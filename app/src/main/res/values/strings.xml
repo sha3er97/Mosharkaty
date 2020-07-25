@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mosharkaty</string>
+    <string name="tab_text_1">Profile</string>
+    <string name="tab_text_2">Upcoming Events</string>
+    <string name="tab_text_3">سجل مشاركة جديدة</string>
+    <string name="title">ايفنت</string>
+
+</resources>
