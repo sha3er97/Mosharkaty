@@ -4,11 +4,21 @@ class EventItem {
     private String title;
     private String day;
     private String imgUrl;
+    private String description;
 
-    public EventItem(String title, String day, String imgUrl) {
+    public EventItem(String title, String day, String imgUrl, String description) {
         this.title = title;
         this.day = day;
         this.imgUrl = imgUrl;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {

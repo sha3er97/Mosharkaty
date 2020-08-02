@@ -1,27 +1,23 @@
 package com.example.mosharkaty;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
-class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
-  private ArrayList<EventItem> eventItems;
+class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder> {
+  private ArrayList<MosharkaItem> mosharkatItems;
   private Context context;
 
-  public EventsAdapter(ArrayList<EventItem> eventItems, Context context) {
-    this.eventItems = eventItems;
+  public MosharkatAdapter(ArrayList<MosharkaItem> mosharkatItems, Context context) {
+    this.mosharkatItems = mosharkatItems;
     this.context = context;
   }
 
@@ -39,9 +35,9 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
    */
   @NonNull
   @Override
-  public EventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public MosharkatAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view =
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item, parent, false);
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.mosharka_item, parent, false);
     return new ViewHolder(view);
   }
 
@@ -61,12 +57,11 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
    * @param position The position of the item within the adapter's data set.
    */
   @Override
-  public void onBindViewHolder(@NonNull EventsAdapter.ViewHolder holder, int position) {
-    EventItem item = eventItems.get(position);
-    holder.title.setText(item.getTitle());
-    holder.date.setText(item.getDay());
-    String url = item.getImgUrl();
-    Picasso.get().load(url).into(holder.imageView);
+  public void onBindViewHolder(@NonNull MosharkatAdapter.ViewHolder holder, int position) {
+    MosharkaItem item = mosharkatItems.get(position);
+    holder.name.setText(item.getVolname());
+    holder.date.setText(item.getMosharkaDate());
+    holder.type.setText(item.getMosharkaType());
   }
 
   /**
@@ -76,34 +71,28 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
    */
   @Override
   public int getItemCount() {
-    return eventItems.size();
+    return mosharkatItems.size();
   }
 
   /** ***************************************************************************** */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    ImageView imageView;
-    TextView title;
+    TextView name;
+    TextView type;
     TextView date;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
-      imageView = itemView.findViewById(R.id.imageViewIMG_Res);
-      title = itemView.findViewById(R.id.eventName);
-      date = itemView.findViewById(R.id.date);
+      name = itemView.findViewById(R.id.ListvolName);
+      type = itemView.findViewById(R.id.ListmosharkaType);
+      date = itemView.findViewById(R.id.ListMosharkadate);
       itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
       int position = getAdapterPosition();
-      EventItem itemClicked = eventItems.get(position);
-      Intent intent = new Intent(context, EventDescription.class);
-      intent.putExtra("title", itemClicked.getTitle());
-      intent.putExtra("date", itemClicked.getDay());
-      intent.putExtra("image", itemClicked.getImgUrl());
-      intent.putExtra("description", itemClicked.getDescription());
-
-      context.startActivity(intent);
+      MosharkaItem itemClicked = mosharkatItems.get(position);
+      // do nothing till now
     }
   }
 }

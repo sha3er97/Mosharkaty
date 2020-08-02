@@ -3,7 +3,6 @@ package com.example.mosharkaty;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,18 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
-import static com.example.mosharkaty.AdminAddGroupMosharka.types;
-import static com.example.mosharkaty.ProfileFragment.userName;
 
-public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
+public class AdminEvents extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
+  private static int eventsCount;
   View view;
+  String[] types = {"معارض", "كساء", "معرض عرايس", "سيشن", "اورينتيشن"}; // todo :: continue
   DatePickerDialog picker;
   EditText eText;
-  private static int mosharkatCount;
-  Button addMosharka_btn;
-  Spinner spin;
-  TextView mosharkatCounterTV;
+  Button addEvent_btn;
   FirebaseDatabase database;
 
   /**
@@ -69,17 +64,67 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
     database = FirebaseDatabase.getInstance();
-    final int[] monthSelected = {-1};
+    view = inflater.inflate(R.layout.admin_events_fragment, container, false);
+    final DatabaseReference EventsRef = database.getReference("events");
+    final DatabaseReference EventsCountRef = database.getReference("eventsCount");
+    EventsCountRef.addListenerForSingleValueEvent(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            eventsCount = dataSnapshot.getValue(Integer.class);
+          }
 
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat");
-    final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+          }
+        });
 
-    eText = view.findViewById(R.id.mosharkaDate);
-    addMosharka_btn = view.findViewById(R.id.confirmMosharka);
-    spin = view.findViewById(R.id.spinner);
-    mosharkatCounterTV = view.findViewById(R.id.mosharkatMonthCount2);
+    final EditText EventName_et = view.findViewById(R.id.eventName_et);
+    final EditText EventDescription_et = view.findViewById(R.id.eventDescription_et);
+    final Spinner spin = (Spinner) view.findViewById(R.id.eventsTypeSpinner);
+    eText = (EditText) view.findViewById(R.id.eventDate_et);
+    addEvent_btn = view.findViewById(R.id.add_event_btn);
+
+    // buttons click listener
+    addEvent_btn.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            DatabaseReference currentEvent = EventsRef.child(String.valueOf(eventsCount));
+            DatabaseReference dateRef = currentEvent.child("date");
+            DatabaseReference typeRef = currentEvent.child("type");
+            DatabaseReference descriptionRef = currentEvent.child("description");
+            DatabaseReference nameRef = currentEvent.child("Eventname");
+
+            nameRef.setValue(EventName_et.getText().toString());
+            descriptionRef.setValue(EventDescription_et.getText().toString());
+            dateRef.setValue(eText.getText().toString());
+            typeRef.setValue(spin.getSelectedItem().toString());
+
+            EventsCountRef.setValue(eventsCount + 1);
+            Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
+          }
+        });
+
+    // database
+    EventsCountRef.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(DataSnapshot dataSnapshot) {
+            // This method is called once with the initial value and again
+            // whenever data at this location is updated.
+            eventsCount = dataSnapshot.getValue(Integer.class);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+          }
+        });
 
     eText.setInputType(InputType.TYPE_NULL);
     eText.setOnClickListener(
@@ -97,29 +142,8 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                     new DatePickerDialog.OnDateSetListener() {
                       @Override
                       public void onDateSet(
-                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                          DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        monthSelected[0] = monthOfYear + 1;
-                        mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
-                        // database
-                        MosharkatCountRef.addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                // This method is called once with the initial value and again
-                                // whenever data at this location is updated.
-                                mosharkatCount =
-                                    dataSnapshot
-                                        .child(String.valueOf(monthOfYear + 1))
-                                        .getValue(Integer.class);
-                              }
-
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                              }
-                            });
                       }
                     },
                     year,
@@ -135,28 +159,6 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);
 
-    // buttons click listener
-    addMosharka_btn.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            if (!validateForm()) return;
-            DatabaseReference currentMosharka =
-                MosharkatRef.child(String.valueOf(monthSelected[0]))
-                    .child(String.valueOf(mosharkatCount));
-            DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
-            DatabaseReference typeRef = currentMosharka.child("mosharkaType");
-            DatabaseReference nameRef = currentMosharka.child("volname");
-
-            nameRef.setValue(userName);
-            dateRef.setValue(eText.getText().toString());
-            typeRef.setValue(spin.getSelectedItem().toString());
-
-            MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
-            Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
-          }
-        });
-
     return view;
   }
 
@@ -165,15 +167,4 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
 
   @Override
   public void onNothingSelected(AdapterView<?> adapterView) {}
-
-  private boolean validateForm() {
-    String date = eText.getText().toString();
-    if (TextUtils.isEmpty(date)) {
-      eText.setError("Required.");
-      return false;
-    } else {
-      eText.setError(null);
-      return true;
-    }
-  }
 }

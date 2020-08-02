@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,18 +29,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
-import static com.example.mosharkaty.AdminAddGroupMosharka.types;
-import static com.example.mosharkaty.ProfileFragment.userName;
 
-public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
+public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
+  public static String[] types = {
+    "استكشاف", "ولاد عم", "اجتماع", "اتصالات", "نزول الفرع", "اخري", "شيت"
+  }; // todo :: continue
   View view;
   DatePickerDialog picker;
   EditText eText;
   private static int mosharkatCount;
   Button addMosharka_btn;
   Spinner spin;
-  TextView mosharkatCounterTV;
+  AutoCompleteTextView volunteerName_et;
   FirebaseDatabase database;
 
   /**
@@ -69,7 +70,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
+    view = inflater.inflate(R.layout.admin_add_group_mosharka, container, false);
     database = FirebaseDatabase.getInstance();
     final int[] monthSelected = {-1};
 
@@ -79,7 +80,8 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     eText = view.findViewById(R.id.mosharkaDate);
     addMosharka_btn = view.findViewById(R.id.confirmMosharka);
     spin = view.findViewById(R.id.spinner);
-    mosharkatCounterTV = view.findViewById(R.id.mosharkatMonthCount2);
+    volunteerName_et = view.findViewById(R.id.volInGroupTV);
+    // TODO :: add auto complete feature
 
     eText.setInputType(InputType.TYPE_NULL);
     eText.setOnClickListener(
@@ -100,7 +102,6 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                           DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
                         eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                         monthSelected[0] = monthOfYear + 1;
-                        mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
                         // database
                         MosharkatCountRef.addValueEventListener(
                             new ValueEventListener() {
@@ -148,7 +149,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
             DatabaseReference typeRef = currentMosharka.child("mosharkaType");
             DatabaseReference nameRef = currentMosharka.child("volname");
 
-            nameRef.setValue(userName);
+            nameRef.setValue(volunteerName_et.getText().toString());
             dateRef.setValue(eText.getText().toString());
             typeRef.setValue(spin.getSelectedItem().toString());
 

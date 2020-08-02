@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:text="الاسم"
+        android:text="@string/name"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,37 +22,167 @@
         android:id="@+id/fra3Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="الفرع"
+        android:text="@string/far3"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volName" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/volDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/dummy_volunteer"
+        android:textColor="@color/ourBlue"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="@+id/volName"
+        app:layout_constraintEnd_toStartOf="@+id/volName"
+        app:layout_constraintTop_toTopOf="@+id/volName" />
 
     <TextView
         android:id="@+id/far3Detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:text="متطوع فريق عمل"
+        android:text="@string/dummy_far3"
         android:textColor="@color/ourBlue"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/volName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/fra3Name"
+        app:layout_constraintEnd_toStartOf="@+id/fra3Name"
+        app:layout_constraintTop_toTopOf="@+id/fra3Name" />
 
-    <TextView
-        android:id="@+id/volDetail"
+    <Button
+        android:id="@+id/signOutBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/log_out_btn_text"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:layout_constraintBottom_toBottomOf="@+id/volDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/far3Detail" />
+
+    <Button
+        android:id="@+id/applyChanges_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/lighterBlue"
+        android:text="@string/save_changes_btn_text"
+        android:onClick="newAccountClick"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/nameCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="المهندسين"
+        android:text=""
+        android:checked="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fra3Name" />
+
+    <TextView
+        android:id="@+id/checkbox1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:text="@string/change_name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/nameCheckBox"
+        app:layout_constraintEnd_toStartOf="@+id/nameCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/nameCheckBox" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="الكود"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volName" />
+
+    <EditText
+        android:id="@+id/codeDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:enabled="false"
+        android:text="@string/dummy_code"
         android:textColor="@color/ourBlue"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/fra3Name"
-        app:layout_constraintTop_toBottomOf="@+id/far3Detail" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <CheckBox
+        android:id="@+id/codeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:checked="false"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameCheckBox" />
+
+    <TextView
+        android:id="@+id/checkbox2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:text="@string/change_code"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/codeCheckBox"
+        app:layout_constraintEnd_toStartOf="@+id/codeCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/codeCheckBox" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="مشاركاتك الحالية"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox2Text" />
+
+    <TextView
+        android:id="@+id/current_mosharkatNum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/dummy_number"
+        android:gravity="center_horizontal"
+        android:textColor="@color/ourBlue"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

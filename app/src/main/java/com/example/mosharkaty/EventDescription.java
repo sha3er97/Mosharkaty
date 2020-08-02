@@ -19,6 +19,7 @@ public class EventDescription extends AppCompatActivity {
     String titleText = intent.getStringExtra("title");
     String dateText = intent.getStringExtra("date");
     String url = intent.getStringExtra("image");
+    String descriptionText = intent.getStringExtra("description");
 
     TextView title = findViewById(R.id.title);
     TextView date = findViewById(R.id.date);
@@ -28,8 +29,7 @@ public class EventDescription extends AppCompatActivity {
     title.setText(titleText);
     date.setText(dateText);
     Picasso.get().load(url).into(image);
-    //TODO :: get description
-
+    description.setText(descriptionText);
 
   }
 }

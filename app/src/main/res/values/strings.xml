@@ -3,6 +3,24 @@
     <string name="tab_text_1">Profile</string>
     <string name="tab_text_2">Upcoming Events</string>
     <string name="tab_text_3">سجل مشاركة جديدة</string>
+    <string name="admin_tab_text_1">تسجيل مجموعة مشاركات</string>
+    <string name="admin_tab_text_2">Add Event</string>
+    <string name="admin_tab_text_3">مشاركات متسجلة</string>
     <string name="title">ايفنت</string>
+    <string name="log_out_btn_text">Log out</string>
+    <string name="save_changes_btn_text">Save changes</string>
+    <string name="change_name">تغيير الاسم</string>
+    <string name="far3">الفرع</string>
+    <string name="name">الاسم</string>
+    <string name="next_events_label">الايفنتات القادمة هذا الشهر :</string>
+    <string name="add_event_btn_txt">Add Event</string>
+    <string name="choose_date_hint">اختار التاريخ</string>
+    <string name="dummy_volunteer">متطوع فريق عمل</string>
+    <string name="change_code">تغيير الكود</string>
+    <string name="dummy_code">00000</string>
+    <string name="login_btnTxt">Login</string>
+    <string name="create_new_account_btnTxt">Create new account</string>
+    <string name="dummy_far3">المهندسين</string>
+    <string name="dummy_number">-1</string>
 
 </resources>
