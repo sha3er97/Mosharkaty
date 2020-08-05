@@ -3,9 +3,11 @@
     <string name="tab_text_1">Profile</string>
     <string name="tab_text_2">Upcoming Events</string>
     <string name="tab_text_3">سجل مشاركة جديدة</string>
-    <string name="admin_tab_text_1">تسجيل مجموعة مشاركات</string>
+    <string name="tab_text_4">تقييمي</string>
+    <string name="admin_tab_text_1">تسجيل مشاركات</string>
     <string name="admin_tab_text_2">Add Event</string>
     <string name="admin_tab_text_3">مشاركات متسجلة</string>
+    <string name="admin_tab_text_4">امضاءات التقييمات</string>
     <string name="title">ايفنت</string>
     <string name="log_out_btn_text">Log out</string>
     <string name="save_changes_btn_text">Save changes</string>
@@ -21,6 +23,30 @@
     <string name="login_btnTxt">Login</string>
     <string name="create_new_account_btnTxt">Create new account</string>
     <string name="dummy_far3">المهندسين</string>
-    <string name="dummy_number">-1</string>
+    <string name="dummy_number">99</string>
+    <string name="password_hint">try something simple</string>
+    <string name="message_write_header">اجعل رسالتك بناءة :)</string>
+    <string name="saraha_description">دي مساحة فاضية ليك تعبر فيها عن رايك - اعتراضك - شكوي\n او اي حاجة نفسك تقولها من غير ما تقول اسمك ..\n او لو عايز تقوله برضو ^^</string>
+    <string name="login_tip">لو اول مرة ليك .. اكتب ايميلك و password من اختيارك \nو اعمل account جديد</string>
+    <string name="technical1">التواصل</string>
+    <string name="technical2">الالتزام</string>
+    <string name="technical3">problem solving</string>
+    <string name="technical4">الجودة</string>
+    <string name="technical5">creativity</string>
+    <string name="point_of_comparison">البند</string>
+    <string name="totalpoints">المجموع</string>
+    <string name="personal1">التعاون</string>
+    <string name="personal2">الاختلاط</string>
+    <string name="personal3">احترام التبعية</string>
+    <string name="personal4">التواضع</string>
+    <string name="personal5">الانتماء</string>
+    <string name="personal6">الاعتذار</string>
+    <string name="personal">البنود الاخلاقية و الشخصية : </string>
+    <string name="technical">البنود الفنية (تتعلق باداء المتطوع لدوره) : </string>
+    <string name="dummy_num2">+2</string>
+    <string name="total_technical">المجموع الفني : </string>
+    <string name="total_personal">المجموع الاخلاقي : </string>
+    <string name="bonus_head">تقييم الهيد المباشر و الادارة :</string>
+    <string name="extraComment">تعليق علي التقييم</string>
 
 </resources>

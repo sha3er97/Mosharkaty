@@ -11,10 +11,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.mosharkaty.AdminAddGroupMosharka;
 import com.example.mosharkaty.AdminEvents;
 import com.example.mosharkaty.AdminShowMosharkat;
+import com.example.mosharkaty.AdminShowSignatures;
 import com.example.mosharkaty.CalendarFragment;
 import com.example.mosharkaty.ComposeMosharkaFragment;
 import com.example.mosharkaty.ProfileFragment;
 import com.example.mosharkaty.R;
+import com.example.mosharkaty.TakyeemFragment;
 
 import static com.example.mosharkaty.LoginActivity.isAdmin;
 
@@ -25,10 +27,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
   @StringRes
   private static final int[] TAB_TITLES =
-      new int[] {R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
+      new int[] {R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3,R.string.tab_text_4};
 
   private static final int[] ADMIN_TAB_TITLES =
-      new int[] {R.string.admin_tab_text_1, R.string.admin_tab_text_2, R.string.admin_tab_text_3};
+      new int[] {R.string.admin_tab_text_1, R.string.admin_tab_text_2, R.string.admin_tab_text_3,R.string.admin_tab_text_4};
   private final Context mContext;
 
   public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -53,6 +55,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         case 2:
           fragment = new AdminShowMosharkat();
           break;
+        case 3:
+          fragment = new AdminShowSignatures();
+          break;
       }
     } else {
       switch (position) {
@@ -64,6 +69,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
           break;
         case 2:
           fragment = new ComposeMosharkaFragment();
+          break;
+        case 3:
+          fragment = new TakyeemFragment();
           break;
       }
     }
@@ -79,7 +87,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    // Show 3 total pages.
-    return 3;
+    // Show 4 total pages.
+    return 4;
   }
 }

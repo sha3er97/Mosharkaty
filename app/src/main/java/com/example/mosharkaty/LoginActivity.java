@@ -3,6 +3,7 @@ package com.example.mosharkaty;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
@@ -24,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
   Button loginBtn;
   EditText email_et;
   EditText password_et;
+  FirebaseDatabase database;
+  final String[] adminEmail = new String[1];
+  final String[] adminPass = new String[1];
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +45,30 @@ public class LoginActivity extends AppCompatActivity {
     loginBtn = findViewById(R.id.login_btn);
     email_et = findViewById(R.id.editTextTextEmailAddress);
     password_et = findViewById(R.id.editTextTextPassword);
+    database = FirebaseDatabase.getInstance();
+    DatabaseReference adminAccount = database.getReference("AdminAccount");
+    adminAccount.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Admin admin = dataSnapshot.getValue(Admin.class);
+            if (admin != null) {
+              adminEmail[0] = admin.email;
+              adminPass[0] = admin.password;
+              Log.d(TAG, "admin email : " + adminEmail[0]);
+              Log.d(TAG, "admin pass : " + adminPass[0]);
+            } else
+              Toast.makeText(
+                      getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
+                  .show();
+          }
 
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+          }
+        });
     FirebaseUser currentUser = mAuth.getCurrentUser();
     updateUI(currentUser);
   }
@@ -43,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     isAdmin = true;
     Toast.makeText(this, "admin Access granted ", Toast.LENGTH_SHORT).show();
     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    //    throw new RuntimeException("Test Crash"); // Force a crash
   }
 
   private void updateUI(FirebaseUser user) {
@@ -138,10 +173,18 @@ public class LoginActivity extends AppCompatActivity {
     return valid;
   }
 
+  private boolean IsAdminDetails() {
+    return (email_et.getText().toString().equalsIgnoreCase(adminEmail[0])
+        && password_et.getText().toString().equalsIgnoreCase(adminPass[0]));
+  }
+
   public void loginClick(View view) {
-    if (email_et.getText().toString().equals("admin")
-        || password_et.getText().toString().equals("admin")) makeAdminActions();
+    if (IsAdminDetails()) makeAdminActions();
     else { // not admin
+      Log.d(TAG, "user not admin ");
+      Log.d(TAG, "entered email : " + email_et.getText().toString());
+      Log.d(TAG, "entered pass : " + password_et.getText().toString());
+
       isAdmin = false;
       signIn(email_et.getText().toString(), password_et.getText().toString());
     }

@@ -168,13 +168,23 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
   public void onNothingSelected(AdapterView<?> adapterView) {}
 
   private boolean validateForm() {
+    boolean valid = true;
     String date = eText.getText().toString();
     if (TextUtils.isEmpty(date)) {
       eText.setError("Required.");
-      return false;
+      valid = false;
     } else {
       eText.setError(null);
-      return true;
     }
+
+    String name = volunteerName_et.getText().toString();
+    if (TextUtils.isEmpty(name)) {
+      volunteerName_et.setError("Required.");
+      valid = false;
+    } else {
+      volunteerName_et.setError(null);
+    }
+
+    return valid;
   }
 }

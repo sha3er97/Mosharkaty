@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static android.content.ContentValues.TAG;
 

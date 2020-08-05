@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/ListvolName"
+        android:id="@+id/ListMessagecontent"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:layout_marginTop="16dp"
+        android:text="message content"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ListMessageAuthor" />
+
+    <TextView
+        android:id="@+id/ListMessageAuthor"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/dummy_volunteer"
+        android:layout_marginTop="3dp"
+        android:text="anonymous"
         android:textColor="@color/ourBlue"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ListMosharkadate"
+        android:id="@+id/ListMessageDate"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="12dp"
-        android:layout_marginStart="16dp"
-        android:text="22/7"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/ListvolName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ListvolName" />
-
-    <TextView
-        android:id="@+id/ListmosharkaType"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_margin="12dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="ولاد عم"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
+        android:text="Sun Aug 02 19:15:47 GMT+02:00 2020"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ListvolName" />
+        app:layout_constraintTop_toBottomOf="@+id/ListMessagecontent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

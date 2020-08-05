@@ -65,6 +65,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
     RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
     ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
     final EditText month_et = view.findViewById(R.id.month_et);
+    final EditText day_et = view.findViewById(R.id.day_et);
     final TextView count = view.findViewById(R.id.mosharkatMonthCount);
 
     recyclerView.setHasFixedSize(true);
@@ -78,29 +79,38 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
           @Override
           public void onClick(View v) {
             final int month = Integer.parseInt(month_et.getText().toString());
-            if (month < 1 || month > 12 || month_et.getText().toString().equals("")) {
-              Toast.makeText(getContext(), "error : choose appropriate month", Toast.LENGTH_SHORT)
+            final int day = Integer.parseInt(day_et.getText().toString());
+
+            if (month < 1
+                || month > 12
+                || month_et.getText().toString().equals("")
+                || day < 1
+                || day > 31
+                || day_et.getText().toString().equals("")) {
+              Toast.makeText(
+                      getContext(), "error : choose appropriate month and day", Toast.LENGTH_SHORT)
                   .show();
               return;
             }
             // data base
-            MosharkatCountRef.addValueEventListener(
-                new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    count.setText(
-                        String.valueOf(
-                            dataSnapshot.child(String.valueOf(month)).getValue(Integer.class)));
-                  }
-
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                  }
-                });
+            //            MosharkatCountRef.addValueEventListener(
+            //                new ValueEventListener() {
+            //                  @Override
+            //                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            //                    // This method is called once with the initial value and again
+            //                    // whenever data at this location is updated.
+            //                    count.setText(
+            //                        String.valueOf(
+            //
+            // dataSnapshot.child(String.valueOf(month)).getValue(Integer.class)));
+            //                  }
+            //
+            //                  @Override
+            //                  public void onCancelled(@NonNull DatabaseError error) {
+            //                    // Failed to read value
+            //                    Log.w(TAG, "Failed to read value.", error.toException());
+            //                  }
+            //                });
 
             MosharkatRef.child(String.valueOf(month))
                 .addValueEventListener(
@@ -108,11 +118,17 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
                       @Override
                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         mosharkaItems.clear();
+                        int counter = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                           MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                          mosharkaItems.add(mosharka);
+                          String[] splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                          if (Integer.parseInt(splittedDate[0]) == day) {
+                            mosharkaItems.add(mosharka);
+                            counter++;
+                          }
                         }
                         adapter.notifyDataSetChanged();
+                        count.setText(String.valueOf(counter));
                       }
 
                       @Override
