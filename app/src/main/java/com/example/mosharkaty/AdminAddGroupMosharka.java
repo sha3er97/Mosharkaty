@@ -33,8 +33,17 @@ import static android.content.ContentValues.TAG;
 public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
   public static String[] types = {
-          "استكشاف", "ولاد عم", "اجتماع", "اتصالات", "نزول الفرع", "اخري", "شيت"
-  }; // todo :: continue
+          "استكشاف",
+          "ولاد عم",
+          "اجتماع",
+          "اتصالات",
+          "نزول الفرع",
+          "اخري / بيت",
+          "شيت",
+          "معرض / قافلة",
+          "كرنفال",
+          "سيشن / اورينتيشن"
+  };
   View view;
   DatePickerDialog picker;
   EditText eText;
@@ -105,16 +114,16 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
                                       DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
                                 eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 monthSelected[0] = monthOfYear + 1;
-                        // database
-                        MosharkatCountRef.addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                // This method is called once with the initial value and again
-                                // whenever data at this location is updated.
-                                mosharkatCount =
-                                    dataSnapshot
-                                        .child(String.valueOf(monthOfYear + 1))
+                                // database
+                                MosharkatCountRef.addValueEventListener(
+                                        new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            // This method is called once with the initial value and again
+                                            // whenever data at this location is updated.
+                                            mosharkatCount =
+                                                    dataSnapshot
+                                                            .child(String.valueOf(monthOfYear + 1))
                                         .getValue(Integer.class);
                               }
 
