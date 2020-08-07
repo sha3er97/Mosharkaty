@@ -48,5 +48,11 @@
     <string name="total_personal">المجموع الاخلاقي : </string>
     <string name="bonus_head">تقييم الهيد المباشر و الادارة :</string>
     <string name="extraComment">تعليق علي التقييم</string>
+    <string name="name_hint">اكتب اسمك ثلاثي</string>
+    <string name="code">الكود</string>
+    <string name="code_hint">اكتب الكود اللي الفرع عامله ليك</string>
+    <string name="password">Password</string>
+    <string name="email_hint">username@gmail.com</string>
+    <string name="e_mail">E-mail</string>
 
 </resources>

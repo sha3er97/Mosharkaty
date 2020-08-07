@@ -2,6 +2,7 @@ package com.example.mosharkaty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,14 +118,23 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            DatabaseReference usersRef = database.getReference("users");
-            DatabaseReference currentUser = usersRef.child(userId);
-            DatabaseReference nameRef = currentUser.child("name");
-            DatabaseReference codeRef = currentUser.child("code");
-
-            nameRef.setValue(name.getText().toString());
-            codeRef.setValue(code.getText().toString());
-            Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
+              DatabaseReference usersRef = database.getReference("users");
+              DatabaseReference currentUser = usersRef.child(userId);
+              DatabaseReference nameRef = currentUser.child("name");
+              DatabaseReference codeRef = currentUser.child("code");
+              String nameText = name.getText().toString();
+              String[] words = nameText.split(" ", 5);
+              if (TextUtils.isEmpty(nameText)) {
+                  name.setError("Required.");
+                  return;
+              }
+              if (words.length < 3) {
+                  name.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
+                  return;
+              }
+              nameRef.setValue(nameText);
+              codeRef.setValue(code.getText().toString());
+              Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
           }
         });
 

@@ -24,7 +24,7 @@ import static com.example.mosharkaty.ProfileFragment.userCode;
 
 public class TakyeemFragment extends androidx.fragment.app.Fragment {
   View view;
-  public static boolean codeFound=false;
+  public static boolean codeFound = false;
   FirebaseDatabase database;
   Button contReading;
   int big_total;
@@ -58,10 +58,12 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    codeFound=false;
+    codeFound = false;
     view = inflater.inflate(R.layout.takyeem_fragment, container, false);
     database = FirebaseDatabase.getInstance();
     contReading = view.findViewById(R.id.contRead);
+    final TextView takyeemVolName = view.findViewById(R.id.takyeemVolName);
+
     final TextView communication = view.findViewById(R.id.communication);
     final TextView commitment = view.findViewById(R.id.commitment);
     final TextView problem_solving = view.findViewById(R.id.problem_solving);
@@ -110,8 +112,9 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
                 the_month_before = takyeem.the_month_before;
                 this_month = takyeem.this_month;
                 Volname = takyeem.Volname;
+                takyeemVolName.setText(Volname);
                 Toast.makeText(getContext(), "تم تحديث تقييمك", Toast.LENGTH_SHORT).show();
-                codeFound=true;
+                codeFound = true;
               }
             }
           }

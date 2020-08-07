@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,23 +25,21 @@ import com.google.firebase.database.ValueEventListener;
 import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
-  private FirebaseAuth mAuth;
-  public static String userId = "-1";
-  public static boolean isAdmin = false;
-  Button loginBtn;
-  EditText email_et;
-  EditText password_et;
-  FirebaseDatabase database;
-  final String[] adminEmail = new String[1];
-  final String[] adminPass = new String[1];
+    private FirebaseAuth mAuth;
+    public static String userId;
+    public static boolean isAdmin;
+    EditText email_et;
+    EditText password_et;
+    FirebaseDatabase database;
+    final String[] adminEmail = new String[1];
+    final String[] adminPass = new String[1];
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
     // Initialize Firebase Auth
     mAuth = FirebaseAuth.getInstance();
-    loginBtn = findViewById(R.id.login_btn);
     email_et = findViewById(R.id.editTextTextEmailAddress);
     password_et = findViewById(R.id.editTextTextPassword);
     database = FirebaseDatabase.getInstance();
@@ -74,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void makeAdminActions() {
-    isAdmin = true;
-    Toast.makeText(this, "admin Access granted ", Toast.LENGTH_SHORT).show();
-    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+      isAdmin = true;
+      Toast.makeText(this, "Admin Access granted ", Toast.LENGTH_SHORT).show();
+      startActivity(new Intent(getApplicationContext(), MainActivity.class));
     //    throw new RuntimeException("Test Crash"); // Force a crash
   }
 
@@ -84,43 +81,11 @@ public class LoginActivity extends AppCompatActivity {
     if (user != null) {
       // Signed in
       userId = user.getUid();
-      // loginBtn.setVisibility(View.GONE);
-      // loginBtn.setText("you are logged in");
       Toast.makeText(this, "login Successful", Toast.LENGTH_SHORT).show();
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
     } else {
-      // Signed out
-      loginBtn.setVisibility(View.VISIBLE);
       Toast.makeText(this, "login Failed .. try again", Toast.LENGTH_SHORT).show();
     }
-  }
-
-  private void createAccount(String email, String password) {
-    if (!validateForm()) {
-      return;
-    }
-
-    // [START create_user_with_email]
-    mAuth
-        .createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(
-            this,
-            new OnCompleteListener<AuthResult>() {
-              @Override
-              public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                  // Sign in success, update UI with the signed-in user's information
-                  FirebaseUser user = mAuth.getCurrentUser();
-                  updateUI(user);
-                } else {
-                  // If sign in fails, display a message to the user.
-                  Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                      .show();
-                  updateUI(null);
-                }
-              }
-            });
-    // [END create_user_with_email]
   }
 
   private void signIn(String email, String password) {
@@ -191,6 +156,6 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void newAccountClick(View view) {
-    createAccount(email_et.getText().toString(), password_et.getText().toString());
+      startActivity(new Intent(this, NewAccount.class));
   }
 }

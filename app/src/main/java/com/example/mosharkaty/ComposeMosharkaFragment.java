@@ -33,26 +33,29 @@ import static com.example.mosharkaty.AdminAddGroupMosharka.types;
 import static com.example.mosharkaty.ProfileFragment.userName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
-    implements AdapterView.OnItemSelectedListener {
-  View view;
-  DatePickerDialog picker;
-  EditText eText;
-  private static int mosharkatCount;
-  Button addMosharka_btn;
-  Spinner spin;
-  TextView mosharkatCounterTV;
-  FirebaseDatabase database;
+        implements AdapterView.OnItemSelectedListener {
+    View view;
+    DatePickerDialog picker;
+    EditText eText;
+    private static int mosharkatCount;
+    Button addMosharka_btn;
+    Spinner spin;
+    TextView mosharkatCounterTV;
+    FirebaseDatabase database;
+    int day;
+    int month;
+    int year;
 
-  /**
-   * Called to have the fragment instantiate its user interface view. This is optional, and
-   * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
-   * and {@link #onActivityCreated(Bundle)}.
-   *
-   * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
-   *
-   * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
-   * view is being released.
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and
+     * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
+     * and {@link #onActivityCreated(Bundle)}.
+     *
+     * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+     *
+     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
+     * view is being released.
    *
    * @param inflater The LayoutInflater object that can be used to inflate any views in the
    *     fragment,
@@ -86,20 +89,20 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            final Calendar cldr = Calendar.getInstance();
-            int day = cldr.get(Calendar.DAY_OF_MONTH);
-            int month = cldr.get(Calendar.MONTH);
-            int year = cldr.get(Calendar.YEAR);
-            // date picker dialog
-            picker =
-                new DatePickerDialog(
-                    getContext(),
-                    new DatePickerDialog.OnDateSetListener() {
-                      @Override
-                      public void onDateSet(
-                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                        eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        monthSelected[0] = monthOfYear + 1;
+              final Calendar cldr = Calendar.getInstance();
+              day = cldr.get(Calendar.DAY_OF_MONTH);
+              month = cldr.get(Calendar.MONTH);
+              year = cldr.get(Calendar.YEAR);
+              // date picker dialog
+              picker =
+                      new DatePickerDialog(
+                              getContext(),
+                              new DatePickerDialog.OnDateSetListener() {
+                                  @Override
+                                  public void onDateSet(
+                                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                                      eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                      monthSelected[0] = monthOfYear + 1;
                         mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
                         // database
                         MosharkatCountRef.addValueEventListener(
@@ -167,13 +170,19 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
   public void onNothingSelected(AdapterView<?> adapterView) {}
 
   private boolean validateForm() {
-    String date = eText.getText().toString();
-    if (TextUtils.isEmpty(date)) {
-      eText.setError("Required.");
-      return false;
-    } else {
-      eText.setError(null);
-      return true;
-    }
+      String date = eText.getText().toString();
+      String[] parts = date.split("/", 3);
+      if (TextUtils.isEmpty(date)) {
+          eText.setError("Required.");
+          return false;
+      } else if (Integer.parseInt(parts[2]) > year
+              || Integer.parseInt(parts[1]) > month + 1
+              || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+          eText.setError("you can't choose a date in the future.");
+          return false;
+      } else {
+          eText.setError(null);
+          return true;
+      }
   }
 }

@@ -33,7 +33,7 @@ import static android.content.ContentValues.TAG;
 public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
   public static String[] types = {
-    "استكشاف", "ولاد عم", "اجتماع", "اتصالات", "نزول الفرع", "اخري", "شيت"
+          "استكشاف", "ولاد عم", "اجتماع", "اتصالات", "نزول الفرع", "اخري", "شيت"
   }; // todo :: continue
   View view;
   DatePickerDialog picker;
@@ -43,6 +43,9 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
   Spinner spin;
   AutoCompleteTextView volunteerName_et;
   FirebaseDatabase database;
+  int day;
+  int month;
+  int year;
 
   /**
    * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -89,19 +92,19 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
           @Override
           public void onClick(View v) {
             final Calendar cldr = Calendar.getInstance();
-            int day = cldr.get(Calendar.DAY_OF_MONTH);
-            int month = cldr.get(Calendar.MONTH);
-            int year = cldr.get(Calendar.YEAR);
+            day = cldr.get(Calendar.DAY_OF_MONTH);
+            month = cldr.get(Calendar.MONTH);
+            year = cldr.get(Calendar.YEAR);
             // date picker dialog
             picker =
-                new DatePickerDialog(
-                    getContext(),
-                    new DatePickerDialog.OnDateSetListener() {
-                      @Override
-                      public void onDateSet(
-                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                        eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        monthSelected[0] = monthOfYear + 1;
+                    new DatePickerDialog(
+                            getContext(),
+                            new DatePickerDialog.OnDateSetListener() {
+                              @Override
+                              public void onDateSet(
+                                      DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                monthSelected[0] = monthOfYear + 1;
                         // database
                         MosharkatCountRef.addValueEventListener(
                             new ValueEventListener() {
@@ -168,23 +171,32 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
   public void onNothingSelected(AdapterView<?> adapterView) {}
 
   private boolean validateForm() {
-    boolean valid = true;
     String date = eText.getText().toString();
+    String[] parts = date.split("/", 3);
     if (TextUtils.isEmpty(date)) {
       eText.setError("Required.");
-      valid = false;
-    } else {
-      eText.setError(null);
+      return false;
+    } else if (Integer.parseInt(parts[2]) > year
+            || Integer.parseInt(parts[1]) > month + 1
+            || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+      eText.setError("you can't choose a date in the future.");
+      return false;
     }
 
     String name = volunteerName_et.getText().toString();
+    String[] words = name.split(" ", 5);
+
     if (TextUtils.isEmpty(name)) {
       volunteerName_et.setError("Required.");
-      valid = false;
+      return false;
+    }
+    if (words.length < 2) {
+      volunteerName_et.setError("الاسم لازم يبقي ثنائي علي الاقل.");
+      return false;
     } else {
       volunteerName_et.setError(null);
     }
 
-    return valid;
+    return true;
   }
 }

@@ -3,13 +3,13 @@ package com.example.mosharkaty;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mosharkaty.ui.main.SectionsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import static com.example.mosharkaty.LoginActivity.isAdmin;
@@ -30,14 +30,20 @@ public class MainActivity extends AppCompatActivity {
 
     fab.setOnClickListener(
         new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //                .setAction("Action", null)
-            //                .show();
-            if (isAdmin) startActivity(new Intent(getApplicationContext(), MessagesRead.class));
-            else startActivity(new Intent(getApplicationContext(), MessagesWrite.class));
-          }
+            @Override
+            public void onClick(View view) {
+                //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //                .setAction("Action", null)
+                //                .show();
+                if (isAdmin) startActivity(new Intent(getApplicationContext(), MessagesRead.class));
+                else startActivity(new Intent(getApplicationContext(), MessagesWrite.class));
+            }
         });
   }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing
+        Toast.makeText(this, "can't go back .. you can log out only", Toast.LENGTH_SHORT).show();
+    }
 }
