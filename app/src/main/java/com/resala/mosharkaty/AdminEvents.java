@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminEvents extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
@@ -64,19 +66,20 @@ public class AdminEvents extends androidx.fragment.app.Fragment
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    database = FirebaseDatabase.getInstance();
-    view = inflater.inflate(R.layout.admin_events_fragment, container, false);
-    final DatabaseReference EventsRef = database.getReference("events");
-    final DatabaseReference EventsCountRef = database.getReference("eventsCount");
-    EventsCountRef.addListenerForSingleValueEvent(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            eventsCount = dataSnapshot.getValue(Integer.class);
-          }
+      database = FirebaseDatabase.getInstance();
+      view = inflater.inflate(R.layout.admin_events_fragment, container, false);
+      userBranch = branches[0]; // todo:: add a way for admin to configure his branch
+      final DatabaseReference EventsRef = database.getReference("events").child(userBranch);
+      final DatabaseReference EventsCountRef = database.getReference("eventsCount");
+      EventsCountRef.addListenerForSingleValueEvent(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      eventsCount = dataSnapshot.getValue(Integer.class);
+                  }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
             // Failed to read value
             Log.w(TAG, "Failed to read value.", error.toException());
           }

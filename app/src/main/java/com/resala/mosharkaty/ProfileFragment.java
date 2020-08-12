@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 
 public class ProfileFragment extends androidx.fragment.app.Fragment {
   public static String userName = "متطوع فريق عمل";
@@ -108,8 +110,9 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
           public void onClick(View v) {
             mAuth.signOut();
             userName = getString(R.string.dummy_volunteer);
-            userCode = getString(R.string.dummy_code);
-            userId = "-1";
+              userCode = getString(R.string.dummy_code);
+              userBranch = getString(R.string.dummy_far3);
+              userId = "-1";
             startActivity(new Intent(getActivity(), LoginActivity.class));
           }
         });
@@ -123,8 +126,13 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
               DatabaseReference nameRef = currentUser.child("name");
               DatabaseReference codeRef = currentUser.child("code");
               String nameText = name.getText().toString();
+              String codeText = code.getText().toString();
               String[] words = nameText.split(" ", 5);
               if (TextUtils.isEmpty(nameText)) {
+                  name.setError("Required.");
+                  return;
+              }
+              if (TextUtils.isEmpty(codeText)) {
                   name.setError("Required.");
                   return;
               }
@@ -132,8 +140,12 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                   name.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
                   return;
               }
+              if (code.getText().length() != 5) {
+                  code.setError("incorrect code entered .. 5 digits required");
+                  return;
+              }
               nameRef.setValue(nameText);
-              codeRef.setValue(code.getText().toString());
+              codeRef.setValue(codeText);
               Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
           }
         });
@@ -142,7 +154,8 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
     DatabaseReference usersRef = database.getReference("users");
     DatabaseReference currentUser = usersRef.child(userId);
     DatabaseReference nameRef = currentUser.child("name");
-    DatabaseReference codeRef = currentUser.child("code");
+      DatabaseReference codeRef = currentUser.child("code");
+      DatabaseReference branchRef = currentUser.child("branch");
 
     nameRef.addValueEventListener(
         new ValueEventListener() {
@@ -168,31 +181,57 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
             // This method is called once with the initial value and again
             // whenever data at this location is updated.
             userCode = dataSnapshot.getValue(String.class);
-            code.setText(userCode);
+              code.setText(userCode);
           }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
-
-    DatabaseReference liveSheet =
-        database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
-    DatabaseReference mosharkatTab = liveSheet.child("month_mosharkat");
-    mosharkatTab.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              Volunteer user = snapshot.getValue(Volunteer.class);
-              if (user.code.equalsIgnoreCase(userCode)) {
-                currentMosharkat.setText(String.valueOf(user.count));
-                Toast.makeText(getContext(), "تم تحديث مشاركاتك", Toast.LENGTH_SHORT).show();
-              }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
-          }
+        });
+
+      branchRef.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(DataSnapshot dataSnapshot) {
+                      // This method is called once with the initial value and again
+                      // whenever data at this location is updated.
+                      userBranch = dataSnapshot.getValue(String.class);
+                      branch.setText(userBranch);
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
+      DatabaseReference liveSheet =
+              database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
+      DatabaseReference mosharkatTab = liveSheet.child("month_mosharkat");
+      mosharkatTab.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(DataSnapshot dataSnapshot) {
+                      codeFound = false;
+                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                          Volunteer user = snapshot.getValue(Volunteer.class);
+                          if (user.code.equalsIgnoreCase(userCode)) {
+                              currentMosharkat.setText(String.valueOf(user.count));
+                              Toast.makeText(getContext(), "تم تحديث مشاركاتك", Toast.LENGTH_SHORT).show();
+                              codeFound = true;
+                          }
+                      }
+                      if (!codeFound) {
+                          currentMosharkat.setText("code not found yet");
+                          currentMosharkat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                          currentMosharkat.setTextColor(getResources().getColor(R.color.red));
+                      } else {
+                          currentMosharkat.setTextColor(getResources().getColor(R.color.ourBlue));
+                          currentMosharkat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 64);
+                      }
+                  }
 
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
@@ -200,6 +239,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
             Log.w(TAG, "Failed to read value.", error.toException());
           }
         });
-    return view;
+
+      return view;
   }
 }

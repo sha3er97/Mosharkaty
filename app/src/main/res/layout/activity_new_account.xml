@@ -101,15 +101,11 @@
         android:id="@+id/signup_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:backgroundTint="@android:color/holo_red_light"
-        android:text="@string/create_new_account_btnTxt"
         android:onClick="newAccountClick"
+        android:text="@string/create_new_account_btnTxt"
         android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
+        app:backgroundTint="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -128,5 +124,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/emailTextView4" />
 
+    <TextView
+        android:id="@+id/brTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/branch"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
 
+    <Spinner
+        android:id="@+id/branchSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/brTV"
+        app:layout_constraintEnd_toStartOf="@+id/brTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/brTV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

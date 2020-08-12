@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class CalendarFragment extends androidx.fragment.app.Fragment {
   View view;
@@ -58,40 +60,57 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    fillEventsImages();
-    view = inflater.inflate(R.layout.calendar_fragment, container, false);
-    database = FirebaseDatabase.getInstance();
-    final DatabaseReference EventsRef = database.getReference("events");
-    final TextView dateTV = view.findViewById(R.id.todayDate);
-    RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new EventsAdapter(eventItems, getContext());
-    recyclerView.setAdapter(adapter);
+      fillEventsImages();
+      view = inflater.inflate(R.layout.calendar_fragment, container, false);
+      database = FirebaseDatabase.getInstance();
+      final DatabaseReference EventsRef = database.getReference("events");
+      final TextView dateTV = view.findViewById(R.id.todayDate);
+      final TextView errorTV = view.findViewById(R.id.eventsErrorTV);
+      ImageButton refreshBtn = view.findViewById(R.id.events_refresh_btn);
 
-    EventsRef.addValueEventListener(
-        new ValueEventListener() {
-          @Override
+      RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
+      recyclerView.setHasFixedSize(true);
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      adapter = new EventsAdapter(eventItems, getContext());
+      recyclerView.setAdapter(adapter);
+
+      EventsRef.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
           public void onDataChange(DataSnapshot dataSnapshot) {
-            eventItems.clear();
-            final Calendar cldr = Calendar.getInstance();
-            int day = cldr.get(Calendar.DAY_OF_MONTH);
-            int month = cldr.get(Calendar.MONTH) + 1;
-            int year = cldr.get(Calendar.YEAR);
-            dateTV.setText(day + "/" + month + "/" + year);
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              Event event = snapshot.getValue(Event.class);
-              String[] splittedDate = event.date.split("/", 3);
-              if (Integer.parseInt(splittedDate[0]) >= day
-                  && Integer.parseInt(splittedDate[1]) == month
-                  && Integer.parseInt(splittedDate[2]) == year) {
-                String url = eventsImages.get(event.type);
-                eventItems.add(new EventItem(event.Eventname, event.date, url, event.description));
-                Toast.makeText(getContext(), "events updated", Toast.LENGTH_SHORT).show();
-              }
-            }
-            adapter.notifyDataSetChanged();
-          }
+//            Log.i(TAG, "onDataChange: has children ? :" + dataSnapshot.hasChildren());
+//            Log.i(TAG, "onDataChange:  branch ? :" + userBranch);
+//            Log.i(TAG, "onDataChange:  value ? :" + dataSnapshot.toString());
+
+                      eventItems.clear();
+                      errorTV.setVisibility(View.INVISIBLE);
+                      boolean eventFound = false;
+                      final Calendar cldr = Calendar.getInstance();
+                      int day = cldr.get(Calendar.DAY_OF_MONTH);
+                      int month = cldr.get(Calendar.MONTH) + 1;
+                      int year = cldr.get(Calendar.YEAR);
+                      dateTV.setText(day + "/" + month + "/" + year);
+                      for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
+                          Log.i(TAG, "onDataChange: child has children ? :" + snapshot.hasChildren());
+                          Log.i(TAG, "onDataChange:  child value ? :" + snapshot.toString());
+                          Event event = snapshot.getValue(Event.class);
+                          Log.i(TAG, "onDataChange: event date :" + event.date);
+                          String[] splittedDate = event.date.split("/", 3);
+                          if (Integer.parseInt(splittedDate[0]) >= day
+                                  && Integer.parseInt(splittedDate[1]) == month
+                                  && Integer.parseInt(splittedDate[2]) == year) {
+                              String url = eventsImages.get(event.type);
+                              eventItems.add(new EventItem(event.Eventname, event.date, url, event.description));
+                              Toast.makeText(getContext(), "Events updated", Toast.LENGTH_SHORT).show();
+                              eventFound = true;
+                          }
+                      }
+                      if (!eventFound) {
+                          Log.i(TAG, "onDataChange: no events found");
+                          errorTV.setVisibility(View.VISIBLE);
+                      }
+                      adapter.notifyDataSetChanged();
+                  }
 
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
@@ -99,14 +118,14 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
             Log.w(TAG, "Failed to read value.", error.toException());
           }
         });
-    return view;
+      return view;
   }
 
-  private void fillEventsImages() {     // todo :: continue
-    eventsImages.put("معارض", "https://i.imgur.com/cmxhBZJ.jpg");
-    eventsImages.put("كساء", "https://i.imgur.com/HROESKW.jpg");
-    eventsImages.put("معرض عرايس", "https://i.imgur.com/fPo06rN.jpg");
-    eventsImages.put("سيشن", "https://i.imgur.com/SMp2S6b.jpg");
-    eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
-  }
+    private void fillEventsImages() { // todo :: continue
+        eventsImages.put("معارض", "https://i.imgur.com/cmxhBZJ.jpg");
+        eventsImages.put("كساء", "https://i.imgur.com/HROESKW.jpg");
+        eventsImages.put("معرض عرايس", "https://i.imgur.com/fPo06rN.jpg");
+        eventsImages.put("سيشن", "https://i.imgur.com/SMp2S6b.jpg");
+        eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
+    }
 }

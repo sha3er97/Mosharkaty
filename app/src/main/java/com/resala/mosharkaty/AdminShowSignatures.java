@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminShowSignatures extends androidx.fragment.app.Fragment {
     View view;
@@ -42,6 +46,9 @@ public class AdminShowSignatures extends androidx.fragment.app.Fragment {
             @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.admin_show_signatures, container, false);
         database = FirebaseDatabase.getInstance();
+        //todo :: show signatures for this month
+        userBranch = branches[0]; // todo:: add a way for admin to configure his branch
+        DatabaseReference signaturesRef = database.getReference("signatures").child(userBranch);
         return view;
     }
     }

@@ -20,7 +20,7 @@
     <string name="dummy_volunteer">متطوع فريق عمل</string>
     <string name="change_code">تغيير الكود</string>
     <string name="dummy_code">00000</string>
-    <string name="login_btnTxt">Login</string>
+    <string name="login_btnTxt">Continue</string>
     <string name="create_new_account_btnTxt">Create new account</string>
     <string name="dummy_far3">المهندسين</string>
     <string name="dummy_number">99</string>
@@ -54,5 +54,7 @@
     <string name="password">Password</string>
     <string name="email_hint">username@gmail.com</string>
     <string name="e_mail">E-mail</string>
+    <string name="reset">reset</string>
+    <string name="branch">الفرع</string>
 
 </resources>

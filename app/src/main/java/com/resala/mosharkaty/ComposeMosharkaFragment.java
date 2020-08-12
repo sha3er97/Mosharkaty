@@ -30,6 +30,7 @@ import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.AdminAddGroupMosharka.types;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
@@ -76,8 +77,8 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     database = FirebaseDatabase.getInstance();
     final int[] monthSelected = {-1};
 
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat");
-    final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+      final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+      final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
 
     eText = view.findViewById(R.id.mosharkaDate);
     addMosharka_btn = view.findViewById(R.id.confirmMosharka);

@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class MessagesRead extends AppCompatActivity {
   MessagesAdapter adapter;
@@ -45,17 +47,18 @@ public class MessagesRead extends AppCompatActivity {
   }
 
   public void refreshMessages(View view) {
-    DatabaseReference MessagesRef = database.getReference("messages");
+    userBranch = branches[0]; // todo:: add a way for admin to configure his branch
+    DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
     DatabaseReference MessagesCountRef = database.getReference("messagesCount");
 
     MessagesRef.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            messageItems.clear();
-            int counter = 0;
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              MessageItem message = snapshot.getValue(MessageItem.class);
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot) {
+                messageItems.clear();
+                int counter = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                  MessageItem message = snapshot.getValue(MessageItem.class);
               messageItems.add(message);
               Toast.makeText(getApplicationContext(), "messages updated", Toast.LENGTH_SHORT)
                   .show();

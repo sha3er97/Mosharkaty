@@ -18,6 +18,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Calendar;
 
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 
 public class ContinueTakyeem extends AppCompatActivity {
@@ -92,8 +93,8 @@ public class ContinueTakyeem extends AppCompatActivity {
     signBtn.setBackgroundColor(
         getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
     signBtn.setText("تم الامضاء");
-    DatabaseReference signaturesRef = database.getReference("signatures");
-    DatabaseReference monthSignaturesRef = signaturesRef.child(String.valueOf(thisMonth));
+      DatabaseReference signaturesRef = database.getReference("signatures").child(userBranch);
+      DatabaseReference monthSignaturesRef = signaturesRef.child(String.valueOf(thisMonth));
     DatabaseReference volSignatureRef = monthSignaturesRef.child(volName);
     DatabaseReference dateRef = volSignatureRef.child("signatureDate");
     DatabaseReference commentRef = volSignatureRef.child("comment");
@@ -101,6 +102,7 @@ public class ContinueTakyeem extends AppCompatActivity {
     nameRef.setValue(volName);
     dateRef.setValue(cldr.getTime().toString());
     commentRef.setValue(VolComment.getText().toString());
-    Toast.makeText(this, "شكرا لامضائك و استني تقييم الشهر الجاي ..", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, "شكرا لامضائك و استني تقييم الشهر الجاي ..", Toast.LENGTH_SHORT).show();
+      finish();
   }
 }

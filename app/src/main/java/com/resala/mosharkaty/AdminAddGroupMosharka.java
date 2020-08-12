@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     implements AdapterView.OnItemSelectedListener {
@@ -85,8 +87,8 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     view = inflater.inflate(R.layout.admin_add_group_mosharka, container, false);
     database = FirebaseDatabase.getInstance();
     final int[] monthSelected = {-1};
-
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat");
+    userBranch = branches[0]; // todo:: add a way for admin to configure his branch
+    final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
     final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
 
     eText = view.findViewById(R.id.mosharkaDate);
@@ -124,16 +126,16 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
                                             mosharkatCount =
                                                     dataSnapshot
                                                             .child(String.valueOf(monthOfYear + 1))
-                                        .getValue(Integer.class);
-                              }
+                                                            .getValue(Integer.class);
+                                          }
 
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
+                                          @Override
+                                          public void onCancelled(@NonNull DatabaseError error) {
+                                            // Failed to read value
+                                            Log.w(TAG, "Failed to read value.", error.toException());
+                                          }
+                                        });
                               }
-                            });
-                      }
                     },
                     year,
                     month,

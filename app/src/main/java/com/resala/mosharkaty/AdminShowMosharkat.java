@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
   View view;
@@ -57,20 +59,20 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.admin_show_mosharkat, container, false);
-    database = FirebaseDatabase.getInstance();
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat");
-    final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+      view = inflater.inflate(R.layout.admin_show_mosharkat, container, false);
+      database = FirebaseDatabase.getInstance();
+      userBranch = branches[0]; //todo:: add a way for admin to configure his branch
+      final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
 
-    RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
-    ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
-    final EditText month_et = view.findViewById(R.id.month_et);
-    final EditText day_et = view.findViewById(R.id.day_et);
-    final TextView count = view.findViewById(R.id.mosharkatMonthCount);
+      RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
+      ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
+      final EditText month_et = view.findViewById(R.id.month_et);
+      final EditText day_et = view.findViewById(R.id.day_et);
+      final TextView count = view.findViewById(R.id.mosharkatMonthCount);
 
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new MosharkatAdapter(mosharkaItems, getContext());
+      recyclerView.setHasFixedSize(true);
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      adapter = new MosharkatAdapter(mosharkaItems, getContext());
     recyclerView.setAdapter(adapter);
 
     // button listener

@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,13 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.resala.mosharkaty.LoginActivity.userId;
 
-public class NewAccount extends AppCompatActivity {
+public class NewAccount extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
   private FirebaseAuth mAuth;
   EditText email_et;
   EditText password_et;
   EditText name_et;
   EditText code_et;
   FirebaseDatabase database;
+  public static String[] branches = {
+          "المهندسين",
+  };
+  Spinner spin;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,14 @@ public class NewAccount extends AppCompatActivity {
     code_et = findViewById(R.id.newAccountCode);
 
     database = FirebaseDatabase.getInstance();
+    spin = findViewById(R.id.branchSpinner);
+    spin.setOnItemSelectedListener(this);
+    // Creating the ArrayAdapter instance having the country list
+    ArrayAdapter aa =
+            new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, branches);
+    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Setting the ArrayAdapter data on the Spinner
+    spin.setAdapter(aa);
   }
 
   private void createAccount(String email, String password) {
@@ -75,9 +91,11 @@ public class NewAccount extends AppCompatActivity {
       DatabaseReference currentUser = usersRef.child(userId);
       DatabaseReference nameRef = currentUser.child("name");
       DatabaseReference codeRef = currentUser.child("code");
+      DatabaseReference branchRef = currentUser.child("branch");
 
       nameRef.setValue(name_et.getText().toString());
       codeRef.setValue(code_et.getText().toString());
+      branchRef.setValue(spin.getSelectedItem().toString());
       Toast.makeText(this, "Account created Successfully..", Toast.LENGTH_SHORT).show();
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
@@ -107,8 +125,7 @@ public class NewAccount extends AppCompatActivity {
     if (TextUtils.isEmpty(name)) {
       name_et.setError("Required.");
       valid = false;
-    }
-    if (words.length < 3) {
+    } else if (words.length < 3) {
       name_et.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
       valid = false;
     } else {
@@ -119,8 +136,20 @@ public class NewAccount extends AppCompatActivity {
     if (TextUtils.isEmpty(code)) {
       code_et.setError("Required.");
       valid = false;
+    } else if (code_et.getText().length() != 5) {
+      code_et.setError("incorrect code entered");
+      valid = false;
     } else {
       code_et.setError(null);
+    }
+
+    String branch = spin.getSelectedItem().toString();
+    TextView errorText = (TextView) spin.getSelectedView();
+    if (TextUtils.isEmpty(branch)) {
+      errorText.setError("Required.");
+      valid = false;
+    } else {
+      errorText.setError(null);
     }
 
     return valid;
@@ -128,5 +157,13 @@ public class NewAccount extends AppCompatActivity {
 
   public void newAccountClick(View view) {
     createAccount(email_et.getText().toString(), password_et.getText().toString());
+  }
+
+  @Override
+  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+  }
+
+  @Override
+  public void onNothingSelected(AdapterView<?> adapterView) {
   }
 }

@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 
 public class MessagesWrite extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class MessagesWrite extends AppCompatActivity {
   }
 
     public void sendMessage(View view) {
-        DatabaseReference MessagesRef = database.getReference("messages");
+        DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
         DatabaseReference MessagesCountRef = database.getReference("messagesCount");
 
         DatabaseReference currentMessage = MessagesRef.child(String.valueOf(messagesCount));

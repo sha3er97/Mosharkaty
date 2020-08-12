@@ -38,16 +38,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    // Initialize Firebase Auth
-    mAuth = FirebaseAuth.getInstance();
-    email_et = findViewById(R.id.editTextTextEmailAddress);
-    password_et = findViewById(R.id.editTextTextPassword);
-    database = FirebaseDatabase.getInstance();
-    DatabaseReference adminAccount = database.getReference("AdminAccount");
-    adminAccount.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        email_et = findViewById(R.id.editTextTextEmailAddress);
+        password_et = findViewById(R.id.editTextTextPassword);
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference adminAccount = database.getReference("AdminAccount");
+        adminAccount.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Admin admin = dataSnapshot.getValue(Admin.class);
             if (admin != null) {
               adminEmail[0] = admin.email;
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
       isAdmin = true;
       Toast.makeText(this, "Admin Access granted ", Toast.LENGTH_SHORT).show();
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//        throw new RuntimeException("Test Crash"); // Force a crash
+      //        throw new RuntimeException("Test Crash"); // Force a crash
   }
 
   private void updateUI(FirebaseUser user) {
@@ -148,14 +148,17 @@ public class LoginActivity extends AppCompatActivity {
     else { // not admin
       Log.d(TAG, "user not admin ");
       Log.d(TAG, "entered email : " + email_et.getText().toString());
-      Log.d(TAG, "entered pass : " + password_et.getText().toString());
+        Log.d(TAG, "entered pass : " + password_et.getText().toString());
 
-      isAdmin = false;
-      signIn(email_et.getText().toString(), password_et.getText().toString());
+        isAdmin = false;
+        signIn(email_et.getText().toString(), password_et.getText().toString());
     }
   }
 
-  public void newAccountClick(View view) {
-      startActivity(new Intent(this, NewAccount.class));
-  }
+    public void newAccountClick(View view) {
+        startActivity(new Intent(this, NewAccount.class));
+    }
+
+    public void resetPassword(View view) {
+    }
 }
