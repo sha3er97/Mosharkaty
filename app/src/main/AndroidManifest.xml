@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mosharkaty">
+    package="com.resala.mosharkaty">
 
     <application
         android:name="androidx.multidex.MultiDexApplication"
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".Splash"
+            android:name="com.resala.mosharkaty.Splash"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,19 +20,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewAccount" />
-        <activity android:name=".ContinueTakyeem" />
-        <activity android:name=".MessagesRead" />
-        <activity android:name=".MessagesWrite" />
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.resala.mosharkaty.NewAccount" />
+        <activity android:name="com.resala.mosharkaty.ContinueTakyeem" />
+        <activity android:name="com.resala.mosharkaty.MessagesRead" />
+        <activity android:name="com.resala.mosharkaty.MessagesWrite" />
+        <activity android:name="com.resala.mosharkaty.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".EventDescription" />
+        <activity android:name="com.resala.mosharkaty.MainActivity" />
+        <activity android:name="com.resala.mosharkaty.EventDescription" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

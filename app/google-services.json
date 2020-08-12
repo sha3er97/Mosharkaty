@@ -42,6 +42,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259432626345:android:1b5585f3921de3a35a11b8",
+        "android_client_info": {
+          "package_name": "com.resala.mosharkaty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259432626345-gavu4jdsmdnvn9krgd16s0ncqqq01glr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDddMy644CUPBtuIKrBx57Dp5j71IxSumE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259432626345-gavu4jdsmdnvn9krgd16s0ncqqq01glr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
