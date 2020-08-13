@@ -48,16 +48,16 @@ public class LoginActivity extends AppCompatActivity {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Admin admin = dataSnapshot.getValue(Admin.class);
-            if (admin != null) {
-              adminEmail[0] = admin.email;
-              adminPass[0] = admin.password;
-              Log.d(TAG, "admin email : " + adminEmail[0]);
-              Log.d(TAG, "admin pass : " + adminPass[0]);
-            } else
-              Toast.makeText(
-                      getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
-                  .show();
+                        Admin admin = dataSnapshot.getValue(Admin.class);
+                        if (admin != null) {
+                            adminEmail[0] = admin.email;
+                            adminPass[0] = admin.password;
+                            Log.d(TAG, "admin email : " + adminEmail[0]);
+                            Log.d(TAG, "admin pass : " + adminPass[0]);
+                        } else
+                            Toast.makeText(
+                                    getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
+                                    .show();
           }
 
           @Override
@@ -92,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
     if (!validateForm()) {
       return;
     }
-
-    // [START sign_in_with_email]
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
@@ -113,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
               }
             });
-    // [END sign_in_with_email]
   }
 
   private boolean validateForm() {
@@ -146,8 +143,8 @@ public class LoginActivity extends AppCompatActivity {
   public void loginClick(View view) {
     if (IsAdminDetails()) makeAdminActions();
     else { // not admin
-      Log.d(TAG, "user not admin ");
-      Log.d(TAG, "entered email : " + email_et.getText().toString());
+        Log.d(TAG, "user not admin ");
+        Log.d(TAG, "entered email : " + email_et.getText().toString());
         Log.d(TAG, "entered pass : " + password_et.getText().toString());
 
         isAdmin = false;
@@ -160,5 +157,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void resetPassword(View view) {
+        mAuth
+                .sendPasswordResetEmail(email_et.getText().toString())
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "check your email for reset password link",
+                                            Toast.LENGTH_SHORT)
+                                            .show();
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
     }
 }

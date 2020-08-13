@@ -30,6 +30,5 @@ public class EventDescription extends AppCompatActivity {
     date.setText(dateText);
     Picasso.get().load(url).into(image);
     description.setText(descriptionText);
-
   }
 }

@@ -56,5 +56,6 @@
     <string name="e_mail">E-mail</string>
     <string name="reset">reset</string>
     <string name="branch">الفرع</string>
+    <string name="not_available_error">Feature Not Available Yet</string>
 
 </resources>
