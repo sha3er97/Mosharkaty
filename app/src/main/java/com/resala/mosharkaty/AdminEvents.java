@@ -194,16 +194,16 @@ public class AdminEvents extends androidx.fragment.app.Fragment
                 if (!validateForm()) return;
                 DatabaseReference currentEvent = EventsRef.child(String.valueOf(eventsCount));
                 DatabaseReference dateRef = currentEvent.child("date");
-            DatabaseReference typeRef = currentEvent.child("type");
-            DatabaseReference descriptionRef = currentEvent.child("description");
-            DatabaseReference nameRef = currentEvent.child("Eventname");
+                DatabaseReference typeRef = currentEvent.child("type");
+                DatabaseReference descriptionRef = currentEvent.child("description");
+                DatabaseReference nameRef = currentEvent.child("Eventname");
 
-            nameRef.setValue(EventName_et.getText().toString());
-            descriptionRef.setValue(EventDescription_et.getText().toString());
-            dateRef.setValue(eText.getText().toString());
-            typeRef.setValue(spin.getSelectedItem().toString());
+                nameRef.setValue(EventName_et.getText().toString());
+                descriptionRef.setValue(EventDescription_et.getText().toString());
+                dateRef.setValue(eText.getText().toString());
+                typeRef.setValue(spin.getSelectedItem().toString());
 
-            EventsCountRef.setValue(eventsCount + 1);
+                EventsCountRef.setValue(eventsCount + 1);
             Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
           }
         });
@@ -244,10 +244,10 @@ public class AdminEvents extends androidx.fragment.app.Fragment
                                       DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                               }
-                    },
-                    year,
-                    month,
-                    day);
+                            },
+                            year,
+                            month,
+                            day);
             picker.show();
           }
         });
