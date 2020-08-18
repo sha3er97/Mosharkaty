@@ -40,64 +40,64 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_account);
-    mAuth = FirebaseAuth.getInstance();
-    email_et = findViewById(R.id.newAccountEmail);
-    password_et = findViewById(R.id.newAccountPass);
-    name_et = findViewById(R.id.newAccountName);
-    code_et = findViewById(R.id.newAccountCode);
+      mAuth = FirebaseAuth.getInstance();
+      email_et = findViewById(R.id.newAccountEmail);
+      password_et = findViewById(R.id.newAccountPass);
+      name_et = findViewById(R.id.newAccountName);
+      code_et = findViewById(R.id.newAccountCode);
 
-    database = FirebaseDatabase.getInstance();
-    spin = findViewById(R.id.branchSpinner);
-    spin.setOnItemSelectedListener(this);
-    // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter aa =
-            new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, branches);
-    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    spin.setAdapter(aa);
+      database = FirebaseDatabase.getInstance();
+      spin = findViewById(R.id.branchSpinner);
+      spin.setOnItemSelectedListener(this);
+      // Creating the ArrayAdapter instance having the country list
+      ArrayAdapter aa =
+              new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, branches);
+      aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      // Setting the ArrayAdapter data on the Spinner
+      spin.setAdapter(aa);
   }
 
   private void createAccount(String email, String password) {
-    if (!validateForm()) {
-      return;
-    }
-    mAuth
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(
-                    this,
-                    new OnCompleteListener<AuthResult>() {
-                      @Override
-                      public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                          // Sign in success, update UI with the signed-in user's information
-                          FirebaseUser user = mAuth.getCurrentUser();
-                          updateUI(user);
-                        } else {
-                          // If sign in fails, display a message to the user.
-                          //                  task.getException().printStackTrace();
-                          Toast.makeText(
-                                  getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT)
-                                  .show();
-                          updateUI(null);
-                        }
-                      }
-                    });
+      if (!validateForm()) {
+          return;
+      }
+      mAuth
+              .createUserWithEmailAndPassword(email, password)
+              .addOnCompleteListener(
+                      this,
+                      new OnCompleteListener<AuthResult>() {
+                          @Override
+                          public void onComplete(@NonNull Task<AuthResult> task) {
+                              if (task.isSuccessful()) {
+                                  // Sign in success, update UI with the signed-in user's information
+                                  FirebaseUser user = mAuth.getCurrentUser();
+                                  updateUI(user);
+                              } else {
+                                  // If sign in fails, display a message to the user.
+                                  //                  task.getException().printStackTrace();
+                                  Toast.makeText(
+                                          getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT)
+                                          .show();
+                                  updateUI(null);
+                              }
+                          }
+                      });
   }
 
   private void updateUI(FirebaseUser user) {
     if (user != null) {
-      userId = user.getUid();
-      DatabaseReference usersRef = database.getReference("users");
-      DatabaseReference currentUser = usersRef.child(userId);
-      DatabaseReference nameRef = currentUser.child("name");
-      DatabaseReference codeRef = currentUser.child("code");
-      DatabaseReference branchRef = currentUser.child("branch");
+        userId = user.getUid();
+        DatabaseReference usersRef = database.getReference("users");
+        DatabaseReference currentUser = usersRef.child(userId);
+        DatabaseReference nameRef = currentUser.child("name");
+        DatabaseReference codeRef = currentUser.child("code");
+        DatabaseReference branchRef = currentUser.child("branch");
 
-      nameRef.setValue(name_et.getText().toString());
-      codeRef.setValue(code_et.getText().toString());
-      branchRef.setValue(spin.getSelectedItem().toString());
-      Toast.makeText(this, "Account created Successfully..", Toast.LENGTH_SHORT).show();
-      startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        nameRef.setValue(name_et.getText().toString().trim());
+        codeRef.setValue(code_et.getText().toString().trim());
+        branchRef.setValue(spin.getSelectedItem().toString());
+        Toast.makeText(this, "Account created Successfully..", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
   }
 
@@ -123,47 +123,47 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     String name = name_et.getText().toString();
     String[] words = name.split(" ", 5);
     if (TextUtils.isEmpty(name)) {
-      name_et.setError("Required.");
-      valid = false;
+        name_et.setError("Required.");
+        valid = false;
     } else if (words.length < 3) {
-      name_et.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
-      valid = false;
+        name_et.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
+        valid = false;
     } else {
-      name_et.setError(null);
+        name_et.setError(null);
     }
 
-    String code = code_et.getText().toString();
-    if (TextUtils.isEmpty(code)) {
-      code_et.setError("Required.");
-      valid = false;
-    } else if (code_et.getText().length() != 5) {
-      code_et.setError("incorrect code entered");
-      valid = false;
-    } else {
-      code_et.setError(null);
+      String code = code_et.getText().toString();
+      if (TextUtils.isEmpty(code)) {
+          code_et.setError("Required.");
+          valid = false;
+      } else if (code_et.getText().length() >= 5) {
+          code_et.setError("incorrect code entered");
+          valid = false;
+      } else {
+          code_et.setError(null);
+      }
+
+      String branch = spin.getSelectedItem().toString();
+      TextView errorText = (TextView) spin.getSelectedView();
+      if (TextUtils.isEmpty(branch)) {
+          errorText.setError("Required.");
+          valid = false;
+      } else {
+          errorText.setError(null);
+      }
+
+      return valid;
+  }
+
+    public void newAccountClick(View view) {
+        createAccount(email_et.getText().toString(), password_et.getText().toString());
     }
 
-    String branch = spin.getSelectedItem().toString();
-    TextView errorText = (TextView) spin.getSelectedView();
-    if (TextUtils.isEmpty(branch)) {
-      errorText.setError("Required.");
-      valid = false;
-    } else {
-      errorText.setError(null);
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     }
 
-    return valid;
-  }
-
-  public void newAccountClick(View view) {
-    createAccount(email_et.getText().toString(), password_et.getText().toString());
-  }
-
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-  }
-
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 }

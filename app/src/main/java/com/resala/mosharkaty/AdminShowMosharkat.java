@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +24,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.NewAccount.branches;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
-public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
+public class AdminShowMosharkat extends androidx.fragment.app.Fragment
+        implements AdapterView.OnItemSelectedListener {
   View view;
   MosharkatAdapter adapter;
   ArrayList<MosharkaItem> mosharkaItems = new ArrayList<>();
   FirebaseDatabase database;
+  public static String[] months = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+  public static String[] days = {
+          "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
+          "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
+  };
+  int day;
+  int month;
+  int year;
 
   /**
    * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -59,88 +71,103 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-      view = inflater.inflate(R.layout.admin_show_mosharkat, container, false);
-      database = FirebaseDatabase.getInstance();
-      userBranch = branches[0]; //todo:: add a way for admin to configure his branch
-      final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+    view = inflater.inflate(R.layout.admin_show_mosharkat, container, false);
+    database = FirebaseDatabase.getInstance();
+    userBranch = branches[0]; // todo:: add a way for admin to configure his branch
+    final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
 
-      RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
-      ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
-      final EditText month_et = view.findViewById(R.id.month_et);
-      final EditText day_et = view.findViewById(R.id.day_et);
-      final TextView count = view.findViewById(R.id.mosharkatMonthCount);
+    RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
+    ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
+    final Spinner month_et = view.findViewById(R.id.month_et);
+    final Spinner day_et = view.findViewById(R.id.day_et);
+    final Calendar cldr = Calendar.getInstance();
+    day = cldr.get(Calendar.DAY_OF_MONTH);
+    month = cldr.get(Calendar.MONTH);
+    year = cldr.get(Calendar.YEAR);
 
-      recyclerView.setHasFixedSize(true);
-      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-      adapter = new MosharkatAdapter(mosharkaItems, getContext());
+    // setting spinner
+    month_et.setOnItemSelectedListener(this);
+    ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, months);
+    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Setting the ArrayAdapter data on the Spinner
+    month_et.setAdapter(aa);
+    month_et.setSelection(Math.max(month, 0));
+    day_et.setOnItemSelectedListener(this);
+    ArrayAdapter ab = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, days);
+    ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Setting the ArrayAdapter data on the Spinner
+    day_et.setAdapter(ab);
+    day_et.setSelection(Math.max(day - 1, 0));
+
+    final TextView count = view.findViewById(R.id.mosharkatMonthCount);
+
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    adapter = new MosharkatAdapter(mosharkaItems, getContext());
     recyclerView.setAdapter(adapter);
 
     // button listener
     refreshBtn.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            final int month = Integer.parseInt(month_et.getText().toString());
-            final int day = Integer.parseInt(day_et.getText().toString());
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                final int month = Integer.parseInt(month_et.getSelectedItem().toString());
+                final int day = Integer.parseInt(day_et.getSelectedItem().toString());
 
-            if (month < 1
-                || month > 12
-                || month_et.getText().toString().equals("")
-                || day < 1
-                || day > 31
-                || day_et.getText().toString().equals("")) {
-              Toast.makeText(
-                      getContext(), "error : choose appropriate month and day", Toast.LENGTH_SHORT)
-                  .show();
-              return;
-            }
-            // data base
-            //            MosharkatCountRef.addValueEventListener(
-            //                new ValueEventListener() {
-            //                  @Override
-            //                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            //                    // This method is called once with the initial value and again
-            //                    // whenever data at this location is updated.
-            //                    count.setText(
-            //                        String.valueOf(
-            //
-            // dataSnapshot.child(String.valueOf(month)).getValue(Integer.class)));
-            //                  }
-            //
-            //                  @Override
-            //                  public void onCancelled(@NonNull DatabaseError error) {
-            //                    // Failed to read value
-            //                    Log.w(TAG, "Failed to read value.", error.toException());
-            //                  }
-            //                });
+                //            if (month < 1
+                //                || month > 12
+                //                || month_et.getText().toString().equals("")
+                //                || day < 1
+                //                || day > 31
+                //                || day_et.getText().toString().equals("")) {
+                //              Toast.makeText(
+                //                      getContext(), "error : choose appropriate month and day",
+                // Toast.LENGTH_SHORT)
+                //                  .show();
+                //              return;
+                //            }
 
-            MosharkatRef.child(String.valueOf(month))
-                .addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mosharkaItems.clear();
-                        int counter = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                          String[] splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                          if (Integer.parseInt(splittedDate[0]) == day) {
-                            mosharkaItems.add(mosharka);
-                            counter++;
-                          }
-                        }
-                        adapter.notifyDataSetChanged();
-                        count.setText(String.valueOf(counter));
-                      }
+                MosharkatRef.child(String.valueOf(month))
+                        .addValueEventListener(
+                                new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mosharkaItems.clear();
+                                    int counter = 0;
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                      MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                      String[] splittedDate;
+                                      if (mosharka != null) {
+                                        splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                        if (Integer.parseInt(splittedDate[0]) == day) {
+                                          mosharkaItems.add(mosharka);
+                                          counter++;
+                                        }
+                                      } else {
+                                        Toast.makeText(getContext(), "something went wrong", Toast.LENGTH_SHORT)
+                                                .show();
+                                      }
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                    count.setText(String.valueOf(counter));
+                                  }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
-          }
-        });
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                    // Failed to read value
+                                    Log.w(TAG, "Failed to read value.", error.toException());
+                                  }
+                                });
+              }
+            });
     return view;
+  }
+
+  @Override
+  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+  }
+
+  @Override
+  public void onNothingSelected(AdapterView<?> adapterView) {
   }
 }

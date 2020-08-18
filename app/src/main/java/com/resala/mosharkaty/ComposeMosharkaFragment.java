@@ -57,71 +57,73 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
      *
      * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
      * view is being released.
-   *
-   * @param inflater The LayoutInflater object that can be used to inflate any views in the
-   *     fragment,
-   * @param container If non-null, this is the parent view that the fragment's UI should be attached
-   *     to. The fragment should not add the view itself, but this can be used to generate the
-   *     LayoutParams of the view.
-   * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-   *     saved state as given here.
-   * @return Return the View for the fragment's UI, or null.
-   */
-  @Nullable
-  @Override
-  public View onCreateView(
-      @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
-    database = FirebaseDatabase.getInstance();
-    final int[] monthSelected = {-1};
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the
+     *                           fragment,
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached
+     *                           to. The fragment should not add the view itself, but this can be used to generate the
+     *                           LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
+     *                           saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
+    @Nullable
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
+        database = FirebaseDatabase.getInstance();
+        final int[] monthSelected = {-1};
 
-      final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
-      final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+        final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+        final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
 
-    eText = view.findViewById(R.id.mosharkaDate);
-    addMosharka_btn = view.findViewById(R.id.confirmMosharka);
-    spin = view.findViewById(R.id.spinner);
-    mosharkatCounterTV = view.findViewById(R.id.mosharkatMonthCount2);
+        eText = view.findViewById(R.id.mosharkaDate);
+        addMosharka_btn = view.findViewById(R.id.confirmMosharka);
+        spin = view.findViewById(R.id.spinner);
+        mosharkatCounterTV = view.findViewById(R.id.mosharkatMonthCount2);
+        final Calendar cldr = Calendar.getInstance();
+        day = cldr.get(Calendar.DAY_OF_MONTH);
+        month = cldr.get(Calendar.MONTH);
+        year = cldr.get(Calendar.YEAR);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addMosharka_btn.setEnabled(true);
+                        addMosharka_btn.setBackgroundColor(getResources().getColor(R.color.lighterBlue));
+                        addMosharka_btn.setText("سجل المشاركة");
+                        // date picker dialog
+                        picker =
+                                new DatePickerDialog(
+                                        getContext(),
+                                        new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(
+                                                    DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                                monthSelected[0] = monthOfYear + 1;
+                                                mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
+                                                // database
+                                                MosharkatCountRef.addValueEventListener(
+                                                        new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                // This method is called once with the initial value and again
+                                                                // whenever data at this location is updated.
+                                                                mosharkatCount =
+                                                                        dataSnapshot
+                                                                                .child(String.valueOf(monthOfYear + 1))
+                                                                                .getValue(Integer.class);
+                                                            }
 
-    eText.setInputType(InputType.TYPE_NULL);
-    eText.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              final Calendar cldr = Calendar.getInstance();
-              day = cldr.get(Calendar.DAY_OF_MONTH);
-              month = cldr.get(Calendar.MONTH);
-              year = cldr.get(Calendar.YEAR);
-              // date picker dialog
-              picker =
-                      new DatePickerDialog(
-                              getContext(),
-                              new DatePickerDialog.OnDateSetListener() {
-                                  @Override
-                                  public void onDateSet(
-                                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                                      eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                      monthSelected[0] = monthOfYear + 1;
-                        mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
-                        // database
-                        MosharkatCountRef.addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                // This method is called once with the initial value and again
-                                // whenever data at this location is updated.
-                                mosharkatCount =
-                                    dataSnapshot
-                                        .child(String.valueOf(monthOfYear + 1))
-                                        .getValue(Integer.class);
-                              }
-
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                                // Failed to read value
+                                                                Log.w(TAG, "Failed to read value.", error.toException());
                               }
                             });
                       }
@@ -144,46 +146,52 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            if (!validateForm()) return;
-            DatabaseReference currentMosharka =
-                MosharkatRef.child(String.valueOf(monthSelected[0]))
-                    .child(String.valueOf(mosharkatCount));
-            DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
-            DatabaseReference typeRef = currentMosharka.child("mosharkaType");
-            DatabaseReference nameRef = currentMosharka.child("volname");
+              if (!validateForm()) return;
+              DatabaseReference currentMosharka =
+                      MosharkatRef.child(String.valueOf(monthSelected[0]))
+                              .child(String.valueOf(mosharkatCount));
+              DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
+              DatabaseReference typeRef = currentMosharka.child("mosharkaType");
+              DatabaseReference nameRef = currentMosharka.child("volname");
 
-            nameRef.setValue(userName);
-            dateRef.setValue(eText.getText().toString());
-            typeRef.setValue(spin.getSelectedItem().toString());
+              nameRef.setValue(userName);
+              dateRef.setValue(eText.getText().toString());
+              typeRef.setValue(spin.getSelectedItem().toString());
 
-            MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
-            Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
+              MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
+              Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
+              addMosharka_btn.setEnabled(false);
+              addMosharka_btn.setBackgroundColor(
+                      getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+              addMosharka_btn.setText("تم تسجيل مشاركة لليوم");
           }
         });
 
-    return view;
-  }
+        return view;
+    }
 
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {}
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 
-  private boolean validateForm() {
-      String date = eText.getText().toString();
-      String[] parts = date.split("/", 3);
-      if (TextUtils.isEmpty(date)) {
-          eText.setError("Required.");
-          return false;
-      } else if (Integer.parseInt(parts[2]) > year
-              || Integer.parseInt(parts[1]) > month + 1
-              || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
-          eText.setError("you can't choose a date in the future.");
-          return false;
-      } else {
-          eText.setError(null);
-          return true;
-      }
-  }
+    private boolean validateForm() {
+        String date = eText.getText().toString();
+        String[] parts = date.split("/", 3);
+        if (TextUtils.isEmpty(date)) {
+            eText.setError("Required.");
+            return false;
+        } else if (Integer.parseInt(parts[2]) > year
+                || Integer.parseInt(parts[1]) > month + 1
+                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+            eText.setError("you can't choose a date in the future.");
+            return false;
+        } else {
+            eText.setError(null);
+            return true;
+        }
+    }
 }

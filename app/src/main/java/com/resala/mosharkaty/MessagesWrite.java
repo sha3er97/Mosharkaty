@@ -68,8 +68,9 @@ public class MessagesWrite extends AppCompatActivity {
         nameRef.setValue(authour);
         final Calendar cldr = Calendar.getInstance();
         dateRef.setValue(cldr.getTime().toString());
-    contentRef.setValue(message_et.getText().toString());
-    MessagesCountRef.setValue(messagesCount + 1);
-    Toast.makeText(this, "Message Sent..", Toast.LENGTH_SHORT).show();
-  }
+        contentRef.setValue(message_et.getText().toString());
+        MessagesCountRef.setValue(messagesCount + 1);
+        Toast.makeText(this, "Message Sent..", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 }

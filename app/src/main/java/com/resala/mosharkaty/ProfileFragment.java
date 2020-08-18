@@ -108,12 +108,12 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            mAuth.signOut();
-            userName = getString(R.string.dummy_volunteer);
+              mAuth.signOut();
+              userName = getString(R.string.dummy_volunteer);
               userCode = getString(R.string.dummy_code);
               userBranch = getString(R.string.dummy_far3);
               userId = "-1";
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+              startActivity(new Intent(getActivity(), LoginActivity.class));
           }
         });
 
@@ -125,8 +125,10 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
               DatabaseReference currentUser = usersRef.child(userId);
               DatabaseReference nameRef = currentUser.child("name");
               DatabaseReference codeRef = currentUser.child("code");
+              DatabaseReference branchRef = currentUser.child("branch");
+
               String nameText = name.getText().toString();
-              String codeText = code.getText().toString();
+              String codeText = code.getText().toString().trim();
               String[] words = nameText.split(" ", 5);
               if (TextUtils.isEmpty(nameText)) {
                   name.setError("Required.");
@@ -146,50 +148,51 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
               }
               nameRef.setValue(nameText);
               codeRef.setValue(codeText);
+              branchRef.setValue(branch.getText().toString());
               Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
           }
         });
 
-    // data base access
-    DatabaseReference usersRef = database.getReference("users");
-    DatabaseReference currentUser = usersRef.child(userId);
-    DatabaseReference nameRef = currentUser.child("name");
+      // data base access
+      DatabaseReference usersRef = database.getReference("users");
+      DatabaseReference currentUser = usersRef.child(userId);
+      DatabaseReference nameRef = currentUser.child("name");
       DatabaseReference codeRef = currentUser.child("code");
       DatabaseReference branchRef = currentUser.child("branch");
 
-    nameRef.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            userName = dataSnapshot.getValue(String.class);
-            name.setText(userName);
-          }
+      nameRef.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(DataSnapshot dataSnapshot) {
+                      // This method is called once with the initial value and again
+                      // whenever data at this location is updated.
+                      userName = dataSnapshot.getValue(String.class);
+                      name.setText(userName);
+                  }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
 
-    codeRef.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            userCode = dataSnapshot.getValue(String.class);
-              code.setText(userCode);
-          }
+      codeRef.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(DataSnapshot dataSnapshot) {
+                      // This method is called once with the initial value and again
+                      // whenever data at this location is updated.
+                      userCode = dataSnapshot.getValue(String.class);
+                      code.setText(userCode);
+                  }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
 
       branchRef.addValueEventListener(
               new ValueEventListener() {
@@ -233,12 +236,12 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                       }
                   }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
 
       return view;
   }

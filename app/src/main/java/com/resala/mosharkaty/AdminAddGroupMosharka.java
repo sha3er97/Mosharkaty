@@ -96,50 +96,49 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     spin = view.findViewById(R.id.spinner);
     volunteerName_et = view.findViewById(R.id.volInGroupTV);
     // TODO :: add auto complete feature
-
+    final Calendar cldr = Calendar.getInstance();
+    day = cldr.get(Calendar.DAY_OF_MONTH);
+    month = cldr.get(Calendar.MONTH);
+    year = cldr.get(Calendar.YEAR);
     eText.setInputType(InputType.TYPE_NULL);
     eText.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            final Calendar cldr = Calendar.getInstance();
-            day = cldr.get(Calendar.DAY_OF_MONTH);
-            month = cldr.get(Calendar.MONTH);
-            year = cldr.get(Calendar.YEAR);
-            // date picker dialog
-            picker =
-                    new DatePickerDialog(
-                            getContext(),
-                            new DatePickerDialog.OnDateSetListener() {
-                              @Override
-                              public void onDateSet(
-                                      DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                monthSelected[0] = monthOfYear + 1;
-                                // database
-                                MosharkatCountRef.addValueEventListener(
-                                        new ValueEventListener() {
-                                          @Override
-                                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            // This method is called once with the initial value and again
-                                            // whenever data at this location is updated.
-                                            mosharkatCount =
-                                                    dataSnapshot
-                                                            .child(String.valueOf(monthOfYear + 1))
-                                                            .getValue(Integer.class);
-                                          }
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                // date picker dialog
+                picker =
+                        new DatePickerDialog(
+                                getContext(),
+                                new DatePickerDialog.OnDateSetListener() {
+                                  @Override
+                                  public void onDateSet(
+                                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                                    eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                    monthSelected[0] = monthOfYear + 1;
+                                    // database
+                                    MosharkatCountRef.addValueEventListener(
+                                            new ValueEventListener() {
+                                              @Override
+                                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                // This method is called once with the initial value and again
+                                                // whenever data at this location is updated.
+                                                mosharkatCount =
+                                                        dataSnapshot
+                                                                .child(String.valueOf(monthOfYear + 1))
+                                                                .getValue(Integer.class);
+                                              }
 
-                                          @Override
-                                          public void onCancelled(@NonNull DatabaseError error) {
-                                            // Failed to read value
-                                            Log.w(TAG, "Failed to read value.", error.toException());
-                                          }
-                                        });
-                              }
-                    },
-                    year,
-                    month,
-                    day);
+                                              @Override
+                                              public void onCancelled(@NonNull DatabaseError error) {
+                                                // Failed to read value
+                                                Log.w(TAG, "Failed to read value.", error.toException());
+                                              }
+                                            });
+                                  }
+                                },
+                                year,
+                                month,
+                                day);
             picker.show();
           }
         });
@@ -194,7 +193,7 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
       return false;
     }
 
-    String name = volunteerName_et.getText().toString();
+    String name = volunteerName_et.getText().toString().trim();
     String[] words = name.split(" ", 5);
 
     if (TextUtils.isEmpty(name)) {
