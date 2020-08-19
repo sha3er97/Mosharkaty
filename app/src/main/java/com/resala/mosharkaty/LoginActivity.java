@@ -24,60 +24,83 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    public static String userId;
-    public static boolean isAdmin;
-    EditText email_et;
-    EditText password_et;
-    FirebaseDatabase database;
-    final String[] adminEmail = new String[1];
-    final String[] adminPass = new String[1];
+  private FirebaseAuth mAuth;
+  public static String userId;
+  public static boolean isAdmin;
+  EditText email_et;
+  EditText password_et;
+  FirebaseDatabase database;
+  final String[] adminEmail = new String[1];
+  final String[] adminPass = new String[1];
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        email_et = findViewById(R.id.editTextTextEmailAddress);
-        password_et = findViewById(R.id.editTextTextPassword);
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference adminAccount = database.getReference("AdminAccount");
-        adminAccount.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Admin admin = dataSnapshot.getValue(Admin.class);
-                        if (admin != null) {
-                            adminEmail[0] = admin.email;
-                            adminPass[0] = admin.password;
-                            Log.d(TAG, "admin email : " + adminEmail[0]);
-                            Log.d(TAG, "admin pass : " + adminPass[0]);
-                        } else
-                            Toast.makeText(
-                                    getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
-                                    .show();
-                    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_login);
+    // Initialize Firebase Auth
+    mAuth = FirebaseAuth.getInstance();
+    email_et = findViewById(R.id.editTextTextEmailAddress);
+    password_et = findViewById(R.id.editTextTextPassword);
+    database = FirebaseDatabase.getInstance();
+    DatabaseReference adminAccount = database.getReference("AdminAccount");
+    adminAccount.addValueEventListener(
+            new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Admin admin = dataSnapshot.getValue(Admin.class);
+                if (admin != null) {
+                  adminEmail[0] = admin.email;
+                  adminPass[0] = admin.password;
+                  Log.d(TAG, "admin email : " + adminEmail[0]);
+                  Log.d(TAG, "admin pass : " + adminPass[0]);
+                } else
+                  Toast.makeText(
+                          getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
+                          .show();
+              }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
+              @Override
+              public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+              }
+            });
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    FirebaseInstanceId.getInstance()
+            .getInstanceId()
+            .addOnCompleteListener(
+                    new OnCompleteListener<InstanceIdResult>() {
+                      @Override
+                      public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                          Log.w(TAG, "getInstanceId failed", task.getException());
+                          return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        //                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.i("getInstanceId", token);
+                        //                        Toast.makeText(MainActivity.this, msg,
+                        // Toast.LENGTH_SHORT).show();
+                      }
+                    });
+    updateUI(currentUser);
+  }
 
   private void makeAdminActions() {
-      isAdmin = true;
-      Toast.makeText(this, "Admin Access granted ", Toast.LENGTH_SHORT).show();
-      startActivity(new Intent(getApplicationContext(), MainActivity.class));
-      //        throw new RuntimeException("Test Crash"); // Force a crash
+    isAdmin = true;
+    Toast.makeText(this, "Admin Access granted ", Toast.LENGTH_SHORT).show();
+    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    //        throw new RuntimeException("Test Crash"); // Force a crash
   }
 
   private void updateUI(FirebaseUser user) {
@@ -144,50 +167,50 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void loginClick(View view) {
-      ConnectivityManager connectivityManager =
-              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    ConnectivityManager connectivityManager =
+            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-      if (connectivityManager != null) {
-          if (connectivityManager.getActiveNetworkInfo() == null
-                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-              //          Toast.makeText(getApplicationContext(), "No Internet",
-              // Toast.LENGTH_SHORT).show();
-              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-              return;
-          }
+    if (connectivityManager != null) {
+      if (connectivityManager.getActiveNetworkInfo() == null
+              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+        //          Toast.makeText(getApplicationContext(), "No Internet",
+        // Toast.LENGTH_SHORT).show();
+        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        return;
       }
+    }
 
-      if (IsAdminDetails()) makeAdminActions();
-      else { // not admin
-          Log.d(TAG, "user not admin ");
-          Log.d(TAG, "entered email : " + email_et.getText().toString());
-          Log.d(TAG, "entered pass : " + password_et.getText().toString());
+    if (IsAdminDetails()) makeAdminActions();
+    else { // not admin
+      Log.d(TAG, "user not admin ");
+      Log.d(TAG, "entered email : " + email_et.getText().toString());
+      Log.d(TAG, "entered pass : " + password_et.getText().toString());
 
-          isAdmin = false;
-          signIn(email_et.getText().toString(), password_et.getText().toString());
-      }
+      isAdmin = false;
+      signIn(email_et.getText().toString(), password_et.getText().toString());
+    }
   }
 
-    public void newAccountClick(View view) {
-        startActivity(new Intent(this, NewAccount.class));
-    }
+  public void newAccountClick(View view) {
+    startActivity(new Intent(this, NewAccount.class));
+  }
 
-    public void resetPassword(View view) {
-        mAuth
-                .sendPasswordResetEmail(email_et.getText().toString())
-                .addOnCompleteListener(
-                        new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "check your email for reset password link",
-                                            Toast.LENGTH_SHORT)
-                                            .show();
-                                    Log.d(TAG, "Email sent.");
-                                }
-                            }
-                        });
-    }
+  public void resetPassword(View view) {
+    mAuth
+            .sendPasswordResetEmail(email_et.getText().toString())
+            .addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                      @Override
+                      public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                          Toast.makeText(
+                                  getApplicationContext(),
+                                  "check your email for reset password link",
+                                  Toast.LENGTH_SHORT)
+                                  .show();
+                          Log.d(TAG, "Email sent.");
+                        }
+                      }
+                    });
+  }
 }
