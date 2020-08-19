@@ -4,13 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder> {
   private ArrayList<MosharkaItem> mosharkatItems;
@@ -74,17 +81,23 @@ class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder>
     return mosharkatItems.size();
   }
 
-  /** ***************************************************************************** */
+  /**
+   * ****************************************************************************
+   */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     TextView name;
     TextView type;
     TextView date;
+    ImageButton delete_btn;
+    FirebaseDatabase database;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       name = itemView.findViewById(R.id.ListvolName);
       type = itemView.findViewById(R.id.ListmosharkaType);
       date = itemView.findViewById(R.id.ListMosharkadate);
+      delete_btn = itemView.findViewById(R.id.delete_btn);
+      delete_btn.setOnClickListener(this);
       itemView.setOnClickListener(this);
     }
 
@@ -92,7 +105,16 @@ class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder>
     public void onClick(View view) {
       int position = getAdapterPosition();
       MosharkaItem itemClicked = mosharkatItems.get(position);
-      // do nothing till now
+
+      if (view.getId() == delete_btn.getId()) {
+        database = FirebaseDatabase.getInstance();
+        final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+        final Calendar cldr = Calendar.getInstance();
+        int month = cldr.get(Calendar.MONTH) + 1;
+        MosharkatRef.child(String.valueOf(month)).child(itemClicked.getKey()).setValue(null);
+      } else {
+        // do nothing till now
+      }
     }
   }
 }

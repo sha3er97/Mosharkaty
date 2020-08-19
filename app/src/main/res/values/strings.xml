@@ -57,5 +57,10 @@
     <string name="reset">reset</string>
     <string name="branch">الفرع</string>
     <string name="not_available_error">Feature Not Available Yet</string>
-
+    <string name="dummy_history">10,11,12,13</string>
+    <string-array name="dummy_array">
+        <item>Array Item One</item>
+        <item>Array Item Two</item>
+        <item>Array Item Three</item>
+    </string-array>
 </resources>

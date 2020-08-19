@@ -1,6 +1,8 @@
 package com.resala.mosharkaty;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,17 +61,17 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(
                                     getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
                                     .show();
-          }
+                    }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
-    FirebaseUser currentUser = mAuth.getCurrentUser();
-    updateUI(currentUser);
-  }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
 
   private void makeAdminActions() {
       isAdmin = true;
@@ -141,15 +144,28 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void loginClick(View view) {
-    if (IsAdminDetails()) makeAdminActions();
-    else { // not admin
-        Log.d(TAG, "user not admin ");
-        Log.d(TAG, "entered email : " + email_et.getText().toString());
-        Log.d(TAG, "entered pass : " + password_et.getText().toString());
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        isAdmin = false;
-        signIn(email_et.getText().toString(), password_et.getText().toString());
-    }
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              //          Toast.makeText(getApplicationContext(), "No Internet",
+              // Toast.LENGTH_SHORT).show();
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
+
+      if (IsAdminDetails()) makeAdminActions();
+      else { // not admin
+          Log.d(TAG, "user not admin ");
+          Log.d(TAG, "entered email : " + email_et.getText().toString());
+          Log.d(TAG, "entered pass : " + password_et.getText().toString());
+
+          isAdmin = false;
+          signIn(email_et.getText().toString(), password_et.getText().toString());
+      }
   }
 
     public void newAccountClick(View view) {

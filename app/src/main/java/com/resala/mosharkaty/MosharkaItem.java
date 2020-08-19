@@ -4,6 +4,7 @@ class MosharkaItem {
   private String volname;
   private String mosharkaDate;
   private String mosharkaType;
+  private String key;
 
   public MosharkaItem() {
     this.volname = "error";
@@ -15,6 +16,14 @@ class MosharkaItem {
     this.volname = volname;
     this.mosharkaDate = mosharkaDate;
     this.mosharkaType = mosharkaType;
+  }
+
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
   }
 
   public String getVolname() {

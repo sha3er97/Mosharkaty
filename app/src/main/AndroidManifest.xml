@@ -11,8 +11,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".AdminShowStatistics"></activity>
+        <activity android:name=".ShowMosharkaty" />
         <activity
-            android:name="com.resala.mosharkaty.Splash"
+            android:name=".Splash"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,20 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.resala.mosharkaty.NewAccount" />
-        <activity android:name="com.resala.mosharkaty.ContinueTakyeem" />
-        <activity android:name="com.resala.mosharkaty.MessagesRead" />
-        <activity android:name="com.resala.mosharkaty.MessagesWrite" />
-        <activity android:name="com.resala.mosharkaty.LoginActivity">
+        <activity android:name=".NewAccount" />
+        <activity android:name=".ContinueTakyeem" />
+        <activity android:name=".MessagesRead" />
+        <activity android:name=".MessagesWrite" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.resala.mosharkaty.MainActivity" />
-        <activity android:name="com.resala.mosharkaty.EventDescription" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".EventDescription" />
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 

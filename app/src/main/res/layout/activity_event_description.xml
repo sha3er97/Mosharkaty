@@ -49,7 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="28dp"
-        android:background="@layout/my_edit_text_border"
+        android:background="@drawable/my_edit_text_border"
         android:text="وصف الايفنت"
         android:padding="8dp"
         android:textAlignment="center"

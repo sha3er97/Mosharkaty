@@ -102,7 +102,10 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
     final TextView count = view.findViewById(R.id.mosharkatMonthCount);
 
     recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+    mLayoutManager.setReverseLayout(true);
+    mLayoutManager.setStackFromEnd(true);
+    recyclerView.setLayoutManager(mLayoutManager);
     adapter = new MosharkatAdapter(mosharkaItems, getContext());
     recyclerView.setAdapter(adapter);
 
@@ -113,19 +116,6 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
               public void onClick(View v) {
                 final int month = Integer.parseInt(month_et.getSelectedItem().toString());
                 final int day = Integer.parseInt(day_et.getSelectedItem().toString());
-
-                //            if (month < 1
-                //                || month > 12
-                //                || month_et.getText().toString().equals("")
-                //                || day < 1
-                //                || day > 31
-                //                || day_et.getText().toString().equals("")) {
-                //              Toast.makeText(
-                //                      getContext(), "error : choose appropriate month and day",
-                // Toast.LENGTH_SHORT)
-                //                  .show();
-                //              return;
-                //            }
 
                 MosharkatRef.child(String.valueOf(month))
                         .addValueEventListener(
@@ -140,6 +130,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
                                       if (mosharka != null) {
                                         splittedDate = mosharka.getMosharkaDate().split("/", 3);
                                         if (Integer.parseInt(splittedDate[0]) == day) {
+                                          mosharka.setKey(snapshot.getKey());
                                           mosharkaItems.add(mosharka);
                                           counter++;
                                         }
