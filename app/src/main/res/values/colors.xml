@@ -6,4 +6,14 @@
     <color name="ourBlue">#357EC7</color>
     <color name="lighterBlue">#82CAFF</color>
     <color name="red">#FF4444</color>
+    <!--    after redesign  -->
+    <color name="new_white_dark">#cfd9df</color>
+    <color name="new_white_light">#e2ebf0</color>
+    <color name="new_blue_light">#0bbafb</color>
+    <color name="new_blue_dark">#4285ec</color>
+    <color name="new_text_black">#464646</color>
+    <color name="new_text_blue">#3e89ed</color>
+    <color name="new_fill_gray">#f0f0f0</color>
+    <color name="new_hint_color">#94cff9</color>
+
 </resources>

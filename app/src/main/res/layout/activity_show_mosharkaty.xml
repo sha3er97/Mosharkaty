@@ -14,8 +14,9 @@
         android:layout_marginEnd="16dp"
         android:text=" عدد المشاركات المسجلة\n في الapp لهذا الشهر :"
         android:textAlignment="center"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -26,9 +27,9 @@
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:text="@string/dummy_number"
-        android:textColor="@android:color/holo_green_light"
+        android:fontFamily="@font/new_jf"
         android:textSize="22sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_blue"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -51,8 +52,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="هذه مشاركات شهر :"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,8 +65,8 @@
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/ourBlue"
+        android:fontFamily="@font/new_jf"
+        android:textColor="@color/new_text_blue"
         app:layout_constraintBottom_toBottomOf="@+id/textView23"
         app:layout_constraintEnd_toStartOf="@+id/textView23"
         app:layout_constraintTop_toTopOf="@+id/textView23" />

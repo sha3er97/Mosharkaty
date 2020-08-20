@@ -253,7 +253,7 @@ public class AdminEvents extends androidx.fragment.app.Fragment
         });
     spin.setOnItemSelectedListener(this);
     // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, types);
+    ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);

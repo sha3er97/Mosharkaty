@@ -54,7 +54,7 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     spin.setOnItemSelectedListener(this);
     // Creating the ArrayAdapter instance having the country list
     ArrayAdapter aa =
-            new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, branches);
+            new ArrayAdapter(this, R.layout.spinner_item, branches);
     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);

@@ -6,135 +6,126 @@
     android:layout_height="match_parent"
     tools:context=".NewAccount">
 
-    <EditText
-        android:id="@+id/newAccountCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/code_hint"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/emailTextView3"
-        app:layout_constraintEnd_toStartOf="@+id/emailTextView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/emailTextView3" />
-
-    <TextView
-        android:id="@+id/emailTextView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/name"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newAccountPass" />
-
-    <TextView
-        android:id="@+id/emailTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/e_mail"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/emailTextView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/code"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView4" />
-
-    <EditText
-        android:id="@+id/newAccountPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/password_hint"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/passwordTextView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/passwordTextView2"
-        app:layout_constraintTop_toTopOf="@+id/passwordTextView2" />
-
-    <EditText
-        android:id="@+id/newAccountEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/emailTextView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/emailTextView2"
-        app:layout_constraintTop_toTopOf="@+id/emailTextView2" />
-
-    <TextView
-        android:id="@+id/passwordTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="54dp"
-        android:text="@string/password"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView2" />
-
-    <Button
-        android:id="@+id/signup_btn"
+    <ImageView
+        android:id="@+id/imageView7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="newAccountClick"
-        android:text="@string/create_new_account_btnTxt"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:backgroundTint="@android:color/holo_red_light"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:srcCompat="@drawable/white_rect" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:srcCompat="@mipmap/icon_round" />
 
     <EditText
         android:id="@+id/newAccountName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_gray"
+        android:fontFamily="@font/new_jf"
         android:hint="@string/name_hint"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/emailTextView4"
-        app:layout_constraintEnd_toStartOf="@+id/emailTextView4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/emailTextView4" />
+        android:textColorHint="@color/new_hint_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView4" />
 
-    <TextView
-        android:id="@+id/brTV"
+    <EditText
+        android:id="@+id/newAccountEmail"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_gray"
+        android:drawableEnd="@drawable/mail"
+        android:inputType="textEmailAddress"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView2" />
+
+    <EditText
+        android:id="@+id/newAccountCode"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_gray"
+        android:fontFamily="@font/new_jf"
+        android:hint="@string/code_hint"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/new_hint_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
+
+    <EditText
+        android:id="@+id/newAccountPass"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_gray"
+        android:drawableEnd="@drawable/pass"
+        android:inputType="textPassword"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextView2" />
+
+    <Button
+        android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/branch"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
+        android:background="@drawable/btn_gradient_blue"
+        android:fontFamily="@font/new_jf"
+        android:onClick="newAccountClick"
+        android:paddingHorizontal="32dp"
+        android:text="@string/create_new_account_btnTxt"
+        android:textColor="@color/new_white_light"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/branchSpinner" />
 
     <Spinner
         android:id="@+id/branchSpinner"
@@ -144,6 +135,75 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/brTV"
         app:layout_constraintEnd_toStartOf="@+id/brTV"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/brTV" />
+
+    <TextView
+        android:id="@+id/emailTextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/name"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/newAccountPass" />
+
+    <TextView
+        android:id="@+id/emailTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/e_mail"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/emailTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/code"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/newAccountName" />
+
+    <TextView
+        android:id="@+id/passwordTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/password"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/newAccountEmail" />
+
+    <TextView
+        android:id="@+id/brTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/branch"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/branchSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/newAccountCode" />
 </androidx.constraintlayout.widget.ConstraintLayout>

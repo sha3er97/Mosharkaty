@@ -87,13 +87,13 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
 
     // setting spinner
     month_et.setOnItemSelectedListener(this);
-    ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, months);
+    ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, months);
     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     month_et.setAdapter(aa);
     month_et.setSelection(Math.max(month, 0));
     day_et.setOnItemSelectedListener(this);
-    ArrayAdapter ab = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, days);
+    ArrayAdapter ab = new ArrayAdapter(getContext(), R.layout.spinner_item, days);
     ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     day_et.setAdapter(ab);

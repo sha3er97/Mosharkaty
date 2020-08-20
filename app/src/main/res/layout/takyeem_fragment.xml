@@ -12,11 +12,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:text="continue reading"
-        android:textColor="@android:color/white"
+        android:text="تابع القراءة"
+        android:textColor="@color/new_white_light"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/lighterBlue"
+        android:background="@drawable/btn_gradient_blue"
+        android:fontFamily="@font/new_jf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -27,11 +27,12 @@
         android:layout_width="0dp"
         android:stretchColumns="*"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/lighterBlue"
-        android:divider="@android:color/black"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/my_edit_text_border"
+        android:divider="@color/new_text_black"
+        android:showDividers="middle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11">
@@ -43,40 +44,40 @@
                 android:padding="3dip"
                 android:text="@string/technical5"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/technical4"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/technical3"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/technical2"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/technical1"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
         </TableRow>
 
@@ -88,7 +89,8 @@
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:id="@+id/quality"
@@ -96,7 +98,8 @@
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:id="@+id/problem_solving"
@@ -104,7 +107,8 @@
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:id="@+id/commitment"
@@ -112,7 +116,8 @@
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
             <TextView
                 android:id="@+id/communication"
@@ -120,7 +125,8 @@
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black"
+                android:fontFamily="@font/new_jf" />
 
         </TableRow>
     </TableLayout>
@@ -129,12 +135,13 @@
         android:id="@+id/personalTable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/my_edit_text_border"
+        android:divider="@color/new_text_black"
+        android:showDividers="middle"
         android:stretchColumns="*"
-        android:background="@color/lighterBlue"
-        android:divider="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14">
@@ -142,52 +149,52 @@
         <TableRow>
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal6"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal5"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal4"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal3"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal2"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/personal1"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
         </TableRow>
 
@@ -195,51 +202,57 @@
 
             <TextView
                 android:id="@+id/execues"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
                 android:id="@+id/loyalty"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
                 android:id="@+id/humble"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
                 android:id="@+id/respect"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
                 android:id="@+id/ekhtlat"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
             <TextView
                 android:id="@+id/cooperation"
+                android:fontFamily="@font/new_jf"
                 android:gravity="center"
                 android:padding="3dip"
                 android:text="@string/dummy_num2"
                 android:textAlignment="center"
-                android:textStyle="bold" />
+                android:textColor="@color/new_text_black" />
 
         </TableRow>
     </TableLayout>
@@ -251,8 +264,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/technical"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -263,8 +277,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/personal"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -275,8 +290,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/bonus_head"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -286,9 +302,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
-        android:textColor="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView19"
         app:layout_constraintEnd_toStartOf="@+id/textView19"
         app:layout_constraintTop_toTopOf="@+id/textView19" />
@@ -300,8 +316,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="تعليق علي التقييم : "
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -316,6 +333,10 @@
         android:gravity="center"
         android:text="@string/extraComment"
         android:textAlignment="center"
+        android:textColor="@color/new_text_blue"
+        android:background="@drawable/my_edit_text_border"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/contRead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -351,9 +372,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
-        android:text="الاجمالي"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/total"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/technicalTable" />
 
@@ -363,21 +385,23 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
-        android:textColor="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView24"
         app:layout_constraintEnd_toStartOf="@+id/textView24"
         app:layout_constraintTop_toTopOf="@+id/textView24" />
+
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
-        android:text="الاجمالي"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/total"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personalTable" />
 
@@ -387,9 +411,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
-        android:textColor="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
         app:layout_constraintEnd_toStartOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="@+id/textView25" />
@@ -401,21 +425,22 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/name"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/takyeemVolName"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_volunteer"
-        android:textColor="@color/ourBlue"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
         app:layout_constraintBottom_toBottomOf="@+id/textView15"
         app:layout_constraintEnd_toStartOf="@+id/textView15"
         app:layout_constraintStart_toStartOf="parent"

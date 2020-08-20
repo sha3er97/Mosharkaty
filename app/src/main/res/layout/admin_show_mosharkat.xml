@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/day_et"
+    <ImageButton
+        android:id="@+id/refresh_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/dummy_number"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/btn_gradient_blue"
         android:padding="16dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/titleShowMosharkat"
-        app:layout_constraintStart_toStartOf="@+id/titleShowMosharkat"
-        app:layout_constraintTop_toBottomOf="@+id/titleShowMosharkat" />
+        android:src="@drawable/refresh_icon"
+        android:tint="@color/new_text_black"
+        app:layout_constraintBottom_toBottomOf="@+id/mosharkatMonthCount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleShowMosharkat" />
 
     <Spinner
         android:id="@+id/month_et"
@@ -25,31 +25,31 @@
         android:padding="16dp"
         android:text="@string/dummy_number"
         android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/titleShowMosharkat2"
         app:layout_constraintStart_toStartOf="@+id/titleShowMosharkat2"
         app:layout_constraintTop_toBottomOf="@+id/titleShowMosharkat" />
 
-    <ImageButton
-        android:id="@+id/refresh_btn"
+    <Spinner
+        android:id="@+id/day_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:padding="16dp"
-        android:src="@drawable/refresh_icon"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="@+id/mosharkatMonthCount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/titleShowMosharkat" />
+        android:text="@string/dummy_number"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="@+id/titleShowMosharkat"
+        app:layout_constraintStart_toStartOf="@+id/titleShowMosharkat"
+        app:layout_constraintTop_toBottomOf="@+id/titleShowMosharkat" />
 
     <TextView
         android:id="@+id/titleShowMosharkat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="  الشهر "
+        android:text="الشهر"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/titleShowMosharkat"
@@ -60,9 +60,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="  اليوم "
+        android:fontFamily="@font/new_jf"
+        android:text="اليوم"
+        android:textColor="@color/new_text_black"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/titleShowMosharkat2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/refresh_btn"
@@ -75,8 +76,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text=" عدد مشاركات اليوم :"
+        android:textColor="@color/new_text_black"
+        android:fontFamily="@font/new_jf"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/month_et" />
 
@@ -85,11 +87,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
         android:padding="8dp"
         android:text="@string/dummy_number"
-        android:textColor="@android:color/holo_green_light"
+        android:textColor="@color/new_text_blue"
         android:textSize="22sp"
-        android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />

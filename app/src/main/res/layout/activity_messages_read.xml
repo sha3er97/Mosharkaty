@@ -11,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:padding="16dp"
         android:onClick="refreshMessages"
         android:src="@drawable/refresh_icon"
-        app:backgroundTint="@color/colorAccent"
+        android:tint="@color/new_text_black"
+        android:background="@drawable/btn_gradient_blue"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/titleShowMessages"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleShowMessages" />
@@ -26,8 +27,9 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
         android:text=" الرسائل"
+        android:fontFamily="@font/new_jf"
+        android:textColor="@color/new_text_black"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
-        android:textColor="@android:color/holo_green_light"
+        android:fontFamily="@font/new_jf"
+        android:textColor="@color/new_text_blue"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/titleShowMessages"
         app:layout_constraintEnd_toStartOf="@+id/titleShowMessages"
         app:layout_constraintTop_toTopOf="@+id/titleShowMessages" />

@@ -98,8 +98,8 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                     @Override
                     public void onClick(View v) {
                         addMosharka_btn.setEnabled(true);
-                        addMosharka_btn.setBackgroundColor(getResources().getColor(R.color.lighterBlue));
-                        newMosharkaTV.setText("سجل المشاركة");
+                        addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
+                        newMosharkaTV.setText(R.string.new_mosharka_btn_txt);
                         // date picker dialog
                         picker =
                                 new DatePickerDialog(
@@ -140,7 +140,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                 });
         spin.setOnItemSelectedListener(this);
         // Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, types);
+        ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);

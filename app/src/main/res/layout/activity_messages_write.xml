@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MessagesWrite">
 
+    <Button
+        android:id="@+id/confirmMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:fontFamily="@font/new_jf"
+        android:onClick="sendMessage"
+        android:text="ارسال الرسالة"
+        android:textColor="@color/new_white_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <CheckBox
         android:id="@+id/anonymousCheckBox"
         android:layout_width="wrap_content"
@@ -17,14 +34,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageText" />
 
+    <EditText
+        android:id="@+id/messageText"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/my_edit_text_border"
+        android:fontFamily="@font/new_jf"
+        android:gravity="center"
+        android:hint="اكتب رسالتك هنا"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        android:textColor="@color/new_text_black"
+        android:textColorHint="@color/new_hint_color"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
     <TextView
         android:id="@+id/checkbox2Text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/new_jf"
         android:text="بدون اسم ؟"
+        android:textColor="@color/new_text_black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/anonymousCheckBox"
         app:layout_constraintEnd_toStartOf="@+id/anonymousCheckBox"
         app:layout_constraintTop_toTopOf="@+id/anonymousCheckBox" />
@@ -34,58 +72,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/new_jf"
         android:text="@string/message_write_header"
-        android:textColor="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/messageText"
-        android:layout_width="0dp"
-        android:layout_height="240dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textMultiLine"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:background="@drawable/my_edit_text_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-    <Button
-        android:id="@+id/confirmMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="send Message"
-        android:onClick="sendMessage"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/lighterBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/new_jf"
+        android:lineSpacingExtra="6sp"
         android:text="@string/saraha_description"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textColor="@color/new_text_black"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />

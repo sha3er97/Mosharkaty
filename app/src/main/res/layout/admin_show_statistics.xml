@@ -13,8 +13,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="هذه مشاركات شهر :"
+        android:fontFamily="@font/new_jf"
+        android:textColor="@color/new_text_black"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,8 +26,8 @@
         android:layout_marginEnd="16dp"
         android:text="@string/dummy_number"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
         app:layout_constraintBottom_toBottomOf="@+id/textView23"
         app:layout_constraintEnd_toStartOf="@+id/textView23"
         app:layout_constraintTop_toTopOf="@+id/textView23" />

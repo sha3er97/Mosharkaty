@@ -51,49 +51,49 @@ public class LoginActivity extends AppCompatActivity {
     DatabaseReference adminAccount = database.getReference("AdminAccount");
     adminAccount.addValueEventListener(
             new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Admin admin = dataSnapshot.getValue(Admin.class);
-                if (admin != null) {
-                  adminEmail[0] = admin.email;
-                  adminPass[0] = admin.password;
-                  Log.d(TAG, "admin email : " + adminEmail[0]);
-                  Log.d(TAG, "admin pass : " + adminPass[0]);
-                } else
-                  Toast.makeText(
-                          getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
-                          .show();
-              }
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Admin admin = dataSnapshot.getValue(Admin.class);
+                    if (admin != null) {
+                        adminEmail[0] = admin.email;
+                        adminPass[0] = admin.password;
+                        Log.d(TAG, "admin email : " + adminEmail[0]);
+                        Log.d(TAG, "admin pass : " + adminPass[0]);
+                    } else
+                        Toast.makeText(
+                                getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
+                                .show();
+                }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
             });
-    FirebaseUser currentUser = mAuth.getCurrentUser();
-    FirebaseInstanceId.getInstance()
-            .getInstanceId()
-            .addOnCompleteListener(
-                    new OnCompleteListener<InstanceIdResult>() {
-                      @Override
-                      public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                          Log.w(TAG, "getInstanceId failed", task.getException());
-                          return;
-                        }
+      FirebaseUser currentUser = mAuth.getCurrentUser();
+      FirebaseInstanceId.getInstance()
+              .getInstanceId()
+              .addOnCompleteListener(
+                      new OnCompleteListener<InstanceIdResult>() {
+                          @Override
+                          public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                              if (!task.isSuccessful()) {
+                                  Log.w(TAG, "getInstanceId failed", task.getException());
+                                  return;
+                              }
 
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
+                              // Get new Instance ID token
+                              String token = task.getResult().getToken();
 
-                        // Log and toast
-                        //                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.i("getInstanceId", token);
-                        //                        Toast.makeText(MainActivity.this, msg,
-                        // Toast.LENGTH_SHORT).show();
-                      }
-                    });
-    updateUI(currentUser);
+                              // Log and toast
+                              //                        String msg = getString(R.string.msg_token_fmt, token);
+                              Log.i("getInstanceId", token);
+                              //                        Toast.makeText(MainActivity.this, msg,
+                              // Toast.LENGTH_SHORT).show();
+                          }
+                      });
+      updateUI(currentUser);
   }
 
   private void makeAdminActions() {
@@ -167,18 +167,18 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void loginClick(View view) {
-    ConnectivityManager connectivityManager =
-            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-      if (connectivityManager.getActiveNetworkInfo() == null
-              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-        //          Toast.makeText(getApplicationContext(), "No Internet",
-        // Toast.LENGTH_SHORT).show();
-        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        return;
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              //          Toast.makeText(getApplicationContext(), "No Internet",
+              // Toast.LENGTH_SHORT).show();
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
       }
-    }
 
     if (IsAdminDetails()) makeAdminActions();
     else { // not admin
@@ -191,26 +191,22 @@ public class LoginActivity extends AppCompatActivity {
     }
   }
 
-  public void newAccountClick(View view) {
-    startActivity(new Intent(this, NewAccount.class));
-  }
-
   public void resetPassword(View view) {
-    mAuth
-            .sendPasswordResetEmail(email_et.getText().toString())
-            .addOnCompleteListener(
-                    new OnCompleteListener<Void>() {
-                      @Override
-                      public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                          Toast.makeText(
-                                  getApplicationContext(),
-                                  "check your email for reset password link",
-                                  Toast.LENGTH_SHORT)
-                                  .show();
-                          Log.d(TAG, "Email sent.");
-                        }
-                      }
-                    });
+      mAuth
+              .sendPasswordResetEmail(email_et.getText().toString())
+              .addOnCompleteListener(
+                      new OnCompleteListener<Void>() {
+                          @Override
+                          public void onComplete(@NonNull Task<Void> task) {
+                              if (task.isSuccessful()) {
+                                  Toast.makeText(
+                                          getApplicationContext(),
+                                          "check your email for reset password link",
+                                          Toast.LENGTH_SHORT)
+                                          .show();
+                                  Log.d(TAG, "Email sent.");
+                              }
+                          }
+                      });
   }
 }

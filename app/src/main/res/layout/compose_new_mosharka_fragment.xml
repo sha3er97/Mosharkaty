@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <EditText
         android:id="@+id/mosharkaDate"
         android:layout_width="0dp"
@@ -12,13 +11,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
+        android:background="@drawable/edit_text_gray"
+        android:drawableEnd="@drawable/calendar"
+        android:fontFamily="@font/new_jf"
         android:hint="@string/choose_date_hint"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="center"
-        android:textColor="@color/ourBlue"
-        android:textColorHint="@color/ourBlue"
+        android:textColor="@color/new_text_blue"
+        android:textColorHint="@color/new_hint_color"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volName" />
@@ -27,13 +29,14 @@
         android:id="@+id/confirmMosharka"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:paddingTop="@android:dimen/thumbnail_height"
+        android:background="@drawable/blue_btn"
+        android:paddingBottom="@android:dimen/thumbnail_height"
         android:src="@drawable/add"
         android:textAlignment="center"
-        app:backgroundTint="@color/ourBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -44,44 +47,18 @@
         android:id="@+id/showMosharkaty_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:paddingTop="@android:dimen/thumbnail_height"
+        android:background="@drawable/btn_gradient_blue"
+        android:paddingBottom="@android:dimen/thumbnail_height"
         android:src="@drawable/done"
-        app:backgroundTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/confirmMosharka"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <TextView
-        android:id="@+id/newMosharkaTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="سجل مشاركة\nجديدة"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/confirmMosharka"
-        app:layout_constraintEnd_toEndOf="@+id/confirmMosharka"
-        app:layout_constraintStart_toStartOf="@+id/confirmMosharka"
-        app:layout_constraintTop_toTopOf="@+id/confirmMosharka" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="مشاركاتي\n المتسجلة"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
-        app:layout_constraintEnd_toStartOf="@+id/confirmMosharka"
-        app:layout_constraintStart_toStartOf="@+id/showMosharkaty_btn"
-        app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -90,9 +67,37 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        style="@style/SpinnerwithNoArrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mosharkaType" />
+
+    <TextView
+        android:id="@+id/newMosharkaTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/new_mosharka_btn_txt"
+        android:textAlignment="center"
+        android:textColor="@color/new_white_light"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="@+id/confirmMosharka"
+        app:layout_constraintEnd_toEndOf="@+id/confirmMosharka"
+        app:layout_constraintStart_toStartOf="@+id/confirmMosharka"
+        app:layout_constraintTop_toTopOf="@+id/confirmMosharka" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/new_jf"
+        android:text="مشاركاتي\n المتسجلة"
+        android:textAlignment="center"
+        android:textColor="@color/new_white_light"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
+        app:layout_constraintEnd_toStartOf="@+id/confirmMosharka"
+        app:layout_constraintStart_toStartOf="@+id/showMosharkaty_btn"
+        app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
 
     <TextView
         android:id="@+id/mosharkatMonthCount2"
@@ -102,7 +107,6 @@
         android:text="@string/dummy_number"
         android:textColor="@android:color/holo_green_light"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintEnd_toStartOf="@+id/textView7"
@@ -114,9 +118,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
         android:text="تاريخ المشاركة : "
+        android:textColor="@color/new_text_black"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +134,6 @@
         android:text=" عدد المشاركات المسجلة \n ايضا في هذا الشهر :"
         android:textAlignment="center"
         android:textSize="22sp"
-        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
@@ -140,9 +144,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
         android:text="نوع المشاركة : "
+        android:textColor="@color/new_text_black"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mosharkaDate" />
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mosharkaty</string>
-    <string name="tab_text_1">Profile</string>
-    <string name="tab_text_2">Upcoming Events</string>
+    <string name="tab_text_1">بروفايلي</string>
+    <string name="tab_text_2">الايفنتات القادمة</string>
     <string name="tab_text_3">سجل مشاركة جديدة</string>
     <string name="tab_text_4">تقييمي</string>
     <string name="admin_tab_text_1">تسجيل مشاركات</string>
@@ -9,24 +9,24 @@
     <string name="admin_tab_text_3">مشاركات متسجلة</string>
     <string name="admin_tab_text_4">امضاءات التقييمات</string>
     <string name="title">ايفنت</string>
-    <string name="log_out_btn_text">Log out</string>
-    <string name="save_changes_btn_text">Save changes</string>
+    <string name="log_out_btn_text">خروج</string>
+    <string name="save_changes_btn_text">حفظ التعديلات</string>
     <string name="change_name">تغيير الاسم</string>
     <string name="far3">الفرع</string>
     <string name="name">الاسم</string>
     <string name="next_events_label">الايفنتات القادمة هذا الشهر :</string>
-    <string name="add_event_btn_txt">Add Event</string>
+    <string name="add_event_btn_txt">اضافة ايفنت جديد</string>
     <string name="choose_date_hint">اختار التاريخ</string>
     <string name="dummy_volunteer">متطوع فريق عمل</string>
     <string name="change_code">تغيير الكود</string>
     <string name="dummy_code">00000</string>
-    <string name="login_btnTxt">Continue</string>
-    <string name="create_new_account_btnTxt">Create new account</string>
+    <string name="login_btnTxt">دخول</string>
+    <string name="create_new_account_btnTxt">إنشاء حساب</string>
     <string name="dummy_far3">المهندسين</string>
     <string name="dummy_number">-</string>
     <string name="password_hint">try something simple</string>
     <string name="message_write_header">اجعل رسالتك بناءة :)</string>
-    <string name="saraha_description">دي مساحة فاضية ليك تعبر فيها عن رايك - اعتراضك - شكوي\n او اي حاجة نفسك تقولها من غير ما تقول اسمك ..\n او لو عايز تقوله برضو ^^</string>
+    <string name="saraha_description">دي مساحة فاضية ليك تعبر فيها عن رايك - اعتراضك - شكوي او اي حاجة نفسك تقولها من غير ما تقول اسمك .. او لو عايز تقوله برضو ^^</string>
     <string name="login_tip">لو اول مرة ليك .. اكتب ايميلك و password من اختيارك \nو اعمل account جديد</string>
     <string name="technical1">التواصل</string>
     <string name="technical2">الالتزام</string>
@@ -51,13 +51,20 @@
     <string name="name_hint">اكتب اسمك ثلاثي بالعربي</string>
     <string name="code">الكود</string>
     <string name="code_hint">اكتب الكود اللي الفرع عامله ليك</string>
-    <string name="password">Password</string>
+    <string name="password">كلمة السر</string>
     <string name="email_hint">username@gmail.com</string>
-    <string name="e_mail">E-mail</string>
-    <string name="reset">reset</string>
+    <string name="e_mail">البريد الالكتروني</string>
+    <string name="reset">نسيت كلمة السر؟</string>
     <string name="branch">الفرع</string>
     <string name="not_available_error">Feature Not Available Yet</string>
     <string name="dummy_history">10,11,12,13</string>
+    <string name="welcome_statement">اهلا بيك في Mosharkaty</string>
+    <string name="dummy_date">22/7</string>
+    <string name="dummy_time">Sun Aug 02 19:15:47 GMT+02:00 2020</string>
+    <string name="sign_btn_txt">امضاء التقييم</string>
+    <string name="no_events_error_message">لا يوجد ايفنتات قادمة\n متبقية هذا الشهر</string>
+    <string name="new_mosharka_btn_txt">سجل مشاركة\nجديدة</string>
+    <string name="total">الاجمالي</string>
     <string-array name="dummy_array">
         <item>Array Item One</item>
         <item>Array Item Two</item>

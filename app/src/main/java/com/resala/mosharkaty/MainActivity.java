@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     viewPager.setAdapter(sectionsPagerAdapter);
     TabLayout tabs = findViewById(R.id.tabs);
     logOut_btn = findViewById(R.id.logOutBtn);
-    if (isAdmin) logOut_btn.setText("Exit");
     tabs.setupWithViewPager(viewPager);
     FloatingActionButton fab = findViewById(R.id.fab);
 
