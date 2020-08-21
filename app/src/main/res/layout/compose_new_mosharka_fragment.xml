@@ -76,12 +76,13 @@
 
     <TextView
         android:id="@+id/newMosharkaTV"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/new_jf"
         android:text="@string/new_mosharka_btn_txt"
         android:textAlignment="center"
         android:gravity="center"
+        android:paddingHorizontal="8dp"
         android:textColor="@color/new_white_light"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="@+id/confirmMosharka"
