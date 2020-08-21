@@ -98,19 +98,19 @@ public class LoginActivity extends AppCompatActivity {
 
   private void makeAdminActions() {
     isAdmin = true;
-    Toast.makeText(this, "Admin Access granted ", Toast.LENGTH_SHORT).show();
-    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+      Toast.makeText(this, "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT).show();
+      startActivity(new Intent(getApplicationContext(), MainActivity.class));
     //        throw new RuntimeException("Test Crash"); // Force a crash
   }
 
   private void updateUI(FirebaseUser user) {
     if (user != null) {
       // Signed in
-      userId = user.getUid();
-      Toast.makeText(this, "login Successful", Toast.LENGTH_SHORT).show();
-      startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        userId = user.getUid();
+        Toast.makeText(this, "نورت مصر 3>", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     } else {
-      Toast.makeText(this, "login Failed .. try again", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "مش فاكرك ياض :/", Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -131,8 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                   updateUI(user);
                 } else {
                   // If sign in fails, display a message to the user.
-                  Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                      .show();
                   updateUI(null);
                 }
               }
@@ -192,6 +190,11 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void resetPassword(View view) {
+      String email = email_et.getText().toString();
+      if (TextUtils.isEmpty(email)) {
+          email_et.setError("must enter a valid email");
+          return;
+      }
       mAuth
               .sendPasswordResetEmail(email_et.getText().toString())
               .addOnCompleteListener(
@@ -205,6 +208,10 @@ public class LoginActivity extends AppCompatActivity {
                                           Toast.LENGTH_SHORT)
                                           .show();
                                   Log.d(TAG, "Email sent.");
+                              } else {
+                                  Toast.makeText(
+                                          getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
+                                          .show();
                               }
                           }
                       });

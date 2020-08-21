@@ -2,13 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_margin="8dp"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/userName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:gravity="start"
+        android:textAlignment="textStart"
         android:layout_margin="12dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -32,7 +35,7 @@
         android:text="@string/dummy_num2"
         android:textColor="@color/new_text_blue"
         android:fontFamily="@font/new_jf"
-        android:textSize="22sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +50,7 @@
         android:fontFamily="@font/new_jf"
         android:text="@string/dummy_history"
         android:textAlignment="textEnd"
+        android:gravity="end"
         android:textColor="@color/new_hint_color"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textView2"

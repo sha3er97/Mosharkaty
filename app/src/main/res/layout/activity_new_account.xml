@@ -4,23 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".NewAccount">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView7"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/background" />-->
+
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:fontFamily="@font/new_jf"
+        android:onClick="newAccountClick"
+        android:paddingHorizontal="32dp"
+        android:text="@string/create_new_account_btnTxt"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="42dp"
+        android:layout_marginHorizontal="54dp"
+        android:layout_marginVertical="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -32,14 +50,14 @@
         android:id="@+id/imageView4"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
-        app:srcCompat="@mipmap/icon_round" />
+        app:srcCompat="@mipmap/icon" />
 
     <EditText
         android:id="@+id/newAccountName"
@@ -50,6 +68,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/edit_text_gray"
         android:fontFamily="@font/new_jf"
+        android:gravity="center"
         android:hint="@string/name_hint"
         android:inputType="textPersonName"
         android:textAlignment="center"
@@ -68,6 +87,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/edit_text_gray"
         android:drawableEnd="@drawable/mail"
+        android:gravity="center"
         android:inputType="textEmailAddress"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -78,20 +98,22 @@
 
     <EditText
         android:id="@+id/newAccountCode"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/edit_text_gray"
         android:fontFamily="@font/new_jf"
-        android:hint="@string/code_hint"
+        android:gravity="center"
+        android:hint="@string/dummy_code"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textColorHint="@color/new_hint_color"
+        android:textColorHint="@android:color/transparent"
+        android:paddingHorizontal="8dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/branchSpinner"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
 
     <EditText
@@ -103,6 +125,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/edit_text_gray"
         android:drawableEnd="@drawable/pass"
+        android:gravity="center"
         android:inputType="textPassword"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -111,34 +134,21 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView2" />
 
-    <Button
-        android:id="@+id/signup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_gradient_blue"
-        android:fontFamily="@font/new_jf"
-        android:onClick="newAccountClick"
-        android:paddingHorizontal="32dp"
-        android:text="@string/create_new_account_btnTxt"
-        android:textColor="@color/new_white_light"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/branchSpinner" />
-
     <Spinner
         android:id="@+id/branchSpinner"
-        android:layout_width="0dp"
+        style="@style/SpinnerwithNoArrow"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/brTV"
-        app:layout_constraintEnd_toStartOf="@+id/brTV"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/newAccountCode"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/brTV" />
+        app:layout_constraintTop_toBottomOf="@+id/brTV" />
 
     <TextView
         android:id="@+id/emailTextView4"
@@ -171,12 +181,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:fontFamily="@font/new_jf"
         android:text="@string/code"
         android:textColor="@color/new_text_blue"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/newAccountCode"
+        app:layout_constraintStart_toStartOf="@+id/newAccountCode"
         app:layout_constraintTop_toBottomOf="@+id/newAccountName" />
 
     <TextView
@@ -196,14 +206,12 @@
         android:id="@+id/brTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:fontFamily="@font/new_jf"
         android:text="@string/branch"
         android:textColor="@color/new_text_blue"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/branchSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/newAccountCode" />
+        app:layout_constraintBottom_toBottomOf="@+id/emailTextView3"
+        app:layout_constraintEnd_toEndOf="@+id/branchSpinner"
+        app:layout_constraintStart_toStartOf="@+id/branchSpinner"
+        app:layout_constraintTop_toTopOf="@+id/emailTextView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

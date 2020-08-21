@@ -7,18 +7,27 @@
     android:background="@color/new_white_light"
     tools:context=".Splash">
 
-    <ImageView
-        android:id="@+id/splashscreen"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/icon"
+        app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toTopOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:id="@+id/splashscreen"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon"
+            android:background="@color/new_blue_light" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView13"
@@ -31,8 +40,8 @@
         android:textColor="@color/ourBlue"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/splashscreen"
+        app:layout_constraintEnd_toEndOf="@+id/card"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/splashscreen"
-        app:layout_constraintTop_toBottomOf="@+id/splashscreen" />
+        app:layout_constraintStart_toStartOf="@+id/card"
+        app:layout_constraintTop_toBottomOf="@+id/card" />
 </androidx.constraintlayout.widget.ConstraintLayout>

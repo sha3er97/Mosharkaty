@@ -78,9 +78,11 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
         database = FirebaseDatabase.getInstance();
         final int[] monthSelected = {-1};
+        final int[] daySelected = {-1};
 
         final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
         final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+        final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
 
         eText = view.findViewById(R.id.mosharkaDate);
         addMosharka_btn = view.findViewById(R.id.confirmMosharka);
@@ -110,6 +112,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                                                     DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
                                                 eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                                 monthSelected[0] = monthOfYear + 1;
+                                                daySelected[0] = dayOfMonth;
                                                 mosharkatCounterTV.setText(String.valueOf(mosharkatCount));
                                                 // database
                                                 MosharkatCountRef.addValueEventListener(
@@ -170,6 +173,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                         typeRef.setValue(spin.getSelectedItem().toString());
 
                         MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
+                        ClosingRef.child(String.valueOf(monthSelected[0])).child(String.valueOf(daySelected[0])).setValue(0);
                         Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
                         addMosharka_btn.setEnabled(false);
                         addMosharka_btn.setBackgroundColor(

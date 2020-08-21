@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,15 +10,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/edit_text_gray"
-        android:hint="اكتب اسم المتطوع ثنائي\n علي الاقل"
-        android:textColorHint="@color/new_hint_color"
-        android:padding="3dp"
         android:fontFamily="@font/new_jf"
+        android:gravity="center"
+        android:hint="اكتب اسم المتطوع ثنائي\n علي الاقل"
+        android:padding="3dp"
         android:textAlignment="center"
+        android:textColorHint="@color/new_hint_color"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/spinner2"
@@ -33,6 +35,7 @@
         android:background="@drawable/edit_text_gray"
         android:drawableEnd="@drawable/calendar"
         android:fontFamily="@font/new_jf"
+        android:gravity="center"
         android:hint="@string/choose_date_hint"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -40,7 +43,9 @@
         android:textColor="@color/new_text_blue"
         android:textColorHint="@color/new_hint_color"
         android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volName" />
 
@@ -48,18 +53,16 @@
         android:id="@+id/confirmMosharka"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/blue_btn"
         android:paddingBottom="@android:dimen/thumbnail_height"
         android:src="@drawable/add"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/showMosharkaty_btn"
-        app:layout_constraintTop_toBottomOf="@+id/volInGroupTV" />
+        app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
 
     <ImageButton
         android:id="@+id/showMosharkaty_btn"
@@ -77,7 +80,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volInGroupTV" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 
     <Spinner
@@ -88,23 +91,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
         app:layout_constraintEnd_toStartOf="@+id/mosharkaType"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mosharkaDate" />
 
     <Spinner
         android:id="@+id/spinner2"
+        style="@style/SpinnerwithNoArrow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        style="@style/SpinnerwithNoArrow"
-        app:layout_constraintBottom_toBottomOf="@+id/volInGroupTV"
+        app:layout_constraintBottom_toTopOf="@+id/showMosharkaty_btn"
         app:layout_constraintEnd_toStartOf="@+id/volInGroupTV"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/volInGroupTV"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <TextView
@@ -115,6 +120,7 @@
         android:fontFamily="@font/new_jf"
         android:text="@string/new_mosharka_btn_txt"
         android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/new_white_light"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@+id/confirmMosharka"
@@ -129,6 +135,7 @@
         android:fontFamily="@font/new_jf"
         android:text="احصائيات \nو مشاركات"
         android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/new_white_light"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
@@ -155,10 +162,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
         android:text="تاريخ المشاركة : "
         android:textColor="@color/new_text_black"
-        android:fontFamily="@font/new_jf"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/mosharkaDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -185,6 +193,7 @@
         android:textAlignment="center"
         android:textColor="@color/new_text_black"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner2"
         app:layout_constraintEnd_toEndOf="@+id/spinner2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"

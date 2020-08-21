@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity">
 
     <androidx.viewpager.widget.ViewPager
@@ -37,7 +38,6 @@
                 android:id="@+id/logOutBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorPrimary"
                 android:textSize="16sp"
                 android:onClick="logOut"
                 android:textColor="@color/new_white_light"
@@ -54,7 +54,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:background="@color/new_blue_dark" />
 
 
     </com.google.android.material.appbar.AppBarLayout>

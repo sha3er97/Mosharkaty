@@ -65,6 +65,8 @@
     <string name="no_events_error_message">لا يوجد ايفنتات قادمة\n متبقية هذا الشهر</string>
     <string name="new_mosharka_btn_txt">سجل مشاركة\nجديدة</string>
     <string name="total">الاجمالي</string>
+    <string name="close_btn_txt">تقفيل اليوم</string>
+    <string name="day_already_closed">اليوم مقفول بالفعل</string>
     <string-array name="dummy_array">
         <item>Array Item One</item>
         <item>Array Item Two</item>

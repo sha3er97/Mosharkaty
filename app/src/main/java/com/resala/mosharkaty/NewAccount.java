@@ -139,7 +139,7 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     if (TextUtils.isEmpty(code)) {
       code_et.setError("Required.");
       valid = false;
-    } else if (code_et.getText().length() >= 5) {
+    } else if (code_et.getText().length() < 4) {
       code_et.setError("incorrect code entered");
       valid = false;
     } else {

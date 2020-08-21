@@ -92,9 +92,11 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
       view = inflater.inflate(R.layout.admin_add_group_mosharka, container, false);
       database = FirebaseDatabase.getInstance();
       final int[] monthSelected = {-1};
+      final int[] daySelected = {-1};
       userBranch = branches[0]; // todo:: add a way for admin to configure his branch
       final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
       final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+      final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
 
       eText = view.findViewById(R.id.mosharkaDate);
       addMosharka_btn = view.findViewById(R.id.confirmMosharka);
@@ -121,6 +123,7 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
                                                   DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
                                               eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                               monthSelected[0] = monthOfYear + 1;
+                                              daySelected[0] = dayOfMonth;
                                               // database
                                               MosharkatCountRef.addValueEventListener(
                                                       new ValueEventListener() {
@@ -215,6 +218,7 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
                       typeRef.setValue(spin.getSelectedItem().toString());
 
                       MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
+                      ClosingRef.child(String.valueOf(monthSelected[0])).child(String.valueOf(daySelected[0])).setValue(0);
                       Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
                   }
               });
