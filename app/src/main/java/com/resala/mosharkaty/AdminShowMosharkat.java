@@ -1,6 +1,5 @@
 package com.resala.mosharkaty;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccount.branches;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminShowMosharkat extends androidx.fragment.app.Fragment
@@ -44,16 +43,16 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
             "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
     };
     int day;
-  int month;
-  int year;
+    int month;
+    int year;
 
-  /**
-   * Called to have the fragment instantiate its user interface view. This is optional, and
-   * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
-   * and {@link #onActivityCreated(Bundle)}.
-   *
-   * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and
+     * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
+     * and {@link #onActivityCreated(Bundle)}.
+     *
+     * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
    *
    * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
    * view is being released.
@@ -75,14 +74,12 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
       @Nullable Bundle savedInstanceState) {
       view = inflater.inflate(R.layout.admin_show_mosharkat, container, false);
       database = FirebaseDatabase.getInstance();
-      userBranch = branches[0]; // todo:: add a way for admin to configure his branch
       final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
       final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
 
       RecyclerView recyclerView = view.findViewById(R.id.mosharkatRecyclerView);
       ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
       final Button close_day_btn = view.findViewById(R.id.close_day_btn);
-      final Button show_closings_btn = view.findViewById(R.id.show_closings_btn);
       final Spinner month_et = view.findViewById(R.id.month_et);
       final Spinner day_et = view.findViewById(R.id.day_et);
       final Calendar cldr = Calendar.getInstance();
@@ -93,36 +90,28 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
       // setting spinner
       month_et.setOnItemSelectedListener(this);
       ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, months);
-    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    month_et.setAdapter(aa);
-    month_et.setSelection(Math.max(month, 0));
-    day_et.setOnItemSelectedListener(this);
-    ArrayAdapter ab = new ArrayAdapter(getContext(), R.layout.spinner_item, days);
-    ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    day_et.setAdapter(ab);
-    day_et.setSelection(Math.max(day - 1, 0));
+      aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      // Setting the ArrayAdapter data on the Spinner
+      month_et.setAdapter(aa);
+      month_et.setSelection(Math.max(month, 0));
+      day_et.setOnItemSelectedListener(this);
+      ArrayAdapter ab = new ArrayAdapter(getContext(), R.layout.spinner_item, days);
+      ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      // Setting the ArrayAdapter data on the Spinner
+      day_et.setAdapter(ab);
+      day_et.setSelection(Math.max(day - 1, 0));
 
-    final TextView count = view.findViewById(R.id.mosharkatMonthCount);
+      final TextView count = view.findViewById(R.id.mosharkatMonthCount);
 
       recyclerView.setHasFixedSize(true);
-      LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-      mLayoutManager.setReverseLayout(true);
-      mLayoutManager.setStackFromEnd(true);
-      recyclerView.setLayoutManager(mLayoutManager);
+      //    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+      //    mLayoutManager.setReverseLayout(true);
+      //    mLayoutManager.setStackFromEnd(true);
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
       adapter = new MosharkatAdapter(mosharkaItems, getContext());
       recyclerView.setAdapter(adapter);
 
       // button listener
-      show_closings_btn.setOnClickListener(
-              new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                      startActivity(new Intent(getActivity(), ShowClosings.class));
-                  }
-              });
-
       close_day_btn.setOnClickListener(
               new View.OnClickListener() {
                   @Override
@@ -134,6 +123,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
                       close_day_btn.setEnabled(false);
                       close_day_btn.setBackgroundColor(
                               getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+                      close_day_btn.setTextColor(getResources().getColor(R.color.new_text_black));
                   }
               });
 
@@ -169,6 +159,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
                                                               .show();
                                                   }
                                               }
+                                              Collections.sort(mosharkaItems);
                                               adapter.notifyDataSetChanged();
                                               count.setText(String.valueOf(counter));
                                           }
@@ -226,7 +217,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment
                               });
                   }
               });
-    return view;
+      return view;
   }
 
     @Override

@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTV" />
 
     <Button
         android:id="@+id/button4"
@@ -88,7 +88,7 @@
         app:srcCompat="@drawable/resala" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/welcomeTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

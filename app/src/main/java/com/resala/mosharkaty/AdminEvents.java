@@ -31,7 +31,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccount.branches;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminEvents extends androidx.fragment.app.Fragment
@@ -123,26 +122,35 @@ public class AdminEvents extends androidx.fragment.app.Fragment
   };
   DatePickerDialog picker;
   EditText eText;
-  Button addEvent_btn;
-  FirebaseDatabase database;
-  ImageView DemoImg;
-  Spinner spin;
-  int day;
-  int month;
-  int year;
-  EditText EventName_et;
-  EditText EventDescription_et;
+    Button addEvent_btn;
+    FirebaseDatabase database;
+    ImageView DemoImg;
+    Spinner spin;
+    int day;
+    int month;
+    int year;
+    EditText EventName_et;
+    EditText EventDescription_et;
 
-  /**
-   * Called to have the fragment instantiate its user interface view. This is optional, and
-   * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
-   * and {@link #onActivityCreated(Bundle)}.
-   *
-   * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
-   *
-   * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
-   * view is being released.
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        eText.setText("");
+    }
+
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and
+     * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
+     * and {@link #onActivityCreated(Bundle)}.
+     *
+     * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+     *
+     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
+     * view is being released.
    *
    * @param inflater The LayoutInflater object that can be used to inflate any views in the
    *     fragment,
@@ -163,7 +171,6 @@ public class AdminEvents extends androidx.fragment.app.Fragment
     database = FirebaseDatabase.getInstance();
     view = inflater.inflate(R.layout.admin_events_fragment, container, false);
     DemoImg = view.findViewById(R.id.demoImg);
-    userBranch = branches[0]; // todo:: add a way for admin to configure his branch
     final DatabaseReference EventsRef = database.getReference("events").child(userBranch);
     final DatabaseReference EventsCountRef = database.getReference("eventsCount");
     EventsCountRef.addListenerForSingleValueEvent(

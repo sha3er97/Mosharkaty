@@ -10,8 +10,8 @@ android {
         applicationId "com.resala.mosharkaty"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.4"
+        versionCode 7
+        versionName "1.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,6 +28,10 @@ android {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -50,8 +54,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-config'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.google.android.play:core:1.8.0'
 
 }

@@ -16,6 +16,7 @@ import com.resala.mosharkaty.ui.main.SectionsPagerAdapter;
 
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.MessagesRead.isManager;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userCode;
 import static com.resala.mosharkaty.ProfileFragment.userName;
@@ -59,13 +60,16 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void logOut(View view) {
-    if (!isAdmin) {
-      mAuth.signOut();
-      userName = getString(R.string.dummy_volunteer);
-      userCode = getString(R.string.dummy_code);
-      userBranch = getString(R.string.dummy_far3);
-      userId = "-1";
-    }
+      if (!isAdmin) {
+          mAuth.signOut();
+          userName = getString(R.string.dummy_volunteer);
+          userCode = getString(R.string.dummy_code);
+          userBranch = getString(R.string.dummy_far3);
+          userId = "-1";
+      } else {
+          isAdmin = false;
+          isManager = false;
+      }
     finish();
   }
 }

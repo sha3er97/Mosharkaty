@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <AutoCompleteTextView
         android:id="@+id/volInGroupTV"
@@ -24,6 +24,26 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/spinner2"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    <Button
+        android:id="@+id/confirmMosharka"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/blue_btn"
+        android:drawableStart="@drawable/add"
+        android:fontFamily="@font/new_jf"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="16dp"
+        android:text="@string/new_mosharka_btn_txt"
+        android:textColor="@color/new_white_light"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
 
     <EditText
         android:id="@+id/mosharkaDate"
@@ -49,39 +69,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volName" />
 
-    <ImageButton
-        android:id="@+id/confirmMosharka"
+    <Spinner
+        android:id="@+id/spinner2"
+        style="@style/SpinnerwithNoArrow"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/blue_btn"
-        android:paddingBottom="@android:dimen/thumbnail_height"
-        android:src="@drawable/add"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/showMosharkaty_btn"
-        app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
-
-    <ImageButton
-        android:id="@+id/showMosharkaty_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/btn_gradient_blue"
-        android:paddingBottom="@android:dimen/thumbnail_height"
-        android:src="@drawable/trend"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/confirmMosharka"
+        app:layout_constraintEnd_toStartOf="@+id/volInGroupTV"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -96,52 +96,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mosharkaDate" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        style="@style/SpinnerwithNoArrow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/showMosharkaty_btn"
-        app:layout_constraintEnd_toStartOf="@+id/volInGroupTV"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    <TextView
-        android:id="@+id/newMosharkaTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/new_mosharka_btn_txt"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textColor="@color/new_white_light"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@+id/confirmMosharka"
-        app:layout_constraintEnd_toEndOf="@+id/confirmMosharka"
-        app:layout_constraintStart_toStartOf="@+id/confirmMosharka"
-        app:layout_constraintTop_toTopOf="@+id/confirmMosharka" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="احصائيات \nو مشاركات"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textColor="@color/new_white_light"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@+id/showMosharkaty_btn"
-        app:layout_constraintEnd_toStartOf="@+id/confirmMosharka"
-        app:layout_constraintStart_toStartOf="@+id/showMosharkaty_btn"
-        app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
 
     <TextView
         android:id="@+id/mosharkaType"

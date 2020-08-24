@@ -29,19 +29,19 @@ import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 
 public class ProfileFragment extends androidx.fragment.app.Fragment {
-  public static String userName = "متطوع فريق عمل";
-  public static String userCode = "-1";
-  public static String userBranch = "مهندسين";
-  View view;
-  private FirebaseAuth mAuth;
-  Button signOut_btn;
-  Button ApplyChanges;
-  EditText name;
-  EditText code;
-  TextView branch;
-  TextView currentMosharkat;
-  CheckBox nameCheck;
-  CheckBox codeCheck;
+    public static String userName;
+    public static String userCode;
+    public static String userBranch;
+    View view;
+    private FirebaseAuth mAuth;
+    Button signOut_btn;
+    Button ApplyChanges;
+    EditText name;
+    EditText code;
+    TextView branch;
+    TextView currentMosharkat;
+    CheckBox nameCheck;
+    CheckBox codeCheck;
   FirebaseDatabase database;
 
   /**
@@ -146,6 +146,11 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                   code.setError("incorrect code entered .. 5 digits required");
                   return;
               }
+              if (userId.equals("-1")) {
+                  Toast.makeText(getContext(), "خطا في حفظ التعديلات", Toast.LENGTH_SHORT).show();
+                  return;
+              }
+
               nameRef.setValue(nameText);
               codeRef.setValue(codeText);
               branchRef.setValue(branch.getText().toString());

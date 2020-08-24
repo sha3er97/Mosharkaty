@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.resala.mosharkaty.AdminAddGroupMosharka;
 import com.resala.mosharkaty.AdminEvents;
 import com.resala.mosharkaty.AdminShowMosharkat;
-import com.resala.mosharkaty.AdminShowSignatures;
+import com.resala.mosharkaty.AdminShowReports;
 import com.resala.mosharkaty.CalendarFragment;
 import com.resala.mosharkaty.ComposeMosharkaFragment;
 import com.resala.mosharkaty.ProfileFragment;
@@ -27,14 +27,21 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
   @StringRes
   private static final int[] TAB_TITLES =
-      new int[] {R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3,R.string.tab_text_4};
+          new int[]{
+                  R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4
+          };
 
   private static final int[] ADMIN_TAB_TITLES =
-      new int[] {R.string.admin_tab_text_1, R.string.admin_tab_text_2, R.string.admin_tab_text_3,R.string.admin_tab_text_4};
+          new int[]{
+                  R.string.admin_tab_text_1,
+                  R.string.admin_tab_text_2,
+                  R.string.admin_tab_text_3,
+                  R.string.admin_tab_text_4
+          };
   private final Context mContext;
 
   public SectionsPagerAdapter(Context context, FragmentManager fm) {
-    super(fm);
+    super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     mContext = context;
   }
 
@@ -47,7 +54,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     if (isAdmin) { // admin tabs
       switch (position) {
         case 0:
-          fragment = new AdminAddGroupMosharka();
+          fragment = new AdminShowReports();
           break;
         case 1:
           fragment = new AdminEvents();
@@ -56,7 +63,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
           fragment = new AdminShowMosharkat();
           break;
         case 3:
-          fragment = new AdminShowSignatures();
+          fragment = new AdminAddGroupMosharka();
           break;
       }
     } else {

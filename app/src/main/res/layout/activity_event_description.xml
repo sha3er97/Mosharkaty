@@ -27,9 +27,9 @@
         android:layout_gravity="bottom"
         android:layout_margin="12dp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/new_text_black"
         android:fontFamily="@font/new_jf"
         android:text="@string/title"
+        android:textColor="@color/new_text_black"
         android:textSize="28sp"
         app:layout_constraintTop_toBottomOf="@+id/eventImage" />
 
@@ -41,9 +41,9 @@
         android:layout_gravity="bottom"
         android:layout_margin="12dp"
         android:layout_marginTop="2dp"
+        android:fontFamily="@font/new_jf"
         android:text="@string/dummy_date"
         android:textColor="@color/new_text_black"
-        android:fontFamily="@font/new_jf"
         android:textSize="22sp"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -53,11 +53,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="28dp"
         android:background="@drawable/my_edit_text_border"
-        android:text="وصف الايفنت"
+        android:fontFamily="@font/new_jf"
+        android:gravity="center"
         android:padding="8dp"
+        android:scrollbars="vertical"
+        android:text="وصف الايفنت"
         android:textAlignment="center"
         android:textColor="@color/new_text_blue"
-        android:fontFamily="@font/new_jf"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

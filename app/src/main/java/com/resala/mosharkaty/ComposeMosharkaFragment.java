@@ -48,6 +48,17 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     int day;
     int month;
     int year;
+    int[] monthSelected = {-1};
+    int[] daySelected = {-1};
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        eText.setText("");
+    }
 
     /**
      * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -77,8 +88,6 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
             @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
         database = FirebaseDatabase.getInstance();
-        final int[] monthSelected = {-1};
-        final int[] daySelected = {-1};
 
         final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
         final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
@@ -173,7 +182,9 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                         typeRef.setValue(spin.getSelectedItem().toString());
 
                         MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
-                        ClosingRef.child(String.valueOf(monthSelected[0])).child(String.valueOf(daySelected[0])).setValue(0);
+                        ClosingRef.child(String.valueOf(monthSelected[0]))
+                                .child(String.valueOf(daySelected[0]))
+                                .setValue(0);
                         Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
                         addMosharka_btn.setEnabled(false);
                         addMosharka_btn.setBackgroundColor(
@@ -203,6 +214,9 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                 || Integer.parseInt(parts[1]) > month + 1
                 || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
             eText.setError("you can't choose a date in the future.");
+            return false;
+        } else if (monthSelected[0] == -1 || daySelected[0] == -1) {
+            Toast.makeText(getContext(), "حدث خطا في تسجيل المشاركة", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             eText.setError(null);

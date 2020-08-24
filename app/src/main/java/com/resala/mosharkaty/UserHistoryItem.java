@@ -1,6 +1,6 @@
 package com.resala.mosharkaty;
 
-class UserHistoryItem {
+class UserHistoryItem implements Comparable {
     private String Username;
     private String history;
     private int count;
@@ -33,5 +33,15 @@ class UserHistoryItem {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int compared = ((UserHistoryItem) o).getCount();
+        /* For Ascending order*/
+        //        return this.count-compared;
+
+        /* For Descending order do like this */
+        return compared - this.count;
     }
 }

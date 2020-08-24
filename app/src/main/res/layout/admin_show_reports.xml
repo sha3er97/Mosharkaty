@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <Button
+        android:id="@+id/change_branch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/border_only_btn"
+        android:fontFamily="@font/new_jf"
+        android:paddingHorizontal="8dp"
+        android:text="تغيير الفرع"
+        android:textColor="@color/new_blue_dark"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/branchSpinner3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/branchSpinner3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/showMosharkat_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:drawableStart="@drawable/trend"
+        android:fontFamily="@font/new_jf"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="32dp"
+        android:text="مشاركات الفريق"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/showClosings_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_branch" />
+
+    <Button
+        android:id="@+id/showClosings_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:drawableStart="@drawable/calendar"
+        android:fontFamily="@font/new_jf"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="32dp"
+        android:text="الايام المقفولة"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        app:drawableTint="@color/new_white_light"
+        app:layout_constraintBottom_toTopOf="@+id/showSignatures_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showMosharkat_btn" />
+
+    <Button
+        android:id="@+id/showSignatures_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:drawableStart="@drawable/tick"
+        android:fontFamily="@font/new_jf"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="32dp"
+        android:text="امضاءات التقييم"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        app:drawableTint="@color/new_white_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showClosings_btn" />
+
+    <Spinner
+        android:id="@+id/branchSpinner3"
+        style="@style/SpinnerwithNoArrow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/brTV2"
+        app:layout_constraintStart_toEndOf="@+id/change_branch"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/brTV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/branch"
+        android:textColor="@color/new_text_blue"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/branchSpinner3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/branchSpinner3" />
+</androidx.constraintlayout.widget.ConstraintLayout>

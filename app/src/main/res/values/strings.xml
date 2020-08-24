@@ -4,10 +4,10 @@
     <string name="tab_text_2">الايفنتات القادمة</string>
     <string name="tab_text_3">سجل مشاركة جديدة</string>
     <string name="tab_text_4">تقييمي</string>
-    <string name="admin_tab_text_1">تسجيل مشاركات</string>
-    <string name="admin_tab_text_2">Add Event</string>
+    <string name="admin_tab_text_1">تقارير</string>
+    <string name="admin_tab_text_2">اضافة ايفنت</string>
     <string name="admin_tab_text_3">مشاركات متسجلة</string>
-    <string name="admin_tab_text_4">امضاءات التقييمات</string>
+    <string name="admin_tab_text_4">تسجيل مشاركات</string>
     <string name="title">ايفنت</string>
     <string name="log_out_btn_text">خروج</string>
     <string name="save_changes_btn_text">حفظ التعديلات</string>
@@ -63,10 +63,11 @@
     <string name="dummy_time">Sun Aug 02 19:15:47 GMT+02:00 2020</string>
     <string name="sign_btn_txt">امضاء التقييم</string>
     <string name="no_events_error_message">لا يوجد ايفنتات قادمة\n متبقية هذا الشهر</string>
-    <string name="new_mosharka_btn_txt">سجل مشاركة\nجديدة</string>
+    <string name="new_mosharka_btn_txt">سجل مشاركة جديدة</string>
     <string name="total">الاجمالي</string>
     <string name="close_btn_txt">تقفيل اليوم</string>
     <string name="day_already_closed">اليوم مقفول بالفعل</string>
+    <string name="dummy_day">5</string>
     <string-array name="dummy_array">
         <item>Array Item One</item>
         <item>Array Item Two</item>
