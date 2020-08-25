@@ -45,7 +45,8 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
           "شيت",
           "معرض / قافلة",
           "كرنفال",
-          "سيشن / اورينتيشن"
+          "سيشن / اورينتيشن",
+          "دعايا"
   };
   View view;
   ArrayList<String> users = new ArrayList<>();
@@ -63,99 +64,99 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
   int[] monthSelected = {-1};
   int[] daySelected = {-1};
 
-  /**
-   * Called when the fragment is visible to the user and actively running.
-   */
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
   @Override
   public void onResume() {
     super.onResume();
     eText.setText("");
   }
 
-  /**
-   * Called to have the fragment instantiate its user interface view. This is optional, and
-   * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
-   * and {@link #onActivityCreated(Bundle)}.
-   *
-   * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
-   *
-   * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
-   * view is being released.
-   *
-   * @param inflater           The LayoutInflater object that can be used to inflate any views in the
-   *                           fragment,
-   * @param container          If non-null, this is the parent view that the fragment's UI should be attached
-   *                           to. The fragment should not add the view itself, but this can be used to generate the
-   *                           LayoutParams of the view.
-   * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-   *                           saved state as given here.
-   * @return Return the View for the fragment's UI, or null.
-   */
-  @Nullable
-  @Override
-  public View onCreateView(
-          @NonNull LayoutInflater inflater,
-          @Nullable ViewGroup container,
-          @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.admin_add_group_mosharka, container, false);
-    database = FirebaseDatabase.getInstance();
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
-    final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
-    final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and
+     * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
+     * and {@link #onActivityCreated(Bundle)}.
+     *
+     * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+     *
+     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
+     * view is being released.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the
+     *                           fragment,
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached
+     *                           to. The fragment should not add the view itself, but this can be used to generate the
+     *                           LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
+     *                           saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
+    @Nullable
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.admin_add_group_mosharka, container, false);
+        database = FirebaseDatabase.getInstance();
+        final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+        final DatabaseReference MosharkatCountRef = database.getReference("mosharkatPerMonthCount");
+        final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
 
-    eText = view.findViewById(R.id.mosharkaDate);
-    addMosharka_btn = view.findViewById(R.id.confirmMosharka);
-    spin = view.findViewById(R.id.spinner);
-    users_spin = view.findViewById(R.id.spinner2);
+        eText = view.findViewById(R.id.mosharkaDate);
+        addMosharka_btn = view.findViewById(R.id.confirmMosharka);
+        spin = view.findViewById(R.id.spinner);
+        users_spin = view.findViewById(R.id.spinner2);
     volunteerName_et = view.findViewById(R.id.volInGroupTV);
     final Calendar cldr = Calendar.getInstance();
     day = cldr.get(Calendar.DAY_OF_MONTH);
-    month = cldr.get(Calendar.MONTH);
-    year = cldr.get(Calendar.YEAR);
-    eText.setInputType(InputType.TYPE_NULL);
-    eText.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                // date picker dialog
-                picker =
-                        new DatePickerDialog(
-                                getContext(),
-                                new DatePickerDialog.OnDateSetListener() {
-                                  @Override
-                                  public void onDateSet(
-                                          DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                                    eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                    monthSelected[0] = monthOfYear + 1;
-                                    daySelected[0] = dayOfMonth;
-                                    // database
-                                    MosharkatCountRef.addValueEventListener(
-                                            new ValueEventListener() {
-                                              @Override
-                                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                // This method is called once with the initial value and again
-                                                // whenever data at this location is updated.
-                                                mosharkatCount =
-                                                        dataSnapshot
-                                                                .child(String.valueOf(monthOfYear + 1))
-                                                                .getValue(Integer.class);
-                                              }
+        month = cldr.get(Calendar.MONTH);
+        year = cldr.get(Calendar.YEAR);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // date picker dialog
+                        picker =
+                                new DatePickerDialog(
+                                        getContext(),
+                                        new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(
+                                                    DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
+                                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                                monthSelected[0] = monthOfYear + 1;
+                                                daySelected[0] = dayOfMonth;
+                                                // database
+                                                MosharkatCountRef.addValueEventListener(
+                                                        new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                // This method is called once with the initial value and again
+                                                                // whenever data at this location is updated.
+                                                                mosharkatCount =
+                                                                        dataSnapshot
+                                                                                .child(String.valueOf(monthOfYear + 1))
+                                                                                .getValue(Integer.class);
+                                                            }
 
-                                              @Override
-                                              public void onCancelled(@NonNull DatabaseError error) {
-                                                // Failed to read value
-                                                Log.w(TAG, "Failed to read value.", error.toException());
-                                              }
-                                            });
-                                  }
-                                },
-                                year,
-                                month,
-                                day);
-                picker.show();
-              }
-            });
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                                // Failed to read value
+                                                                Log.w(TAG, "Failed to read value.", error.toException());
+                                                            }
+                                                        });
+                                            }
+                    },
+                    year,
+                    month,
+                    day);
+            picker.show();
+          }
+        });
     //    spin.setOnItemSelectedListener(this);
     // Creating the ArrayAdapter instance having the country list
     ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
@@ -169,59 +170,77 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
     users_spin.setOnItemSelectedListener(this);
     final ArrayAdapter ab = new ArrayAdapter(getContext(), R.layout.spinner_item, users);
     ab.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    users_spin.setAdapter(ab);
-    usersRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(DataSnapshot dataSnapshot) {
-                users.clear();
-                users.add(" ");
-                users_spin.setSelection(0);
+        // Setting the ArrayAdapter data on the Spinner
+        users_spin.setAdapter(ab);
+        usersRef.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        users.clear();
+                        users.add(" ");
+                        users_spin.setSelection(0);
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  User user = snapshot.getValue(User.class);
-                  if (user.branch.trim().equals(userBranch)) {
-                    users.add(user.name);
-                  }
-                }
-                Collections.sort(users); // alphapetical
-                ab.notifyDataSetChanged();
-              }
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User user = snapshot.getValue(User.class);
+                            if (user.branch.trim().equals(userBranch)) {
+                                users.add(user.name);
+                            }
+                        }
+                        Collections.sort(users); // alphapetical
+                        ab.notifyDataSetChanged();
+                    }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+          }
+        });
     /**
      * ************************************************************************************************************
      */
-    // buttons click listener
-    addMosharka_btn.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                if (!validateForm()) return;
-                DatabaseReference currentMosharka =
-                        MosharkatRef.child(String.valueOf(monthSelected[0]))
-                                .child(String.valueOf(mosharkatCount));
-                DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
-                DatabaseReference typeRef = currentMosharka.child("mosharkaType");
-                DatabaseReference nameRef = currentMosharka.child("volname");
+        // buttons click listener
+        addMosharka_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!validateForm()) return;
+                        MosharkatCountRef.addValueEventListener(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        // This method is called once with the initial value and again
+                                        // whenever data at this location is updated.
+                                        mosharkatCount =
+                                                dataSnapshot
+                                                        .child(String.valueOf(monthSelected[0]))
+                                                        .getValue(Integer.class);
+                                    }
 
-                nameRef.setValue(volunteerName_et.getText().toString().trim());
-                dateRef.setValue(eText.getText().toString());
-                typeRef.setValue(spin.getSelectedItem().toString());
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w(TAG, "Failed to read value.", error.toException());
+                                    }
+                                });
+                        DatabaseReference currentMosharka =
+                                MosharkatRef.child(String.valueOf(monthSelected[0]))
+                                        .child(String.valueOf(mosharkatCount));
+                        DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
+                        DatabaseReference typeRef = currentMosharka.child("mosharkaType");
+                        DatabaseReference nameRef = currentMosharka.child("volname");
 
-                MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
-                ClosingRef.child(String.valueOf(monthSelected[0]))
-                        .child(String.valueOf(daySelected[0]))
-                        .setValue(0);
-                Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
-              }
-            });
+                        nameRef.setValue(volunteerName_et.getText().toString().trim());
+                        dateRef.setValue(eText.getText().toString());
+                        typeRef.setValue(spin.getSelectedItem().toString());
+
+                        MosharkatCountRef.child(String.valueOf(monthSelected[0])).setValue(mosharkatCount + 1);
+                        ClosingRef.child(String.valueOf(monthSelected[0]))
+                                .child(String.valueOf(daySelected[0]))
+                .setValue(0);
+            Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
+          }
+        });
 
     return view;
   }
@@ -232,18 +251,17 @@ public class AdminAddGroupMosharka extends androidx.fragment.app.Fragment
   }
 
   @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
+  public void onNothingSelected(AdapterView<?> adapterView) {}
 
   private boolean validateForm() {
     String date = eText.getText().toString();
-    String[] parts = date.split("/", 3);
-    if (TextUtils.isEmpty(date)) {
-      eText.setError("Required.");
-      return false;
-    } else if (Integer.parseInt(parts[2]) > year
-            || Integer.parseInt(parts[1]) > month + 1
-            || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+      String[] parts = date.split("/", 3);
+      if (TextUtils.isEmpty(date)) {
+          eText.setError("Required.");
+          return false;
+      } else if (Integer.parseInt(parts[2]) > year
+              || Integer.parseInt(parts[1]) > month + 1
+              || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
       eText.setError("you can't choose a date in the future.");
       return false;
     }

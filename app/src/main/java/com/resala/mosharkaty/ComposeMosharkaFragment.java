@@ -170,6 +170,24 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                     @Override
                     public void onClick(View v) {
                         if (!validateForm()) return;
+                        MosharkatCountRef.addValueEventListener(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        // This method is called once with the initial value and again
+                                        // whenever data at this location is updated.
+                                        mosharkatCount =
+                                                dataSnapshot
+                                                        .child(String.valueOf(monthSelected[0]))
+                                                        .getValue(Integer.class);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w(TAG, "Failed to read value.", error.toException());
+                                    }
+                                });
                         DatabaseReference currentMosharka =
                                 MosharkatRef.child(String.valueOf(monthSelected[0]))
                                         .child(String.valueOf(mosharkatCount));
