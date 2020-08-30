@@ -5,12 +5,33 @@ class EventItem {
     private String day;
     private String imgUrl;
     private String description;
+    private String location;
+    private String time;
 
-    public EventItem(String title, String day, String imgUrl, String description) {
+    public EventItem(
+            String title, String day, String imgUrl, String description, String location, String time) {
         this.title = title;
         this.day = day;
         this.imgUrl = imgUrl;
         this.description = description;
+        this.location = location;
+        this.time = time;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getDescription() {

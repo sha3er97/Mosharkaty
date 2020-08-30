@@ -1,17 +1,16 @@
 package com.resala.mosharkaty;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -20,108 +19,105 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
-import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class AdminEvents extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
-  private static int eventsCount;
-  HashMap<String, String> eventsImages = new HashMap<>();
-  View view;
-  String[] types = {
-          "فرز",
-          "فرز 2",
-          "فرز 3",
-          "فرز 4",
-          "تجهيزات رمضان",
-          "ايفنت طوارئ",
+    HashMap<String, String> eventsImages = new HashMap<>();
+    View view;
+    String[] types = {
+            "فرز",
+            "فرز 2",
+            "فرز 3",
+            "فرز 4",
+            "تجهيزات رمضان",
+            "ايفنت طوارئ",
 
-          // نقل
-          "نقل",
-          "نقل 2",
-          "نقل داخلي",
-          "نقل خارجي",
-          "نقل خارجي 2",
-          "تحضير ايفنت/معارض",
-          "نقلة بطاطين",
-          "شغل مخزن",
+            // نقل
+            "نقل",
+            "نقل 2",
+            "نقل داخلي",
+            "نقل خارجي",
+            "نقل خارجي 2",
+            "تحضير ايفنت/معارض",
+            "نقلة بطاطين",
+            "شغل مخزن",
 
-          // اتصالات و اتش ار
-          "سيشن",
-          "اورينتيشن",
-          "كرنفال",
-          "كرنفال 2",
-          "كرنفال 3",
-          "كرنفال 4",
-          "ورشة اتصالات",
-          "ولاد عم",
-          "افطار في الشارع",
-          "حفلة داخل الفرع",
+            // اتصالات و اتش ار
+            "سيشن",
+            "اورينتيشن",
+            "كرنفال",
+            "كرنفال 2",
+            "كرنفال 3",
+            "كرنفال 4",
+            "ورشة اتصالات",
+            "ولاد عم",
+            "افطار في الشارع",
+            "حفلة داخل الفرع",
 
-          // معارض و قوافل
-          "معارض",
-          "معارض 2",
-          "معارض 3",
-          "معرض كبير",
-          "معرض داخل الفرع",
-          "توزيع علي بيوت",
-          "اعمار",
-          "اعمار 2",
-          "زيارات مسنين",
-          "حفلة اطفال",
-          "حفلة اطفال 2",
-          "حفلة اطفال 3",
-          "اطعام",
-          "اطعام 2",
-          "مائدة افطار",
-          "مستشفي",
-          "دار ايواء",
+            // معارض و قوافل
+            "معارض",
+            "معارض 2",
+            "معارض 3",
+            "معرض كبير",
+            "معرض داخل الفرع",
+            "توزيع علي بيوت",
+            "اعمار",
+            "اعمار 2",
+            "زيارات مسنين",
+            "حفلة اطفال",
+            "حفلة اطفال 2",
+            "حفلة اطفال 3",
+            "اطعام",
+            "اطعام 2",
+            "مائدة افطار",
+            "مستشفي",
+            "دار ايواء",
 
-          // ايفنتات مركزية
-          "كساء",
-          "كساء 2",
-          "مجزر",
-          "معرض عرايس",
-          "يوم اليتيم",
-          "يوم اليتيم 2",
-          "عيد الام",
-          "عيد الام 2",
-          "عزومة",
-          "كامب مسؤولين فرز",
-          "كامب مسؤولين فرز 2",
-          "كامب مسؤولين فرز 3",
-          "دوري كورة",
-          "دوري كورة 2",
-          "دوري كورة 3",
+            // ايفنتات مركزية
+            "كساء",
+            "كساء 2",
+            "مجزر",
+            "معرض عرايس",
+            "يوم اليتيم",
+            "يوم اليتيم 2",
+            "عيد الام",
+            "عيد الام 2",
+            "عزومة",
+            "كامب مسؤولين فرز",
+            "كامب مسؤولين فرز 2",
+            "كامب مسؤولين فرز 3",
+            "دوري كورة",
+            "دوري كورة 2",
+            "دوري كورة 3",
 
-          // ايفنتات رسالة
-          "كامب بنات",
-          "كامب 48",
-          "اجتماع الدكتور",
-          "ميني كامب",
-          "ميني كامب 2",
-          "حفلة النشاط",
-          "حفلة النشاط 2",
+            // ايفنتات رسالة
+            "كامب بنات",
+            "كامب 48",
+            "اجتماع الدكتور",
+            "ميني كامب",
+            "ميني كامب 2",
+            "حفلة النشاط",
+            "حفلة النشاط 2",
 
-          // مكافحة
-          "حملة مكافحة كبيرة",
-          "حملة مكافحة",
-          "حملة مكافحة 2",
-          "حملة مكافحة 3",
-          "مطبخ مكافحة"
-  };
-  DatePickerDialog picker;
-  EditText eText;
+            // مكافحة
+            "حملة مكافحة كبيرة",
+            "حملة مكافحة",
+            "حملة مكافحة 2",
+            "حملة مكافحة 3",
+            "مطبخ مكافحة"
+    };
+    DatePickerDialog picker;
+    EditText eText;
+    TimePickerDialog picker2;
+    EditText eText2;
     Button addEvent_btn;
     FirebaseDatabase database;
     ImageView DemoImg;
@@ -130,16 +126,8 @@ public class AdminEvents extends androidx.fragment.app.Fragment
     int month;
     int year;
     EditText EventName_et;
+    EditText EventLocation_et;
     EditText EventDescription_et;
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        eText.setText("");
-    }
 
     /**
      * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -151,16 +139,16 @@ public class AdminEvents extends androidx.fragment.app.Fragment
      *
      * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
      * view is being released.
-   *
-   * @param inflater The LayoutInflater object that can be used to inflate any views in the
-   *     fragment,
-   * @param container If non-null, this is the parent view that the fragment's UI should be attached
-   *     to. The fragment should not add the view itself, but this can be used to generate the
-   *     LayoutParams of the view.
-   * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-   *     saved state as given here.
-   * @return Return the View for the fragment's UI, or null.
-   */
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the
+     *                           fragment,
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached
+     *                           to. The fragment should not add the view itself, but this can be used to generate the
+     *                           LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
+     *                           saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
   @Nullable
   @Override
   public View onCreateView(
@@ -172,96 +160,94 @@ public class AdminEvents extends androidx.fragment.app.Fragment
     view = inflater.inflate(R.layout.admin_events_fragment, container, false);
     DemoImg = view.findViewById(R.id.demoImg);
     final DatabaseReference EventsRef = database.getReference("events").child(userBranch);
-    final DatabaseReference EventsCountRef = database.getReference("eventsCount");
-    EventsCountRef.addListenerForSingleValueEvent(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                eventsCount = dataSnapshot.getValue(Integer.class);
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
-
-    EventName_et = view.findViewById(R.id.eventName_et);
-    EventDescription_et = view.findViewById(R.id.eventDescription_et);
+      EventName_et = view.findViewById(R.id.eventName_et);
+      EventDescription_et = view.findViewById(R.id.eventDescription_et);
+    EventLocation_et = view.findViewById(R.id.eventLocation_et);
     spin = view.findViewById(R.id.eventsTypeSpinner);
     eText = view.findViewById(R.id.eventDate_et);
-    addEvent_btn = view.findViewById(R.id.add_event_btn);
+      addEvent_btn = view.findViewById(R.id.add_event_btn);
 
-    // buttons click listener
-    addEvent_btn.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                if (!validateForm()) return;
-                DatabaseReference currentEvent = EventsRef.child(String.valueOf(eventsCount));
-                DatabaseReference dateRef = currentEvent.child("date");
-                DatabaseReference typeRef = currentEvent.child("type");
-                DatabaseReference descriptionRef = currentEvent.child("description");
-                DatabaseReference nameRef = currentEvent.child("Eventname");
+      // buttons click listener
+      addEvent_btn.setOnClickListener(
+              v -> {
+                  if (!validateForm()) return;
+                  DatabaseReference currentEvent =
+                          EventsRef.child(String.valueOf(System.currentTimeMillis() / 1000));
+                  DatabaseReference dateRef = currentEvent.child("date");
+                  DatabaseReference typeRef = currentEvent.child("type");
+                  DatabaseReference descriptionRef = currentEvent.child("description");
+                  DatabaseReference nameRef = currentEvent.child("Eventname");
+                  DatabaseReference locRef = currentEvent.child("location");
+                  DatabaseReference timeRef = currentEvent.child("time");
 
-                nameRef.setValue(EventName_et.getText().toString());
-                descriptionRef.setValue(EventDescription_et.getText().toString());
-                dateRef.setValue(eText.getText().toString());
-                typeRef.setValue(spin.getSelectedItem().toString());
+                  nameRef.setValue(EventName_et.getText().toString().trim());
+                  descriptionRef.setValue(EventDescription_et.getText().toString());
+                  dateRef.setValue(eText.getText().toString());
+                  timeRef.setValue(eText2.getText().toString());
+                  locRef.setValue(EventLocation_et.getText().toString().trim());
+                  typeRef.setValue(spin.getSelectedItem().toString());
 
-                EventsCountRef.setValue(eventsCount + 1);
-            Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
-          }
-        });
+                  Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
+              });
 
-    // database
-    EventsCountRef.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            eventsCount = dataSnapshot.getValue(Integer.class);
-          }
+      eText.setInputType(InputType.TYPE_NULL);
+      eText.setOnClickListener(
+              v -> {
+                  final Calendar cldr = Calendar.getInstance();
+                  day = cldr.get(Calendar.DAY_OF_MONTH);
+                  month = cldr.get(Calendar.MONTH);
+                  year = cldr.get(Calendar.YEAR);
+                  // date picker dialog
+                  picker =
+                          new DatePickerDialog(
+                                  getContext(),
+                                  (view, year, monthOfYear, dayOfMonth) ->
+                                          eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
+                                  year,
+                                  month,
+                                  day);
+                  picker.show();
+              });
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
+      eText2 = view.findViewById(R.id.eventTime_et);
+      eText2.setInputType(InputType.TYPE_NULL);
+      eText2.setOnClickListener(
+              v -> {
+                  final Calendar cldr = Calendar.getInstance();
+                  int hour = cldr.get(Calendar.HOUR_OF_DAY);
+                  int minutes = cldr.get(Calendar.MINUTE);
+                  // time picker dialog
+                  picker2 =
+                          new TimePickerDialog(
+                                  getContext(),
+                                  (tp, sHour, sMinute) -> {
+                                      int Mhour;
+                                      String Mminute;
+                                      String am_pm;
+                                      Mhour = sHour;
+                                      Mminute = String.valueOf(sMinute);
+                                      if (sMinute == 0) {
+                                          Mminute = "00";
+                                      }
+                                      if (Mhour > 12) {
+                                          am_pm = "PM";
+                                          Mhour = Mhour - 12;
+                                      } else {
+                                          am_pm = "AM";
+                                      }
+                                      eText2.setText(Mhour + ":" + Mminute + " " + am_pm);
+                                  },
+                                  hour,
+                                  minutes,
+                                  false);
+                  picker2.show();
+              });
 
-    eText.setInputType(InputType.TYPE_NULL);
-    eText.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            final Calendar cldr = Calendar.getInstance();
-            day = cldr.get(Calendar.DAY_OF_MONTH);
-            month = cldr.get(Calendar.MONTH);
-            year = cldr.get(Calendar.YEAR);
-            // date picker dialog
-            picker =
-                    new DatePickerDialog(
-                            getContext(),
-                            new DatePickerDialog.OnDateSetListener() {
-                              @Override
-                              public void onDateSet(
-                                      DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                              }
-                            },
-                            year,
-                            month,
-                            day);
-            picker.show();
-          }
-        });
-    spin.setOnItemSelectedListener(this);
-    // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
-    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spin.setOnItemSelectedListener(this);
+      // Creating the ArrayAdapter instance having the country list
+      ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
+      aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);
 
@@ -270,32 +256,40 @@ public class AdminEvents extends androidx.fragment.app.Fragment
 
   @Override
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-    String url = eventsImages.get(spin.getSelectedItem().toString());
+      String url = eventsImages.get(spin.getSelectedItem().toString());
     Picasso.get().load(url).into(DemoImg);
   }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
-
-  private boolean validateForm() {
-    boolean valid = true;
-    String date = eText.getText().toString();
-    String[] parts = date.split("/", 3);
-    if (TextUtils.isEmpty(date)) {
-      eText.setError("Required.");
-      valid = false;
-    } else if (Integer.parseInt(parts[2]) < year
-            || Integer.parseInt(parts[1]) < month + 1
-            || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) < day)) {
-      eText.setError("you can't choose a date in the past.");
-      valid = false;
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
-    String description = EventDescription_et.getText().toString();
-    String name = EventName_et.getText().toString();
-    if (TextUtils.isEmpty(description)) {
-      EventDescription_et.setError("Required.");
+    private boolean validateForm() {
+        boolean valid = true;
+        String date = eText.getText().toString();
+        String[] parts = date.split("/", 2);
+        if (TextUtils.isEmpty(date)) {
+            eText.setError("Required.");
+            valid = false;
+        } else if (Integer.parseInt(parts[1]) < month + 1
+                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) < day)) {
+            eText.setError("you can't choose a date in the past.");
+            valid = false;
+        }
+        String time = eText2.getText().toString();
+        if (TextUtils.isEmpty(time)) {
+            eText2.setError("Required.");
+            valid = false;
+        }
+        String loc = EventLocation_et.getText().toString();
+        if (TextUtils.isEmpty(loc)) {
+            EventLocation_et.setError("Required.");
+            valid = false;
+        }
+        String description = EventDescription_et.getText().toString();
+        String name = EventName_et.getText().toString();
+        if (TextUtils.isEmpty(description)) {
+            EventDescription_et.setError("Required.");
       valid = false;
     }
     if (TextUtils.isEmpty(name)) {

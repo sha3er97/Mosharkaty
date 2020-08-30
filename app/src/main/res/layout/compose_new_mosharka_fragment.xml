@@ -105,19 +105,6 @@
         app:layout_constraintTop_toTopOf="@+id/showMosharkaty_btn" />
 
     <TextView
-        android:id="@+id/mosharkatMonthCount2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="@string/dummy_number"
-        android:textColor="@android:color/holo_green_light"
-        android:textSize="24sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintEnd_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
-
-    <TextView
         android:id="@+id/volName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

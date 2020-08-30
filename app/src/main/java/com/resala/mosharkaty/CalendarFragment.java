@@ -5,9 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +31,18 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
   EventsAdapter adapter;
   ArrayList<EventItem> eventItems = new ArrayList<>();
   FirebaseDatabase database;
+  public static int eventsCount;
+  ValueEventListener Eventslistener;
+  DatabaseReference EventsRef;
+
+  /**
+   * Called when the fragment is visible to the user and actively running.
+   */
+  @Override
+  public void onResume() {
+    super.onResume();
+    eventsCount = eventItems.size();
+  }
 
   /**
    * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -57,16 +67,15 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
   @Nullable
   @Override
   public View onCreateView(
-      @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+          @NonNull LayoutInflater inflater,
+          @Nullable ViewGroup container,
+          @Nullable Bundle savedInstanceState) {
     fillEventsImages();
     view = inflater.inflate(R.layout.calendar_fragment, container, false);
     database = FirebaseDatabase.getInstance();
-    final DatabaseReference EventsRef = database.getReference("events");
+    EventsRef = database.getReference("events");
     final TextView dateTV = view.findViewById(R.id.todayDate);
     final TextView errorTV = view.findViewById(R.id.eventsErrorTV);
-    ImageButton refreshBtn = view.findViewById(R.id.events_refresh_btn);
 
     RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
     recyclerView.setHasFixedSize(true);
@@ -74,54 +83,65 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
     adapter = new EventsAdapter(eventItems, getContext());
     recyclerView.setAdapter(adapter);
 
-    EventsRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(DataSnapshot dataSnapshot) {
-                //            Log.i(TAG, "onDataChange: has children ? :" + dataSnapshot.hasChildren());
-                //            Log.i(TAG, "onDataChange:  branch ? :" + userBranch);
-                //            Log.i(TAG, "onDataChange:  value ? :" + dataSnapshot.toString());
+    Eventslistener =
+            EventsRef.addValueEventListener(
+                    new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        eventItems.clear();
+                        errorTV.setVisibility(View.INVISIBLE);
+                        boolean eventFound = false;
+                        final Calendar cldr = Calendar.getInstance();
+                        int day = cldr.get(Calendar.DAY_OF_MONTH);
+                        int month = cldr.get(Calendar.MONTH) + 1;
+                        int year = cldr.get(Calendar.YEAR);
+                        dateTV.setText(day + "/" + month + "/" + year);
+                        if (userBranch != null && dataSnapshot.hasChild(userBranch)) {
+                          for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
+                            Event event = snapshot.getValue(Event.class);
+                            if (event != null) {
+                              String[] splittedDate = event.date.split("/", 2);
+                              if (Integer.parseInt(splittedDate[0]) >= day
+                                      && Integer.parseInt(splittedDate[1]) == month) {
+                                String url = eventsImages.get(event.type);
+                                eventItems.add(
+                                        new EventItem(
+                                                event.Eventname,
+                                                event.date,
+                                                url,
+                                                event.description,
+                                                event.location,
+                                                event.time));
+                                //                        Toast.makeText(getContext(), "Events updated",
+                                // Toast.LENGTH_SHORT).show();
+                                eventFound = true;
+                              }
+                            }
+                          }
+                        }
+                        if (!eventFound) {
+                          Log.i(TAG, "onDataChange: no events found");
+                          errorTV.setVisibility(View.VISIBLE);
+                        }
+                        eventsCount = eventItems.size();
+                        adapter.notifyDataSetChanged();
+                      }
 
-                eventItems.clear();
-                errorTV.setVisibility(View.INVISIBLE);
-                boolean eventFound = false;
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH) + 1;
-                int year = cldr.get(Calendar.YEAR);
-                dateTV.setText(day + "/" + month + "/" + year);
-                if (dataSnapshot.hasChild(userBranch)) {
-                  for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
-                    Log.i(TAG, "onDataChange: child has children ? :" + snapshot.hasChildren());
-                    Log.i(TAG, "onDataChange:  child value ? :" + snapshot.toString());
-                    Event event = snapshot.getValue(Event.class);
-                    Log.i(TAG, "onDataChange: event date :" + event.date);
-                    String[] splittedDate = event.date.split("/", 3);
-                    if (Integer.parseInt(splittedDate[0]) >= day
-                            && Integer.parseInt(splittedDate[1]) == month
-                            && Integer.parseInt(splittedDate[2]) == year) {
-                      String url = eventsImages.get(event.type);
-                      eventItems.add(
-                              new EventItem(event.Eventname, event.date, url, event.description));
-                      Toast.makeText(getContext(), "Events updated", Toast.LENGTH_SHORT).show();
-                      eventFound = true;
-                    }
-                  }
-                }
-                if (!eventFound) {
-                  Log.i(TAG, "onDataChange: no events found");
-                  errorTV.setVisibility(View.VISIBLE);
-                }
-                adapter.notifyDataSetChanged();
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                      }
+                    });
     return view;
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    if (EventsRef != null && Eventslistener != null) {
+      EventsRef.removeEventListener(Eventslistener);
+    }
   }
 
   private void fillEventsImages() {

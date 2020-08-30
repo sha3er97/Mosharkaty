@@ -12,15 +12,15 @@ class MosharkaItem implements Comparable {
         this.mosharkaType = "error";
     }
 
-  public MosharkaItem(String volname, String mosharkaDate, String mosharkaType) {
-    this.volname = volname;
-    this.mosharkaDate = mosharkaDate;
-    this.mosharkaType = mosharkaType;
-  }
+    public MosharkaItem(String volname, String mosharkaDate, String mosharkaType) {
+        this.volname = volname;
+        this.mosharkaDate = mosharkaDate;
+        this.mosharkaType = mosharkaType;
+    }
 
-  public String getKey() {
-    return key;
-  }
+    public String getKey() {
+        return key;
+    }
 
   public void setKey(String key) {
     this.key = key;
@@ -34,13 +34,13 @@ class MosharkaItem implements Comparable {
     this.volname = volname;
   }
 
-  public String getMosharkaDate() {
-    return mosharkaDate;
-  }
+    public String getMosharkaDate() {
+        return mosharkaDate;
+    }
 
-  public void setMosharkaDate(String mosharkaDate) {
-      this.mosharkaDate = mosharkaDate;
-  }
+    public void setMosharkaDate(String mosharkaDate) {
+        this.mosharkaDate = mosharkaDate;
+    }
 
     public String getMosharkaType() {
         return mosharkaType;
@@ -52,12 +52,14 @@ class MosharkaItem implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        int compared = Integer.parseInt(((MosharkaItem) o).getKey());
+        String[] comparedString = ((MosharkaItem) o).getKey().split("&", 3);
+        int compared = Integer.parseInt(comparedString[0]);
         /* For Ascending order*/
         //        return this.count-compared;
 
         /* For Descending order do like this */
         //    return compared.compareTo(this.mosharkaType);
-        return compared - Integer.parseInt(this.key);
+        String[] other = this.key.split("&", 3);
+        return compared - Integer.parseInt(other[0]);
     }
 }

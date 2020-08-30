@@ -28,21 +28,21 @@
     <Button
         android:id="@+id/confirmMosharka"
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/blue_btn"
         android:drawableStart="@drawable/add"
         android:fontFamily="@font/new_jf"
         android:gravity="start|center_vertical"
         android:paddingHorizontal="16dp"
+        android:paddingVertical="32dp"
         android:text="@string/new_mosharka_btn_txt"
         android:textColor="@color/new_white_light"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
 
     <EditText
@@ -68,6 +68,26 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volName" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_gray"
+        android:fontFamily="@font/new_jf"
+        android:gravity="center"
+        android:hint="رقم تليفون لو متطوع جديد"
+        android:inputType="phone"
+        android:padding="3dp"
+        android:textAlignment="center"
+        android:textColorHint="@color/new_hint_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volInGroupTV" />
 
     <Spinner
         android:id="@+id/spinner2"
@@ -143,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/new_jf"
-        android:text=" او اختار يوزر \nمن البرنامج :"
+        android:text=" او اختار من \nفريق العمل :"
         android:textAlignment="center"
         android:textColor="@color/new_text_black"
         android:textSize="20sp"

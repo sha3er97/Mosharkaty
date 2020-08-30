@@ -4,13 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
     private ArrayList<MessageItem> messageItems;
@@ -22,12 +28,13 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
     }
 
     /**
-     * Called when RecyclerView needs a new {@link MessagesAdapter.ViewHolder} of the given type to represent an item.
-     * This new ViewHolder should be constructed with a new View that can represent the items of the
-     * given type. You can either create a new View manually or inflate it from an XML layout file.
+     * Called when RecyclerView needs a new {@link MessagesAdapter.ViewHolder} of the given type to
+     * represent an item. This new ViewHolder should be constructed with a new View that can represent
+     * the items of the given type. You can either create a new View manually or inflate it from an
+     * XML layout file.
      *
-     * @param parent The ViewGroup into which the new View will be added after it is bound to an
-     *     adapter position.
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to an
+     *                 adapter position.
      * @param viewType The view type of the new View.
      * @return A new ViewHolder that holds a View of the given view type.
      * @see #getItemViewType(int)
@@ -43,7 +50,8 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should update
-     * the contents of the {@link MessagesAdapter.ViewHolder#itemView} to reflect the item at the given position.
+     * the contents of the {@link MessagesAdapter.ViewHolder#itemView} to reflect the item at the
+     * given position.
      *
      * <p>Note that unlike {@link ListView}, RecyclerView will not call this method again if the
      * position of the item changes in the data set unless the item itself is invalidated or the new
@@ -52,8 +60,8 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
      * of it. If you need the position of an item later on (e.g. in a click listener), use {@link
      * MessagesAdapter.ViewHolder#getAdapterPosition()} which will have the updated adapter position.
      *
-     * @param holder The ViewHolder which should be updated to represent the contents of the item at
-     *     the given position in the data set.
+     * @param holder   The ViewHolder which should be updated to represent the contents of the item at
+     *                 the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
     @Override
@@ -62,7 +70,6 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
         holder.author.setText(item.getAuthor());
         holder.date.setText(item.getDate());
         holder.content.setText(item.getContent());
-
     }
 
     /**
@@ -75,18 +82,23 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
         return messageItems.size();
     }
 
-    /** ***************************************************************************** */
+    /**
+     * ****************************************************************************
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView author;
         TextView date;
         TextView content;
-
+        ImageButton delete_btn;
+        FirebaseDatabase database;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             author = itemView.findViewById(R.id.ListMessageAuthor);
             content = itemView.findViewById(R.id.ListMessagecontent);
             date = itemView.findViewById(R.id.ListMessageDate);
+            delete_btn = itemView.findViewById(R.id.delete_btn);
+            delete_btn.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
@@ -94,7 +106,13 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
         public void onClick(View view) {
             int position = getAdapterPosition();
             MessageItem itemClicked = messageItems.get(position);
-            //do nothing
+            if (view.getId() == delete_btn.getId()) {
+                database = FirebaseDatabase.getInstance();
+                final DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
+                MessagesRef.child(itemClicked.getKey()).setValue(null);
+            } else {
+                // do nothing till now
+            }
         }
     }
 }

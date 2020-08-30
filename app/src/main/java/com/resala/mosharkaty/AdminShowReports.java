@@ -2,6 +2,7 @@ package com.resala.mosharkaty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import static com.resala.mosharkaty.LoginActivity.branchOrder;
+import static com.resala.mosharkaty.LoginActivity.isMrkzy;
 import static com.resala.mosharkaty.NewAccount.branches;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
@@ -52,44 +55,40 @@ public class AdminShowReports extends androidx.fragment.app.Fragment {
         Button showSignatures_btn = view.findViewById(R.id.showSignatures_btn);
         Button showClosings_btn = view.findViewById(R.id.showClosings_btn);
         Button showMosharkat_btn = view.findViewById(R.id.showMosharkat_btn);
+        Button showUsers_btn = view.findViewById(R.id.showUsers_btn);
+        Button show_confirmations_btn = view.findViewById(R.id.show_confirmations_btn);
 
         ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, branches);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
-        spin.setSelection(0);
+        spin.setSelection(Math.max(branchOrder, 0)); // just in case
+        if (!isMrkzy) {
+            change_branch.setEnabled(false);
+            change_branch.setText("لا يمكن تغيير الفرع");
+            change_branch.setBackgroundColor(
+                    getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+            change_branch.setTextColor(getResources().getColor(R.color.new_text_black));
+            change_branch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        }
         userBranch = spin.getSelectedItem().toString();
 
         change_branch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        userBranch = spin.getSelectedItem().toString();
-                        Toast.makeText(getContext(), "تم تحديث الفرع لفرع " + userBranch, Toast.LENGTH_SHORT)
-                                .show();
-                    }
+                view -> {
+                    userBranch = spin.getSelectedItem().toString();
+                    Toast.makeText(getContext(), "تم تحديث الفرع لفرع " + userBranch, Toast.LENGTH_SHORT)
+                            .show();
                 });
         showClosings_btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(getActivity(), AdminShowClosings.class));
-                    }
-                });
+                view -> startActivity(new Intent(getActivity(), AdminShowClosings.class)));
         showMosharkat_btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(getActivity(), AdminShowStatistics.class));
-                    }
-                });
+                view -> startActivity(new Intent(getActivity(), AdminShowStatistics.class)));
         showSignatures_btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(getActivity(), AdminShowSignature.class));
-                    }
-                });
+                view -> startActivity(new Intent(getActivity(), AdminShowSignature.class)));
+        showUsers_btn.setOnClickListener(
+                view -> startActivity(new Intent(getActivity(), AdminShowUsers.class)));
+        show_confirmations_btn.setOnClickListener(
+                view -> startActivity(new Intent(getActivity(), AdminShowConfirmations.class)));
         return view;
     }
 }

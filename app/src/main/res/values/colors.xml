@@ -6,11 +6,18 @@
     <color name="ourBlue">#357EC7</color>
     <color name="lighterBlue">#82CAFF</color>
     <color name="red">#FF4444</color>
+    <color name="green">#4CAF50</color>
     <!--    after redesign  -->
     <color name="new_white_dark">#cfd9df</color>
     <color name="new_white_light">#e2ebf0</color>
     <color name="new_blue_light">#0bbafb</color>
     <color name="new_blue_dark">#4285ec</color>
+    <color name="new_yellow_light">#fae500</color>
+    <color name="new_yellow_dark">#eab601</color>
+    <color name="new_red_light">#ea013d</color>
+    <color name="new_red_dark">#be1616</color>
+    <color name="new_gray_light">#d7d7d7</color>
+    <color name="new_gray_dark">#cbcaca</color>
     <color name="new_text_black">#464646</color>
     <color name="new_text_blue">#3e89ed</color>
     <color name="new_fill_gray">#f0f0f0</color>

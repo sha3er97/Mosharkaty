@@ -13,10 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,87 +22,74 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class LoginActivity extends AppCompatActivity {
-  private FirebaseAuth mAuth;
-  public static String userId;
-  public static boolean isAdmin;
-  EditText email_et;
-  EditText password_et;
-  FirebaseDatabase database;
-  final String[] adminEmail = new String[1];
-  final String[] adminPass = new String[1];
+    private FirebaseAuth mAuth;
+    public static String userId;
+    public static int branchOrder;
+    public static boolean isMrkzy;
+    public static boolean isAdmin;
+    EditText email_et;
+    EditText password_et;
+    Admin admin;
+    FirebaseDatabase database;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
     // Initialize Firebase Auth
     mAuth = FirebaseAuth.getInstance();
     email_et = findViewById(R.id.editTextTextEmailAddress);
-    password_et = findViewById(R.id.editTextTextPassword);
-    database = FirebaseDatabase.getInstance();
-    DatabaseReference adminAccount = database.getReference("AdminAccount");
-    adminAccount.addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Admin admin = dataSnapshot.getValue(Admin.class);
-                    if (admin != null) {
-                        adminEmail[0] = admin.email;
-                        adminPass[0] = admin.password;
-                        Log.d(TAG, "admin email : " + adminEmail[0]);
-                        Log.d(TAG, "admin pass : " + adminPass[0]);
-                    } else
-                        Toast.makeText(
-                                getApplicationContext(), "error reading admin data", Toast.LENGTH_SHORT)
-                                .show();
-                }
+        password_et = findViewById(R.id.editTextTextPassword);
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference adminAccount = database.getReference("AdminAccount");
+        adminAccount.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        admin = dataSnapshot.getValue(Admin.class);
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                }
-            });
-      FirebaseUser currentUser = mAuth.getCurrentUser();
-      FirebaseInstanceId.getInstance()
-              .getInstanceId()
-              .addOnCompleteListener(
-                      new OnCompleteListener<InstanceIdResult>() {
-                          @Override
-                          public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                              if (!task.isSuccessful()) {
-                                  Log.w(TAG, "getInstanceId failed", task.getException());
-                                  return;
-                              }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnCompleteListener(
+                        task -> {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "getInstanceId failed", task.getException());
+                                return;
+                            }
 
-                              // Get new Instance ID token
-                              String token = task.getResult().getToken();
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
 
-                              // Log and toast
-                              //                        String msg = getString(R.string.msg_token_fmt, token);
-                              Log.i("getInstanceId", token);
-                              //                        Toast.makeText(MainActivity.this, msg,
-                              // Toast.LENGTH_SHORT).show();
-                          }
-                      });
-      updateUI(currentUser);
-  }
+                            // Log
+                            Log.i("getInstanceId", token);
+                        });
+        updateUI(currentUser);
+    }
 
   private void makeAdminActions() {
-    isAdmin = true;
+      isAdmin = true;
       Toast.makeText(this, "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT).show();
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
-    //        throw new RuntimeException("Test Crash"); // Force a crash
+      //        throw new RuntimeException("Test Crash"); // Force a crash
   }
 
   private void updateUI(FirebaseUser user) {
     if (user != null) {
-      // Signed in
+        // Signed in
         userId = user.getUid();
         Toast.makeText(this, "نورت مصر 3>", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -121,20 +105,17 @@ public class LoginActivity extends AppCompatActivity {
     mAuth
         .signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(
-            this,
-            new OnCompleteListener<AuthResult>() {
-              @Override
-              public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                  // Sign in success, update UI with the signed-in user's information
-                  FirebaseUser user = mAuth.getCurrentUser();
-                  updateUI(user);
-                } else {
-                  // If sign in fails, display a message to the user.
-                  updateUI(null);
-                }
-              }
-            });
+                this,
+                task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        updateUI(null);
+                    }
+                });
   }
 
   private boolean validateForm() {
@@ -160,8 +141,52 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private boolean IsAdminDetails() {
-    return (email_et.getText().toString().equalsIgnoreCase(adminEmail[0])
-        && password_et.getText().toString().equalsIgnoreCase(adminPass[0]));
+      if (!password_et.getText().toString().equalsIgnoreCase(admin.password)) return false;
+      // check emails
+      if (email_et.getText().toString().equalsIgnoreCase(admin.mohandseen)) {
+          userBranch = branches[0];
+          branchOrder = 0;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.maadi)) {
+          userBranch = branches[1];
+          branchOrder = 1;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.faisal)) {
+          userBranch = branches[2];
+          branchOrder = 2;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.mnasr)) {
+          userBranch = branches[3];
+          branchOrder = 3;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.msrelgdida)) {
+          userBranch = branches[4];
+          branchOrder = 4;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.october)) {
+          userBranch = branches[5];
+          branchOrder = 5;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.helwan)) {
+          userBranch = branches[6];
+          branchOrder = 6;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.alex)) {
+          userBranch = branches[7];
+          branchOrder = 7;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.mokattam)) {
+          userBranch = branches[8];
+          branchOrder = 8;
+          return true;
+      } else if (email_et.getText().toString().equalsIgnoreCase(admin.mrkzy)) {
+          isMrkzy = true;
+          userBranch = branches[0];
+          branchOrder = 0;
+          return true;
+      } else return false;
+      //    return (email_et.getText().toString().equalsIgnoreCase(admin.email)
+      //        && password_et.getText().toString().equalsIgnoreCase(admin.password));
   }
 
   public void loginClick(View view) {
@@ -178,15 +203,15 @@ public class LoginActivity extends AppCompatActivity {
           }
       }
 
-    if (IsAdminDetails()) makeAdminActions();
-    else { // not admin
-      Log.d(TAG, "user not admin ");
-      Log.d(TAG, "entered email : " + email_et.getText().toString());
-      Log.d(TAG, "entered pass : " + password_et.getText().toString());
+      if (IsAdminDetails()) makeAdminActions();
+      else { // not admin
+          Log.d(TAG, "user not admin ");
+          Log.d(TAG, "entered email : " + email_et.getText().toString());
+          Log.d(TAG, "entered pass : " + password_et.getText().toString());
 
-      isAdmin = false;
-      signIn(email_et.getText().toString(), password_et.getText().toString());
-    }
+          isAdmin = false;
+          signIn(email_et.getText().toString(), password_et.getText().toString());
+      }
   }
 
   public void resetPassword(View view) {
@@ -198,21 +223,18 @@ public class LoginActivity extends AppCompatActivity {
       mAuth
               .sendPasswordResetEmail(email_et.getText().toString())
               .addOnCompleteListener(
-                      new OnCompleteListener<Void>() {
-                          @Override
-                          public void onComplete(@NonNull Task<Void> task) {
-                              if (task.isSuccessful()) {
-                                  Toast.makeText(
-                                          getApplicationContext(),
-                                          "check your email for reset password link",
-                                          Toast.LENGTH_SHORT)
-                                          .show();
-                                  Log.d(TAG, "Email sent.");
-                              } else {
-                                  Toast.makeText(
-                                          getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
-                                          .show();
-                              }
+                      task -> {
+                          if (task.isSuccessful()) {
+                              Toast.makeText(
+                                      getApplicationContext(),
+                                      "check your email for reset password link",
+                                      Toast.LENGTH_SHORT)
+                                      .show();
+                              Log.d(TAG, "Email sent.");
+                          } else {
+                              Toast.makeText(
+                                      getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
+                                      .show();
                           }
                       });
   }

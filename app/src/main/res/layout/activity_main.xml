@@ -22,40 +22,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minHeight="?actionBarSize"
-                android:textColor="@color/new_white_light"
-                android:padding="@dimen/appbar_padding"
-                android:text="@string/app_name"
-                android:fontFamily="@font/new_jf"
-                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
             <Button
                 android:id="@+id/logOutBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:onClick="logOut"
-                android:textColor="@color/new_white_light"
-                android:fontFamily="@font/new_jf"
-                app:drawableTint="@color/new_white_light"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="8dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:drawableEnd="@drawable/exit"
-                android:layout_margin="8dp"
-                android:layout_alignParentEnd="true"
-                android:text="@string/log_out_btn_text" />
+                android:fontFamily="@font/new_jf"
+                android:onClick="logOut"
+                android:text="@string/log_out_btn_text"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:drawableTint="@color/new_white_light" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:padding="@dimen/appbar_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:textColor="@color/new_white_light" />
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
+            app:tabGravity="fill"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/new_blue_dark" />
-
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -65,6 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/new_blue_dark"
+        android:background="@drawable/blue_btn"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

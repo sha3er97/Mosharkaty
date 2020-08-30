@@ -2,6 +2,7 @@ package com.resala.mosharkaty.ui.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import com.resala.mosharkaty.AdminShowMosharkat;
 import com.resala.mosharkaty.AdminShowReports;
 import com.resala.mosharkaty.CalendarFragment;
 import com.resala.mosharkaty.ComposeMosharkaFragment;
+import com.resala.mosharkaty.HomeFragment;
 import com.resala.mosharkaty.ProfileFragment;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.TakyeemFragment;
@@ -28,16 +30,23 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
   @StringRes
   private static final int[] TAB_TITLES =
           new int[]{
-                  R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4
+                  R.string.tab_text_1,
+                  R.string.tab_text_2,
+                  R.string.home_tab,
+                  R.string.tab_text_3,
+                  R.string.tab_text_4
           };
 
+  @StringRes
   private static final int[] ADMIN_TAB_TITLES =
           new int[]{
                   R.string.admin_tab_text_1,
                   R.string.admin_tab_text_2,
+                  R.string.home_tab,
                   R.string.admin_tab_text_3,
                   R.string.admin_tab_text_4
           };
+
   private final Context mContext;
 
   public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -45,6 +54,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     mContext = context;
   }
 
+  @NonNull
   @Override
   public Fragment getItem(int position) {
     // getItem is called to instantiate the fragment for the given page.
@@ -60,9 +70,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
           fragment = new AdminEvents();
           break;
         case 2:
-          fragment = new AdminShowMosharkat();
+          fragment = new HomeFragment();
           break;
         case 3:
+          fragment = new AdminShowMosharkat();
+          break;
+        case 4:
           fragment = new AdminAddGroupMosharka();
           break;
       }
@@ -75,13 +88,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
           fragment = new CalendarFragment();
           break;
         case 2:
-          fragment = new ComposeMosharkaFragment();
+          fragment = new HomeFragment();
           break;
         case 3:
+          fragment = new ComposeMosharkaFragment();
+          break;
+        case 4:
           fragment = new TakyeemFragment();
           break;
       }
     }
+    assert fragment != null;
     return fragment;
   }
 
@@ -94,7 +111,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    // Show 4 total pages.
-    return 4;
+    // Show 5 total pages.
+    return 5;
   }
 }

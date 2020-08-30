@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,61 +7,198 @@
     android:background="#ffffff"
     tools:context=".EventDescription">
 
-    <ImageView
-        android:id="@+id/eventImage"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="centerCrop"
-        android:src="#88888888"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="12dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/title"
-        android:textColor="@color/new_text_black"
-        android:textSize="28sp"
-        app:layout_constraintTop_toBottomOf="@+id/eventImage" />
+        <ImageView
+            android:id="@+id/eventImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerCrop"
+            android:src="#88888888"
+            android:background="@drawable/border_only_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="12dp"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/dummy_date"
-        android:textColor="@color/new_text_black"
-        android:textSize="22sp"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:text="@string/title"
+            android:textAlignment="center"
+            android:textColor="@color/new_blue_dark"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventImage" />
 
-    <TextView
-        android:id="@+id/eventDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="28dp"
-        android:background="@drawable/my_edit_text_border"
-        android:fontFamily="@font/new_jf"
-        android:gravity="center"
-        android:padding="8dp"
-        android:scrollbars="vertical"
-        android:text="وصف الايفنت"
-        android:textAlignment="center"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/eventDetails"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/my_edit_text_border"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:padding="8dp"
+            android:scrollbars="vertical"
+            android:text="@string/large_text"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonsLayout"
+            app:layout_constraintTop_toBottomOf="@+id/detailsLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <TextView
+                android:id="@+id/timeTV"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_btn"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="12:00 PM"
+                android:textAlignment="center"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/clock_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dateTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dateTV"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/blue_btn"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/dummy_date"
+                android:textAlignment="center"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/calendar_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/location"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/timeTV"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/location"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/blue_btn"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="الوراق"
+                android:textAlignment="center"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/dateTV"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/eventDetails"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailsLayout">
+
+            <Button
+                android:id="@+id/coming"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/btn_gradient_blue"
+                android:fontFamily="@font/new_jf"
+                android:text="جاي"
+                android:onClick="eventComingClick"
+                android:textColor="@color/new_white_light"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/maybe"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/maybe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/btn_gradient_yellow"
+                android:fontFamily="@font/new_jf"
+                android:text="احتمال"
+                android:textColor="@color/new_white_light"
+                android:textSize="24sp"
+                android:onClick="eventMaybeClick"
+                app:layout_constraintBottom_toTopOf="@+id/not_coming"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/coming" />
+
+            <Button
+                android:id="@+id/not_coming"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/btn_gradient_red"
+                android:fontFamily="@font/new_jf"
+                android:text="معتذر"
+                android:textColor="@color/new_white_light"
+                android:textSize="24sp"
+                android:onClick="eventNotComingClick"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maybe" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

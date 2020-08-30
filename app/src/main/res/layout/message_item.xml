@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/new_jf"
+        android:gravity="center"
         android:text="message content"
         android:textAlignment="center"
-        android:gravity="center"
         android:textColor="@color/new_text_black"
-        android:fontFamily="@font/new_jf"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/delete_btn"
         app:layout_constraintTop_toBottomOf="@+id/ListMessageAuthor" />
 
     <TextView
@@ -55,4 +56,16 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ListMessagecontent" />
+
+    <ImageButton
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:padding="8dp"
+        android:src="@drawable/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

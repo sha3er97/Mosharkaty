@@ -95,15 +95,17 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
     @Override
     public void onClick(View view) {
-      int position = getAdapterPosition();
-      EventItem itemClicked = eventItems.get(position);
-      Intent intent = new Intent(context, EventDescription.class);
-      intent.putExtra("title", itemClicked.getTitle());
-      intent.putExtra("date", itemClicked.getDay());
-      intent.putExtra("image", itemClicked.getImgUrl());
-      intent.putExtra("description", itemClicked.getDescription());
+        int position = getAdapterPosition();
+        EventItem itemClicked = eventItems.get(position);
+        Intent intent = new Intent(context, EventDescription.class);
+        intent.putExtra("title", itemClicked.getTitle());
+        intent.putExtra("date", itemClicked.getDay());
+        intent.putExtra("image", itemClicked.getImgUrl());
+        intent.putExtra("description", itemClicked.getDescription());
+        intent.putExtra("location", itemClicked.getLocation());
+        intent.putExtra("time", itemClicked.getTime());
 
-      context.startActivity(intent);
+        context.startActivity(intent);
     }
   }
 }

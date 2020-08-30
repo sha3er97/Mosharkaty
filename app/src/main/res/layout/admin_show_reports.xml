@@ -22,25 +22,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/showMosharkat_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/btn_gradient_blue"
-        android:drawableStart="@drawable/trend"
-        android:fontFamily="@font/new_jf"
-        android:gravity="start|center_vertical"
-        android:paddingHorizontal="32dp"
-        android:text="مشاركات الفريق"
-        android:textColor="@color/new_white_light"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/showClosings_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_branch" />
-
-    <Button
         android:id="@+id/showClosings_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -54,31 +35,12 @@
         android:textColor="@color/new_white_light"
         android:textSize="18sp"
         app:drawableTint="@color/new_white_light"
-        app:layout_constraintBottom_toTopOf="@+id/showSignatures_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showMosharkat_btn" />
-
-    <Button
-        android:id="@+id/showSignatures_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/btn_gradient_blue"
-        android:drawableStart="@drawable/tick"
-        android:fontFamily="@font/new_jf"
-        android:gravity="start|center_vertical"
-        android:paddingHorizontal="32dp"
-        android:text="امضاءات التقييم"
-        android:textColor="@color/new_white_light"
-        android:textSize="18sp"
-        app:drawableTint="@color/new_white_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showClosings_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutBottom" />
+
 
     <Spinner
         android:id="@+id/branchSpinner3"
@@ -106,4 +68,111 @@
         app:layout_constraintBottom_toBottomOf="@+id/branchSpinner3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/branchSpinner3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_branch"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <Button
+            android:id="@+id/showMosharkat_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/trend"
+            android:fontFamily="@font/new_jf"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="28dp"
+            android:text="مشاركات الفريق"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:drawableTint="@color/new_white_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/show_confirmations_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/show_confirmations_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/person_add"
+            android:fontFamily="@font/new_jf"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="28dp"
+            android:text="تاكيدات الايفنتات"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:drawableTint="@color/new_white_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/showMosharkat_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/showClosings_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTop">
+
+        <Button
+            android:id="@+id/showSignatures_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/tick"
+            android:fontFamily="@font/new_jf"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="28dp"
+            android:text="امضاءات التقييم"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:drawableTint="@color/new_white_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/showUsers_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/showUsers_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/account"
+            android:fontFamily="@font/new_jf"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="28dp"
+            android:text="يوزرز البرنامج"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:drawableTint="@color/new_white_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/showSignatures_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

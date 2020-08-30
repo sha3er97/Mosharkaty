@@ -4,4 +4,5 @@ class Volunteer {
     public String code;
     public int count;
     public String Volname;
+    public String degree;
 }

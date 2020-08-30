@@ -36,6 +36,14 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
   FirebaseDatabase database;
   public static String[] branches = {
           "المهندسين",
+          "المعادي",
+          "فيصل",
+          "مدينة نصر",
+          "مصر الجديدة",
+          "اكتوبر",
+          "حلوان",
+          "اسكندرية",
+          "المقطم"
   };
   Spinner spin;
 
@@ -53,8 +61,7 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     spin = findViewById(R.id.branchSpinner);
     spin.setOnItemSelectedListener(this);
     // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter aa =
-            new ArrayAdapter(this, R.layout.spinner_item, branches);
+      ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, branches);
     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);
@@ -64,27 +71,27 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     if (!validateForm()) {
       return;
     }
-    mAuth
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(
-                    this,
-                    new OnCompleteListener<AuthResult>() {
-                      @Override
-                      public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                          // Sign in success, update UI with the signed-in user's information
-                          FirebaseUser user = mAuth.getCurrentUser();
-                          updateUI(user);
-                        } else {
-                          // If sign in fails, display a message to the user.
-                          //                  task.getException().printStackTrace();
-                          Toast.makeText(
-                                  getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT)
-                                  .show();
-                          updateUI(null);
-                        }
-                      }
-                    });
+      mAuth
+              .createUserWithEmailAndPassword(email, password)
+              .addOnCompleteListener(
+                      this,
+                      new OnCompleteListener<AuthResult>() {
+                          @Override
+                          public void onComplete(@NonNull Task<AuthResult> task) {
+                              if (task.isSuccessful()) {
+                                  // Sign in success, update UI with the signed-in user's information
+                                  FirebaseUser user = mAuth.getCurrentUser();
+                                  updateUI(user);
+                              } else {
+                                  // If sign in fails, display a message to the user.
+                                  //                  task.getException().printStackTrace();
+                                  Toast.makeText(
+                                          getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT)
+                                          .show();
+                                  updateUI(null);
+                              }
+                          }
+                      });
   }
 
   private void updateUI(FirebaseUser user) {
@@ -159,26 +166,26 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
   }
 
   public void newAccountClick(View view) {
-    ConnectivityManager connectivityManager =
-            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
     if (connectivityManager != null) {
-      if (connectivityManager.getActiveNetworkInfo() == null
-              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-        //          Toast.makeText(getApplicationContext(), "No Internet",
-        // Toast.LENGTH_SHORT).show();
-        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        return;
-      }
+        if (connectivityManager.getActiveNetworkInfo() == null
+                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+            //          Toast.makeText(getApplicationContext(), "No Internet",
+            // Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
     }
     createAccount(email_et.getText().toString(), password_et.getText().toString());
   }
 
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-  }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 }

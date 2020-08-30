@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 public class MessagesRead extends AppCompatActivity {
@@ -50,10 +51,10 @@ public class MessagesRead extends AppCompatActivity {
     pass_et = findViewById(R.id.messagesPass);
     confirm_pass = findViewById(R.id.confirm_pass);
     if (isManager) {
-      confirm_pass.setEnabled(false);
-      confirm_pass.setBackgroundColor(
-              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-      confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
+        confirm_pass.setEnabled(false);
+        confirm_pass.setBackgroundColor(
+                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+        confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
       confirm_pass.setText("Welcome");
     }
     recyclerView.setHasFixedSize(true);
@@ -64,88 +65,91 @@ public class MessagesRead extends AppCompatActivity {
     adapter = new MessagesAdapter(messageItems, getApplicationContext());
     recyclerView.setAdapter(adapter);
     DatabaseReference adminAccount = database.getReference("messagesPassword");
-    adminAccount.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                adminPass[0] = dataSnapshot.getValue(String.class);
-              }
+      adminAccount.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      adminPass[0] = dataSnapshot.getValue(String.class);
+                  }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
   }
 
   public void refreshMessages(View view) {
-    ConnectivityManager connectivityManager =
-            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
     if (connectivityManager != null) {
-      if (connectivityManager.getActiveNetworkInfo() == null
-              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        return;
-      }
+        if (connectivityManager.getActiveNetworkInfo() == null
+                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
     }
     if (!isManager) {
-      Toast.makeText(
-              getApplicationContext(),
-              "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
-              Toast.LENGTH_SHORT)
-              .show();
+        Toast.makeText(
+                getApplicationContext(),
+                "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
+                Toast.LENGTH_SHORT)
+                .show();
       return;
     }
     DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
 
     MessagesRef.addValueEventListener(
             new ValueEventListener() {
-              @Override
-              public void onDataChange(DataSnapshot dataSnapshot) {
-                messageItems.clear();
-                int counter = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  MessageItem message = snapshot.getValue(MessageItem.class);
-                  messageItems.add(message);
-                  Toast.makeText(getApplicationContext(), "messages updated", Toast.LENGTH_SHORT)
-                          .show();
-                  counter++;
-                }
-                adapter.notifyDataSetChanged();
-                messagesTV.setText(String.valueOf(counter));
-              }
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    messageItems.clear();
+                    int counter = 0;
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MessageItem message = snapshot.getValue(MessageItem.class);
+                        if (message != null) message.setKey(snapshot.getKey());
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
+                        messageItems.add(message);
+                        Toast.makeText(getApplicationContext(), "messages updated", Toast.LENGTH_SHORT)
+                                .show();
+                        counter++;
+                    }
+                    adapter.notifyDataSetChanged();
+                    messagesTV.setText(String.valueOf(counter));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
             });
   }
 
   public void checkPassword(View view) {
-    ConnectivityManager connectivityManager =
-            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
     if (connectivityManager != null) {
-      if (connectivityManager.getActiveNetworkInfo() == null
-              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        return;
-      }
+        if (connectivityManager.getActiveNetworkInfo() == null
+                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
     }
 
     if (!adminPass[0].equalsIgnoreCase(pass_et.getText().toString().trim())) {
       Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
     } else {
-      isManager = true;
-      Toast.makeText(getApplicationContext(), "اهلا استاذ مدير", Toast.LENGTH_SHORT).show();
-      confirm_pass.setEnabled(false);
-      confirm_pass.setBackgroundColor(
-              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-      confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
+        isManager = true;
+        isAdmin = true;
+        Toast.makeText(getApplicationContext(), "اهلا استاذ مدير", Toast.LENGTH_SHORT).show();
+        confirm_pass.setEnabled(false);
+        confirm_pass.setBackgroundColor(
+                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+        confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
       confirm_pass.setText("Welcome");
     }
   }

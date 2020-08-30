@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +31,9 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
   int the_month_before;
   int this_month;
   String Volname;
+  ValueEventListener Takyeemlistener;
+  DatabaseReference takyeemTab;
+
   /**
    * Called to have the fragment instantiate its user interface view. This is optional, and
    * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
@@ -83,51 +85,53 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
 
     final TextView extra_comment = view.findViewById(R.id.extraComment);
     DatabaseReference liveSheet =
-        database.getReference("1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk");
-    DatabaseReference takyeemTab = liveSheet.child("takyeem");
-    takyeemTab.addValueEventListener(
-        new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              Takyeem takyeem = snapshot.getValue(Takyeem.class);
-              if (takyeem.code.equalsIgnoreCase(userCode)) {
-                communication.setText(String.valueOf(takyeem.communication));
-                commitment.setText(String.valueOf(takyeem.commitment));
-                problem_solving.setText(String.valueOf(takyeem.problem_solving));
-                quality.setText(String.valueOf(takyeem.quality));
-                creativity.setText(String.valueOf(takyeem.creativity));
-                cooperation.setText(String.valueOf(takyeem.cooperation));
-                ekhtlat.setText(String.valueOf(takyeem.ekhtlat));
-                respect.setText(String.valueOf(takyeem.respect));
-                humble.setText(String.valueOf(takyeem.humble));
-                loyalty.setText(String.valueOf(takyeem.loyalty));
-                execuses.setText(String.valueOf(takyeem.execuses));
-                totalTechTV.setText(String.valueOf(takyeem.total_technical));
-                totalPersonalTV.setText(String.valueOf(takyeem.total_personal));
-                head_bonus.setText(String.valueOf(takyeem.head_bonus));
-                extra_comment.setText(String.valueOf(takyeem.extra_comment));
-                big_total = takyeem.big_total;
-                last_month = takyeem.last_month;
-                the_month_before = takyeem.the_month_before;
-                this_month = takyeem.this_month;
-                Volname = takyeem.Volname;
-                takyeemVolName.setText(Volname);
-                Toast.makeText(getContext(), "تم تحديث تقييمك", Toast.LENGTH_SHORT).show();
-                codeFound = true;
-              }
-            }
-          }
+            database.getReference("1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk");
+    takyeemTab = liveSheet.child("takyeem");
+    Takyeemlistener =
+            takyeemTab.addValueEventListener(
+                    new ValueEventListener() {
+                      @Override
+                      public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                          Takyeem takyeem = snapshot.getValue(Takyeem.class);
+                          if (takyeem.code.equalsIgnoreCase(userCode)) {
+                            communication.setText(String.valueOf(takyeem.communication));
+                            commitment.setText(String.valueOf(takyeem.commitment));
+                            problem_solving.setText(String.valueOf(takyeem.problem_solving));
+                            quality.setText(String.valueOf(takyeem.quality));
+                            creativity.setText(String.valueOf(takyeem.creativity));
+                            cooperation.setText(String.valueOf(takyeem.cooperation));
+                            ekhtlat.setText(String.valueOf(takyeem.ekhtlat));
+                            respect.setText(String.valueOf(takyeem.respect));
+                            humble.setText(String.valueOf(takyeem.humble));
+                            loyalty.setText(String.valueOf(takyeem.loyalty));
+                            execuses.setText(String.valueOf(takyeem.execuses));
+                            totalTechTV.setText(String.valueOf(takyeem.total_technical));
+                            totalPersonalTV.setText(String.valueOf(takyeem.total_personal));
+                            head_bonus.setText(String.valueOf(takyeem.head_bonus));
+                            extra_comment.setText(String.valueOf(takyeem.extra_comment));
+                            big_total = takyeem.big_total;
+                            last_month = takyeem.last_month;
+                            the_month_before = takyeem.the_month_before;
+                            this_month = takyeem.this_month;
+                            Volname = takyeem.Volname;
+                            takyeemVolName.setText(Volname);
+                            //                    Toast.makeText(getContext(), "تم تحديث تقييمك",
+                            // Toast.LENGTH_SHORT).show();
+                            codeFound = true;
+                          }
+                        }
+                      }
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-          }
-        });
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                      }
+                    });
     // button listener
     contReading.setOnClickListener(
-        new View.OnClickListener() {
+            new View.OnClickListener() {
           @Override
           public void onClick(View v) {
             Intent intent = new Intent(getContext(), ContinueTakyeem.class);
@@ -138,7 +142,15 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
             intent.putExtra("Volname", Volname);
             startActivity(intent);
           }
-        });
+            });
     return view;
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    if (takyeemTab != null && Takyeemlistener != null) {
+      takyeemTab.removeEventListener(Takyeemlistener);
+    }
   }
 }
