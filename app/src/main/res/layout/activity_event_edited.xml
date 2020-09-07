@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".EventEdited">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/add_event_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:fontFamily="@font/new_jf"
+            android:onClick="editEvent"
+            android:text="تعديل"
+            android:textColor="@color/new_white_light"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/delete_event_btn"
+            app:layout_constraintTop_toBottomOf="@+id/eventDescription_et" />
+
+        <Button
+            android:id="@+id/delete_event_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_gradient_red"
+            android:fontFamily="@font/new_jf"
+            android:onClick="deleteEvent"
+            android:text="إلغاء"
+            android:textColor="@color/new_white_light"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_event_btn"
+            app:layout_constraintEnd_toStartOf="@+id/add_event_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/add_event_btn" />
+
+        <EditText
+            android:id="@+id/eventDate_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:drawableEnd="@drawable/calendar"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="@string/choose_date_hint"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventName_et" />
+
+        <EditText
+            android:id="@+id/eventTime_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:drawableEnd="@drawable/clock"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="اختار الساعة"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventTime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventDate_et" />
+
+        <EditText
+            android:id="@+id/eventLocation_et"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="مكان من كلمة\n او كلمتين"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventLocation"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventTime_et" />
+
+        <EditText
+            android:id="@+id/eventDescription_et"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textSize="12sp"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/eventDescription"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventLocation_et" />
+
+        <EditText
+            android:id="@+id/eventName_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventNameTV"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="مكان الايفنت"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eventLocation_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eventLocation_et" />
+
+        <TextView
+            android:id="@+id/eventTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="الساعة"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eventTime_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eventTime_et" />
+
+        <TextView
+            android:id="@+id/eventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="تاريخ الايفنت"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eventDate_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eventDate_et" />
+
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="وصف الايفنت"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eventDescription_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eventDescription_et" />
+
+        <TextView
+            android:id="@+id/eventNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="اسم الايفنت"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/eventName_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/eventName_et" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

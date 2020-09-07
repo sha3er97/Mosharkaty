@@ -17,10 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.MessagesRead.isManager;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
 
 class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder> {
   private ArrayList<MosharkaItem> mosharkatItems;
@@ -84,9 +85,9 @@ class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder>
     return mosharkatItems.size();
   }
 
-    /**
-     * ***************************************************************************
-     */
+  /**
+   * **************************************************************************
+   */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     TextView name;
     TextView type;
@@ -112,10 +113,10 @@ class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder>
       if (view.getId() == delete_btn.getId()) {
           if (isManager || !isAdmin) {
               database = FirebaseDatabase.getInstance();
-              final DatabaseReference MosharkatRef =
-                      database.getReference("mosharkat").child(userBranch);
-              final Calendar cldr = Calendar.getInstance();
-              int month = cldr.get(Calendar.MONTH) + 1;
+            final DatabaseReference MosharkatRef =
+                    database.getReference("mosharkat").child(userBranch);
+            final Calendar cldr = Calendar.getInstance(Locale.US);
+            int month = cldr.get(Calendar.MONTH) + 1;
               MosharkatRef.child(String.valueOf(month)).child(itemClicked.getKey()).setValue(null);
           } else {
               Toast.makeText(context, "illegal action : متقدرش تلغي المشاركة دي", Toast.LENGTH_SHORT)

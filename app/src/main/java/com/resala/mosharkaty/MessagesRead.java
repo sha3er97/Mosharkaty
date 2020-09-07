@@ -27,7 +27,8 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.Starter.myRules;
 
 public class MessagesRead extends AppCompatActivity {
   MessagesAdapter adapter;
@@ -37,7 +38,6 @@ public class MessagesRead extends AppCompatActivity {
   TextView messagesTV;
   EditText pass_et;
   Button confirm_pass;
-  final String[] adminPass = new String[1];
   public static boolean isManager;
 
   @Override
@@ -64,20 +64,6 @@ public class MessagesRead extends AppCompatActivity {
     recyclerView.setLayoutManager(mLayoutManager);
     adapter = new MessagesAdapter(messageItems, getApplicationContext());
     recyclerView.setAdapter(adapter);
-    DatabaseReference adminAccount = database.getReference("messagesPassword");
-      adminAccount.addValueEventListener(
-              new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                      adminPass[0] = dataSnapshot.getValue(String.class);
-                  }
-
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-                      // Failed to read value
-                      Log.w(TAG, "Failed to read value.", error.toException());
-                  }
-              });
   }
 
   public void refreshMessages(View view) {
@@ -104,7 +90,7 @@ public class MessagesRead extends AppCompatActivity {
     MessagesRef.addValueEventListener(
             new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     messageItems.clear();
                     int counter = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -132,25 +118,25 @@ public class MessagesRead extends AppCompatActivity {
       ConnectivityManager connectivityManager =
               (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-        if (connectivityManager.getActiveNetworkInfo() == null
-                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
-        }
-    }
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
 
-    if (!adminPass[0].equalsIgnoreCase(pass_et.getText().toString().trim())) {
-      Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
-    } else {
-        isManager = true;
-        isAdmin = true;
-        Toast.makeText(getApplicationContext(), "اهلا استاذ مدير", Toast.LENGTH_SHORT).show();
-        confirm_pass.setEnabled(false);
-        confirm_pass.setBackgroundColor(
-                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-        confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
-      confirm_pass.setText("Welcome");
-    }
+      if (!myRules.manager_password.equalsIgnoreCase(pass_et.getText().toString().trim())) {
+          Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
+      } else {
+          isManager = true;
+          isAdmin = true;
+          Toast.makeText(getApplicationContext(), "اهلا استاذ مدير", Toast.LENGTH_SHORT).show();
+          confirm_pass.setEnabled(false);
+          confirm_pass.setBackgroundColor(
+                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+          confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
+          confirm_pass.setText("Welcome");
+      }
   }
 }

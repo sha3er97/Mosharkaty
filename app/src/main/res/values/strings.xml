@@ -164,9 +164,18 @@
     <string name="youAreNotUpdatedMessage">A new version of Mosharkaty is available. Please update to version </string>
     <string name="youAreNotUpdatedMessage1">  now</string>
     <string name="update">Update</string>
-    <string-array name="dummy_array">
-        <item>Array Item One</item>
-        <item>Array Item Two</item>
-        <item>Array Item Three</item>
-    </string-array>
+    <string name="send_daily_update">ارسال المتابعة اليومية</string>
+    <string name="coming">جاي</string>
+    <string name="maybe">احتمال</string>
+    <string name="not_coming">معتذر</string>
+    <string name="title_activity_admin_meetings">AdminMeetings</string>
+    <string name="meeting_tab_text_1">اضافة اجتماع</string>
+    <string name="meeting_tab_text_2">عرض اجتماعات</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chooseExcelForm">اختار فورم الاكسيل اللي عايزه</string>
+    <string name="dailyReport">متابعة ادارة المتطوعين اليومية</string>
+    <string name="motab3asheet">شيت المتابعة</string>
+    <string name="nasheet_tab_text_1">اضافة نشيط</string>
+    <string name="nasheet_tab_text_2">عرض المشاركات</string>
+    <string name="nasheet_tab_text_3">تقرير</string>
 </resources>

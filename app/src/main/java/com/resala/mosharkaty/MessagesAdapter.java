@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
     private ArrayList<MessageItem> messageItems;

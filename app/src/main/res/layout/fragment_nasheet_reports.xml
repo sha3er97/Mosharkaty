@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TableLayout
+        android:id="@+id/reportsTable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/my_edit_text_border"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36">
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="جدد"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_blue"
+                android:textSize="22sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="نشيط"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_blue"
+                android:textSize="22sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="22sp" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:id="@+id/noobsCount"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nasheetCount"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="عدد"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:id="@+id/noobsAttended"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nasheetAttended"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="شارك منهم"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:id="@+id/noobsPercent"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_percent"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nasheetPercent"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_percent"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="نسبة مشاركة"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:id="@+id/noobsMosharkat"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nasheetMosharkat"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="اجمالي مشاركات"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/my_edit_text_border">
+
+            <TextView
+                android:id="@+id/noobsAverage1"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nasheetAverage1"
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="@string/dummy_num2"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:background="@drawable/my_edit_text_border"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="متوسط مشاركات حقيقي"
+                android:textAlignment="center"
+                android:textColor="@color/new_text_black"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/current_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/dummy_number"
+        android:textColor="@color/new_text_blue"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView36"
+        app:layout_constraintEnd_toStartOf="@+id/textView36"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView36" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/new_jf"
+        android:text="تقرير شهر :"
+        android:textColor="@color/new_text_black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/current_month"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

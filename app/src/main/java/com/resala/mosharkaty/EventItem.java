@@ -7,15 +7,31 @@ class EventItem {
     private String description;
     private String location;
     private String time;
+    private String key;
 
     public EventItem(
-            String title, String day, String imgUrl, String description, String location, String time) {
+            String title,
+            String day,
+            String imgUrl,
+            String description,
+            String location,
+            String time,
+            String key) {
         this.title = title;
         this.day = day;
         this.imgUrl = imgUrl;
         this.description = description;
         this.location = location;
         this.time = time;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getLocation() {

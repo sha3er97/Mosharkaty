@@ -25,8 +25,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminEvents extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
@@ -59,6 +60,10 @@ public class AdminEvents extends androidx.fragment.app.Fragment
             "كرنفال 4",
             "ورشة اتصالات",
             "ولاد عم",
+            "اجتماع",
+            "اجتماع 2",
+            "اجتماع 3",
+            "اوتينج",
             "افطار في الشارع",
             "حفلة داخل الفرع",
 
@@ -91,6 +96,7 @@ public class AdminEvents extends androidx.fragment.app.Fragment
             "عيد الام",
             "عيد الام 2",
             "عزومة",
+            "عزومة 2",
             "كامب مسؤولين فرز",
             "كامب مسؤولين فرز 2",
             "كامب مسؤولين فرز 3",
@@ -149,116 +155,124 @@ public class AdminEvents extends androidx.fragment.app.Fragment
      *                           saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
-  @Nullable
-  @Override
-  public View onCreateView(
-      @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    fillEventsImages();
-    database = FirebaseDatabase.getInstance();
-    view = inflater.inflate(R.layout.admin_events_fragment, container, false);
-    DemoImg = view.findViewById(R.id.demoImg);
-    final DatabaseReference EventsRef = database.getReference("events").child(userBranch);
+    @Nullable
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        fillEventsImages();
+        database = FirebaseDatabase.getInstance();
+        view = inflater.inflate(R.layout.admin_events_fragment, container, false);
+        DemoImg = view.findViewById(R.id.demoImg);
 
-      EventName_et = view.findViewById(R.id.eventName_et);
-      EventDescription_et = view.findViewById(R.id.eventDescription_et);
-    EventLocation_et = view.findViewById(R.id.eventLocation_et);
-    spin = view.findViewById(R.id.eventsTypeSpinner);
-    eText = view.findViewById(R.id.eventDate_et);
-      addEvent_btn = view.findViewById(R.id.add_event_btn);
+        EventName_et = view.findViewById(R.id.eventName_et);
+        EventDescription_et = view.findViewById(R.id.eventDescription_et);
+        EventLocation_et = view.findViewById(R.id.eventLocation_et);
+        spin = view.findViewById(R.id.eventsTypeSpinner);
+        eText = view.findViewById(R.id.eventDate_et);
+        eText2 = view.findViewById(R.id.eventTime_et);
+        addEvent_btn = view.findViewById(R.id.add_event_btn);
+        if (userBranch != null) {
+            final DatabaseReference EventsRef = database.getReference("events").child(userBranch);
 
-      // buttons click listener
-      addEvent_btn.setOnClickListener(
-              v -> {
-                  if (!validateForm()) return;
-                  DatabaseReference currentEvent =
-                          EventsRef.child(String.valueOf(System.currentTimeMillis() / 1000));
-                  DatabaseReference dateRef = currentEvent.child("date");
-                  DatabaseReference typeRef = currentEvent.child("type");
-                  DatabaseReference descriptionRef = currentEvent.child("description");
-                  DatabaseReference nameRef = currentEvent.child("Eventname");
-                  DatabaseReference locRef = currentEvent.child("location");
-                  DatabaseReference timeRef = currentEvent.child("time");
+            // buttons click listener
+            addEvent_btn.setOnClickListener(
+                    v -> {
+                        if (!validateForm()) return;
+                        DatabaseReference currentEvent =
+                                EventsRef.child(String.valueOf(System.currentTimeMillis() / 1000));
+                        DatabaseReference dateRef = currentEvent.child("date");
+                        DatabaseReference typeRef = currentEvent.child("type");
+                        DatabaseReference descriptionRef = currentEvent.child("description");
+                        DatabaseReference nameRef = currentEvent.child("Eventname");
+                        DatabaseReference locRef = currentEvent.child("location");
+                        DatabaseReference timeRef = currentEvent.child("time");
 
-                  nameRef.setValue(EventName_et.getText().toString().trim());
-                  descriptionRef.setValue(EventDescription_et.getText().toString());
-                  dateRef.setValue(eText.getText().toString());
-                  timeRef.setValue(eText2.getText().toString());
-                  locRef.setValue(EventLocation_et.getText().toString().trim());
-                  typeRef.setValue(spin.getSelectedItem().toString());
+                        nameRef.setValue(EventName_et.getText().toString().trim());
+                        descriptionRef.setValue(EventDescription_et.getText().toString());
+                        dateRef.setValue(eText.getText().toString());
+                        timeRef.setValue(eText2.getText().toString());
+                        locRef.setValue(EventLocation_et.getText().toString().trim());
+                        typeRef.setValue(spin.getSelectedItem().toString());
 
-                  Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
-              });
+                        Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
 
-      eText.setInputType(InputType.TYPE_NULL);
-      eText.setOnClickListener(
-              v -> {
-                  final Calendar cldr = Calendar.getInstance();
-                  day = cldr.get(Calendar.DAY_OF_MONTH);
-                  month = cldr.get(Calendar.MONTH);
-                  year = cldr.get(Calendar.YEAR);
-                  // date picker dialog
-                  picker =
-                          new DatePickerDialog(
-                                  getContext(),
-                                  (view, year, monthOfYear, dayOfMonth) ->
-                                          eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
-                                  year,
-                                  month,
-                                  day);
-                  picker.show();
-              });
+                        // عشان ماجد
+                        EventName_et.setText("");
+                        EventDescription_et.setText("");
+                        eText.setText("");
+                        eText2.setText("");
+                        EventLocation_et.setText("");
+                    });
+        }
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(
+                v -> {
+                    final Calendar cldr = Calendar.getInstance(Locale.US);
+                    day = cldr.get(Calendar.DAY_OF_MONTH);
+                    month = cldr.get(Calendar.MONTH);
+                    year = cldr.get(Calendar.YEAR);
+                    // date picker dialog
+                    picker =
+                            new DatePickerDialog(
+                                    getContext(),
+                                    (view, year, monthOfYear, dayOfMonth) ->
+                                            eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
+                                    year,
+                                    month,
+                                    day);
+                    picker.show();
+                });
 
-      eText2 = view.findViewById(R.id.eventTime_et);
-      eText2.setInputType(InputType.TYPE_NULL);
-      eText2.setOnClickListener(
-              v -> {
-                  final Calendar cldr = Calendar.getInstance();
-                  int hour = cldr.get(Calendar.HOUR_OF_DAY);
-                  int minutes = cldr.get(Calendar.MINUTE);
-                  // time picker dialog
-                  picker2 =
-                          new TimePickerDialog(
-                                  getContext(),
-                                  (tp, sHour, sMinute) -> {
-                                      int Mhour;
-                                      String Mminute;
-                                      String am_pm;
-                                      Mhour = sHour;
-                                      Mminute = String.valueOf(sMinute);
-                                      if (sMinute == 0) {
-                                          Mminute = "00";
-                                      }
-                                      if (Mhour > 12) {
-                                          am_pm = "PM";
-                                          Mhour = Mhour - 12;
-                                      } else {
-                                          am_pm = "AM";
-                                      }
-                                      eText2.setText(Mhour + ":" + Mminute + " " + am_pm);
-                                  },
-                                  hour,
-                                  minutes,
-                                  false);
-                  picker2.show();
-              });
+        eText2.setInputType(InputType.TYPE_NULL);
+        eText2.setOnClickListener(
+                v -> {
+                    final Calendar cldr = Calendar.getInstance(Locale.US);
+                    int hour = cldr.get(Calendar.HOUR_OF_DAY);
+                    int minutes = cldr.get(Calendar.MINUTE);
+                    // time picker dialog
+                    picker2 =
+                            new TimePickerDialog(
+                                    getContext(),
+                                    (tp, sHour, sMinute) -> {
+                                        int Mhour;
+                                        String Mminute;
+                                        String am_pm;
+                                        Mhour = sHour;
+                                        Mminute = String.valueOf(sMinute);
+                                        if (sMinute == 0) {
+                                            Mminute = "00";
+                                        }
+                                        if (Mhour > 12) {
+                                            am_pm = "PM";
+                                            Mhour = Mhour - 12;
+                                        } else {
+                                            am_pm = "AM";
+                                        }
+                                        eText2.setText(Mhour + ":" + Mminute + " " + am_pm);
+                                    },
+                                    hour,
+                                    minutes,
+                                    false);
+                    picker2.show();
+                });
 
-      spin.setOnItemSelectedListener(this);
-      // Creating the ArrayAdapter instance having the country list
-      ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
-      aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    spin.setAdapter(aa);
+        spin.setOnItemSelectedListener(this);
+        // Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
 
-    return view;
-  }
+        return view;
+    }
 
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-      String url = eventsImages.get(spin.getSelectedItem().toString());
-    Picasso.get().load(url).into(DemoImg);
-  }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String url = eventsImages.get(spin.getSelectedItem().toString());
+        Picasso.get().load(url).into(DemoImg);
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
@@ -290,19 +304,21 @@ public class AdminEvents extends androidx.fragment.app.Fragment
         String name = EventName_et.getText().toString();
         if (TextUtils.isEmpty(description)) {
             EventDescription_et.setError("Required.");
-      valid = false;
+            valid = false;
+        }
+        if (TextUtils.isEmpty(name)) {
+            EventName_et.setError("Required.");
+            valid = false;
+        }
+        if (valid) {
+            eText.setError(null);
+            EventDescription_et.setError(null);
+            EventName_et.setError(null);
+            EventLocation_et.setError(null);
+            eText2.setError(null);
+        }
+        return valid;
     }
-    if (TextUtils.isEmpty(name)) {
-      EventName_et.setError("Required.");
-      valid = false;
-    }
-    if (valid) {
-      eText.setError(null);
-      EventDescription_et.setError(null);
-      EventName_et.setError(null);
-    }
-    return valid;
-  }
 
   private void fillEventsImages() {
     eventsImages.put("معارض", "https://i.imgur.com/cmxhBZJ.jpg");
@@ -351,28 +367,34 @@ public class AdminEvents extends androidx.fragment.app.Fragment
     eventsImages.put("نقل 2", "https://i.imgur.com/Xo5Vbxk.jpg");
     eventsImages.put("ورشة اتصالات", "https://i.imgur.com/ddORToQ.jpg");
     eventsImages.put("كساء 2", "https://i.imgur.com/uanNgkT.jpg");
-    eventsImages.put("كامب مسؤولين فرز 3", "https://i.imgur.com/x7y8yZd.jpg");
-    eventsImages.put("زيارات مسنين", "https://i.imgur.com/lM5BD3A.jpg");
-    eventsImages.put("فرز 3", "https://i.imgur.com/Qciv6Kh.jpg");
-    eventsImages.put("كرنفال 3", "https://i.imgur.com/vWFXHr1.jpg");
-    eventsImages.put("فرز 4", "https://i.imgur.com/mYQWcBr.jpg");
-    eventsImages.put("عيد الام", "https://i.imgur.com/Wt7p4JB.jpg");
-    eventsImages.put("عيد الام 2", "https://i.imgur.com/AeoHH6v.jpg");
-    eventsImages.put("تحضير ايفنت/معارض", "https://i.imgur.com/IzQ6g55.jpg");
-    eventsImages.put("يوم اليتيم 2", "https://i.imgur.com/1hNtlUS.jpg");
-    eventsImages.put("حملة مكافحة 3", "https://i.imgur.com/n12h3sh.jpg");
-    eventsImages.put("ميني كامب 2", "https://i.imgur.com/MttRKh9.jpg");
-    eventsImages.put("ولاد عم", "https://i.imgur.com/4d8lS5v.jpg");
-    eventsImages.put("معارض 3", "https://i.imgur.com/kJcrQEG.jpg");
-    eventsImages.put("افطار في الشارع", "https://i.imgur.com/gmRfiU7.jpg");
-    eventsImages.put("حفلة داخل الفرع", "https://i.imgur.com/QIc3ZDv.jpg");
-    eventsImages.put("كرنفال 4", "https://i.imgur.com/5PZB1wc.jpg");
-    eventsImages.put("توزيع حضار", "https://i.imgur.com/PLfqZgq.jpg");
-    eventsImages.put("دوري كورة 2", "https://i.imgur.com/t2TFMm2.jpg");
-    eventsImages.put("مطبخ مكافحة", "https://i.imgur.com/nzwgC1B.jpg");
-    eventsImages.put("حفلة النشاط 2", "https://i.imgur.com/CV7werB.jpg");
-    eventsImages.put("ميني كامب", "https://i.imgur.com/FwLGrvr.jpg");
-    eventsImages.put("دوري كورة 3", "https://i.imgur.com/PLCx3ui.jpg");
-    eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
+      eventsImages.put("كامب مسؤولين فرز 3", "https://i.imgur.com/x7y8yZd.jpg");
+      eventsImages.put("زيارات مسنين", "https://i.imgur.com/lM5BD3A.jpg");
+      eventsImages.put("فرز 3", "https://i.imgur.com/Qciv6Kh.jpg");
+      eventsImages.put("كرنفال 3", "https://i.imgur.com/vWFXHr1.jpg");
+      eventsImages.put("فرز 4", "https://i.imgur.com/mYQWcBr.jpg");
+      eventsImages.put("عيد الام", "https://i.imgur.com/Wt7p4JB.jpg");
+      eventsImages.put("عيد الام 2", "https://i.imgur.com/AeoHH6v.jpg");
+      eventsImages.put("تحضير ايفنت/معارض", "https://i.imgur.com/IzQ6g55.jpg");
+      eventsImages.put("يوم اليتيم 2", "https://i.imgur.com/1hNtlUS.jpg");
+      eventsImages.put("حملة مكافحة 3", "https://i.imgur.com/n12h3sh.jpg");
+      eventsImages.put("ميني كامب 2", "https://i.imgur.com/MttRKh9.jpg");
+      eventsImages.put("معارض 3", "https://i.imgur.com/kJcrQEG.jpg");
+      eventsImages.put("افطار في الشارع", "https://i.imgur.com/gmRfiU7.jpg");
+      eventsImages.put("حفلة داخل الفرع", "https://i.imgur.com/QIc3ZDv.jpg");
+      eventsImages.put("كرنفال 4", "https://i.imgur.com/5PZB1wc.jpg");
+      eventsImages.put("توزيع حضار", "https://i.imgur.com/PLfqZgq.jpg");
+      eventsImages.put("دوري كورة 2", "https://i.imgur.com/t2TFMm2.jpg");
+      eventsImages.put("مطبخ مكافحة", "https://i.imgur.com/nzwgC1B.jpg");
+      eventsImages.put("حفلة النشاط 2", "https://i.imgur.com/CV7werB.jpg");
+      eventsImages.put("ميني كامب", "https://i.imgur.com/FwLGrvr.jpg");
+      eventsImages.put("دوري كورة 3", "https://i.imgur.com/PLCx3ui.jpg");
+      eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
+      // 2.1 additions
+      eventsImages.put("اجتماع", "https://i.imgur.com/BCRwgrz.jpg");
+      eventsImages.put("اوتينج", "https://i.imgur.com/Y0hURa5.jpg");
+      eventsImages.put("عزومة 2", "https://i.imgur.com/cLuQSJU.jpg");
+      eventsImages.put("ولاد عم", "https://i.imgur.com/7ccjKJy.jpg");
+      eventsImages.put("اجتماع 2", "https://i.imgur.com/eHYve40.jpg");
+      eventsImages.put("اجتماع 3", "https://i.imgur.com/mn0i5n8.jpg");
   }
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_margin="8dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:gravity="start"
+        android:text="@string/dummy_volunteer"
+        android:textAlignment="textStart"
+        android:textColor="@color/new_text_blue"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/delete_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/dummy_num2"
+        android:textColor="@color/new_text_blue"
+        android:fontFamily="@font/new_jf"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userHistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/new_jf"
+        android:gravity="end"
+        android:text="@string/dummy_history"
+        android:textAlignment="textEnd"
+        android:textColor="@color/new_hint_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/delete_btn"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/delete_btn"
+        app:layout_constraintTop_toTopOf="@+id/delete_btn" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="تواريخ المشاركات"
+        android:textSize="14sp"
+        android:textColor="@color/new_text_black"
+        app:layout_constraintBottom_toBottomOf="@+id/userHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userHistory" />
+
+    <ImageButton
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:padding="8dp"
+        android:src="@drawable/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userCount" />
+</androidx.constraintlayout.widget.ConstraintLayout>

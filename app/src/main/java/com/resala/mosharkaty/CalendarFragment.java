@@ -21,9 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccount.branches;
 
 public class CalendarFragment extends androidx.fragment.app.Fragment {
   View view;
@@ -31,18 +33,8 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
   EventsAdapter adapter;
   ArrayList<EventItem> eventItems = new ArrayList<>();
   FirebaseDatabase database;
-  public static int eventsCount;
   ValueEventListener Eventslistener;
   DatabaseReference EventsRef;
-
-  /**
-   * Called when the fragment is visible to the user and actively running.
-   */
-  @Override
-  public void onResume() {
-    super.onResume();
-    eventsCount = eventItems.size();
-  }
 
   /**
    * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -70,70 +62,91 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
           @NonNull LayoutInflater inflater,
           @Nullable ViewGroup container,
           @Nullable Bundle savedInstanceState) {
-    fillEventsImages();
-    view = inflater.inflate(R.layout.calendar_fragment, container, false);
-    database = FirebaseDatabase.getInstance();
-    EventsRef = database.getReference("events");
-    final TextView dateTV = view.findViewById(R.id.todayDate);
-    final TextView errorTV = view.findViewById(R.id.eventsErrorTV);
+      fillEventsImages();
+      view = inflater.inflate(R.layout.calendar_fragment, container, false);
+      database = FirebaseDatabase.getInstance();
+      EventsRef = database.getReference("events");
+      final TextView dateTV = view.findViewById(R.id.todayDate);
+      final TextView errorTV = view.findViewById(R.id.eventsErrorTV);
 
-    RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new EventsAdapter(eventItems, getContext());
-    recyclerView.setAdapter(adapter);
+      RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
+      recyclerView.setHasFixedSize(true);
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      adapter = new EventsAdapter(eventItems, getContext());
+      recyclerView.setAdapter(adapter);
 
-    Eventslistener =
-            EventsRef.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        eventItems.clear();
-                        errorTV.setVisibility(View.INVISIBLE);
-                        boolean eventFound = false;
-                        final Calendar cldr = Calendar.getInstance();
-                        int day = cldr.get(Calendar.DAY_OF_MONTH);
-                        int month = cldr.get(Calendar.MONTH) + 1;
-                        int year = cldr.get(Calendar.YEAR);
-                        dateTV.setText(day + "/" + month + "/" + year);
-                        if (userBranch != null && dataSnapshot.hasChild(userBranch)) {
-                          for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
-                            Event event = snapshot.getValue(Event.class);
-                            if (event != null) {
-                              String[] splittedDate = event.date.split("/", 2);
-                              if (Integer.parseInt(splittedDate[0]) >= day
-                                      && Integer.parseInt(splittedDate[1]) == month) {
-                                String url = eventsImages.get(event.type);
-                                eventItems.add(
-                                        new EventItem(
-                                                event.Eventname,
-                                                event.date,
-                                                url,
-                                                event.description,
-                                                event.location,
-                                                event.time));
-                                //                        Toast.makeText(getContext(), "Events updated",
-                                // Toast.LENGTH_SHORT).show();
-                                eventFound = true;
+      Eventslistener =
+              EventsRef.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              eventItems.clear();
+                              errorTV.setVisibility(View.INVISIBLE);
+                              boolean eventFound = false;
+                              final Calendar cldr = Calendar.getInstance(Locale.US);
+                              int day = cldr.get(Calendar.DAY_OF_MONTH);
+                              int month = cldr.get(Calendar.MONTH) + 1;
+                              int year = cldr.get(Calendar.YEAR);
+                              dateTV.setText(day + "/" + month + "/" + year);
+                              if (userBranch != null && dataSnapshot.hasChild(userBranch)) {
+                                  for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
+                                      Event event = snapshot.getValue(Event.class);
+                                      if (event != null) {
+                                          String[] splittedDate = event.date.split("/", 2);
+                                          if (Integer.parseInt(splittedDate[0]) >= day
+                                                  && Integer.parseInt(splittedDate[1]) == month) {
+                                              String url = eventsImages.get(event.type);
+                                              eventItems.add(
+                                                      new EventItem(
+                                                              event.Eventname,
+                                                              event.date,
+                                                              url,
+                                                              event.description,
+                                                              event.location,
+                                                              event.time,
+                                                              snapshot.getKey()));
+                                              eventFound = true;
+                                          }
+                                      }
+                                  }
                               }
-                            }
+                              // الايفنتات المركزية
+                              if (dataSnapshot.hasChild(branches[9])) {
+                                  for (DataSnapshot snapshot : dataSnapshot.child(branches[9]).getChildren()) {
+                                      Event event = snapshot.getValue(Event.class);
+                                      if (event != null) {
+                                          String[] splittedDate = event.date.split("/", 2);
+                                          if (Integer.parseInt(splittedDate[0]) >= day
+                                                  && Integer.parseInt(splittedDate[1]) == month) {
+                                              String url = eventsImages.get(event.type);
+                                              eventItems.add(
+                                                      new EventItem(
+                                                              event.Eventname,
+                                                              event.date,
+                                                              url,
+                                                              event.description,
+                                                              event.location,
+                                                              event.time,
+                                                              snapshot.getKey()));
+                                              eventFound = true;
+                                          }
+                                      }
+                                  }
+                              }
+                              if (!eventFound) {
+                                  Log.i(TAG, "onDataChange: no events found");
+                                  errorTV.setVisibility(View.VISIBLE);
+                              }
+                              adapter.notifyDataSetChanged();
                           }
-                        }
-                        if (!eventFound) {
-                          Log.i(TAG, "onDataChange: no events found");
-                          errorTV.setVisibility(View.VISIBLE);
-                        }
-                        eventsCount = eventItems.size();
-                        adapter.notifyDataSetChanged();
-                      }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
-    return view;
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
+      return view;
   }
 
   @Override
@@ -193,26 +206,32 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
     eventsImages.put("كساء 2", "https://i.imgur.com/uanNgkT.jpg");
     eventsImages.put("كامب مسؤولين فرز 3", "https://i.imgur.com/x7y8yZd.jpg");
     eventsImages.put("زيارات مسنين", "https://i.imgur.com/lM5BD3A.jpg");
-    eventsImages.put("فرز 3", "https://i.imgur.com/Qciv6Kh.jpg");
-    eventsImages.put("كرنفال 3", "https://i.imgur.com/vWFXHr1.jpg");
-    eventsImages.put("فرز 4", "https://i.imgur.com/mYQWcBr.jpg");
-    eventsImages.put("عيد الام", "https://i.imgur.com/Wt7p4JB.jpg");
-    eventsImages.put("عيد الام 2", "https://i.imgur.com/AeoHH6v.jpg");
-    eventsImages.put("تحضير ايفنت/معارض", "https://i.imgur.com/IzQ6g55.jpg");
-    eventsImages.put("يوم اليتيم 2", "https://i.imgur.com/1hNtlUS.jpg");
-    eventsImages.put("حملة مكافحة 3", "https://i.imgur.com/n12h3sh.jpg");
-    eventsImages.put("ميني كامب 2", "https://i.imgur.com/MttRKh9.jpg");
-    eventsImages.put("ولاد عم", "https://i.imgur.com/4d8lS5v.jpg");
-    eventsImages.put("معارض 3", "https://i.imgur.com/kJcrQEG.jpg");
-    eventsImages.put("افطار في الشارع", "https://i.imgur.com/gmRfiU7.jpg");
-    eventsImages.put("حفلة داخل الفرع", "https://i.imgur.com/QIc3ZDv.jpg");
-    eventsImages.put("كرنفال 4", "https://i.imgur.com/5PZB1wc.jpg");
-    eventsImages.put("توزيع حضار", "https://i.imgur.com/PLfqZgq.jpg");
-    eventsImages.put("دوري كورة 2", "https://i.imgur.com/t2TFMm2.jpg");
-    eventsImages.put("مطبخ مكافحة", "https://i.imgur.com/nzwgC1B.jpg");
-    eventsImages.put("حفلة النشاط 2", "https://i.imgur.com/CV7werB.jpg");
-    eventsImages.put("ميني كامب", "https://i.imgur.com/FwLGrvr.jpg");
-    eventsImages.put("دوري كورة 3", "https://i.imgur.com/PLCx3ui.jpg");
-    eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
+      eventsImages.put("فرز 3", "https://i.imgur.com/Qciv6Kh.jpg");
+      eventsImages.put("كرنفال 3", "https://i.imgur.com/vWFXHr1.jpg");
+      eventsImages.put("فرز 4", "https://i.imgur.com/mYQWcBr.jpg");
+      eventsImages.put("عيد الام", "https://i.imgur.com/Wt7p4JB.jpg");
+      eventsImages.put("عيد الام 2", "https://i.imgur.com/AeoHH6v.jpg");
+      eventsImages.put("تحضير ايفنت/معارض", "https://i.imgur.com/IzQ6g55.jpg");
+      eventsImages.put("يوم اليتيم 2", "https://i.imgur.com/1hNtlUS.jpg");
+      eventsImages.put("حملة مكافحة 3", "https://i.imgur.com/n12h3sh.jpg");
+      eventsImages.put("ميني كامب 2", "https://i.imgur.com/MttRKh9.jpg");
+      eventsImages.put("معارض 3", "https://i.imgur.com/kJcrQEG.jpg");
+      eventsImages.put("افطار في الشارع", "https://i.imgur.com/gmRfiU7.jpg");
+      eventsImages.put("حفلة داخل الفرع", "https://i.imgur.com/QIc3ZDv.jpg");
+      eventsImages.put("كرنفال 4", "https://i.imgur.com/5PZB1wc.jpg");
+      eventsImages.put("توزيع حضار", "https://i.imgur.com/PLfqZgq.jpg");
+      eventsImages.put("دوري كورة 2", "https://i.imgur.com/t2TFMm2.jpg");
+      eventsImages.put("مطبخ مكافحة", "https://i.imgur.com/nzwgC1B.jpg");
+      eventsImages.put("حفلة النشاط 2", "https://i.imgur.com/CV7werB.jpg");
+      eventsImages.put("ميني كامب", "https://i.imgur.com/FwLGrvr.jpg");
+      eventsImages.put("دوري كورة 3", "https://i.imgur.com/PLCx3ui.jpg");
+      eventsImages.put("اورينتيشن", "https://i.imgur.com/GV3chTd.jpg");
+      // 2.1 additions
+      eventsImages.put("اجتماع", "https://i.imgur.com/BCRwgrz.jpg");
+      eventsImages.put("اوتينج", "https://i.imgur.com/Y0hURa5.jpg");
+      eventsImages.put("عزومة 2", "https://i.imgur.com/cLuQSJU.jpg");
+      eventsImages.put("ولاد عم", "https://i.imgur.com/7ccjKJy.jpg");
+      eventsImages.put("اجتماع 2", "https://i.imgur.com/eHYve40.jpg");
+      eventsImages.put("اجتماع 3", "https://i.imgur.com/mn0i5n8.jpg");
   }
 }

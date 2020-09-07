@@ -10,5 +10,12 @@ class Rules {
     public int medium_average;
     public int bad_average;
     public int big_font;
+    public String vol_mohndseen;
+    public String supervisor_email;
+    public String daily_email_body;
+    public boolean takyeem_available;
+    public String manager_password;
+    public String from_home;
+    public String from_far3;
 
 }

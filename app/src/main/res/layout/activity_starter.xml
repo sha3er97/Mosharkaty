@@ -43,11 +43,11 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/border_only_btn"
         android:fontFamily="@font/new_jf"
-        android:text="اكونت جديد"
         android:onClick="newAccStarter"
+        android:text="اكونت جديد"
         android:textColor="@color/new_blue_dark"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -75,17 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
-        app:srcCompat="@mipmap/icon" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="74dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="-5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:srcCompat="@drawable/resala" />
+        app:srcCompat="@mipmap/icon_foreground" />
 
     <TextView
         android:id="@+id/welcomeTV"

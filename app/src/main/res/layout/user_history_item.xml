@@ -69,4 +69,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/userHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/userHistory" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

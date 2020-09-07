@@ -61,7 +61,7 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     codeFound = false;
-    view = inflater.inflate(R.layout.takyeem_fragment, container, false);
+    view = inflater.inflate(R.layout.fragment_takyeem, container, false);
     database = FirebaseDatabase.getInstance();
     contReading = view.findViewById(R.id.contRead);
     final TextView takyeemVolName = view.findViewById(R.id.takyeemVolName);
@@ -119,6 +119,7 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
                             //                    Toast.makeText(getContext(), "تم تحديث تقييمك",
                             // Toast.LENGTH_SHORT).show();
                             codeFound = true;
+                            break;
                           }
                         }
                       }

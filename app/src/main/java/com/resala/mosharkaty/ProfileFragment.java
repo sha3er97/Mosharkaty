@@ -27,8 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.Starter.myRules;
 import static com.resala.mosharkaty.TakyeemFragment.codeFound;
@@ -36,7 +38,6 @@ import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 public class ProfileFragment extends androidx.fragment.app.Fragment {
     public static String userName;
     public static String userCode;
-    public static String userBranch;
     public static String userOfficialName;
     View view;
     Button ApplyChanges;
@@ -234,6 +235,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                       //                    Toast.makeText(getContext(), "تم تحديث مشاركاتك",
                                       // Toast.LENGTH_SHORT).show();
                                       codeFound = true;
+                                      break;
                                   }
                               }
                               if (!codeFound) {
@@ -256,7 +258,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                           }
                       });
       MosharkatRef = database.getReference("mosharkat").child(userBranch);
-      final Calendar cldr = Calendar.getInstance();
+      final Calendar cldr = Calendar.getInstance(Locale.US);
       month = cldr.get(Calendar.MONTH) + 1;
       Mosharkatlistener =
               MosharkatRef.child(String.valueOf(month))

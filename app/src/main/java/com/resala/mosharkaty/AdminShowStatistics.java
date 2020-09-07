@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowStatistics extends AppCompatActivity {
     FirebaseDatabase database;
@@ -39,7 +40,7 @@ public class AdminShowStatistics extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         RecyclerView recyclerView = findViewById(R.id.mosharkatnaRecyclerView);
         TextView current_month = findViewById(R.id.current_month);
-        final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH) + 1;
         current_month.setText(String.valueOf(month));
         recyclerView.setHasFixedSize(true);

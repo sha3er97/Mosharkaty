@@ -19,10 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.AdminShowMosharkat.months;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowClosings extends AppCompatActivity {
     ClosingAdapter adapter;
@@ -41,10 +42,10 @@ public class AdminShowClosings extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.closingsRecyclerView);
         RecyclerView recyclerView2 = findViewById(R.id.closingsRecyclerView2);
         month_et = findViewById(R.id.month_et);
-        final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH);
         ArrayAdapter aa = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, months);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         month_et.setAdapter(aa);
         month_et.setSelection(Math.max(month, 0));

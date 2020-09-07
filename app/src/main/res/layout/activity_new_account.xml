@@ -7,49 +7,8 @@
     android:background="@drawable/background"
     tools:context=".NewAccount">
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/imageView7"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:srcCompat="@drawable/background" />-->
-
-    <Button
-        android:id="@+id/signup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_gradient_blue"
-        android:fontFamily="@font/new_jf"
-        android:onClick="newAccountClick"
-        android:paddingHorizontal="32dp"
-        android:text="@string/create_new_account_btnTxt"
-        android:textColor="@color/new_white_light"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/branchSpinner"
-        app:layout_constraintVertical_bias="1.0" />
-
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="54dp"
-        android:layout_marginVertical="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@drawable/white_rect" />
-
-    <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/logo"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginTop="8dp"
@@ -59,161 +18,205 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
-        app:srcCompat="@mipmap/icon" />
+        app:srcCompat="@mipmap/icon_foreground" />
 
-    <EditText
-        android:id="@+id/newAccountName"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageView3"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/edit_text_gray"
-        android:fontFamily="@font/new_jf"
-        android:gravity="center"
-        android:hint="@string/name_hint"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textColorHint="@color/new_hint_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView4" />
-
-    <EditText
-        android:id="@+id/newAccountEmail"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/edit_text_gray"
-        android:drawableEnd="@drawable/mail"
-        android:gravity="center"
-        android:inputType="textEmailAddress"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView2" />
-
-    <EditText
-        android:id="@+id/newAccountCode"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/edit_text_gray"
-        android:fontFamily="@font/new_jf"
-        android:gravity="center"
-        android:hint="@string/dummy_code"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textColorHint="@android:color/transparent"
-        android:paddingHorizontal="8dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="54dp"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/white_rect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/branchSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    <EditText
-        android:id="@+id/newAccountPass"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/edit_text_gray"
-        android:drawableEnd="@drawable/pass"
-        android:gravity="center"
-        android:inputType="textPassword"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextView2" />
+        <Button
+            android:id="@+id/signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:fontFamily="@font/new_jf"
+            android:onClick="newAccountClick"
+            android:paddingHorizontal="32dp"
+            android:text="@string/create_new_account_btnTxt"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/branchSpinner"
-        style="@style/SpinnerwithNoArrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/newAccountCode"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/brTV" />
+        <EditText
+            android:id="@+id/newAccountName"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="@string/name_hint"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/brTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextView4" />
 
-    <TextView
-        android:id="@+id/emailTextView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/name"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/newAccountPass" />
+        <EditText
+            android:id="@+id/newAccountEmail"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:drawableEnd="@drawable/mail"
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/passwordTextView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextView2" />
 
-    <TextView
-        android:id="@+id/emailTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/e_mail"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        <EditText
+            android:id="@+id/newAccountCode"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="@string/dummy_code"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="8dp"
+            android:textAlignment="center"
+            android:textColorHint="@android:color/transparent"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/branchSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/branchSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextView3" />
 
-    <TextView
-        android:id="@+id/emailTextView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/code"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/newAccountCode"
-        app:layout_constraintStart_toStartOf="@+id/newAccountCode"
-        app:layout_constraintTop_toBottomOf="@+id/newAccountName" />
+        <EditText
+            android:id="@+id/newAccountPass"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:drawableEnd="@drawable/pass"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/emailTextView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextView2" />
 
-    <TextView
-        android:id="@+id/passwordTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/password"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/newAccountEmail" />
+        <Spinner
+            android:id="@+id/branchSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/signup_btn"
+            app:layout_constraintEnd_toStartOf="@+id/newAccountCode"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brTV" />
 
-    <TextView
-        android:id="@+id/brTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/new_jf"
-        android:text="@string/branch"
-        android:textColor="@color/new_text_blue"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/emailTextView3"
-        app:layout_constraintEnd_toEndOf="@+id/branchSpinner"
-        app:layout_constraintStart_toStartOf="@+id/branchSpinner"
-        app:layout_constraintTop_toTopOf="@+id/emailTextView3" />
+        <TextView
+            android:id="@+id/emailTextView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/name"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/newAccountName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newAccountPass" />
+
+        <TextView
+            android:id="@+id/emailTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/e_mail"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/newAccountEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/emailTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/code"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/newAccountCode"
+            app:layout_constraintStart_toStartOf="@+id/newAccountCode"
+            app:layout_constraintTop_toTopOf="@+id/brTV" />
+
+        <TextView
+            android:id="@+id/passwordTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/password"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/newAccountPass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newAccountEmail" />
+
+        <TextView
+            android:id="@+id/brTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/branch"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/branchSpinner"
+            app:layout_constraintEnd_toEndOf="@+id/branchSpinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/branchSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/newAccountName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

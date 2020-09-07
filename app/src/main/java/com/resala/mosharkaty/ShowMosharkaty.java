@@ -18,9 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
 
@@ -42,7 +43,7 @@ public class ShowMosharkaty extends AppCompatActivity {
         TextView current_month = findViewById(R.id.current_month);
         final TextView count = findViewById(R.id.mosharkatyMonthCount);
 
-    final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr = Calendar.getInstance(Locale.US);
     month = cldr.get(Calendar.MONTH) + 1;
         current_month.setText(String.valueOf(month));
 

@@ -13,8 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.Locale;
 
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 
 public class MessagesWrite extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class MessagesWrite extends AppCompatActivity {
         DatabaseReference nameRef = currentMessage.child("author");
 
         nameRef.setValue(authour);
-        final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr = Calendar.getInstance(Locale.US);
         dateRef.setValue(cldr.getTime().toString());
         contentRef.setValue(message_et.getText().toString());
         Toast.makeText(this, "Message Sent..", Toast.LENGTH_SHORT).show();

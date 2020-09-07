@@ -11,9 +11,15 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/icon_round"
         android:screenOrientation="portrait"
-        android:supportsRtl="false"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".AdminShowConfirmations"></activity>
+        <activity android:name=".NasheetActivity" />
+        <activity android:name=".MeetingDescription" />
+        <activity android:name=".AdminMeetingsActivity" />
+        <activity android:name=".EventEdited" />
+        <activity android:name=".AdminEditEvent" />
+        <activity android:name=".AdminShowHomeMosharkat" />
+        <activity android:name=".AdminShowZeroes" />
+        <activity android:name=".AdminShowConfirmations" />
         <activity android:name=".AdminShowUsers" />
         <activity android:name=".AdminShowSignature" />
         <activity android:name=".AdminShowClosings" />
@@ -36,7 +42,20 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".EventDescription" />
+
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Locale;
 
+import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.AdminAddGroupMosharka.types;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
@@ -40,6 +46,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     int day;
     int month;
     int year;
+    DatabaseReference appMosharkatRef;
 
     /**
      * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -69,76 +76,127 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
             @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.compose_new_mosharka_fragment, container, false);
         database = FirebaseDatabase.getInstance();
+
+        eText = view.findViewById(R.id.mosharkaDate);
+        addMosharka_btn = view.findViewById(R.id.confirmMosharka);
+        showMosharkaty_btn = view.findViewById(R.id.showMosharkaty_btn);
+        final TextView newMosharkaTV = view.findViewById(R.id.newMosharkaTV);
+        spin = view.findViewById(R.id.spinner);
+        final Calendar cldr = Calendar.getInstance(Locale.US);
+        day = cldr.get(Calendar.DAY_OF_MONTH);
+        month = cldr.get(Calendar.MONTH);
+        year = cldr.get(Calendar.YEAR);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(
+                v -> {
+                    addMosharka_btn.setEnabled(true);
+                    addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
+                    newMosharkaTV.setText(R.string.new_mosharka_btn_txt);
+                    // date picker dialog
+                    picker =
+                            new DatePickerDialog(
+                                    getContext(),
+                                    (view, year, monthOfYear, dayOfMonth) -> {
+                                        eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                    },
+                                    year,
+                                    month,
+                                    day);
+                    picker.show();
+                });
+        spin.setOnItemSelectedListener(this);
+        // Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+
+        // buttons click listener
+        showMosharkaty_btn.setOnClickListener(
+                v -> startActivity(new Intent(getActivity(), ShowMosharkaty.class)));
         if (userBranch != null) {
             final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
             final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
-
-            eText = view.findViewById(R.id.mosharkaDate);
-            addMosharka_btn = view.findViewById(R.id.confirmMosharka);
-            showMosharkaty_btn = view.findViewById(R.id.showMosharkaty_btn);
-            final TextView newMosharkaTV = view.findViewById(R.id.newMosharkaTV);
-            spin = view.findViewById(R.id.spinner);
-            final Calendar cldr = Calendar.getInstance();
-            day = cldr.get(Calendar.DAY_OF_MONTH);
-            month = cldr.get(Calendar.MONTH);
-            year = cldr.get(Calendar.YEAR);
-            eText.setInputType(InputType.TYPE_NULL);
-            eText.setOnClickListener(
-                    v -> {
-                        addMosharka_btn.setEnabled(true);
-                        addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
-                        newMosharkaTV.setText(R.string.new_mosharka_btn_txt);
-                        // date picker dialog
-                        picker =
-                                new DatePickerDialog(
-                                        getContext(),
-                                        (view, year, monthOfYear, dayOfMonth) -> {
-                                            eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                        },
-                                        year,
-                                        month,
-                                        day);
-                        picker.show();
-                    });
-            spin.setOnItemSelectedListener(this);
-            // Creating the ArrayAdapter instance having the country list
-            ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_item, types);
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            // Setting the ArrayAdapter data on the Spinner
-            spin.setAdapter(aa);
-
-            // buttons click listener
-            showMosharkaty_btn.setOnClickListener(
-                    v -> startActivity(new Intent(getActivity(), ShowMosharkaty.class)));
             addMosharka_btn.setOnClickListener(
                     v -> {
                         if (!validateForm()) return;
-                        String date = eText.getText().toString();
-                        String[] dateParts = date.split("/", 3);
-                        String key =
-                                System.currentTimeMillis() / (1000 * 60)
-                                        + "&"
-                                        + dateParts[0]
-                                        + "&"
-                                        + userOfficialName;
-                        DatabaseReference currentMosharka =
-                                MosharkatRef.child(String.valueOf(dateParts[1])).child(key);
-                        DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
-                        DatabaseReference typeRef = currentMosharka.child("mosharkaType");
-                        DatabaseReference nameRef = currentMosharka.child("volname");
 
-                        nameRef.setValue(userOfficialName);
-                        dateRef.setValue(eText.getText().toString());
-                        typeRef.setValue(spin.getSelectedItem().toString());
+                        appMosharkatRef = database.getReference("mosharkat").child(userBranch);
+                        //          final Calendar cldr = Calendar.getInstance(Locale.US);
+                        appMosharkatRef
+                                .child(String.valueOf(month + 1))
+                                .addListenerForSingleValueEvent(
+                                        new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                boolean duplicate = false;
+                                                boolean isHome = false;
+                                                addMosharka_btn.setEnabled(false);
+                                                addMosharka_btn.setBackgroundColor(
+                                                        getResources()
+                                                                .getColor(R.color.common_google_signin_btn_text_light_disabled));
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                                    if (mosharka != null) {
+                                                        if (userOfficialName.equals(mosharka.getVolname().trim())
+                                                                && mosharka.getMosharkaType().matches("(.*)بيت(.*)"))
+                                                            isHome = true;
+                                                        if (userOfficialName.equals(mosharka.getVolname().trim())
+                                                                && eText.getText().toString().equals(mosharka.getMosharkaDate())
+                                                                || (spin.getSelectedItem().toString().matches("(.*)بيت(.*)")
+                                                                && isHome)) {
+                                                            duplicate = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                if (!duplicate) {
+                                                    String date = eText.getText().toString();
+                                                    String[] dateParts = date.split("/", 3);
+                                                    String key =
+                                                            System.currentTimeMillis() / (1000 * 60)
+                                                                    + "&"
+                                                                    + dateParts[0]
+                                                                    + "&"
+                                                                    + userOfficialName;
+                                                    DatabaseReference currentMosharka =
+                                                            MosharkatRef.child(String.valueOf(dateParts[1])).child(key);
+                                                    DatabaseReference dateRef = currentMosharka.child("mosharkaDate");
+                                                    DatabaseReference typeRef = currentMosharka.child("mosharkaType");
+                                                    DatabaseReference nameRef = currentMosharka.child("volname");
 
-                        ClosingRef.child(String.valueOf(dateParts[1]))
-                                .child(String.valueOf(dateParts[0]))
-                                .setValue(0);
-                        Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT).show();
-                        addMosharka_btn.setEnabled(false);
-                        addMosharka_btn.setBackgroundColor(
-                                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-                        newMosharkaTV.setText("تم تسجيل مشاركة لليوم");
+                                                    nameRef.setValue(userOfficialName);
+                                                    dateRef.setValue(eText.getText().toString());
+                                                    typeRef.setValue(spin.getSelectedItem().toString());
+
+                                                    ClosingRef.child(String.valueOf(dateParts[1]))
+                                                            .child(String.valueOf(dateParts[0]))
+                                                            .setValue(0);
+                                                    Toast.makeText(
+                                                            getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
+                                                            .show();
+                                                    addMosharka_btn.setEnabled(false);
+                                                    addMosharka_btn.setBackgroundColor(
+                                                            getResources()
+                                                                    .getColor(R.color.common_google_signin_btn_text_light_disabled));
+                                                    newMosharkaTV.setText("تم تسجيل مشاركة لليوم");
+                                                } else {
+                                                    Toast.makeText(
+                                                            getContext(),
+                                                            "عذرا .. المشاركة مكررة في اليوم دا",
+                                                            Toast.LENGTH_SHORT)
+                                                            .show();
+                                                }
+                                                addMosharka_btn.setEnabled(true);
+                                                addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                // Failed to read value
+                                                Log.w(TAG, "Failed to read value.", error.toException());
+                                            }
+                                        });
                     });
         }
         return view;

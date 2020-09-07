@@ -10,6 +10,71 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/meetingsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/pointsLayout"
+            android:background="@drawable/white_rect">
+
+            <TextView
+                android:id="@+id/meetings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/new_blue_dark"
+                android:textSize="64sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+            <TextView
+                android:id="@+id/meetings_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="اجتماع"
+                android:textAlignment="center"
+                android:textColor="@color/new_blue_dark"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/meetings" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/blue_btn"
+                android:fontFamily="@font/new_jf"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="اجتماعات الفرع حتي الان"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
@@ -164,6 +229,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView30">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -172,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/chart_blue"
+                android:background="@drawable/btn_gradient_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -213,9 +280,9 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="32dp"
                     android:text="@string/dummy_float"
-                    android:textStyle="bold"
                     android:textColor="@color/new_white_light"
                     android:textSize="22sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -226,7 +293,7 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/chart_blue"
+                android:background="@drawable/btn_gradient_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -266,9 +333,9 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="32dp"
                     android:text="@string/dummy_float"
-                    android:textStyle="bold"
                     android:textColor="@color/new_white_light"
                     android:textSize="22sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -282,7 +349,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/chart_blue"
+                android:background="@drawable/btn_gradient_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -322,9 +389,9 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="32dp"
                     android:text="@string/dummy_float"
-                    android:textStyle="bold"
                     android:textColor="@color/new_white_light"
                     android:textSize="22sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -338,9 +405,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/white_rect"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/averagesLayout"
-            tools:layout_editor_absoluteX="16dp">
+            app:layout_constraintTop_toBottomOf="@+id/averagesLayout">
 
             <TextView
                 android:id="@+id/points"
@@ -350,7 +415,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:paddingHorizontal="16dp"
-                android:text="@string/dummy_number"
+                android:text="0"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/new_blue_dark"
@@ -398,16 +463,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/large_text"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/pointsLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -18,9 +18,9 @@ import com.resala.mosharkaty.ui.main.SectionsPagerAdapter;
 
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.isMrkzy;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.MessagesRead.isManager;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userCode;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 

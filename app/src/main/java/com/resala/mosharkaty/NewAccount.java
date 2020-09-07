@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,34 +44,70 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
           "اكتوبر",
           "حلوان",
           "اسكندرية",
-          "المقطم"
+          "المقطم",
+          "مركزي"
   };
-  Spinner spin;
+    Spinner spin;
+    ImageView logo;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_new_account);
-    mAuth = FirebaseAuth.getInstance();
-    email_et = findViewById(R.id.newAccountEmail);
-    password_et = findViewById(R.id.newAccountPass);
-    name_et = findViewById(R.id.newAccountName);
-    code_et = findViewById(R.id.newAccountCode);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_account);
+        mAuth = FirebaseAuth.getInstance();
+        email_et = findViewById(R.id.newAccountEmail);
+        password_et = findViewById(R.id.newAccountPass);
+        name_et = findViewById(R.id.newAccountName);
+        code_et = findViewById(R.id.newAccountCode);
+        logo = findViewById(R.id.logo);
 
-    database = FirebaseDatabase.getInstance();
-    spin = findViewById(R.id.branchSpinner);
-    spin.setOnItemSelectedListener(this);
-    // Creating the ArrayAdapter instance having the country list
-      ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, branches);
-    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Setting the ArrayAdapter data on the Spinner
-    spin.setAdapter(aa);
-  }
+        email_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        password_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        name_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        code_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        database = FirebaseDatabase.getInstance();
+        spin = findViewById(R.id.branchSpinner);
+        spin.setOnItemSelectedListener(this);
+        // Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, branches);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+    }
 
   private void createAccount(String email, String password) {
-    if (!validateForm()) {
-      return;
-    }
+      if (!validateForm()) {
+          return;
+      }
       mAuth
               .createUserWithEmailAndPassword(email, password)
               .addOnCompleteListener(
@@ -143,42 +180,42 @@ public class NewAccount extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     String code = code_et.getText().toString();
-    if (TextUtils.isEmpty(code)) {
-      code_et.setError("Required.");
-      valid = false;
-    } else if (code_et.getText().length() < 4) {
-      code_et.setError("incorrect code entered");
-      valid = false;
-    } else {
-      code_et.setError(null);
-    }
+      if (TextUtils.isEmpty(code)) {
+          code_et.setError("Required.");
+          valid = false;
+      } else if (code_et.getText().length() < 4) {
+          code_et.setError("incorrect code entered");
+          valid = false;
+      } else {
+          code_et.setError(null);
+      }
 
-    String branch = spin.getSelectedItem().toString();
-    TextView errorText = (TextView) spin.getSelectedView();
-    if (TextUtils.isEmpty(branch)) {
-      errorText.setError("Required.");
-      valid = false;
-    } else {
-      errorText.setError(null);
-    }
+      String branch = spin.getSelectedItem().toString();
+      TextView errorText = (TextView) spin.getSelectedView();
+      if (branch.equals(branches[9])) {
+          errorText.setError("المتطوع لازم يكون في فرع من ال9 الاساسيين فقط");
+          valid = false;
+      } else {
+          errorText.setError(null);
+      }
 
-    return valid;
+      return valid;
   }
 
   public void newAccountClick(View view) {
       ConnectivityManager connectivityManager =
               (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-        if (connectivityManager.getActiveNetworkInfo() == null
-                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-            //          Toast.makeText(getApplicationContext(), "No Internet",
-            // Toast.LENGTH_SHORT).show();
-            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
-        }
-    }
-    createAccount(email_et.getText().toString(), password_et.getText().toString());
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              //          Toast.makeText(getApplicationContext(), "No Internet",
+              // Toast.LENGTH_SHORT).show();
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
+      createAccount(email_et.getText().toString(), password_et.getText().toString());
   }
 
     @Override

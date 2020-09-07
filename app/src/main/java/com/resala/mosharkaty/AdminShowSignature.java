@@ -18,9 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowSignature extends AppCompatActivity {
     SignaturesAdapter adapter;
@@ -37,7 +38,7 @@ public class AdminShowSignature extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         RecyclerView recyclerView = findViewById(R.id.signaturesRecyclerView);
         TextView current_month = findViewById(R.id.current_month);
-        final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH);
         current_month.setText(String.valueOf(month));
         recyclerView.setHasFixedSize(true);

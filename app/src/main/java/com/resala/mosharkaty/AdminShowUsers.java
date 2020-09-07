@@ -1,5 +1,6 @@
 package com.resala.mosharkaty;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowUsers extends AppCompatActivity {
     FirebaseDatabase database;
@@ -30,6 +31,10 @@ public class AdminShowUsers extends AppCompatActivity {
     DatabaseReference mosharkatTab;
     ValueEventListener mosharkatlistener;
     ValueEventListener userslistener;
+    TextView usersCount;
+    TextView teamCount;
+    TextView percent;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +42,18 @@ public class AdminShowUsers extends AppCompatActivity {
         setContentView(R.layout.admin_show_users);
         database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("users");
-        TextView usersCount = findViewById(R.id.usersCount);
-        TextView teamCount = findViewById(R.id.teamCount);
-        TextView percent = findViewById(R.id.percent);
+        usersCount = findViewById(R.id.usersCount);
+        teamCount = findViewById(R.id.teamCount);
+        percent = findViewById(R.id.percent);
         RecyclerView recyclerView = findViewById(R.id.usersRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new UsersAdapter(userItems, getApplicationContext());
         recyclerView.setAdapter(adapter);
-
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("لحظات معانا...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
         userslistener =
                 usersRef.addValueEventListener(
                         new ValueEventListener() {
@@ -57,6 +66,9 @@ public class AdminShowUsers extends AppCompatActivity {
                                         codes.add(user.code);
                                     }
                                 }
+                                checkForBranch();
+                                // To dismiss the dialog
+                                progress.dismiss();
                             }
 
                             @Override
@@ -65,7 +77,9 @@ public class AdminShowUsers extends AppCompatActivity {
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
+    }
 
+    private void checkForBranch() {
         DatabaseReference liveSheet =
                 database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
         mosharkatTab = liveSheet.child("month_mosharkat");
@@ -79,7 +93,7 @@ public class AdminShowUsers extends AppCompatActivity {
                                 int teamCounter = 0;
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Volunteer user = snapshot.getValue(Volunteer.class);
-                                    if (user != null && !user.degree.equals("مجمد")) {
+                                    if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
                                         teamCounter++;
                                         if (codes.contains(user.code)) {
                                             userCounter++;
@@ -100,6 +114,8 @@ public class AdminShowUsers extends AppCompatActivity {
                                 } else {
                                     percent.setTextColor(getResources().getColor(R.color.green));
                                 }
+                                // To dismiss the dialog
+                                progress.dismiss();
                             }
 
                             @Override

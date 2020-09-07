@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="@color/new_white_light">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -59,16 +59,22 @@
 
             <EditText
                 android:id="@+id/volDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:background="@drawable/border_only_btn"
                 android:enabled="false"
                 android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:padding="8dp"
                 android:text="@string/dummy_volunteer"
                 android:textColor="@color/new_blue_dark"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="@+id/volName"
                 app:layout_constraintEnd_toStartOf="@+id/volName"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/volName" />
 
             <EditText
@@ -81,6 +87,8 @@
                 android:text="@string/dummy_code"
                 android:textColor="@color/new_blue_dark"
                 android:textSize="22sp"
+                android:background="@drawable/border_only_btn"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
                 app:layout_constraintEnd_toStartOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -100,16 +108,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:background="@drawable/border_only_btn"
                 android:fontFamily="@font/new_jf"
                 android:gravity="center"
+                android:padding="8dp"
                 android:text="اتاكد من كتابة الكود صح عشان يظهرلك مشاركاتك و تقييمك"
                 android:textAlignment="center"
                 android:textColor="@color/new_text_black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/codeCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/checkbox2Text"
                 app:layout_constraintTop_toBottomOf="@+id/codeDetail" />
 
             <TextView
@@ -147,6 +156,8 @@
                 android:text="@string/dummy_far3"
                 android:textColor="@color/new_blue_dark"
                 android:textSize="22sp"
+                android:background="@drawable/border_only_btn"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/fra3Name"
                 app:layout_constraintEnd_toStartOf="@+id/fra3Name"
                 app:layout_constraintTop_toTopOf="@+id/fra3Name" />
@@ -206,7 +217,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/border_only_btn"
+                    android:background="@drawable/white_rect"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/constraintLayout7"
@@ -252,7 +263,7 @@
                     android:id="@+id/constraintLayout7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_only_btn"
+                    android:background="@drawable/white_rect"
                     app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -299,7 +310,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/border_only_btn"
+                    android:background="@drawable/white_rect"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

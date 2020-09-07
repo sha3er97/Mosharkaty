@@ -7,10 +7,8 @@
 
     <Button
         android:id="@+id/close_day_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_gradient_blue"
         android:fontFamily="@font/new_jf"
@@ -18,29 +16,28 @@
         android:text="@string/close_btn_txt"
         android:textColor="@color/new_white_light"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/daily_report_btn"
+        app:layout_constraintEnd_toEndOf="@+id/daily_report_btn"
+        app:layout_constraintStart_toStartOf="@+id/daily_report_btn" />
+
+    <Button
+        android:id="@+id/daily_report_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_green"
+        android:drawableStart="@drawable/daily_update"
+        android:drawablePadding="16dp"
+        android:fontFamily="@font/new_jf"
+        android:paddingHorizontal="16dp"
+        android:text="@string/send_daily_update"
+        android:textAlignment="center"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/show_closings_btn" />
-
-    <Button
-        android:id="@+id/show_closings_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_only_btn"
-        android:fontFamily="@font/new_jf"
-        android:paddingHorizontal="32dp"
-        android:text="اعرض الايام\n المتقفلة"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textColor="@color/new_blue_dark"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/close_day_btn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
@@ -58,25 +55,23 @@
 
     <Spinner
         android:id="@+id/month_et"
-        android:layout_width="wrap_content"
+        style="@style/SpinnerwithNoArrow"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="16dp"
         android:text="@string/dummy_number"
         android:textSize="32sp"
-        style="@style/SpinnerwithNoArrow"
         app:layout_constraintEnd_toEndOf="@+id/titleShowMosharkat2"
         app:layout_constraintStart_toStartOf="@+id/titleShowMosharkat2"
         app:layout_constraintTop_toBottomOf="@+id/titleShowMosharkat" />
 
     <Spinner
         android:id="@+id/day_et"
-        android:layout_width="wrap_content"
+        style="@style/SpinnerwithNoArrow"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="16dp"
         android:text="@string/dummy_number"
-        style="@style/SpinnerwithNoArrow"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/titleShowMosharkat"
         app:layout_constraintStart_toStartOf="@+id/titleShowMosharkat"
@@ -86,7 +81,7 @@
         android:id="@+id/titleShowMosharkat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/new_jf"
         android:text="الشهر"
         android:textColor="@color/new_text_black"
@@ -100,7 +95,7 @@
         android:id="@+id/titleShowMosharkat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/new_jf"
         android:text="اليوم"
         android:textColor="@color/new_text_black"
@@ -145,6 +140,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/close_day_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

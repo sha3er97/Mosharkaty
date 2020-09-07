@@ -22,12 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.ProfileFragment.userBranch;
 import static com.resala.mosharkaty.ProfileFragment.userCode;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
@@ -49,7 +50,12 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   DatabaseReference mosharkatTab;
 
   DatabaseReference appMosharkatRef;
-  HashMap<String, String> teamDegrees;
+  DatabaseReference meetingsRef;
+
+  ValueEventListener appMosharkatlistener;
+  ValueEventListener meetingslistener;
+
+  HashMap<String, String> teamDegrees = new HashMap<>();
   private ProgressDialog progress;
   int arrivedCounter;
   int teamCounter;
@@ -62,6 +68,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   TextView totalTeam;
   TextView arrivedTeam;
   TextView points;
+  TextView meetings;
   TextView average_fari2;
   TextView average_mas2oleen;
   TextView average_msharee3;
@@ -179,11 +186,11 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   }
 
   private void refreshReports() {
-    teamDegrees = new HashMap<>();
     average_fari2 = view.findViewById(R.id.average_fari2);
     average_mas2oleen = view.findViewById(R.id.average_mas2oleen);
     average_msharee3 = view.findViewById(R.id.average_msharee3);
     points = view.findViewById(R.id.points);
+    meetings = view.findViewById(R.id.meetings);
     percent = view.findViewById(R.id.percent);
     totalTeam = view.findViewById(R.id.totalTeam);
     arrivedTeam = view.findViewById(R.id.arrivedTeam);
@@ -201,12 +208,12 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                   Volunteer user = snapshot.getValue(Volunteer.class);
                   if (user != null) {
-                    if (!user.degree.contains("مجمد")) {
+                    if (!user.degree.matches("(.*)مجمد(.*)")) {
                       teamDegrees.put(user.Volname, user.degree);
                       teamCounter++;
                     }
-                    if (user.degree.contains("مسؤول")) mas2oleenCounter++;
-                    else if (user.degree.contains("مشروع")) msharee3Counter++;
+                    if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
+                    else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
                   }
                 }
                 totalTeam.setText(String.valueOf(teamCounter));
@@ -219,58 +226,77 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
               }
             });
     Log.d("Home", "finished official data");
+    final Calendar cldr = Calendar.getInstance(Locale.US);
+    month = cldr.get(Calendar.MONTH) + 1;
+    meetingsRef = database.getReference("meetings").child(userBranch);
+    meetingslistener =
+            meetingsRef
+                    .child(String.valueOf(month))
+                    .addValueEventListener(
+                            new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                meetings.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                              }
+
+                              @Override
+                              public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                              }
+                            });
 
     appMosharkatRef = database.getReference("mosharkat").child(userBranch);
-    final Calendar cldr = Calendar.getInstance();
-    month = cldr.get(Calendar.MONTH) + 1;
-    appMosharkatRef
-            .child(String.valueOf(month))
-            .addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        HashMap<String, Integer> nameCounting = new HashMap<>();
-                        mas2oleenMosharkat = 0;
-                        msharee3Mosharkat = 0;
-                        arrivedCounter = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                          if (mosharka != null) {
-                            if (nameCounting.containsKey(mosharka.getVolname().trim())) {
-                              nameCounting.put(
-                                      mosharka.getVolname().trim(),
-                                      Math.min(nameCounting.get(mosharka.getVolname().trim()) + 1, 8));
-                            } else {
-                              nameCounting.put(mosharka.getVolname().trim(), 1);
-                            }
-                          }
-                        }
-                        Log.d("Home", "nameCounting size " + nameCounting.size());
-                        Log.d("Home", "teamDegrees size " + teamDegrees.size());
+    appMosharkatlistener =
+            appMosharkatRef
+                    .child(String.valueOf(month))
+                    .addValueEventListener(
+                            new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                HashMap<String, Integer> nameCounting = new HashMap<>();
+                                mas2oleenMosharkat = 0;
+                                msharee3Mosharkat = 0;
+                                arrivedCounter = 0;
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                  if (mosharka != null) {
+                                    if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                      nameCounting.put(
+                                              mosharka.getVolname().trim(),
+                                              Math.min(nameCounting.get(mosharka.getVolname().trim()) + 1, 8));
+                                    } else {
+                                      nameCounting.put(mosharka.getVolname().trim(), 1);
+                                    }
+                                  }
+                                }
+                                Log.d("Home", "nameCounting size " + nameCounting.size());
+                                Log.d("Home", "teamDegrees size " + teamDegrees.size());
 
-                        for (Map.Entry entry : nameCounting.entrySet()) {
-                          String degree = teamDegrees.get(entry.getKey().toString());
-                          if (teamDegrees.containsKey(entry.getKey().toString())) {
-                            if (!degree.contains("مجمد")) arrivedCounter++;
-                            if (degree.contains("مسؤول"))
-                              mas2oleenMosharkat += Integer.parseInt(entry.getValue().toString());
-                            if (degree.contains("مشروع"))
-                              msharee3Mosharkat += Integer.parseInt(entry.getValue().toString());
-                          }
-                        }
-                        updateAttendance();
-                        updatePoints();
-                        updateAverages();
-                        //                    Toast.makeText(getContext(), "Report updated",
-                        // Toast.LENGTH_SHORT).show();
-                      }
+                                for (Map.Entry entry : nameCounting.entrySet()) {
+                                  String degree = teamDegrees.get(entry.getKey().toString());
+                                  if (teamDegrees.containsKey(entry.getKey().toString())) {
+                                    assert degree != null;
+                                    if (!degree.matches("(.*)مجمد(.*)")) arrivedCounter++;
+                                    if (degree.matches("(.*)مسؤول(.*)"))
+                                      mas2oleenMosharkat += Integer.parseInt(entry.getValue().toString());
+                                    if (degree.matches("(.*)مشروع(.*)"))
+                                      msharee3Mosharkat += Integer.parseInt(entry.getValue().toString());
+                                  }
+                                }
+                                updateAttendance();
+                                updatePoints();
+                                updateAverages();
+                                //                    Toast.makeText(getContext(), "Report updated",
+                                // Toast.LENGTH_SHORT).show();
+                              }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                              @Override
+                              public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                              }
+                            });
   }
 
   private void updateAverages() {
@@ -350,6 +376,12 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     }
     if (mosharkatTab != null && mosharkatlistener != null) {
       mosharkatTab.removeEventListener(mosharkatlistener);
+    }
+    if (appMosharkatRef != null && appMosharkatlistener != null) {
+      appMosharkatRef.removeEventListener(appMosharkatlistener);
+    }
+    if (meetingsRef != null && meetingslistener != null) {
+      meetingsRef.removeEventListener(meetingslistener);
     }
   }
 }

@@ -16,24 +16,26 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+
 class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
-  private ArrayList<EventItem> eventItems;
-  private Context context;
+    private ArrayList<EventItem> eventItems;
+    private Context context;
 
-  public EventsAdapter(ArrayList<EventItem> eventItems, Context context) {
-    this.eventItems = eventItems;
-    this.context = context;
-  }
+    public EventsAdapter(ArrayList<EventItem> eventItems, Context context) {
+        this.eventItems = eventItems;
+        this.context = context;
+    }
 
-  /**
-   * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent an item.
-   * This new ViewHolder should be constructed with a new View that can represent the items of the
-   * given type. You can either create a new View manually or inflate it from an XML layout file.
-   *
-   * @param parent The ViewGroup into which the new View will be added after it is bound to an
-   *     adapter position.
-   * @param viewType The view type of the new View.
-   * @return A new ViewHolder that holds a View of the given view type.
+    /**
+     * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent an item.
+     * This new ViewHolder should be constructed with a new View that can represent the items of the
+     * given type. You can either create a new View manually or inflate it from an XML layout file.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an
+     *     adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View of the given view type.
    * @see #getItemViewType(int)
    * @see #onBindViewHolder(ViewHolder, int)
    */
@@ -97,13 +99,17 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     public void onClick(View view) {
         int position = getAdapterPosition();
         EventItem itemClicked = eventItems.get(position);
-        Intent intent = new Intent(context, EventDescription.class);
+        Intent intent;
+        if (isAdmin) intent = new Intent(context, EventEdited.class);
+        else intent = new Intent(context, EventDescription.class);
         intent.putExtra("title", itemClicked.getTitle());
         intent.putExtra("date", itemClicked.getDay());
         intent.putExtra("image", itemClicked.getImgUrl());
         intent.putExtra("description", itemClicked.getDescription());
         intent.putExtra("location", itemClicked.getLocation());
         intent.putExtra("time", itemClicked.getTime());
+        intent.putExtra("key", itemClicked.getKey());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(intent);
     }
