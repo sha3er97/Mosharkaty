@@ -121,22 +121,26 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
           sheet.addCell(label_nasheet);
         }
       } catch (RowsExceededException e) {
+//        Toast.makeText(getContext(), "rows exceeding limit error", Toast.LENGTH_SHORT).show();
         e.printStackTrace();
       } catch (WriteException e) {
+//        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
         e.printStackTrace();
       }
 
       workbook.write();
-      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_SHORT)
+      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
               .show();
       //      sendEmail(root, Fnamexls);
       try {
         workbook.close();
       } catch (WriteException e) {
+//        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
         e.printStackTrace();
       }
       // createExcel(excelSheet);
     } catch (IOException e) {
+//      Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
       e.printStackTrace();
     }
   }

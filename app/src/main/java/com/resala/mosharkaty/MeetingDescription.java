@@ -216,9 +216,10 @@ public class MeetingDescription extends AppCompatActivity {
 
     public void editMeeting(View view) {
         if (!validateForm()) return;
-
+        String date = eText.getText().toString();
+        String[] dateParts = date.split("/", 2);
         DatabaseReference currentEvent =
-                MeetingsRef.child(key);
+                MeetingsRef.child(String.valueOf(dateParts[1])).child(key);
         DatabaseReference dateRef = currentEvent.child("date");
         DatabaseReference headRef = currentEvent.child("head");
         DatabaseReference descriptionRef = currentEvent.child("description");
