@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,52 +28,52 @@ import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AddNasheetFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
-  View view;
-  ArrayList<String> users = new ArrayList<>();
-  ArrayList<String> phones = new ArrayList<>();
-  Spinner users_spin;
-  DatePickerDialog picker;
-  EditText eText;
-  TextView volunteerName_et;
-  TextView editTextPhone;
-  Button confirmAdd;
-  FirebaseDatabase database;
-  Spinner phoneSpinner;
-  int day;
-  int month;
-  int year;
-  DatabaseReference nasheetRef;
+    View view;
+    ArrayList<String> users = new ArrayList<>();
+    ArrayList<String> phones = new ArrayList<>();
+    CustomSearchableSpinner users_spin;
+    CustomSearchableSpinner phoneSpinner;
+    DatePickerDialog picker;
+    EditText eText;
+    TextView volunteerName_et;
+    TextView editTextPhone;
+    Button confirmAdd;
+    FirebaseDatabase database;
+    int day;
+    int month;
+    int year;
+    DatabaseReference nasheetRef;
 
-  @Override
-  public View onCreateView(
-          LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    view = inflater.inflate(R.layout.fragment_add_nasheet, container, false);
-    database = FirebaseDatabase.getInstance();
-    users_spin = view.findViewById(R.id.spinner3);
-    phoneSpinner = view.findViewById(R.id.phoneSpinner2);
-    editTextPhone = view.findViewById(R.id.editTextPhone2);
-    volunteerName_et = view.findViewById(R.id.volInGroupTV2);
-    eText = view.findViewById(R.id.nasheetDate);
-    confirmAdd = view.findViewById(R.id.confirmAdd);
-    final Calendar cldr = Calendar.getInstance(Locale.US);
-    day = cldr.get(Calendar.DAY_OF_MONTH);
-    month = cldr.get(Calendar.MONTH);
-    year = cldr.get(Calendar.YEAR);
-    eText.setInputType(InputType.TYPE_NULL);
-    eText.setOnClickListener(
-            v -> {
-              // date picker dialog
-              picker =
-                      new DatePickerDialog(
-                              getContext(),
-                              (view, year, monthOfYear, dayOfMonth) ->
-                                      eText.setText((monthOfYear + 1) + "/" + year),
-                              year,
-                              month,
-                              day);
-              picker.show();
-            });
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_add_nasheet, container, false);
+        database = FirebaseDatabase.getInstance();
+        users_spin = (CustomSearchableSpinner) view.findViewById(R.id.spinner3);
+        phoneSpinner = (CustomSearchableSpinner) view.findViewById(R.id.phoneSpinner2);
+        editTextPhone = view.findViewById(R.id.editTextPhone2);
+        volunteerName_et = view.findViewById(R.id.volInGroupTV2);
+        eText = view.findViewById(R.id.nasheetDate);
+        confirmAdd = view.findViewById(R.id.confirmAdd);
+        final Calendar cldr = Calendar.getInstance(Locale.US);
+        day = cldr.get(Calendar.DAY_OF_MONTH);
+        month = cldr.get(Calendar.MONTH);
+        year = cldr.get(Calendar.YEAR);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(
+                v -> {
+                    // date picker dialog
+                    picker =
+                            new DatePickerDialog(
+                                    getContext(),
+                                    (view, year, monthOfYear, dayOfMonth) ->
+                                            eText.setText((monthOfYear + 1) + "/" + year),
+                                    year,
+                                    month,
+                                    day);
+                    picker.show();
+                });
     /**
      * *******************************************************************************************************
      */
@@ -106,21 +105,21 @@ public class AddNasheetFragment extends androidx.fragment.app.Fragment
     /**
      * ************************************************************************************************************
      */
-    confirmAdd.setOnClickListener(
-            v -> {
-              if (!validateForm()) return;
-              nasheetRef =
-                      database
-                              .getReference("nasheet")
-                              .child(userBranch)
-                              .child(volunteerName_et.getText().toString());
-              DatabaseReference currentNasheet = nasheetRef.child("first_month");
-              currentNasheet.setValue(eText.getText().toString());
-              Toast.makeText(getContext(), "تم اضافة نشيط جديد..", Toast.LENGTH_SHORT).show();
-              editTextPhone.setText("");
-              volunteerName_et.setText("");
-              eText.setText("");
-            });
+        confirmAdd.setOnClickListener(
+                v -> {
+                    if (!validateForm()) return;
+                    nasheetRef =
+                            database
+                                    .getReference("nasheet")
+                                    .child(userBranch)
+                                    .child(volunteerName_et.getText().toString());
+                    DatabaseReference currentNasheet = nasheetRef.child("first_month");
+                    currentNasheet.setValue(eText.getText().toString());
+                    Toast.makeText(getContext(), "تم اضافة نشيط جديد..", Toast.LENGTH_SHORT).show();
+                    editTextPhone.setText("");
+                    volunteerName_et.setText("");
+                    eText.setText("");
+                });
 
     return view;
   }
@@ -131,20 +130,20 @@ public class AddNasheetFragment extends androidx.fragment.app.Fragment
     //    volunteerName_et = view.findViewById(R.id.volInGroupTV);
     if (adapterView.getId() == R.id.spinner3) {
       volunteerName_et.setText(adapterView.getItemAtPosition(i).toString());
-      normalVolunteer normalVolunteer =
-              allVolunteersByName.get(adapterView.getItemAtPosition(i).toString());
+        normalVolunteer normalVolunteer =
+                allVolunteersByName.get(adapterView.getItemAtPosition(i).toString());
       editTextPhone.setText(normalVolunteer.phone_text);
     } else if (adapterView.getId() == R.id.phoneSpinner2) {
       editTextPhone.setText(adapterView.getItemAtPosition(i).toString());
-      normalVolunteer normalVolunteer =
-              allVolunteersByPhone.get(adapterView.getItemAtPosition(i).toString());
+        normalVolunteer normalVolunteer =
+                allVolunteersByPhone.get(adapterView.getItemAtPosition(i).toString());
       volunteerName_et.setText(normalVolunteer.Volname);
     }
   }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 
   private boolean validateForm() {
     String name = volunteerName_et.getText().toString().trim();

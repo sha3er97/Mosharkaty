@@ -245,7 +245,7 @@
                 app:layout_constraintStart_toStartOf="@+id/spinner2"
                 app:layout_constraintTop_toTopOf="@+id/textView37" />
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <com.resala.mosharkaty.CustomSearchableSpinner
                 android:id="@+id/spinner2"
                 style="@style/SpinnerwithNoArrow"
                 android:layout_width="0dp"
@@ -258,7 +258,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/phoneSpinner" />
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <com.resala.mosharkaty.CustomSearchableSpinner
                 android:id="@+id/phoneSpinner"
                 style="@style/SpinnerwithNoArrow"
                 android:layout_width="0dp"

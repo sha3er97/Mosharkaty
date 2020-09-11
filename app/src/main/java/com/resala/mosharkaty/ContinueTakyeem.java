@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 
 public class ContinueTakyeem extends AppCompatActivity {

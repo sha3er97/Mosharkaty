@@ -178,4 +178,6 @@
     <string name="nasheet_tab_text_1">اضافة نشيط</string>
     <string name="nasheet_tab_text_2">عرض المشاركات</string>
     <string name="nasheet_tab_text_3">تقرير</string>
+    <string name="fari2_filter_checkbox_text">فريق فقط</string>
+    <string name="refresh_report">refresh report</string>
 </resources>

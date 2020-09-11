@@ -143,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT)
                         .show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                  finish();
               }
 
               @Override
@@ -160,7 +161,8 @@ public class LoginActivity extends AppCompatActivity {
       // Signed in
       userId = user.getUid();
       Toast.makeText(this, "اهلا اهلا 3>", Toast.LENGTH_SHORT).show();
-      startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     } else {
       Toast.makeText(this, "مش فاكرك ياض :/", Toast.LENGTH_SHORT).show();
     }

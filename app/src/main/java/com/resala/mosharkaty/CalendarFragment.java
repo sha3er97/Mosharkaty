@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -133,6 +134,7 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
                                       }
                                   }
                               }
+                              Collections.sort(eventItems);
                               if (!eventFound) {
                                   Log.i(TAG, "onDataChange: no events found");
                                   errorTV.setVisibility(View.VISIBLE);
@@ -196,16 +198,16 @@ public class CalendarFragment extends androidx.fragment.app.Fragment {
     eventsImages.put("كامب 48", "https://i.imgur.com/zGJu0KV.jpg");
     eventsImages.put("دوري كورة", "https://i.imgur.com/Gc51yBW.jpg");
     eventsImages.put("حملة مكافحة", "https://i.imgur.com/VgPtm1z.jpg");
-    eventsImages.put("دار ايواء", "https://i.imgur.com/pF4EC0F.jpg");
-    eventsImages.put("حملة مكافحة 2", "https://i.imgur.com/6aIgVxj.jpg");
-    eventsImages.put("معارض 2", "https://i.imgur.com/xjydZEV.jpg");
-    eventsImages.put("كامب مسؤولين فرز 2", "https://i.imgur.com/giqO8tF.jpg");
-    eventsImages.put("نقل داخلي", "https://i.imgur.com/F7iRNwK.jpg");
-    eventsImages.put("نقل 2", "https://i.imgur.com/Xo5Vbxk.jpg");
-    eventsImages.put("ورشة اتصالات", "https://i.imgur.com/ddORToQ.jpg");
-    eventsImages.put("كساء 2", "https://i.imgur.com/uanNgkT.jpg");
-    eventsImages.put("كامب مسؤولين فرز 3", "https://i.imgur.com/x7y8yZd.jpg");
-    eventsImages.put("زيارات مسنين", "https://i.imgur.com/lM5BD3A.jpg");
+      eventsImages.put("دار ايواء", "https://i.imgur.com/pF4EC0F.jpg");
+      eventsImages.put("حملة مكافحة 2", "https://i.imgur.com/6aIgVxj.jpg");
+      eventsImages.put("معارض 2", "https://i.imgur.com/xjydZEV.jpg");
+      eventsImages.put("كامب مسؤولين فرز 2", "https://i.imgur.com/giqO8tF.jpg");
+      eventsImages.put("نقل داخلي", "https://i.imgur.com/F7iRNwK.jpg");
+      eventsImages.put("نقل 2", "https://i.imgur.com/Xo5Vbxk.jpg");
+      eventsImages.put("ورشة اتصالات", "https://i.imgur.com/ddORToQ.jpg");
+      eventsImages.put("كساء 2", "https://i.imgur.com/uanNgkT.jpg");
+      eventsImages.put("كامب مسؤولين فرز 3", "https://i.imgur.com/x7y8yZd.jpg");
+      eventsImages.put("زيارات مسنين", "https://i.imgur.com/lM5BD3A.jpg");
       eventsImages.put("فرز 3", "https://i.imgur.com/Qciv6Kh.jpg");
       eventsImages.put("كرنفال 3", "https://i.imgur.com/vWFXHr1.jpg");
       eventsImages.put("فرز 4", "https://i.imgur.com/mYQWcBr.jpg");

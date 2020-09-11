@@ -1,18 +1,23 @@
 package com.resala.mosharkaty;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,8 +44,10 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.AdminShowMosharkat.REQUEST;
+import static com.resala.mosharkaty.AdminShowMosharkat.months;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 
 public class ShowMeetingFragment extends Fragment {
     View view;
@@ -48,6 +55,7 @@ public class ShowMeetingFragment extends Fragment {
     ArrayList<Meeting> meetingitems = new ArrayList<>();
     FirebaseDatabase database;
     int month;
+    Spinner month_et;
     DatabaseReference MeetingsRef;
     ValueEventListener Meetingslistener;
     Button export_meetings_btn;
@@ -60,55 +68,113 @@ public class ShowMeetingFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         RecyclerView recyclerView = view.findViewById(R.id.meetingsRecyclerView);
         export_meetings_btn = view.findViewById(R.id.export_meetings_btn);
+        month_et = view.findViewById(R.id.month_et);
 
-        TextView current_month = view.findViewById(R.id.current_month);
         final Calendar cldr = Calendar.getInstance(Locale.US);
-        month = cldr.get(Calendar.MONTH) + 1;
-        current_month.setText(String.valueOf(month));
+        month = cldr.get(Calendar.MONTH);
+        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, months);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        month_et.setAdapter(aa);
+        month_et.setSelection(Math.max(month, 0));
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new MeetingAdapter(meetingitems, getContext());
         recyclerView.setAdapter(adapter);
-        MeetingsRef = database.getReference("meetings").child(userBranch);
-        Meetingslistener =
-                MeetingsRef.child(String.valueOf(month))
-                        .addValueEventListener(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        meetingitems.clear();
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            Meeting meet = snapshot.getValue(Meeting.class);
-                                            if (meet != null) {
-                                                meet.setKey(snapshot.getKey());
-                                                meetingitems.add(meet);
 
-                                            } else {
-                                                Toast.makeText(getContext(), "something went wrong", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        }
-                                        adapter.notifyDataSetChanged();
-                                    }
+        // by default
+        export_meetings_btn.setEnabled(false);
+        export_meetings_btn.setBackgroundColor(
+                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Failed to read value
-                                        Log.w(TAG, "Failed to read value.", error.toException());
-                                    }
-                                });
+        ImageButton refreshBtn = view.findViewById(R.id.refresh_btn);
+        refreshBtn.setOnClickListener(
+                v -> {
+                    export_meetings_btn.setEnabled(true);
+                    export_meetings_btn.setBackgroundResource(R.drawable.btn_green);
+                    MeetingsRef = database.getReference("meetings").child(userBranch);
+                    Meetingslistener =
+                            MeetingsRef.child(month_et.getSelectedItem().toString())
+                                    .addValueEventListener(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    meetingitems.clear();
+                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                        Meeting meet = snapshot.getValue(Meeting.class);
+                                                        if (meet != null) {
+                                                            meet.setKey(snapshot.getKey());
+                                                            meetingitems.add(meet);
+
+                                                        } else {
+                                                            Toast.makeText(
+                                                                    getContext(), "something went wrong", Toast.LENGTH_SHORT)
+                                                                    .show();
+                                                        }
+                                                    }
+                                                    adapter.notifyDataSetChanged();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    // Failed to read value
+                                                    Log.w(TAG, "Failed to read value.", error.toException());
+                                                }
+                                            });
+                });
 
         export_meetings_btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        exportExcel();
+                view -> {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        if (!hasPermissions(PERMISSIONS)) {
+                            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
+                        } else { // permession already granted
+                            exportExcel(month_et.getSelectedItem().toString());
+                        }
+                    } else { // api below 23
+                        exportExcel(month_et.getSelectedItem().toString());
                     }
                 });
         return view;
     }
 
-    private void exportExcel() {
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    exportExcel(month_et.getSelectedItem().toString());
+
+                } else {
+                    Toast.makeText(
+                            getContext(),
+                            "The app was not allowed to write in your storage",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        }
+    }
+
+    private boolean hasPermissions(String[] permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && getContext() != null
+                && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(getContext(), permission)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void exportExcel(String month) {
         String root =
                 Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/اجتماعات";
         File dir = new File(root);
@@ -153,7 +219,6 @@ public class ShowMeetingFragment extends Fragment {
                     sheet.addCell(label_location);
                     sheet.addCell(label_reason);
                     sheet.addCell(label_branch);
-
                 }
             } catch (RowsExceededException e) {
                 e.printStackTrace();

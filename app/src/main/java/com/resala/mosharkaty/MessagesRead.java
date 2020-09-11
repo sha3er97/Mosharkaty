@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 
 public class MessagesRead extends AppCompatActivity {
   MessagesAdapter adapter;

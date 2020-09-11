@@ -32,7 +32,7 @@ import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.ProfileFragment.userCode;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 import static com.resala.mosharkaty.TakyeemFragment.codeFound;
 
 public class HomeFragment extends androidx.fragment.app.Fragment {

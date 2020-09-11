@@ -1,6 +1,8 @@
 package com.resala.mosharkaty;
 
-class EventItem {
+import androidx.annotation.NonNull;
+
+class EventItem implements Comparable {
     private String title;
     private String day;
     private String imgUrl;
@@ -80,5 +82,21 @@ class EventItem {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        String[] comparedString = ((EventItem) o).getDay().split("/", 2);
+        int compared = Integer.parseInt(comparedString[0]); // day
+        /* For Ascending order*/
+        //        return this.count-compared;
+
+        /* For Descending order do like this */
+        //    return compared.compareTo(this.mosharkaType);
+        String[] other = this.day.split("/", 2);
+
+        /* For Descending order*/
+        //        return compared - Integer.parseInt(other[0]);
+        return Integer.parseInt(other[0]) - compared;
     }
 }

@@ -7,54 +7,27 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.Splash.myRules;
 
 public class Starter extends AppCompatActivity {
-    DatabaseReference rulesRef;
-    public static Rules myRules;
-    FirebaseDatabase database;
     private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter);
-        progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("لحظات معانا...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
-        database = FirebaseDatabase.getInstance();
-        rulesRef = database.getReference("Rules");
-        rulesRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        myRules = dataSnapshot.getValue(Rules.class);
-                        // To dismiss the dialog
-                        progress.dismiss();
-                        checkUpdate();
-                    }
+//        progress = new ProgressDialog(this);
+//        progress.setTitle("Loading");
+//        progress.setMessage("لحظات معانا...");
+//        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+//        progress.show();
+        checkUpdate();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
     }
 
     private void checkUpdate() {
@@ -72,6 +45,7 @@ public class Starter extends AppCompatActivity {
                         getString(R.string.youAreNotUpdatedMessage)
                                 + " "
                                 + myRules.last_important_update
+                                + " "
                                 + getString(R.string.youAreNotUpdatedMessage1));
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton(

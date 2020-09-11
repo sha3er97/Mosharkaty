@@ -91,7 +91,7 @@ public class MeetingDescription extends AppCompatActivity {
                     // date picker dialog
                     picker =
                             new DatePickerDialog(
-                                    getApplicationContext(),
+                                    MeetingDescription.this,
                                     (view, year, monthOfYear, dayOfMonth) ->
                                             eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
                                     year,
@@ -108,7 +108,7 @@ public class MeetingDescription extends AppCompatActivity {
                     // time picker dialog
                     picker2 =
                             new TimePickerDialog(
-                                    getApplicationContext(),
+                                    MeetingDescription.this,
                                     (tp, sHour, sMinute) -> {
                                         int Mhour;
                                         String Mminute;
@@ -139,7 +139,7 @@ public class MeetingDescription extends AppCompatActivity {
                     // time picker dialog
                     picker3 =
                             new TimePickerDialog(
-                                    getApplicationContext(),
+                                    MeetingDescription.this,
                                     (tp, sHour, sMinute) -> {
                                         int Mhour;
                                         String Mminute;

@@ -52,7 +52,7 @@ import jxl.write.biff.RowsExceededException;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 
 public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
     View view;
@@ -67,7 +67,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
     int day;
     int month;
     int year;
-    private static final int REQUEST = 112;
+    public static final int REQUEST = 112;
     Spinner month_et;
     Spinner day_et;
 
@@ -123,6 +123,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
       // Setting the ArrayAdapter data on the Spinner
       month_et.setAdapter(aa);
       month_et.setSelection(Math.max(month, 0));
+
       ArrayAdapter ab = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, days);
       ab.setDropDownViewResource(R.layout.spinner_dropdown);
       // Setting the ArrayAdapter data on the Spinner
@@ -398,7 +399,7 @@ public class AdminShowMosharkat extends androidx.fragment.app.Fragment {
             WritableSheet sheet = workbook.createSheet(day + "_" + month, 0);
             Label label0 = new Label(0, 0, "الاسم");
             Label label1 = new Label(1, 0, String.valueOf(day));
-            Label label2 = new Label(2, 0, "غير موجود");
+            Label label2 = new Label(2, 0, "غير موجود في الشيت");
 
             try {
                 sheet.addCell(label2);

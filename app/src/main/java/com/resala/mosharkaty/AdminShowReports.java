@@ -131,6 +131,8 @@ public class AdminShowReports extends androidx.fragment.app.Fragment {
                 view -> startActivity(new Intent(getActivity(), AdminMeetingsActivity.class)));
         nasheet_btn.setOnClickListener(
                 view -> startActivity(new Intent(getActivity(), NasheetActivity.class)));
+        weeklyReport_btn.setOnClickListener(
+                view -> startActivity(new Intent(getActivity(), AdminWeeklyReport.class)));
         return view;
     }
 }

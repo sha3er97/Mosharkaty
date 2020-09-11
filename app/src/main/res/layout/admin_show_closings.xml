@@ -32,6 +32,8 @@
         android:text="@string/dummy_number"
         android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/textView23"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/refresh_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

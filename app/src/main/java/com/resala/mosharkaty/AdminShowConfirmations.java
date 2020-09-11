@@ -31,7 +31,7 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.NewAccount.branches;
-import static com.resala.mosharkaty.Starter.myRules;
+import static com.resala.mosharkaty.Splash.myRules;
 
 public class AdminShowConfirmations extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {

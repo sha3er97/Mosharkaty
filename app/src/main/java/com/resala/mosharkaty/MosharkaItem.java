@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import androidx.annotation.NonNull;
+
 class MosharkaItem implements Comparable {
     private String volname;
     private String mosharkaDate;
@@ -51,7 +53,7 @@ class MosharkaItem implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(@NonNull Object o) {
         String[] comparedString = ((MosharkaItem) o).getKey().split("&", 3);
         int compared = Integer.parseInt(comparedString[0]);
         /* For Ascending order*/
