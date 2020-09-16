@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
   FirebaseDatabase database;
   ImageView logo;
   Button login_btn;
-//    private ProgressDialog progress;
+  //    private ProgressDialog progress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,98 +59,98 @@ public class LoginActivity extends AppCompatActivity {
     database = FirebaseDatabase.getInstance();
     logo = findViewById(R.id.logo);
 
-    login_btn = findViewById(R.id.login_btn);
-    email_et.setOnFocusChangeListener(
-            (view, hasFocus) -> {
-              if (hasFocus) {
-                logo.setVisibility(View.GONE);
-              } else {
-                logo.setVisibility(View.VISIBLE);
-              }
-            });
-    password_et.setOnFocusChangeListener(
-            (view, hasFocus) -> {
-              if (hasFocus) {
-                logo.setVisibility(View.GONE);
-              } else {
-                logo.setVisibility(View.VISIBLE);
-              }
-            });
-//    progress = new ProgressDialog(getApplicationContext());
-//    progress.setTitle("Loading");
-//    progress.setMessage("لحظات معانا...");
-//    progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-//    progress.show();
-    DatabaseReference adminAccount = database.getReference("AdminAccount");
-    adminAccount.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                admin = dataSnapshot.getValue(Admin.class);
-//            progress.dismiss();
-              }
+      login_btn = findViewById(R.id.login_btn);
+      email_et.setOnFocusChangeListener(
+              (view, hasFocus) -> {
+                  if (hasFocus) {
+                      logo.setVisibility(View.GONE);
+                  } else {
+                      logo.setVisibility(View.VISIBLE);
+                  }
+              });
+      password_et.setOnFocusChangeListener(
+              (view, hasFocus) -> {
+                  if (hasFocus) {
+                      logo.setVisibility(View.GONE);
+                  } else {
+                      logo.setVisibility(View.VISIBLE);
+                  }
+              });
+      //    progress = new ProgressDialog(getApplicationContext());
+      //    progress.setTitle("Loading");
+      //    progress.setMessage("لحظات معانا...");
+      //    progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+      //    progress.show();
+      DatabaseReference adminAccount = database.getReference("AdminAccount");
+      adminAccount.addValueEventListener(
+              new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      admin = dataSnapshot.getValue(Admin.class);
+                      //            progress.dismiss();
+                  }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
+              });
     FirebaseUser currentUser = mAuth.getCurrentUser();
-    FirebaseInstanceId.getInstance()
-            .getInstanceId()
-            .addOnCompleteListener(
-                    task -> {
-                      if (!task.isSuccessful()) {
-                        Log.w(TAG, "getInstanceId failed", task.getException());
-                        return;
-                      }
+      FirebaseInstanceId.getInstance()
+              .getInstanceId()
+              .addOnCompleteListener(
+                      task -> {
+                          if (!task.isSuccessful()) {
+                              Log.w(TAG, "getInstanceId failed", task.getException());
+                              return;
+                          }
 
-                      // Get new Instance ID token
-                      String token = task.getResult().getToken();
+                          // Get new Instance ID token
+                          String token = task.getResult().getToken();
 
-                      // Log
-                      Log.i("getInstanceId", token);
-                    });
-    updateUI(currentUser);
+                          // Log
+                          Log.i("getInstanceId", token);
+                      });
+      updateUI(currentUser);
   }
 
   private void makeAdminActions() {
-    login_btn.setEnabled(false);
-    login_btn.setBackgroundColor(
-            getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-    DatabaseReference allVolsRef =
-            database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0").child("all");
+      login_btn.setEnabled(false);
+      login_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      DatabaseReference allVolsRef =
+              database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0").child("all");
     allVolsRef.addListenerForSingleValueEvent(
             new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //            progress = new ProgressDialog(getApplicationContext());
-                //            progress.setTitle("Loading");
-                //            progress.setMessage("لحظات معانا...");
-                //            progress.setCancelable(false); // disable dismiss by tapping outside of
-                // the dialog
-                //            progress.show();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  normalVolunteer user = snapshot.getValue(normalVolunteer.class);
-                  assert user != null;
-                  allVolunteersByName.put(user.Volname, user);
-                  allVolunteersByPhone.put(user.phone_text, user);
-
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //            progress = new ProgressDialog(getApplicationContext());
+                    //            progress.setTitle("Loading");
+                    //            progress.setMessage("لحظات معانا...");
+                    //            progress.setCancelable(false); // disable dismiss by tapping outside of
+                    // the dialog
+                    //            progress.show();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        normalVolunteer user = snapshot.getValue(normalVolunteer.class);
+                        assert user != null;
+                        if (user.Volname.isEmpty()) continue;
+                        allVolunteersByName.put(user.Volname, user);
+                        allVolunteersByPhone.put(user.phone_text, user);
+                    }
+                    isAdmin = true;
+                    //            progress.dismiss();
+                    Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT)
+                            .show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
                 }
-                isAdmin = true;
-                //            progress.dismiss();
-                Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT)
-                        .show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                  finish();
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
             });
 
     //        throw new RuntimeException("Test Crash"); // Force a crash
@@ -158,9 +158,9 @@ public class LoginActivity extends AppCompatActivity {
 
   private void updateUI(FirebaseUser user) {
     if (user != null) {
-      // Signed in
-      userId = user.getUid();
-      Toast.makeText(this, "اهلا اهلا 3>", Toast.LENGTH_SHORT).show();
+        // Signed in
+        userId = user.getUid();
+        Toast.makeText(this, "اهلا اهلا 3>", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
     } else {
@@ -172,20 +172,20 @@ public class LoginActivity extends AppCompatActivity {
     if (!validateForm()) {
       return;
     }
-    mAuth
-            .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(
-                    this,
-                    task -> {
-                      if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                      } else {
-                        // If sign in fails, display a message to the user.
-                        updateUI(null);
-                      }
-                    });
+      mAuth
+              .signInWithEmailAndPassword(email, password)
+              .addOnCompleteListener(
+                      this,
+                      task -> {
+                          if (task.isSuccessful()) {
+                              // Sign in success, update UI with the signed-in user's information
+                              FirebaseUser user = mAuth.getCurrentUser();
+                              updateUI(user);
+                          } else {
+                              // If sign in fails, display a message to the user.
+                              updateUI(null);
+                          }
+                      });
   }
 
   private boolean validateForm() {
@@ -260,17 +260,17 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void loginClick(View view) {
-    ConnectivityManager connectivityManager =
-            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager =
+              (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
     if (connectivityManager != null) {
-      if (connectivityManager.getActiveNetworkInfo() == null
-              || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-        //          Toast.makeText(getApplicationContext(), "No Internet",
-        // Toast.LENGTH_SHORT).show();
-        Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        return;
-      }
+        if (connectivityManager.getActiveNetworkInfo() == null
+                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+            //          Toast.makeText(getApplicationContext(), "No Internet",
+            // Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
     }
     if (IsAdminDetails()) makeAdminActions();
     else { // not admin
@@ -289,22 +289,22 @@ public class LoginActivity extends AppCompatActivity {
       email_et.setError("must enter a valid email");
       return;
     }
-    mAuth
-            .sendPasswordResetEmail(email_et.getText().toString())
-            .addOnCompleteListener(
-                    task -> {
-                      if (task.isSuccessful()) {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "check your email for reset password link",
-                                Toast.LENGTH_SHORT)
-                                .show();
-                        Log.d(TAG, "Email sent.");
-                      } else {
-                        Toast.makeText(
-                                getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
-                                .show();
-                      }
-                    });
+      mAuth
+              .sendPasswordResetEmail(email_et.getText().toString())
+              .addOnCompleteListener(
+                      task -> {
+                          if (task.isSuccessful()) {
+                              Toast.makeText(
+                                      getApplicationContext(),
+                                      "check your email for reset password link",
+                                      Toast.LENGTH_SHORT)
+                                      .show();
+                              Log.d(TAG, "Email sent.");
+                          } else {
+                              Toast.makeText(
+                                      getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
+                                      .show();
+                          }
+                      });
   }
 }

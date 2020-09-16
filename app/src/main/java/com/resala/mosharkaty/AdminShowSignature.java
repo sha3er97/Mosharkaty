@@ -29,7 +29,6 @@ public class AdminShowSignature extends AppCompatActivity {
     FirebaseDatabase database;
     int month;
     DatabaseReference SignaturesRef;
-    ValueEventListener signaturelistener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,41 +45,32 @@ public class AdminShowSignature extends AppCompatActivity {
         adapter = new SignaturesAdapter(signatureitems, getApplicationContext());
         recyclerView.setAdapter(adapter);
         SignaturesRef = database.getReference("signatures").child(userBranch);
-        signaturelistener =
-                SignaturesRef.child(String.valueOf(month))
-                        .addValueEventListener(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        signatureitems.clear();
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            Sig signature = snapshot.getValue(Sig.class);
-                                            if (signature != null) {
-                                                signatureitems.add(
-                                                        new Signature(
-                                                                signature.comment, signature.volName, signature.signatureDate));
-                                            } else {
-                                                Toast.makeText(
-                                                        getApplicationContext(), "something went wrong", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        }
-                                        adapter.notifyDataSetChanged();
+        SignaturesRef.child(String.valueOf(month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                signatureitems.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Sig signature = snapshot.getValue(Sig.class);
+                                    if (signature != null) {
+                                        signatureitems.add(
+                                                new Signature(
+                                                        signature.comment, signature.volName, signature.signatureDate));
+                                    } else {
+                                        Toast.makeText(
+                                                getApplicationContext(), "something went wrong", Toast.LENGTH_SHORT)
+                                                .show();
                                     }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Failed to read value
-                                        Log.w(TAG, "Failed to read value.", error.toException());
-                                    }
-                                });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (SignaturesRef != null && signaturelistener != null) {
-            SignaturesRef.removeEventListener(signaturelistener);
-        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
     }
 }

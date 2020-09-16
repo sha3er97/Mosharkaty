@@ -64,8 +64,9 @@ class SignaturesAdapter extends RecyclerView.Adapter<SignaturesAdapter.ViewHolde
         Signature item = signatureitems.get(position);
         holder.name.setText(item.getName());
         holder.time.setText(item.getTime());
-        if (item.getComment().equals("")) holder.comment.setVisibility(View.GONE);
-        else holder.comment.setText(item.getComment());
+        //        if (item.getComment().isEmpty()) holder.comment.setVisibility(View.GONE);
+        //        else holder.comment.setText(item.getComment());
+        holder.comment.setText(item.getComment());
     }
 
     /**
@@ -79,7 +80,7 @@ class SignaturesAdapter extends RecyclerView.Adapter<SignaturesAdapter.ViewHolde
     }
 
     /**
-     * ****************************************************************************
+     * ***************************************************************************
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;

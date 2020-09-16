@@ -69,7 +69,7 @@ public class AdminShowStatistics extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                   Volunteer user = snapshot.getValue(Volunteer.class);
                   if (user != null && !user.degree.matches("(.*)مجمد(.*)"))
-                    allFari2.add(user.Volname); // add all team
+                    allFari2.add(user.Volname.trim()); // add all team
                 }
                 refreshBtn.setEnabled(true);
               }
@@ -105,8 +105,8 @@ public class AdminShowStatistics extends AppCompatActivity {
                                   MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
                                   String[] splittedDate;
                                   if (mosharka != null) {
-                                    if (fari2Filter && !allFari2.contains(mosharka.getVolname()))
-                                      continue;
+                                      if (fari2Filter && !allFari2.contains(mosharka.getVolname().trim()))
+                                          continue;
                                     splittedDate = mosharka.getMosharkaDate().split("/", 3);
                                     if (nameCounting.containsKey(mosharka.getVolname().trim())) {
                                       // If char is present in charCountMap,

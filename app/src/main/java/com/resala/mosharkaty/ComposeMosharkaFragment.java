@@ -32,7 +32,6 @@ import java.util.Locale;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.AdminAddGroupMosharka.types;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
@@ -90,24 +89,6 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
     month = cldr.get(Calendar.MONTH);
     year = cldr.get(Calendar.YEAR);
 
-    DatabaseReference usersRef = database.getReference("users");
-    DatabaseReference currentUser = usersRef.child(userId);
-    branchRef = currentUser.child("branch");
-    branchlistener =
-            branchRef.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        userBranch = dataSnapshot.getValue(String.class);
-                      }
-
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
-
     eText.setInputType(InputType.TYPE_NULL);
     eText.setOnClickListener(
             v -> {
@@ -141,22 +122,23 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
             v -> {
               if (!validateForm()) return;
               if (userBranch != null) {
-                final DatabaseReference MosharkatRef =
-                        database.getReference("mosharkat").child(userBranch);
-                final DatabaseReference ClosingRef =
-                        database.getReference("closings").child(userBranch);
-                appMosharkatRef = database.getReference("mosharkat").child(userBranch);
-                //          final Calendar cldr = Calendar.getInstance(Locale.US);
-                appMosharkatRef
-                        .child(String.valueOf(month + 1))
-                        .addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                  @Override
-                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    boolean duplicate = false;
-                                    boolean isHome = false;
-                                    addMosharka_btn.setEnabled(false);
-                                    addMosharka_btn.setBackgroundColor(
+                  final DatabaseReference MosharkatRef =
+                          database.getReference("mosharkat").child(userBranch);
+                  final DatabaseReference ClosingRef =
+                          database.getReference("closings").child(userBranch);
+                  appMosharkatRef = database.getReference("mosharkat").child(userBranch);
+                  String date = eText.getText().toString();
+                  String[] dateParts = date.split("/", 3);
+                  appMosharkatRef
+                          .child(dateParts[1])
+                          .addListenerForSingleValueEvent(
+                                  new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                          boolean duplicate = false;
+                                          boolean isHome = false;
+                                          addMosharka_btn.setEnabled(false);
+                                          addMosharka_btn.setBackgroundColor(
                                             getResources()
                                                     .getColor(R.color.common_google_signin_btn_text_light_disabled));
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -175,8 +157,6 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                                       }
                                     }
                                     if (!duplicate) {
-                                      String date = eText.getText().toString();
-                                      String[] dateParts = date.split("/", 3);
                                       String key =
                                               System.currentTimeMillis() / (1000 * 60)
                                                       + "&"
@@ -207,7 +187,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                                     } else {
                                       Toast.makeText(
                                               getContext(),
-                                              "عذرا .. المشاركة مكررة في اليوم دا",
+                                              "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
                                               Toast.LENGTH_SHORT)
                                               .show();
                                     }

@@ -175,6 +175,30 @@
                     android:textColor="@color/new_text_black"
                     android:textSize="18sp" />
             </TableRow>
+
+            <TableRow android:background="@drawable/my_edit_text_border">
+
+                <TextView
+                    android:id="@+id/coursesCount"
+                    android:background="@drawable/my_edit_text_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_num2"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:background="@drawable/my_edit_text_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="سيشن / كورس"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+            </TableRow>
         </TableLayout>
 
         <TableLayout

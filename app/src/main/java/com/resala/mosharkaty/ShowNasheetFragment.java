@@ -49,14 +49,16 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
   View view;
   FirebaseDatabase database;
   int month;
-  UserNasheetHistoryAdapter adapter;
-  ArrayList<String> allNsheet = new ArrayList<>();
-  ArrayList<UserHistoryItem> userHistoryItems = new ArrayList<>();
-  DatabaseReference MosharkatRef;
-  ValueEventListener mosharkatlistener;
-  DatabaseReference nasheetRef;
-  ValueEventListener nasheetlistener;
-  Button export_nasheet_btn2;
+    int year;
+    UserNasheetHistoryAdapter adapter;
+    ArrayList<String> allNsheet = new ArrayList<>();
+    ArrayList<NasheetHistoryItem> userHistoryItems = new ArrayList<>();
+    DatabaseReference MosharkatRef;
+    ValueEventListener mosharkatlistener;
+    DatabaseReference nasheetRef;
+    ValueEventListener nasheetlistener;
+    Button export_nasheet_btn2;
+    HashMap<String, Integer> nasheetMonths = new HashMap<>();
 
     @Override
     public View onCreateView(
@@ -68,21 +70,30 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         TextView current_month = view.findViewById(R.id.current_month);
         final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH) + 1;
+        year = cldr.get(Calendar.YEAR);
         current_month.setText(String.valueOf(month));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new UserNasheetHistoryAdapter(userHistoryItems, getContext());
-    recyclerView.setAdapter(adapter);
-    export_nasheet_btn2 = view.findViewById(R.id.export_nasheet_btn2);
-    nasheetRef = database.getReference("nasheet").child(userBranch);
+        adapter = new UserNasheetHistoryAdapter(userHistoryItems, getContext());
+        recyclerView.setAdapter(adapter);
+        export_nasheet_btn2 = view.findViewById(R.id.export_nasheet_btn2);
+        nasheetRef = database.getReference("nasheet").child(userBranch);
         nasheetlistener =
                 nasheetRef.addValueEventListener(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 allNsheet.clear();
+                                nasheetMonths = new HashMap<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
+                                    assert nasheetVolunteer != null;
                                     allNsheet.add(snapshot.getKey());
+                                    String[] parts = nasheetVolunteer.first_month.split("/", 2);
+                                    int months =
+                                            (year - Integer.parseInt(parts[1])) * 12
+                                                    + (month - Integer.parseInt(parts[0]));
+                                    nasheetMonths.put(snapshot.getKey(), months);
                                 }
                                 getNasheetMosharkat();
                             }
@@ -153,64 +164,63 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
         try {
-      File file = new File(dir, Fnamexls);
-      workbook = Workbook.createWorkbook(file, wbSettings);
-      WritableSheet sheet = workbook.createSheet("sheet", 0);
-      Label label0 = new Label(0, 0, "الاسم");
+            File file = new File(dir, Fnamexls);
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableSheet sheet = workbook.createSheet("sheet", 0);
+            Label label0 = new Label(0, 0, "الاسم");
             Label label1 = new Label(1, 0, "نشيط ؟");
             Label label2 = new Label(2, 0, "غير موجود في الشيت");
 
-      try {
-          sheet.addCell(label2);
-          sheet.addCell(label1);
-        sheet.addCell(label0);
-          int notFoundCounter = 0;
-        for (int i = 0; i < allNsheet.size(); i++) {
-            normalVolunteer vol = allVolunteersByName.get(allNsheet.get(i));
-            int volID;
-            int colNum = 0;
-            int col2Num = 1;
-            if (vol != null) {
-                volID = vol.id;
-            } else {
-                volID = ++notFoundCounter;
-                colNum = 2;
-                col2Num = 3;
+            try {
+                sheet.addCell(label2);
+                sheet.addCell(label1);
+                sheet.addCell(label0);
+                int notFoundCounter = 0;
+                for (int i = 0; i < userHistoryItems.size(); i++) {
+                    normalVolunteer vol = allVolunteersByName.get(userHistoryItems.get(i).getUsername());
+                    int volID;
+                    int colNum = 0;
+                    int col2Num = 1;
+                    if (vol != null) {
+                        volID = vol.id;
+                    } else {
+                        volID = ++notFoundCounter;
+                        colNum = 2;
+                        col2Num = 3;
+                    }
+                    Label label_name = new Label(colNum, volID, userHistoryItems.get(i).getUsername());
+                    Label label_nasheet = new Label(col2Num, volID, "نشيط");
+                    sheet.addCell(label_name);
+                    sheet.addCell(label_nasheet);
+                }
+            } catch (RowsExceededException e) {
+                Toast.makeText(getContext(), "rows exceeding limit error",
+                        Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            } catch (WriteException e) {
+                //        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
-            Label label_name = new Label(colNum, volID, allNsheet.get(i));
-            Label label_nasheet = new Label(col2Num, volID, "نشيط");
-            sheet.addCell(label_name);
-            sheet.addCell(label_nasheet);
-
-        }
-      } catch (RowsExceededException e) {
-          //        Toast.makeText(getContext(), "rows exceeding limit error",
-          // Toast.LENGTH_SHORT).show();
-          e.printStackTrace();
-      } catch (WriteException e) {
-          //        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
-        e.printStackTrace();
-      }
 
             workbook.write();
             Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
                     .show();
-      //      sendEmail(root, Fnamexls);
-      try {
-        workbook.close();
-      } catch (WriteException e) {
-          //        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
-        e.printStackTrace();
-      }
-      // createExcel(excelSheet);
-    } catch (IOException e) {
+            //      sendEmail(root, Fnamexls);
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                //        Toast.makeText(getContext(), "writing error", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+            // createExcel(excelSheet);
+        } catch (IOException e) {
             //      Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
       e.printStackTrace();
     }
   }
 
   private void getNasheetMosharkat() {
-    MosharkatRef = database.getReference("mosharkat").child(userBranch);
+      MosharkatRef = database.getReference("mosharkat").child(userBranch);
       mosharkatlistener =
               MosharkatRef.child(String.valueOf(month))
                       .addValueEventListener(
@@ -249,15 +259,16 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                                       for (Map.Entry entry : nameCounting.entrySet()) {
                                           allNsheet.remove(entry.getKey().toString());
                                           userHistoryItems.add(
-                                                  new UserHistoryItem(
+                                                  new NasheetHistoryItem(
                                                           entry.getKey().toString(),
                                                           nameHistory.get(entry.getKey().toString()),
-                                                          Integer.parseInt(entry.getValue().toString())));
-                                          //                      System.out.println(entry.getKey() + " " +
-                                          // entry.getValue());
+                                                          Integer.parseInt(entry.getValue().toString()),
+                                                          nasheetMonths.get(entry.getKey().toString())));
                                       }
                                       for (int i = 0; i < allNsheet.size(); i++) {
-                                          userHistoryItems.add(new UserHistoryItem(allNsheet.get(i), "", 0));
+                                          userHistoryItems.add(
+                                                  new NasheetHistoryItem(
+                                                          allNsheet.get(i), "", 0, nasheetMonths.get(allNsheet.get(i))));
                                       }
                                       Collections.sort(userHistoryItems);
                                       adapter.notifyDataSetChanged();

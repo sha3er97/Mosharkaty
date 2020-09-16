@@ -285,11 +285,13 @@ public class AdminEvents extends androidx.fragment.app.Fragment
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
-        } else if (Integer.parseInt(parts[1]) < month + 1
-                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) < day)) {
-            eText.setError("you can't choose a date in the past.");
-            valid = false;
         }
+        //        else if (Integer.parseInt(parts[1]) < month + 1
+        //                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) <
+        // day)) {
+        //            eText.setError("you can't choose a date in the past.");
+        //            valid = false;
+        //        }
         String time = eText2.getText().toString();
         if (TextUtils.isEmpty(time)) {
             eText2.setError("Required.");

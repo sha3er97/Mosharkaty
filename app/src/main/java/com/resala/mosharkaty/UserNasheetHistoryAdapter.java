@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryAdapter.ViewHolder> {
-    private ArrayList<UserHistoryItem> userHistoryItems;
+    private ArrayList<NasheetHistoryItem> userHistoryItems;
     private Context context;
 
-    public UserNasheetHistoryAdapter(ArrayList<UserHistoryItem> userHistoryItems, Context context) {
+    public UserNasheetHistoryAdapter(
+            ArrayList<NasheetHistoryItem> userHistoryItems, Context context) {
         this.userHistoryItems = userHistoryItems;
         this.context = context;
     }
@@ -45,7 +46,8 @@ class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryA
     public UserNasheetHistoryAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         View view =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.user_nasheet_history_item, parent, false);
+                LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.nasheet_history_item, parent, false);
         return new UserNasheetHistoryAdapter.ViewHolder(view);
     }
 
@@ -68,8 +70,9 @@ class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryA
      */
     @Override
     public void onBindViewHolder(@NonNull UserNasheetHistoryAdapter.ViewHolder holder, int position) {
-        UserHistoryItem item = userHistoryItems.get(position);
+        NasheetHistoryItem item = userHistoryItems.get(position);
         holder.Username.setText(item.getUsername());
+        holder.monthsCount.setText(String.valueOf(item.getMonthsCount()));
         holder.count.setText(String.valueOf(item.getCount()));
         holder.history.setText(item.getHistory());
     }
@@ -85,11 +88,12 @@ class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryA
     }
 
     /**
-     * ***************************************************************************
+     * **************************************************************************
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView Username;
         TextView count;
+        TextView monthsCount;
         TextView history;
         ImageButton delete_btn;
         FirebaseDatabase database;
@@ -98,6 +102,7 @@ class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryA
             super(itemView);
             Username = itemView.findViewById(R.id.userName);
             count = itemView.findViewById(R.id.userCount);
+            monthsCount = itemView.findViewById(R.id.monthsCount);
             history = itemView.findViewById(R.id.userHistory);
             delete_btn = itemView.findViewById(R.id.delete_btn);
             delete_btn.setOnClickListener(this);
@@ -107,7 +112,7 @@ class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryA
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            UserHistoryItem itemClicked = userHistoryItems.get(position);
+            NasheetHistoryItem itemClicked = userHistoryItems.get(position);
             if (view.getId() == delete_btn.getId()) {
                 database = FirebaseDatabase.getInstance();
                 final DatabaseReference nasheetRef = database.getReference("nasheet").child(userBranch);

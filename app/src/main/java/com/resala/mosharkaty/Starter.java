@@ -21,13 +21,15 @@ public class Starter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter);
-//        progress = new ProgressDialog(this);
-//        progress.setTitle("Loading");
-//        progress.setMessage("لحظات معانا...");
-//        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-//        progress.show();
-        checkUpdate();
-
+        //        progress = new ProgressDialog(this);
+        //        progress.setTitle("Loading");
+        //        progress.setMessage("لحظات معانا...");
+        //        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        //        progress.show();
+        try {
+            checkUpdate();
+        } catch (Exception ignored) {
+        }
     }
 
     private void checkUpdate() {
