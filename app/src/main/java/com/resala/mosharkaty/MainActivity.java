@@ -14,13 +14,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.resala.mosharkaty.ui.main.SectionsPagerAdapter;
+import com.resala.mosharkaty.ui.adapters.SectionsPagerAdapter;
 
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.isMrkzy;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.MessagesRead.isManager;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
 import static com.resala.mosharkaty.ProfileFragment.userCode;
 import static com.resala.mosharkaty.ProfileFragment.userName;
 
@@ -130,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
     fab.setOnClickListener(
             view -> {
-              if (isAdmin) startActivity(new Intent(getApplicationContext(), MessagesRead.class));
-              else startActivity(new Intent(getApplicationContext(), MessagesWrite.class));
+              if (isAdmin)
+                startActivity(new Intent(getApplicationContext(), MessagesReadActivity.class));
+              else startActivity(new Intent(getApplicationContext(), MessagesWriteActivity.class));
             });
   }
 

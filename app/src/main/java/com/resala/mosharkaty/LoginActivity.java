@@ -24,11 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.resala.mosharkaty.utility.classes.Admin;
+import com.resala.mosharkaty.utility.classes.normalVolunteer;
 
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccount.branches;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
 
 public class LoginActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
@@ -50,16 +52,19 @@ public class LoginActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
-    // Initialize Firebase Auth
-    mAuth = FirebaseAuth.getInstance();
-    email_et = findViewById(R.id.editTextTextEmailAddress);
-    password_et = findViewById(R.id.editTextTextPassword);
-    database = FirebaseDatabase.getInstance();
-    logo = findViewById(R.id.logo);
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_login);
+      // Initialize Firebase Auth
+      mAuth = FirebaseAuth.getInstance();
+      email_et = findViewById(R.id.editTextTextEmailAddress);
+      password_et = findViewById(R.id.editTextTextPassword);
+      database = FirebaseDatabase.getInstance();
+      logo = findViewById(R.id.logo);
 
       login_btn = findViewById(R.id.login_btn);
+      login_btn.setEnabled(false);
+      login_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
       email_et.setOnFocusChangeListener(
               (view, hasFocus) -> {
                   if (hasFocus) {
@@ -88,6 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                       admin = dataSnapshot.getValue(Admin.class);
                       //            progress.dismiss();
+                      login_btn.setEnabled(true);
+                      login_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
                   }
 
                   @Override

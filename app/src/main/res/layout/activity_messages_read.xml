@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".MessagesRead">
+    tools:context=".MessagesReadActivity">
 
     <TextView
         android:id="@+id/passwordTextView2"

@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner3" />
 
-    <com.resala.mosharkaty.CustomSearchableSpinner
+    <com.resala.mosharkaty.utility.classes.CustomSearchableSpinner
         android:id="@+id/phoneSpinner2"
         style="@style/SpinnerwithNoArrow"
         android:layout_width="0dp"
@@ -133,7 +133,7 @@
         app:layout_constraintStart_toEndOf="@+id/spinner3"
         app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
-    <com.resala.mosharkaty.CustomSearchableSpinner
+    <com.resala.mosharkaty.utility.classes.CustomSearchableSpinner
         android:id="@+id/spinner3"
         style="@style/SpinnerwithNoArrow"
         android:layout_width="0dp"

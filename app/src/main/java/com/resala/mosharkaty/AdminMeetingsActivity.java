@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.resala.mosharkaty.ui.main.MeetingsPagerAdapter;
+import com.resala.mosharkaty.ui.adapters.MeetingsPagerAdapter;
 
 public class AdminMeetingsActivity extends AppCompatActivity {
     public TabLayout.Tab tab0;

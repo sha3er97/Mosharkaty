@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.resala.mosharkaty.ui.main.NasheetPagerAdapter;
+import com.resala.mosharkaty.ui.adapters.NasheetPagerAdapter;
 
 public class NasheetActivity extends AppCompatActivity {
     public TabLayout.Tab tab0;

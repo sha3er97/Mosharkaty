@@ -1,30 +1,31 @@
 package com.resala.mosharkaty;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.resala.mosharkaty.utility.classes.MosharkaItem;
+import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -32,25 +33,23 @@ import java.util.Locale;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.Splash.myRules;
-import static com.resala.mosharkaty.TakyeemFragment.codeFound;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class ProfileFragment extends androidx.fragment.app.Fragment {
     public static String userName;
     public static String userCode;
     public static String userOfficialName;
     View view;
-    Button ApplyChanges;
+    ImageButton ApplyChanges;
+    Button Courses_btn;
     EditText name;
     EditText code;
     TextView branch;
-    TextView currentMosharkatOfficial;
     TextView currentMosharkatapp;
     TextView currentpercent;
     ProgressBar attendanceBar;
 
-    CheckBox nameCheck;
-    CheckBox codeCheck;
     FirebaseDatabase database;
     ValueEventListener namelistener;
     ValueEventListener codelistener;
@@ -65,18 +64,6 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
     int month, mycounter;
     ValueEventListener Mosharkatlistener;
     DatabaseReference MosharkatRef;
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        ConstraintLayout official = view.findViewById(R.id.constraintLayout6);
-        if (myRules.show_official) {
-            official.setVisibility(View.VISIBLE);
-        } else official.setVisibility(View.GONE);
-    }
 
     /**
      * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -104,27 +91,24 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
             @NonNull LayoutInflater inflater,
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.profile_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
         database = FirebaseDatabase.getInstance();
 
         // define views
         name = view.findViewById(R.id.volDetail);
         code = view.findViewById(R.id.codeDetail);
         branch = view.findViewById(R.id.far3Detail);
-        nameCheck = view.findViewById(R.id.nameCheckBox);
-        codeCheck = view.findViewById(R.id.codeCheckBox);
-        ApplyChanges = view.findViewById(R.id.applyChanges_btn);
-        currentMosharkatOfficial = view.findViewById(R.id.current_official);
+        ApplyChanges = view.findViewById(R.id.applyChanges_btn2);
+        Courses_btn = view.findViewById(R.id.Courses_btn);
         currentMosharkatapp = view.findViewById(R.id.current_from_app);
         currentpercent = view.findViewById(R.id.current_percent);
-        name.setText(userName);
         branch.setText(userBranch);
 
-        // check boxes
-        nameCheck.setOnClickListener(v -> name.setEnabled(nameCheck.isChecked()));
-        codeCheck.setOnClickListener(v -> code.setEnabled(codeCheck.isChecked()));
-
         // buttons listeners
+        Courses_btn.setOnClickListener(
+                v -> {
+                    startActivity(new Intent(getActivity(), ViewSessionActivity.class));
+                });
         ApplyChanges.setOnClickListener(
                 v -> {
                     DatabaseReference usersRef = database.getReference("users");
@@ -230,21 +214,9 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                     Volunteer user = snapshot.getValue(Volunteer.class);
                                     if (user != null && user.code.equalsIgnoreCase(userCode)) {
                                         userOfficialName = user.Volname;
-                                        //                    Toast.makeText(getContext(), "تم تحديث مشاركاتك",
-                                        // Toast.LENGTH_SHORT).show();
                                         codeFound = true;
                                         break;
                                     }
-                                }
-                                if (!codeFound) {
-                                    currentMosharkatOfficial.setText("code not found yet");
-                                    currentMosharkatOfficial.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                                    currentMosharkatOfficial.setTextColor(getResources().getColor(R.color.red));
-                                    userOfficialName = " ";
-                                } else {
-                                    currentMosharkatOfficial.setTextColor(getResources().getColor(R.color.ourBlue));
-                                    currentMosharkatOfficial.setTextSize(
-                                            TypedValue.COMPLEX_UNIT_SP, myRules.big_font);
                                 }
                             }
 
@@ -287,28 +259,27 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
 
     private void updateMosharkatUI() {
         currentMosharkatapp.setText(String.valueOf(mycounter));
-        currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
-        currentMosharkatapp.setTextSize(TypedValue.COMPLEX_UNIT_SP, myRules.big_font);
         attendanceBar = view.findViewById(R.id.determinateBar);
         float percentage = (float) Math.min(mycounter, 8) / 8 * 100;
         attendanceBar.setProgress(Math.round(percentage));
         currentpercent.setText(Math.round(percentage) + " %");
-        currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
-        currentpercent.setTextSize(TypedValue.COMPLEX_UNIT_SP, myRules.big_font);
         if (percentage < (float) myRules.bad_average / 8 * 100) {
             currentpercent.setTextColor(getResources().getColor(R.color.red));
+            currentMosharkatapp.setTextColor(getResources().getColor(R.color.red));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 attendanceBar.setProgressTintList(
                         ColorStateList.valueOf(getResources().getColor(R.color.red)));
             }
         } else if (percentage < (float) myRules.medium_average / 8 * 100) {
             currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
+            currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 attendanceBar.setProgressTintList(
                         ColorStateList.valueOf(getResources().getColor(R.color.ourBlue)));
             }
         } else { // bigger than both
             currentpercent.setTextColor(getResources().getColor(R.color.green));
+            currentMosharkatapp.setTextColor(getResources().getColor(R.color.green));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 attendanceBar.setProgressTintList(
                         ColorStateList.valueOf(getResources().getColor(R.color.green)));

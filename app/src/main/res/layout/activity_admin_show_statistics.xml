@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".AdminShowStatisticsActivity">
+
+    <ImageButton
+        android:id="@+id/refresh_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:onClick="refreshStatistics"
+        android:padding="16dp"
+        android:src="@drawable/refresh_icon"
+        android:tint="@color/new_text_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="هذه مشاركات شهر :"
+        android:textColor="@color/new_text_black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/refresh_btn" />
+
+    <TextView
+        android:id="@+id/current_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/dummy_number"
+        android:textColor="@color/new_text_blue"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintEnd_toStartOf="@+id/textView23"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/refresh_btn"
+        app:layout_constraintTop_toTopOf="@+id/textView23" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mosharkatnaRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/refresh_btn" />
+
+    <CheckBox
+        android:id="@+id/Filtercheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/mosharkatnaRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/checkbox2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:fontFamily="@font/new_jf"
+        android:text="@string/fari2_filter_checkbox_text"
+        android:textSize="16sp"
+        android:textColor="@color/new_text_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/Filtercheckbox"
+        app:layout_constraintEnd_toStartOf="@+id/Filtercheckbox"
+        app:layout_constraintTop_toTopOf="@+id/Filtercheckbox" />
+</androidx.constraintlayout.widget.ConstraintLayout>
