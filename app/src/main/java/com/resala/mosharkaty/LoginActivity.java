@@ -142,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
                         normalVolunteer user = snapshot.getValue(normalVolunteer.class);
                         assert user != null;
                         if (user.Volname.isEmpty()) continue;
-                        allVolunteersByName.put(user.Volname, user);
-                        allVolunteersByPhone.put(user.phone_text, user);
+                        allVolunteersByName.put(user.Volname.trim(), user);
+                        allVolunteersByPhone.put(user.phone_text.trim(), user);
                     }
                     isAdmin = true;
                     //            progress.dismiss();

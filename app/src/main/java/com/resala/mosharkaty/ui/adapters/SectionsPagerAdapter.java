@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.resala.mosharkaty.ProfileFragment;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment;
 import com.resala.mosharkaty.fragments.AdminEventsFragment;
@@ -17,6 +16,7 @@ import com.resala.mosharkaty.fragments.AdminShowMosharkatFragment;
 import com.resala.mosharkaty.fragments.AdminShowReportsFragment;
 import com.resala.mosharkaty.fragments.ComposeMosharkaFragment;
 import com.resala.mosharkaty.fragments.HomeFragment;
+import com.resala.mosharkaty.fragments.ProfileFragment;
 import com.resala.mosharkaty.fragments.TakyeemFragment;
 import com.resala.mosharkaty.fragments.UserCalendarFragment;
 

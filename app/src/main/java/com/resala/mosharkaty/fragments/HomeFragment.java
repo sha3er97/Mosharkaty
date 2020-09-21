@@ -32,10 +32,10 @@ import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.ProfileFragment.userCode;
-import static com.resala.mosharkaty.ProfileFragment.userName;
-import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
 import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userOfficialName;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class HomeFragment extends androidx.fragment.app.Fragment {

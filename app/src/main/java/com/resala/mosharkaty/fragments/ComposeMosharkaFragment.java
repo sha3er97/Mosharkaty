@@ -34,8 +34,8 @@ import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.types;
+import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userOfficialName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
@@ -112,7 +112,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
             });
     spin.setOnItemSelectedListener(this);
     // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, types);
+      ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);

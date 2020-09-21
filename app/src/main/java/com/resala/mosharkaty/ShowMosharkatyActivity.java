@@ -24,8 +24,8 @@ import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.ProfileFragment.userName;
-import static com.resala.mosharkaty.ProfileFragment.userOfficialName;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userOfficialName;
 
 public class ShowMosharkatyActivity extends AppCompatActivity {
     int month;

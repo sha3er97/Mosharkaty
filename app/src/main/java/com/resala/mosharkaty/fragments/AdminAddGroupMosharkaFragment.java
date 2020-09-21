@@ -44,7 +44,7 @@ import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
-  public static String[] types = {
+  public static String[] mosharkaTypes = {
           "استكشاف",
           "ولاد عم",
           "اجتماع",
@@ -146,7 +146,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
               picker.show();
             });
 
-    ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, types);
+      ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);

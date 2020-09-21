@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".AdminAddCourseActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/add_course_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:fontFamily="@font/new_jf"
+            android:onClick="addCourse"
+            android:text="اضافة كورس جديد"
+            android:textColor="@color/new_white_light"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_description" />
+
+        <EditText
+            android:id="@+id/course_description"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventDescription2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseColorSpinner" />
+
+        <EditText
+            android:id="@+id/instructor_name_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:drawableEnd="@drawable/account_black"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventTime3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseTypeSpinner" />
+
+        <EditText
+            android:id="@+id/courseName_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventNameTV3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/courseColorSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toStartOf="@+id/eventType6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseLevelSpinner" />
+
+        <Spinner
+            android:id="@+id/courseLevelSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toStartOf="@+id/eventType5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructor_name_et" />
+
+        <Spinner
+            android:id="@+id/courseTypeSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toStartOf="@+id/eventType4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseName_et" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/new_jf"
+            android:text="شكل الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_course_btn" />
+
+        <TextView
+            android:id="@+id/eventDescription2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="وصف الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/course_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/course_description" />
+
+        <TextView
+            android:id="@+id/eventType6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="اللون"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/courseColorSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/courseColorSpinner" />
+
+        <TextView
+            android:id="@+id/eventType5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="مستوي الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/courseLevelSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/courseLevelSpinner" />
+
+        <TextView
+            android:id="@+id/eventType4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="نوع الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/courseTypeSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/courseTypeSpinner" />
+
+        <TextView
+            android:id="@+id/eventNameTV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="اسم الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/courseName_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/courseName_et" />
+
+        <TextView
+            android:id="@+id/eventTime3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="اسم المحاضر"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/instructor_name_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/instructor_name_et" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/CardView.Light"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <ImageView
+                android:id="@+id/course_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@color/green" />
+
+            <LinearLayout
+                android:id="@+id/fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sidebar"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:gravity="left"
+                    tools:ignore="RtlHardcoded">
+
+                    <TextView
+                        android:id="@+id/instructor"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/new_jf"
+                        android:gravity="left"
+                        android:lineSpacingExtra="8sp"
+                        android:text="@string/dummy_instructor"
+                        android:textColor="@color/new_white_light"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/courseName"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/new_jf"
+                        android:lineSpacingExtra="8sp"
+                        android:gravity="left"
+                        android:text="@string/dummy_course"
+                        android:textColor="@color/new_white_light"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/white_rect"
+                        app:layout_constraintBottom_toTopOf="@+id/instructor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/course_level"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/new_jf"
+                            android:lineSpacingExtra="8sp"
+                            android:padding="3dp"
+                            android:text="Beginner "
+                            android:textColor="@color/dark_blue"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView43"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/new_jf"
+                            android:lineSpacingExtra="8sp"
+                            android:text="Level : "
+                            android:textColor="@color/dark_blue"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/course_level"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- other views, with a total layout_weight of 2 -->
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -21,8 +21,8 @@ import static com.resala.mosharkaty.LoginActivity.isMrkzy;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.ProfileFragment.userCode;
-import static com.resala.mosharkaty.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
 
 public class MainActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;

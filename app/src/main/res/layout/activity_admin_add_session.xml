@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".AdminAddSessionActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/eventDescription4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="سيشنز الكورس"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_course_btn2" />
+
+        <Button
+            android:id="@+id/add_course_btn2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="488dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:fontFamily="@font/new_jf"
+            android:onClick="addSession"
+            android:text="اضافة سيشن جديد"
+            android:textColor="@color/new_white_light"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/session_description" />
+
+        <EditText
+            android:id="@+id/session_description"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventDescription3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/link_et" />
+
+        <EditText
+            android:id="@+id/link_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:hint="link form : https://youtu.be/AKPaaB3baEg"
+            android:lineSpacingExtra="8sp"
+            android:paddingVertical="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventNameTV5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sessionName_et" />
+
+        <EditText
+            android:id="@+id/sessionName_et"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventNameTV4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eventNameTV5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="لينك الفيديو"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/link_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/link_et"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/eventDescription3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="محتوي السيشن"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/session_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/session_description" />
+
+        <TextView
+            android:id="@+id/eventNameTV4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="رقم السيشن"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sessionName_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sessionName_et" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sessionsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventDescription4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

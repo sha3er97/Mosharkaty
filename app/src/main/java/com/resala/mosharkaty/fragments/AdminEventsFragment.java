@@ -34,7 +34,7 @@ public class AdminEventsFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
     HashMap<String, String> eventsImages = new HashMap<>();
     View view;
-    String[] types = {
+    String[] eventTypes = {
             "فرز",
             "فرز 2",
             "فرز 3",
@@ -261,7 +261,7 @@ public class AdminEventsFragment extends androidx.fragment.app.Fragment
 
         spin.setOnItemSelectedListener(this);
         // Creating the ArrayAdapter instance having the country list
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, types);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, eventTypes);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);

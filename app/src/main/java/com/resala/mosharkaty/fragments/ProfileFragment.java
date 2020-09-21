@@ -1,4 +1,4 @@
-package com.resala.mosharkaty;
+package com.resala.mosharkaty.fragments;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -18,15 +18,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.resala.mosharkaty.AdminViewCoursesActivity;
+import com.resala.mosharkaty.R;
+import com.resala.mosharkaty.ui.adapters.EnrolledCoursesAdapter;
+import com.resala.mosharkaty.utility.classes.Course;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -64,6 +71,24 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
     int month, mycounter;
     ValueEventListener Mosharkatlistener;
     DatabaseReference MosharkatRef;
+    ValueEventListener CoursesListener;
+    DatabaseReference CoursesRef;
+
+    EnrolledCoursesAdapter adapter;
+    ArrayList<Course> courseItems = new ArrayList<>();
+    ArrayList<String> enrolledCourses = new ArrayList<>();
+
+    DatabaseReference EnrollmentRef;
+    ValueEventListener EnrollmentListener;
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     /**
      * Called to have the fragment instantiate its user interface view. This is optional, and
@@ -107,7 +132,11 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
         // buttons listeners
         Courses_btn.setOnClickListener(
                 v -> {
-                    startActivity(new Intent(getActivity(), ViewSessionActivity.class));
+                    startActivity(
+                            new Intent(
+                                    getActivity(),
+                                    AdminViewCoursesActivity
+                                            .class)); // TODO :: change to user view courses (same + filter)
                 });
         ApplyChanges.setOnClickListener(
                 v -> {
@@ -254,7 +283,58 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                         Log.w(TAG, "Failed to read value.", error.toException());
                                     }
                                 });
+
+        RecyclerView recyclerView = view.findViewById(R.id.coursesRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new EnrolledCoursesAdapter(courseItems, getContext());
+        recyclerView.setAdapter(adapter);
+
+        EnrollmentRef = database.getReference("enrollment");
+        EnrollmentListener =
+                EnrollmentRef.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                enrolledCourses.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    if (snapshot.hasChild(userId)) {
+                                        boolean isEnrolled = snapshot.child(userId).getValue(Boolean.class);
+                                        if (isEnrolled) enrolledCourses.add(snapshot.getKey());
+                                    }
+                                }
+                                getEnrolledCourses();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
         return view;
+    }
+
+    private void getEnrolledCourses() {
+        CoursesRef = database.getReference("courses");
+        CoursesListener =
+                CoursesRef.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                courseItems.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Course course = snapshot.getValue(Course.class);
+                                    if (course != null && enrolledCourses.contains(snapshot.getKey())) {
+                                        courseItems.add(course);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
     }
 
     private void updateMosharkatUI() {
@@ -304,6 +384,12 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
         }
         if (MosharkatRef != null && Mosharkatlistener != null) {
             MosharkatRef.removeEventListener(Mosharkatlistener);
+        }
+        if (CoursesRef != null && CoursesListener != null) {
+            CoursesRef.removeEventListener(CoursesListener);
+        }
+        if (EnrollmentRef != null && EnrollmentListener != null) {
+            EnrollmentRef.removeEventListener(EnrollmentListener);
         }
     }
 }

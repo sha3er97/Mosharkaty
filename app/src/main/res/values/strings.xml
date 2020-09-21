@@ -180,4 +180,12 @@
     <string name="nasheet_tab_text_3">تقرير</string>
     <string name="fari2_filter_checkbox_text">فريق فقط</string>
     <string name="refresh_report">refresh report</string>
+    <string name="dummy_course"><![CDATA[Basic Excel & Google Sheets]]></string>
+    <string name="enroll">اشتراك</string>
+    <string name="dummy_link"><![CDATA[https://www.youtube.com/watch?v=IuPxQP0lg78&ab_channel=MostafaElshaer]]></string>
+    <string name="dummy_instructor">ا/محمد عادل</string>
+    <string name="dummy_link2">https://youtu.be/AKPaaB3baEg</string>
+    <string name="courses_btn_text">استكشف المزيد من\n كورسات الفرز</string>
+    <string name="nasheetColumn">عمود النشيط</string>
+    <string name="nasheetStats">مشاركات كل النشيط</string>
 </resources>

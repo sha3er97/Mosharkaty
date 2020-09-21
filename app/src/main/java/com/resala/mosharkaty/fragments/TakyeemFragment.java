@@ -22,7 +22,7 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.Takyeem;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.ProfileFragment.userCode;
+import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
 
 public class TakyeemFragment extends androidx.fragment.app.Fragment {
   View view;

@@ -16,7 +16,14 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:supportsRtl">
-        <activity android:name=".ViewSessionActivity"></activity>
+        <activity android:name=".AdminEditSessionActivity"></activity>
+        <activity android:name=".ViewSessionsActivity" />
+        <activity android:name=".AdminAddSessionActivity" />
+        <activity android:name=".AdminViewCoursesActivity" />
+        <activity android:name=".AdminCoursesActivity" />
+        <activity android:name=".AdminAddCourseActivity" />
+        <activity android:name=".CourseDescriptionActivity" />
+        <activity android:name=".ViewSpecificSessionActivity" />
         <activity android:name=".AdminWeeklyReportActivity" />
         <activity android:name=".NasheetActivity" />
         <activity android:name=".MeetingDescriptionActivity" />
@@ -62,10 +69,10 @@
         </provider>
     </application>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
