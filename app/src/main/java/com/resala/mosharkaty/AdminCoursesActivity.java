@@ -15,7 +15,7 @@ public class AdminCoursesActivity extends AppCompatActivity {
     }
 
     public void AddSession(View view) {
-        startActivity(new Intent(this, AdminViewCoursesActivity.class));
+        startActivity(new Intent(this, ShowAllCourses.class));
         finish();
     }
 

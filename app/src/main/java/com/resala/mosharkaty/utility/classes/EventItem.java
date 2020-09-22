@@ -91,8 +91,6 @@ public class EventItem implements Comparable {
         /* For Ascending order*/
         //        return this.count-compared;
 
-        /* For Descending order do like this */
-        //    return compared.compareTo(this.mosharkaType);
         String[] other = this.day.split("/", 2);
 
         /* For Descending order*/

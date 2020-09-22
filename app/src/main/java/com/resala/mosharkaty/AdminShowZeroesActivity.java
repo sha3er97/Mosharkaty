@@ -26,6 +26,8 @@ import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowZeroesActivity extends AppCompatActivity {
     FirebaseDatabase database;
@@ -61,8 +63,12 @@ public class AdminShowZeroesActivity extends AppCompatActivity {
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
 
-        DatabaseReference liveSheet =
-                database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         usersRef = liveSheet.child("month_mosharkat");
         usersRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {

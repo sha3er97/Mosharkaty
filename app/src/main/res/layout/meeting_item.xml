@@ -43,7 +43,7 @@
             android:fontFamily="@font/new_jf"
             android:gravity="center"
             android:padding="8dp"
-            android:text="تحطيط"
+            android:text="متابعة شغل الشهر"
             android:textAlignment="center"
             android:textColor="@color/new_white_light"
             android:textSize="16sp"
@@ -59,7 +59,7 @@
             android:id="@+id/dateTV"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/blue_btn"
             android:drawablePadding="8dp"
@@ -75,13 +75,13 @@
             app:layout_constraintEnd_toStartOf="@+id/countTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/reasonTV"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/reasonTV" />
 
         <TextView
             android:id="@+id/countTV"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/blue_btn"
             android:drawablePadding="8dp"
@@ -93,11 +93,10 @@
             android:textColor="@color/new_white_light"
             android:textSize="16sp"
             app:drawableEndCompat="@drawable/account"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/reasonTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/dateTV"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/reasonTV" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

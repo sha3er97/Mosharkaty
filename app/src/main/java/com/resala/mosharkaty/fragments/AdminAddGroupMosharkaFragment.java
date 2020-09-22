@@ -41,6 +41,8 @@ import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
 import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
@@ -209,27 +211,31 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                         ad.notifyDataSetChanged();
                       }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Failed to read value
+                            Log.w(TAG, "Failed to read value.", error.toException());
+                        }
                     });
-    /**
-     * *************************************************************************************************************
-     */
-    DatabaseReference liveSheet =
-            database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
-    fari2Ref = liveSheet.child("month_mosharkat");
-    final ArrayAdapter<String> ae =
-            new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
-    ae.setDropDownViewResource(R.layout.spinner_dropdown);
-    fari2Spinner.setSelection(0, false);
-    fari2Spinner.setOnItemSelectedListener(this);
-    fari2Spinner.setAdapter(ae);
+      /**
+       * *************************************************************************************************************
+       */
+      String branchSheetLink =
+              userBranch.equals(branches[9])
+                      ? branchesSheets.get(branches[0])
+                      : branchesSheets.get(userBranch);
+      assert branchSheetLink != null;
+      DatabaseReference liveSheet = database.getReference(branchSheetLink);
+      fari2Ref = liveSheet.child("month_mosharkat");
+      final ArrayAdapter<String> ae =
+              new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
+      ae.setDropDownViewResource(R.layout.spinner_dropdown);
+      fari2Spinner.setSelection(0, false);
+      fari2Spinner.setOnItemSelectedListener(this);
+      fari2Spinner.setAdapter(ae);
 
-    fari2listener =
-            fari2Ref.addValueEventListener(
+      fari2listener =
+              fari2Ref.addValueEventListener(
                     new ValueEventListener() {
                       @Override
                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

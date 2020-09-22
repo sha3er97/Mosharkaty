@@ -30,6 +30,8 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
@@ -74,93 +76,96 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
     day_from_et = findViewById(R.id.day_from);
     day_to_et = findViewById(R.id.day_to);
     refresh_btn = findViewById(R.id.refresh_btn);
-    refresh_btn.setEnabled(false);
-    refresh_btn.setBackgroundColor(
-            getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      refresh_btn.setEnabled(false);
+      refresh_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
     final Calendar cldr = Calendar.getInstance(Locale.US);
     day = cldr.get(Calendar.DAY_OF_MONTH);
     month = cldr.get(Calendar.MONTH);
     year = cldr.get(Calendar.YEAR);
 
     // setting spinner
-    ArrayAdapter<String> aa =
-            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, months);
+      ArrayAdapter<String> aa =
+              new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, months);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     month_et.setAdapter(aa);
     month_et.setSelection(Math.max(month, 0));
 
-    ArrayAdapter<String> ab =
-            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
+      ArrayAdapter<String> ab =
+              new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
     ab.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     day_to_et.setAdapter(ab);
     day_to_et.setSelection(Math.max(day - 1, 0));
 
-    ArrayAdapter<String> ac =
-            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
+      ArrayAdapter<String> ac =
+              new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
     ac.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     day_from_et.setAdapter(ac);
     day_from_et.setSelection(0);
     if (userBranch == null) {
-      Toast.makeText(getApplicationContext(), "an error occurred .. try again", Toast.LENGTH_SHORT)
-              .show();
-      finish();
+        Toast.makeText(getApplicationContext(), "an error occurred .. try again", Toast.LENGTH_SHORT)
+                .show();
+        finish();
     } else {
       refresh_btn.setEnabled(true);
       refresh_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
       nasheetRef = database.getReference("nasheet").child(userBranch);
       nasheetRef.addListenerForSingleValueEvent(
               new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  allNsheet.clear();
-                  nasheetCounter = 0;
-                  for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    allNsheet.add(snapshot.getKey());
-                    nasheetCounter++;
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      allNsheet.clear();
+                      nasheetCounter = 0;
+                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                          allNsheet.add(snapshot.getKey());
+                          nasheetCounter++;
+                      }
+                      TextView nasheetCount = findViewById(R.id.nasheetCount);
+                      nasheetCount.setText(String.valueOf(nasheetCounter));
                   }
-                  TextView nasheetCount = findViewById(R.id.nasheetCount);
-                  nasheetCount.setText(String.valueOf(nasheetCounter));
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                  // Failed to read value
-                  Log.w(TAG, "Failed to read value.", error.toException());
-                }
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                      // Failed to read value
+                      Log.w(TAG, "Failed to read value.", error.toException());
+                  }
               });
-
-      DatabaseReference liveSheet =
-              database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
-      usersRef = liveSheet.child("month_mosharkat");
-      usersRef.addListenerForSingleValueEvent(
-              new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  mas2oleenCounter = 0;
-                  msharee3Counter = 0;
-                  for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Volunteer user = snapshot.getValue(Volunteer.class);
-                    if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
-                      teamDegrees.put(user.Volname, user.degree);
-                      if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
-                      else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        usersRef = liveSheet.child("month_mosharkat");
+        usersRef.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mas2oleenCounter = 0;
+                        msharee3Counter = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Volunteer user = snapshot.getValue(Volunteer.class);
+                            if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
+                                teamDegrees.put(user.Volname, user.degree);
+                                if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
+                                else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
+                            }
+                        }
+                        TextView mas2olCount = findViewById(R.id.mas2olCount);
+                        mas2olCount.setText(String.valueOf(mas2oleenCounter));
+                        TextView mshro3Count = findViewById(R.id.mshro3Count);
+                        mshro3Count.setText(String.valueOf(msharee3Counter));
                     }
-                  }
-                  TextView mas2olCount = findViewById(R.id.mas2olCount);
-                  mas2olCount.setText(String.valueOf(mas2oleenCounter));
-                  TextView mshro3Count = findViewById(R.id.mshro3Count);
-                  mshro3Count.setText(String.valueOf(msharee3Counter));
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                  // Failed to read value
-                  Log.w(TAG, "Failed to read value.", error.toException());
-                }
-              });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
     }
   }
 
@@ -175,43 +180,43 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
 
   private void updateMosharkat() {
     MosharkatRef = database.getReference("mosharkat").child(userBranch);
-    MosharkatRef.child(String.valueOf(selected_month))
-            .addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        HashMap<String, Integer> nameCounting = new HashMap<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                          String[] splittedDate;
-                          if (mosharka != null) {
-                            splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                            if (Integer.parseInt(splittedDate[0]) >= start_day
-                                    && Integer.parseInt(splittedDate[0]) <= end_day) {
-                              // get all mosharkat for everyone firstly
-                              if (nameCounting.containsKey(mosharka.getVolname().trim())) {
-                                // If char is present in charCountMap,
-                                // incrementing it's count by 1
-                                nameCounting.put(
-                                        mosharka.getVolname().trim(),
-                                        nameCounting.get(mosharka.getVolname().trim()) + 1);
-                              } else {
-                                // If char is not present in charCountMap,
-                                // putting this char to charCountMap with 1 as it's value
-                                nameCounting.put(mosharka.getVolname().trim(), 1);
+      MosharkatRef.child(String.valueOf(selected_month))
+              .addListenerForSingleValueEvent(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              HashMap<String, Integer> nameCounting = new HashMap<>();
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                  String[] splittedDate;
+                                  if (mosharka != null) {
+                                      splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                      if (Integer.parseInt(splittedDate[0]) >= start_day
+                                              && Integer.parseInt(splittedDate[0]) <= end_day) {
+                                          // get all mosharkat for everyone firstly
+                                          if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                              // If char is present in charCountMap,
+                                              // incrementing it's count by 1
+                                              nameCounting.put(
+                                                      mosharka.getVolname().trim(),
+                                                      nameCounting.get(mosharka.getVolname().trim()) + 1);
+                                          } else {
+                                              // If char is not present in charCountMap,
+                                              // putting this char to charCountMap with 1 as it's value
+                                              nameCounting.put(mosharka.getVolname().trim(), 1);
+                                          }
+                                      }
+                                  }
                               }
-                            }
+                              divideMosharkatByDegree(nameCounting);
                           }
-                        }
-                        divideMosharkatByDegree(nameCounting);
-                      }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
   }
 
   private void divideMosharkatByDegree(HashMap<String, Integer> nameCounting) {
@@ -298,65 +303,65 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
     EventsRef = database.getReference("events").child(userBranch);
     EventsRef.addValueEventListener(
             new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int EventsCounter = 0;
-                int OrientationCounter = 0;
-                int CoursesCounter = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  Event event = snapshot.getValue(Event.class);
-                  if (event != null) {
-                    String[] splittedDate = event.date.split("/", 2);
-                    if (Integer.parseInt(splittedDate[0]) >= start_day
-                            && Integer.parseInt(splittedDate[0]) <= end_day
-                            && Integer.parseInt(splittedDate[1]) == selected_month) {
-                      if (event.type.matches("(.*)اورينتيشن(.*)")) OrientationCounter++;
-                      if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
-                      else EventsCounter++;
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int EventsCounter = 0;
+                    int OrientationCounter = 0;
+                    int CoursesCounter = 0;
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Event event = snapshot.getValue(Event.class);
+                        if (event != null) {
+                            String[] splittedDate = event.date.split("/", 2);
+                            if (Integer.parseInt(splittedDate[0]) >= start_day
+                                    && Integer.parseInt(splittedDate[0]) <= end_day
+                                    && Integer.parseInt(splittedDate[1]) == selected_month) {
+                                if (event.type.matches("(.*)اورينتيشن(.*)")) OrientationCounter++;
+                                if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
+                                else EventsCounter++;
+                            }
+                        }
                     }
-                  }
+                    eventsCount.setText(String.valueOf(EventsCounter));
+                    orientationCount.setText(String.valueOf(OrientationCounter));
+                    coursesCount.setText(String.valueOf(CoursesCounter));
                 }
-                eventsCount.setText(String.valueOf(EventsCounter));
-                orientationCount.setText(String.valueOf(OrientationCounter));
-                coursesCount.setText(String.valueOf(CoursesCounter));
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
             });
   }
 
   private void updateMeetings() {
     MeetingsRef = database.getReference("meetings").child(userBranch);
     TextView meetingsCount = findViewById(R.id.meetingsCount);
-    MeetingsRef.child(month_et.getSelectedItem().toString())
-            .addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        int meetingsCounter = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          Meeting meet = snapshot.getValue(Meeting.class);
-                          if (meet != null) {
-                            String[] splittedDate = meet.date.split("/", 2);
-                            if (Integer.parseInt(splittedDate[0]) >= start_day
-                                    && Integer.parseInt(splittedDate[0]) <= end_day
-                                    && Integer.parseInt(splittedDate[1]) == selected_month) {
-                              meetingsCounter++;
-                            }
+      MeetingsRef.child(month_et.getSelectedItem().toString())
+              .addListenerForSingleValueEvent(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              int meetingsCounter = 0;
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  Meeting meet = snapshot.getValue(Meeting.class);
+                                  if (meet != null) {
+                                      String[] splittedDate = meet.date.split("/", 2);
+                                      if (Integer.parseInt(splittedDate[0]) >= start_day
+                                              && Integer.parseInt(splittedDate[0]) <= end_day
+                                              && Integer.parseInt(splittedDate[1]) == selected_month) {
+                                          meetingsCounter++;
+                                      }
+                                  }
+                              }
+                              meetingsCount.setText(String.valueOf(meetingsCounter));
                           }
-                        }
-                        meetingsCount.setText(String.valueOf(meetingsCounter));
-                      }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
   }
 }

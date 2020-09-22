@@ -18,7 +18,7 @@ import com.resala.mosharkaty.utility.classes.Course;
 
 import java.util.ArrayList;
 
-public class AdminViewCoursesActivity extends AppCompatActivity {
+public class ShowAllCourses extends AppCompatActivity {
     ExploreCoursesAdapter adapter;
     ArrayList<Course> courseItems = new ArrayList<>();
     FirebaseDatabase database;
@@ -42,6 +42,7 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 courseItems.clear();
+                                //TODO :: add filter by category
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Course course = snapshot.getValue(Course.class);
                                     if (course != null) {

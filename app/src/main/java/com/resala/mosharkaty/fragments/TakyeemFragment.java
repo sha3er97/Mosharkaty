@@ -87,23 +87,24 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
     final TextView head_bonus = view.findViewById(R.id.bonusHead);
 
     final TextView extra_comment = view.findViewById(R.id.extraComment);
-    DatabaseReference liveSheet =
-            database.getReference("1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk");
+      DatabaseReference liveSheet =
+              database.getReference("1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk"); //TODO :: شيت تقييمات لكل فرع
     takyeemTab = liveSheet.child("takyeem");
     Takyeemlistener =
             takyeemTab.addValueEventListener(
                     new ValueEventListener() {
-                      @Override
-                      public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          Takyeem takyeem = snapshot.getValue(Takyeem.class);
-                          if (takyeem.code.equalsIgnoreCase(userCode)) {
-                            communication.setText(String.valueOf(takyeem.communication));
-                            commitment.setText(String.valueOf(takyeem.commitment));
-                            problem_solving.setText(String.valueOf(takyeem.problem_solving));
-                            quality.setText(String.valueOf(takyeem.quality));
-                            creativity.setText(String.valueOf(takyeem.creativity));
-                            cooperation.setText(String.valueOf(takyeem.cooperation));
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Takyeem takyeem = snapshot.getValue(Takyeem.class);
+                                assert takyeem != null;
+                                if (takyeem.code.equalsIgnoreCase(userCode)) {
+                                    communication.setText(String.valueOf(takyeem.communication));
+                                    commitment.setText(String.valueOf(takyeem.commitment));
+                                    problem_solving.setText(String.valueOf(takyeem.problem_solving));
+                                    quality.setText(String.valueOf(takyeem.quality));
+                                    creativity.setText(String.valueOf(takyeem.creativity));
+                                    cooperation.setText(String.valueOf(takyeem.cooperation));
                             ekhtlat.setText(String.valueOf(takyeem.ekhtlat));
                             respect.setText(String.valueOf(takyeem.respect));
                             humble.setText(String.valueOf(takyeem.humble));

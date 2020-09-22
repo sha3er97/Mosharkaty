@@ -26,8 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.resala.mosharkaty.AdminViewCoursesActivity;
 import com.resala.mosharkaty.R;
+import com.resala.mosharkaty.ShowAllCourses;
 import com.resala.mosharkaty.ui.adapters.EnrolledCoursesAdapter;
 import com.resala.mosharkaty.utility.classes.Course;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
@@ -40,7 +40,9 @@ import java.util.Locale;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class ProfileFragment extends androidx.fragment.app.Fragment {
@@ -135,8 +137,8 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                     startActivity(
                             new Intent(
                                     getActivity(),
-                                    AdminViewCoursesActivity
-                                            .class)); // TODO :: change to user view courses (same + filter)
+                                    ShowAllCourses
+                                            .class));
                 });
         ApplyChanges.setOnClickListener(
                 v -> {
@@ -230,8 +232,12 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
-        DatabaseReference liveSheet =
-                database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         mosharkatTab = liveSheet.child("month_mosharkat");
         mosharkatlistener =
                 mosharkatTab.addValueEventListener(

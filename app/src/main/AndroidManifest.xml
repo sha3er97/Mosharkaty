@@ -16,10 +16,10 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:supportsRtl">
-        <activity android:name=".AdminEditSessionActivity"></activity>
+        <activity android:name=".AdminEditSessionActivity" />
         <activity android:name=".ViewSessionsActivity" />
         <activity android:name=".AdminAddSessionActivity" />
-        <activity android:name=".AdminViewCoursesActivity" />
+        <activity android:name=".ShowAllCourses" />
         <activity android:name=".AdminCoursesActivity" />
         <activity android:name=".AdminAddCourseActivity" />
         <activity android:name=".CourseDescriptionActivity" />

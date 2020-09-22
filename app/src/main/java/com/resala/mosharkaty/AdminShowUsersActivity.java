@@ -24,6 +24,8 @@ import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowUsersActivity extends AppCompatActivity {
     FirebaseDatabase database;
@@ -83,8 +85,12 @@ public class AdminShowUsersActivity extends AppCompatActivity {
     }
 
     private void checkForBranch() {
-        DatabaseReference liveSheet =
-                database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         mosharkatTab = liveSheet.child("month_mosharkat");
         mosharkatlistener =
                 mosharkatTab.addValueEventListener(

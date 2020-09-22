@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 import jxl.Workbook;
@@ -118,6 +119,7 @@ public class ShowMeetingFragment extends Fragment {
                                                       .show();
                                             }
                                           }
+                                          Collections.sort(meetingitems);
                                           adapter.notifyDataSetChanged();
                                         }
 

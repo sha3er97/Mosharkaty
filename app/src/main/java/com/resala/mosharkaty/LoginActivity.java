@@ -31,6 +31,7 @@ import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class LoginActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
@@ -103,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                       Log.w(TAG, "Failed to read value.", error.toException());
                   }
               });
-    FirebaseUser currentUser = mAuth.getCurrentUser();
+      FirebaseUser currentUser = mAuth.getCurrentUser();
       FirebaseInstanceId.getInstance()
               .getInstanceId()
               .addOnCompleteListener(
@@ -126,40 +127,43 @@ public class LoginActivity extends AppCompatActivity {
       login_btn.setEnabled(false);
       login_btn.setBackgroundColor(
               getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-      DatabaseReference allVolsRef =
-              database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0").child("all");
-    allVolsRef.addListenerForSingleValueEvent(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //            progress = new ProgressDialog(getApplicationContext());
-                    //            progress.setTitle("Loading");
-                    //            progress.setMessage("لحظات معانا...");
-                    //            progress.setCancelable(false); // disable dismiss by tapping outside of
-                    // the dialog
-                    //            progress.show();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        normalVolunteer user = snapshot.getValue(normalVolunteer.class);
-                        assert user != null;
-                        if (user.Volname.isEmpty()) continue;
-                        allVolunteersByName.put(user.Volname.trim(), user);
-                        allVolunteersByPhone.put(user.phone_text.trim(), user);
-                    }
-                    isAdmin = true;
-                    //            progress.dismiss();
-                    Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT)
-                            .show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                }
+      String branchSheetLink =
+              userBranch.equals(branches[9])
+                      ? branchesSheets.get(branches[0])
+                      : branchesSheets.get(userBranch);
+      if (!userBranch.equals(branches[9])) {
+          assert branchSheetLink != null;
+          DatabaseReference allVolsRef = database.getReference(branchSheetLink).child("all");
+          allVolsRef.addListenerForSingleValueEvent(
+                  new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                              normalVolunteer user = snapshot.getValue(normalVolunteer.class);
+                              assert user != null;
+                              if (user.Volname.isEmpty()) continue;
+                              allVolunteersByName.put(user.Volname.trim(), user);
+                              allVolunteersByPhone.put(user.phone_text.trim(), user);
+                          }
+                          isAdmin = true;
+                          Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT)
+                                  .show();
+                          startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                          finish();
+                      }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                }
-            });
-
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                          // Failed to read value
+                          Log.w(TAG, "Failed to read value.", error.toException());
+                      }
+                  });
+      } else {
+          isAdmin = true;
+          Toast.makeText(getApplicationContext(), "اتفضل يا استاذ ادمن ", Toast.LENGTH_SHORT).show();
+          startActivity(new Intent(getApplicationContext(), MainActivity.class));
+          finish();
+      }
     //        throw new RuntimeException("Test Crash"); // Force a crash
   }
 
@@ -176,9 +180,9 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void signIn(String email, String password) {
-    if (!validateForm()) {
-      return;
-    }
+      if (!validateForm()) {
+          return;
+      }
       mAuth
               .signInWithEmailAndPassword(email, password)
               .addOnCompleteListener(
@@ -270,15 +274,15 @@ public class LoginActivity extends AppCompatActivity {
       ConnectivityManager connectivityManager =
               (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-        if (connectivityManager.getActiveNetworkInfo() == null
-                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-            //          Toast.makeText(getApplicationContext(), "No Internet",
-            // Toast.LENGTH_SHORT).show();
-            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
-        }
-    }
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              //          Toast.makeText(getApplicationContext(), "No Internet",
+              // Toast.LENGTH_SHORT).show();
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
     if (IsAdminDetails()) makeAdminActions();
     else { // not admin
       Log.d(TAG, "user not admin ");
@@ -291,11 +295,11 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   public void resetPassword(View view) {
-    String email = email_et.getText().toString();
-    if (TextUtils.isEmpty(email)) {
-      email_et.setError("must enter a valid email");
-      return;
-    }
+      String email = email_et.getText().toString();
+      if (TextUtils.isEmpty(email)) {
+          email_et.setError("must enter a valid email");
+          return;
+      }
       mAuth
               .sendPasswordResetEmail(email_et.getText().toString())
               .addOnCompleteListener(

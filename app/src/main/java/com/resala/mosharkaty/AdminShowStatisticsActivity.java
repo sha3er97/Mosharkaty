@@ -31,6 +31,8 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowStatisticsActivity extends AppCompatActivity {
   FirebaseDatabase database;
@@ -62,8 +64,12 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
     filterFari2Check = findViewById(R.id.Filtercheckbox);
     filterFari2Check.setOnClickListener(v -> fari2Filter = filterFari2Check.isChecked());
-    DatabaseReference liveSheet =
-            database.getReference("1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0");
+    String branchSheetLink =
+            userBranch.equals(branches[9])
+                    ? branchesSheets.get(branches[0])
+                    : branchesSheets.get(userBranch);
+    assert branchSheetLink != null;
+    DatabaseReference liveSheet = database.getReference(branchSheetLink);
     usersRef = liveSheet.child("month_mosharkat");
     usersRef.addListenerForSingleValueEvent(
             new ValueEventListener() {
