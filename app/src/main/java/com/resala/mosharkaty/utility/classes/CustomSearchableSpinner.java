@@ -14,39 +14,38 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 @SuppressLint("ParcelCreator")
 public class CustomSearchableSpinner extends SearchableSpinner implements Parcelable {
 
-    public static boolean isSpinnerDialogOpen = false;
+  public static boolean isSpinnerDialogOpen = false;
 
-    public CustomSearchableSpinner(Context context) {
-        super(context);
-    }
+  public CustomSearchableSpinner(Context context) {
+    super(context);
+  }
 
-    public CustomSearchableSpinner(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public CustomSearchableSpinner(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    public CustomSearchableSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+  public CustomSearchableSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+  }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (!isSpinnerDialogOpen) {
-                isSpinnerDialogOpen = true;
-                return super.onTouch(v, event);
-            }
-            isSpinnerDialogOpen = false;
-        }
-        new Handler().postDelayed(() -> isSpinnerDialogOpen = false, 500);
-        return true;
+  @Override
+  public boolean onTouch(View v, MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_UP) {
+      if (!isSpinnerDialogOpen) {
+        isSpinnerDialogOpen = true;
+        return super.onTouch(v, event);
+      }
+      isSpinnerDialogOpen = false;
     }
+    new Handler().postDelayed(() -> isSpinnerDialogOpen = false, 500);
+    return true;
+  }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {}
 }
