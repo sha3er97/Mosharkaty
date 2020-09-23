@@ -8,7 +8,12 @@ public class MosharkaItem implements Comparable {
   private String mosharkaType;
   private String key;
 
-  public MosharkaItem() {}
+  public MosharkaItem() {
+    //in case of error
+    this.volname = "error";
+    this.mosharkaDate = "1/1/2020";
+    this.mosharkaType = "error";
+  }
 
   public MosharkaItem(String volname, String mosharkaDate, String mosharkaType) {
     this.volname = volname;

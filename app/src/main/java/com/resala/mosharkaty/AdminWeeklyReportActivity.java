@@ -68,49 +68,49 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_admin_weekly_report);
-    database = FirebaseDatabase.getInstance();
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_admin_weekly_report);
+      database = FirebaseDatabase.getInstance();
 
-    month_et = findViewById(R.id.current_month);
-    day_from_et = findViewById(R.id.day_from);
-    day_to_et = findViewById(R.id.day_to);
-    refresh_btn = findViewById(R.id.refresh_btn);
+      month_et = findViewById(R.id.current_month);
+      day_from_et = findViewById(R.id.day_from);
+      day_to_et = findViewById(R.id.day_to);
+      refresh_btn = findViewById(R.id.refresh_btn);
       refresh_btn.setEnabled(false);
       refresh_btn.setBackgroundColor(
               getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-    final Calendar cldr = Calendar.getInstance(Locale.US);
-    day = cldr.get(Calendar.DAY_OF_MONTH);
-    month = cldr.get(Calendar.MONTH);
-    year = cldr.get(Calendar.YEAR);
+      final Calendar cldr = Calendar.getInstance(Locale.US);
+      day = cldr.get(Calendar.DAY_OF_MONTH);
+      month = cldr.get(Calendar.MONTH);
+      year = cldr.get(Calendar.YEAR);
 
-    // setting spinner
+      // setting spinner
       ArrayAdapter<String> aa =
               new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, months);
-    aa.setDropDownViewResource(R.layout.spinner_dropdown);
-    // Setting the ArrayAdapter data on the Spinner
-    month_et.setAdapter(aa);
-    month_et.setSelection(Math.max(month, 0));
+      aa.setDropDownViewResource(R.layout.spinner_dropdown);
+      // Setting the ArrayAdapter data on the Spinner
+      month_et.setAdapter(aa);
+      month_et.setSelection(Math.max(month, 0));
 
       ArrayAdapter<String> ab =
               new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
-    ab.setDropDownViewResource(R.layout.spinner_dropdown);
-    // Setting the ArrayAdapter data on the Spinner
-    day_to_et.setAdapter(ab);
-    day_to_et.setSelection(Math.max(day - 1, 0));
+      ab.setDropDownViewResource(R.layout.spinner_dropdown);
+      // Setting the ArrayAdapter data on the Spinner
+      day_to_et.setAdapter(ab);
+      day_to_et.setSelection(Math.max(day - 1, 0));
 
       ArrayAdapter<String> ac =
               new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, days);
-    ac.setDropDownViewResource(R.layout.spinner_dropdown);
-    // Setting the ArrayAdapter data on the Spinner
-    day_from_et.setAdapter(ac);
-    day_from_et.setSelection(0);
-    if (userBranch == null) {
-        Toast.makeText(getApplicationContext(), "an error occurred .. try again", Toast.LENGTH_SHORT)
-                .show();
-        finish();
-    } else {
-      refresh_btn.setEnabled(true);
+      ac.setDropDownViewResource(R.layout.spinner_dropdown);
+      // Setting the ArrayAdapter data on the Spinner
+      day_from_et.setAdapter(ac);
+      day_from_et.setSelection(0);
+      if (userBranch == null) {
+          Toast.makeText(getApplicationContext(), "an error occurred .. try again", Toast.LENGTH_SHORT)
+                  .show();
+          finish();
+      } else {
+          refresh_btn.setEnabled(true);
       refresh_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
       nasheetRef = database.getReference("nasheet").child(userBranch);
       nasheetRef.addListenerForSingleValueEvent(
@@ -133,40 +133,40 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                       Log.w(TAG, "Failed to read value.", error.toException());
                   }
               });
-        String branchSheetLink =
-                userBranch.equals(branches[9])
-                        ? branchesSheets.get(branches[0])
-                        : branchesSheets.get(userBranch);
-        assert branchSheetLink != null;
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
-        usersRef = liveSheet.child("month_mosharkat");
-        usersRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mas2oleenCounter = 0;
-                        msharee3Counter = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Volunteer user = snapshot.getValue(Volunteer.class);
-                            if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
-                                teamDegrees.put(user.Volname, user.degree);
-                                if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
-                                else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
-                            }
-                        }
-                        TextView mas2olCount = findViewById(R.id.mas2olCount);
-                        mas2olCount.setText(String.valueOf(mas2oleenCounter));
-                        TextView mshro3Count = findViewById(R.id.mshro3Count);
-                        mshro3Count.setText(String.valueOf(msharee3Counter));
-                    }
+          String branchSheetLink =
+                  userBranch.equals(branches[9])
+                          ? branchesSheets.get(branches[0])
+                          : branchesSheets.get(userBranch);
+          assert branchSheetLink != null;
+          DatabaseReference liveSheet = database.getReference(branchSheetLink);
+          usersRef = liveSheet.child("month_mosharkat");
+          usersRef.addListenerForSingleValueEvent(
+                  new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          mas2oleenCounter = 0;
+                          msharee3Counter = 0;
+                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                              Volunteer user = snapshot.getValue(Volunteer.class);
+                              if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
+                                  teamDegrees.put(user.Volname, user.degree);
+                                  if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
+                                  else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
+                              }
+                          }
+                          TextView mas2olCount = findViewById(R.id.mas2olCount);
+                          mas2olCount.setText(String.valueOf(mas2oleenCounter));
+                          TextView mshro3Count = findViewById(R.id.mshro3Count);
+                          mshro3Count.setText(String.valueOf(msharee3Counter));
+                      }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
-    }
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                          // Failed to read value
+                          Log.w(TAG, "Failed to read value.", error.toException());
+                      }
+                  });
+      }
   }
 
   public void refreshReport(View view) {
@@ -179,7 +179,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
   }
 
   private void updateMosharkat() {
-    MosharkatRef = database.getReference("mosharkat").child(userBranch);
+      MosharkatRef = database.getReference("mosharkat").child(userBranch);
       MosharkatRef.child(String.valueOf(selected_month))
               .addListenerForSingleValueEvent(
                       new ValueEventListener() {
@@ -228,23 +228,23 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
     msharee3Arrived = 0;
     nasheetArrived = 0;
     normalArrived = 0;
-    for (Map.Entry entry : nameCounting.entrySet()) {
-      String volName = entry.getKey().toString();
+      for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+          String volName = entry.getKey().toString();
 
-      if (teamDegrees.get(volName) != null) {
-        if (teamDegrees.get(volName).matches("(.*)مسؤول(.*)")) {
-          mas2oleenMosharkat += (Integer) entry.getValue();
-          mas2oleenArrived++;
-        } else if (teamDegrees.get(volName).matches("(.*)مشروع(.*)")) {
-          msharee3Mosharkat += (Integer) entry.getValue();
-          msharee3Arrived++;
-        }
+          if (teamDegrees.get(volName) != null) {
+              if (teamDegrees.get(volName).matches("(.*)مسؤول(.*)")) {
+                  mas2oleenMosharkat += entry.getValue();
+                  mas2oleenArrived++;
+              } else if (teamDegrees.get(volName).matches("(.*)مشروع(.*)")) {
+                  msharee3Mosharkat += entry.getValue();
+                  msharee3Arrived++;
+              }
       } else if (allNsheet.contains(volName)) {
-        nasheetMosharkat += (Integer) entry.getValue();
-        nasheetArrived++;
+              nasheetMosharkat += entry.getValue();
+              nasheetArrived++;
       } else {
-        normalMosharkat += (Integer) entry.getValue();
-        normalArrived++;
+              normalMosharkat += entry.getValue();
+              normalArrived++;
       }
     }
     // write in table
@@ -335,8 +335,8 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
   }
 
   private void updateMeetings() {
-    MeetingsRef = database.getReference("meetings").child(userBranch);
-    TextView meetingsCount = findViewById(R.id.meetingsCount);
+      MeetingsRef = database.getReference("meetings").child(userBranch);
+      TextView meetingsCount = findViewById(R.id.meetingsCount);
       MeetingsRef.child(month_et.getSelectedItem().toString())
               .addListenerForSingleValueEvent(
                       new ValueEventListener() {

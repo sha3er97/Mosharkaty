@@ -30,14 +30,14 @@ import static com.resala.mosharkaty.LoginActivity.userBranch;
 public class NasheetReportsFragment extends androidx.fragment.app.Fragment {
   View view;
   FirebaseDatabase database;
-  int month;
-  int year;
-  ArrayList<String> allNsheet = new ArrayList<>();
-  ArrayList<String> allNoobs = new ArrayList<>();
-  DatabaseReference nasheetRef;
-  ValueEventListener nasheetlistener;
-  DatabaseReference MosharkatRef;
-  ValueEventListener mosharkatlistener;
+    int month;
+    int year;
+    ArrayList<String> allNsheet = new ArrayList<>();
+    ArrayList<String> allNoobs = new ArrayList<>();
+    DatabaseReference nasheetRef;
+    ValueEventListener nasheetlistener;
+    DatabaseReference MosharkatRef;
+    ValueEventListener mosharkatlistener;
     HashMap<Integer, Integer> nasheetIntervals = new HashMap<>();
 
     @Override
@@ -98,15 +98,15 @@ public class NasheetReportsFragment extends androidx.fragment.app.Fragment {
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
-    return view;
-  }
+        return view;
+    }
 
   private void updateReport() {
-    TextView nasheetCount = view.findViewById(R.id.nasheetCount);
-    TextView noobsCount = view.findViewById(R.id.noobsCount);
+      TextView nasheetCount = view.findViewById(R.id.nasheetCount);
+      TextView noobsCount = view.findViewById(R.id.noobsCount);
 
-    TextView nasheetAttended = view.findViewById(R.id.nasheetAttended);
-    TextView noobsAttended = view.findViewById(R.id.noobsAttended);
+      TextView nasheetAttended = view.findViewById(R.id.nasheetAttended);
+      TextView noobsAttended = view.findViewById(R.id.noobsAttended);
 
       TextView nasheetPercentTV = view.findViewById(R.id.nasheetPercent);
       TextView noobsPercentTV = view.findViewById(R.id.noobsPercent);
@@ -184,11 +184,11 @@ public class NasheetReportsFragment extends androidx.fragment.app.Fragment {
                                       float noobsPercent = (float) noobsAttendedCount / allNoobs.size() * 100;
                                       nasheetPercentTV.setText(Math.round(nsheetPercent * 10) / 10.0 + " %");
                                       noobsPercentTV.setText(Math.round(noobsPercent * 10) / 10.0 + " %");
-                                      for (Map.Entry entry : nsheetCounting.entrySet()) {
-                                          nsheetMosharkatCount += (int) entry.getValue();
+                                      for (Map.Entry<String, Integer> entry : nsheetCounting.entrySet()) {
+                                          nsheetMosharkatCount += entry.getValue();
                                       }
-                                      for (Map.Entry entry : noobCounting.entrySet()) {
-                                          noobsMosharkatCount += (int) entry.getValue();
+                                      for (Map.Entry<String, Integer> entry : noobCounting.entrySet()) {
+                                          noobsMosharkatCount += entry.getValue();
                                       }
                                       nasheetMosharkat.setText(String.valueOf(nsheetMosharkatCount));
                                       noobsMosharkat.setText(String.valueOf(noobsMosharkatCount));

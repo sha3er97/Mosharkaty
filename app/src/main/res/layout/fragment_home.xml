@@ -11,6 +11,106 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top5DaysLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/white_rect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top5TypesLayout">
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/blue_btn"
+                android:fontFamily="@font/new_jf"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="اعلي ايام مشاركات حتي الان"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top5DaysRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top5TypesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/white_rect"
+            app:layout_constraintTop_toBottomOf="@id/meetingsLayout"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/totslMosharkatCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView33"
+                app:layout_constraintEnd_toStartOf="@+id/textView33"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/blue_btn"
+                android:fontFamily="@font/new_jf"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="مشاركات الفرع حتي الان"
+                android:textColor="@color/new_white_light"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top5TypesRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/meetingsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +216,7 @@
             android:fontFamily="@font/new_jf"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="متوسط المشاركات"
+            android:text="متوسط المشاركات حتي الان"
             android:textColor="@color/new_blue_dark"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +274,7 @@
                 android:fontFamily="@font/new_jf"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:text="نسبة مشاركة فريق العمل"
+                android:text="نسبة مشاركة فريق العمل الان"
                 android:textColor="@color/new_white_light"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

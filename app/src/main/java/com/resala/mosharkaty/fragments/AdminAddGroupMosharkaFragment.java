@@ -51,13 +51,15 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
           "ولاد عم",
           "اجتماع",
           "اتصالات",
-          "نزول الفرع",
-          "اخري / بيت",
           "شيت",
           "معرض / قافلة",
           "كرنفال",
+          "نقل",
+          "فرز",
           "سيشن / اورينتيشن",
-          "دعايا"
+          "دعايا",
+          "نزول الفرع",
+          "اخري / بيت"
   };
   View view;
   ArrayList<String> users = new ArrayList<>();
@@ -99,13 +101,13 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
    * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
    * view is being released.
    *
-   * @param inflater           The LayoutInflater object that can be used to inflate any views in the
-   *                           fragment,
-   * @param container          If non-null, this is the parent view that the fragment's UI should be attached
-   *                           to. The fragment should not add the view itself, but this can be used to generate the
-   *                           LayoutParams of the view.
+   * @param inflater The LayoutInflater object that can be used to inflate any views in the
+   *     fragment,
+   * @param container If non-null, this is the parent view that the fragment's UI should be attached
+   *     to. The fragment should not add the view itself, but this can be used to generate the
+   *     LayoutParams of the view.
    * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-   *                           saved state as given here.
+   *     saved state as given here.
    * @return Return the View for the fragment's UI, or null.
    */
   @Nullable
@@ -148,7 +150,8 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
               picker.show();
             });
 
-      ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
+    ArrayAdapter<String> aa =
+            new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);
@@ -156,10 +159,10 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
      * ***********************************************************************************************************************************
      */
     phones.clear();
-    for (Map.Entry entry : allVolunteersByPhone.entrySet()) {
+    for (Map.Entry<String, normalVolunteer> entry : allVolunteersByPhone.entrySet()) {
       //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
       //      phones.add(normalVolunteer.phone_text);
-      phones.add((String) entry.getKey());
+      phones.add(entry.getKey());
     }
     ArrayAdapter<String> ac = new ArrayAdapter<>(getContext(), R.layout.spinner_item, phones);
     ac.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -172,10 +175,10 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
      * ************************************************************************************************************
      */
     users.clear();
-    for (Map.Entry entry : allVolunteersByName.entrySet()) {
+    for (Map.Entry<String, normalVolunteer> entry : allVolunteersByName.entrySet()) {
       //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
       //      users.add(normalVolunteer.Volname);
-      users.add((String) entry.getKey());
+      users.add(entry.getKey());
     }
     final ArrayAdapter<String> ab = new ArrayAdapter<>(getContext(), R.layout.spinner_item, users);
     ab.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -211,31 +214,31 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                         ad.notifyDataSetChanged();
                       }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // Failed to read value
-                            Log.w(TAG, "Failed to read value.", error.toException());
-                        }
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                      }
                     });
-      /**
-       * *************************************************************************************************************
-       */
-      String branchSheetLink =
-              userBranch.equals(branches[9])
-                      ? branchesSheets.get(branches[0])
-                      : branchesSheets.get(userBranch);
-      assert branchSheetLink != null;
-      DatabaseReference liveSheet = database.getReference(branchSheetLink);
-      fari2Ref = liveSheet.child("month_mosharkat");
-      final ArrayAdapter<String> ae =
-              new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
-      ae.setDropDownViewResource(R.layout.spinner_dropdown);
-      fari2Spinner.setSelection(0, false);
-      fari2Spinner.setOnItemSelectedListener(this);
-      fari2Spinner.setAdapter(ae);
+    /**
+     * *************************************************************************************************************
+     */
+    String branchSheetLink =
+            userBranch.equals(branches[9])
+                    ? branchesSheets.get(branches[0])
+                    : branchesSheets.get(userBranch);
+    assert branchSheetLink != null;
+    DatabaseReference liveSheet = database.getReference(branchSheetLink);
+    fari2Ref = liveSheet.child("month_mosharkat");
+    final ArrayAdapter<String> ae =
+            new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
+    ae.setDropDownViewResource(R.layout.spinner_dropdown);
+    fari2Spinner.setSelection(0, false);
+    fari2Spinner.setOnItemSelectedListener(this);
+    fari2Spinner.setAdapter(ae);
 
-      fari2listener =
-              fari2Ref.addValueEventListener(
+    fari2listener =
+            fari2Ref.addValueEventListener(
                     new ValueEventListener() {
                       @Override
                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

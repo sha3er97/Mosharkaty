@@ -81,10 +81,10 @@ public class AddNasheetFragment extends androidx.fragment.app.Fragment
      * *******************************************************************************************************
      */
     phones.clear();
-    for (Map.Entry entry : allVolunteersByPhone.entrySet()) {
+    for (Map.Entry<String, normalVolunteer> entry : allVolunteersByPhone.entrySet()) {
       //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
       //      phones.add(normalVolunteer.phone_text);
-      phones.add((String) entry.getKey());
+      phones.add(entry.getKey());
     }
     ArrayAdapter<String> ac = new ArrayAdapter<>(getContext(), R.layout.spinner_item, phones);
     ac.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -97,10 +97,10 @@ public class AddNasheetFragment extends androidx.fragment.app.Fragment
      * ************************************************************************************************************
      */
     users.clear();
-    for (Map.Entry entry : allVolunteersByName.entrySet()) {
+    for (Map.Entry<String, normalVolunteer> entry : allVolunteersByName.entrySet()) {
       //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
       //      users.add(normalVolunteer.Volname);
-      users.add((String) entry.getKey());
+      users.add(entry.getKey());
     }
     final ArrayAdapter<String> ab = new ArrayAdapter<>(getContext(), R.layout.spinner_item, users);
     ab.setDropDownViewResource(R.layout.spinner_dropdown);

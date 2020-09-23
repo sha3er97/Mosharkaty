@@ -1,22 +1,27 @@
 package com.resala.mosharkaty.utility.classes;
 
 public class MessageItem {
-  public String author;
-  public String content;
-  public String date;
-  public String key;
+    public String author;
+    public String content;
+    public String date;
+    public String key;
 
-  public MessageItem() {}
+    public MessageItem() {
+        //in case of error
+        this.author = "error";
+        this.content = "error";
+        this.date = "1/1/2020";
+    }
 
-  public String getKey() {
-    return key;
-  }
+    public String getKey() {
+        return key;
+    }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public String getAuthor() {
+    public String getAuthor() {
     return author;
   }
 

@@ -70,101 +70,101 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
   @Override
   public View onCreateView(
           LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    view = inflater.inflate(R.layout.fragment_show_nasheet, container, false);
-    database = FirebaseDatabase.getInstance();
-    RecyclerView recyclerView = view.findViewById(R.id.nasheetRecyclerView);
-    TextView current_month = view.findViewById(R.id.current_month);
-    final Calendar cldr = Calendar.getInstance(Locale.US);
-    month = cldr.get(Calendar.MONTH) + 1;
-    year = cldr.get(Calendar.YEAR);
-    current_month.setText(String.valueOf(month));
-    recyclerView.setHasFixedSize(true);
+      // Inflate the layout for this fragment
+      view = inflater.inflate(R.layout.fragment_show_nasheet, container, false);
+      database = FirebaseDatabase.getInstance();
+      RecyclerView recyclerView = view.findViewById(R.id.nasheetRecyclerView);
+      TextView current_month = view.findViewById(R.id.current_month);
+      final Calendar cldr = Calendar.getInstance(Locale.US);
+      month = cldr.get(Calendar.MONTH) + 1;
+      year = cldr.get(Calendar.YEAR);
+      current_month.setText(String.valueOf(month));
+      recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     adapter = new UserNasheetHistoryAdapter(userHistoryItems, getContext());
     recyclerView.setAdapter(adapter);
     export_nasheet_btn2 = view.findViewById(R.id.export_nasheet_btn2);
     nasheetRef = database.getReference("nasheet").child(userBranch);
-    nasheetlistener =
-            nasheetRef.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        allNsheet.clear();
-                        nasheetMonths = new HashMap<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
-                          assert nasheetVolunteer != null;
-                          allNsheet.add(snapshot.getKey());
-                          String[] parts = nasheetVolunteer.first_month.split("/", 2);
-                          int months =
-                                  (year - Integer.parseInt(parts[1])) * 12
-                                          + (month - Integer.parseInt(parts[0]));
-                          nasheetMonths.put(snapshot.getKey(), months);
-                        }
-                        getNasheetMosharkat();
-                      }
+      nasheetlistener =
+              nasheetRef.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              allNsheet.clear();
+                              nasheetMonths = new HashMap<>();
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
+                                  assert nasheetVolunteer != null;
+                                  allNsheet.add(snapshot.getKey());
+                                  String[] parts = nasheetVolunteer.first_month.split("/", 2);
+                                  int months =
+                                          (year - Integer.parseInt(parts[1])) * 12
+                                                  + (month - Integer.parseInt(parts[0]));
+                                  nasheetMonths.put(snapshot.getKey(), months);
+                              }
+                              getNasheetMosharkat();
+                          }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
 
-    export_nasheet_btn2.setOnClickListener(
-            view -> {
-              if (Build.VERSION.SDK_INT >= 23) {
-                String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                if (!hasPermissions(PERMISSIONS)) {
-                  ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
-                } else { // permession already granted
-                  showDialog();
-                }
-              } else { // api below 23
-                showDialog();
-              }
-            });
+      export_nasheet_btn2.setOnClickListener(
+              view -> {
+                  if (Build.VERSION.SDK_INT >= 23) {
+                      String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                      if (!hasPermissions(PERMISSIONS)) {
+                          ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
+                      } else { // permession already granted
+                          showDialog();
+                      }
+                  } else { // api below 23
+                      showDialog();
+                  }
+              });
     return view;
   }
 
-  @Override
-  public void onRequestPermissionsResult(
-          int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    switch (requestCode) {
-      case REQUEST: {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          showDialog();
-        } else {
-          Toast.makeText(
-                  getContext(),
-                  "The app was not allowed to write in your storage",
-                  Toast.LENGTH_LONG)
-                  .show();
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showDialog();
+                } else {
+                    Toast.makeText(
+                            getContext(),
+                            "The app was not allowed to write in your storage",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
         }
-      }
-    }
   }
 
   private boolean hasPermissions(String[] permissions) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-            && getContext() != null
-            && permissions != null) {
-      for (String permission : permissions) {
-        if (ActivityCompat.checkSelfPermission(getContext(), permission)
-                != PackageManager.PERMISSION_GRANTED) {
-          return false;
-        }
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+              && getContext() != null
+              && permissions != null) {
+          for (String permission : permissions) {
+              if (ActivityCompat.checkSelfPermission(getContext(), permission)
+                      != PackageManager.PERMISSION_GRANTED) {
+                  return false;
+              }
+          }
       }
-    }
     return true;
   }
 
   private void writeExcel() {
-    String root =
-            Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
-    File dir = new File(root);
+      String root =
+              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
+      File dir = new File(root);
     dir.mkdirs();
     String Fnamexls = ("/قائمة_نشيط_نشاط_الفرز_" + userBranch + ".xls");
     WorkbookSettings wbSettings = new WorkbookSettings();
@@ -207,9 +207,9 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         e.printStackTrace();
       }
 
-      workbook.write();
-      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
-              .show();
+        workbook.write();
+        Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
+                .show();
       //      sendEmail(root, Fnamexls);
       try {
         workbook.close();
@@ -226,64 +226,65 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 
   private void getNasheetMosharkat() {
     MosharkatRef = database.getReference("mosharkat").child(userBranch);
-    mosharkatlistener =
-            MosharkatRef.child(String.valueOf(month))
-                    .addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                userHistoryItems.clear();
-                                HashMap<String, Integer> nameCounting = new HashMap<>();
-                                HashMap<String, String> nameHistory = new HashMap<>();
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                  MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                                  String[] splittedDate;
-                                  if (mosharka != null) {
-                                    if (!allNsheet.contains(mosharka.getVolname())) continue;
-                                    splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                                    if (nameCounting.containsKey(mosharka.getVolname().trim())) {
-                                      // If char is present in charCountMap,
-                                      // incrementing it's count by 1
-                                      nameCounting.put(
-                                              mosharka.getVolname().trim(),
-                                              nameCounting.get(mosharka.getVolname().trim()) + 1);
-                                      nameHistory.put(
-                                              mosharka.getVolname().trim(),
-                                              nameHistory.get(mosharka.getVolname().trim())
-                                                      + ","
-                                                      + splittedDate[0]);
-                                    } else {
-                                      // If char is not present in charCountMap,
-                                      // putting this char to charCountMap with 1 as it's value
-                                      nameCounting.put(mosharka.getVolname().trim(), 1);
-                                      nameHistory.put(mosharka.getVolname().trim(), splittedDate[0]);
-                                    }
+      mosharkatlistener =
+              MosharkatRef.child(String.valueOf(month))
+                      .addValueEventListener(
+                              new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                      userHistoryItems.clear();
+                                      HashMap<String, Integer> nameCounting = new HashMap<>();
+                                      HashMap<String, String> nameHistory = new HashMap<>();
+                                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                          String[] splittedDate;
+                                          if (mosharka != null) {
+                                              if (!allNsheet.contains(mosharka.getVolname()))
+                                                  continue;
+                                              splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                              if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                                  // If char is present in charCountMap,
+                                                  // incrementing it's count by 1
+                                                  nameCounting.put(
+                                                          mosharka.getVolname().trim(),
+                                                          nameCounting.get(mosharka.getVolname().trim()) + 1);
+                                                  nameHistory.put(
+                                                          mosharka.getVolname().trim(),
+                                                          nameHistory.get(mosharka.getVolname().trim())
+                                                                  + ","
+                                                                  + splittedDate[0]);
+                                              } else {
+                                                  // If char is not present in charCountMap,
+                                                  // putting this char to charCountMap with 1 as it's value
+                                                  nameCounting.put(mosharka.getVolname().trim(), 1);
+                                                  nameHistory.put(mosharka.getVolname().trim(), splittedDate[0]);
+                                              }
+                                          }
+                                      }
+                                      for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+                                          allNsheet.remove(entry.getKey());
+                                          userHistoryItems.add(
+                                                  new NasheetHistoryItem(
+                                                          entry.getKey(),
+                                                          nameHistory.get(entry.getKey()),
+                                                          entry.getValue(),
+                                                          nasheetMonths.get(entry.getKey())));
+                                      }
+                                      for (int i = 0; i < allNsheet.size(); i++) {
+                                          userHistoryItems.add(
+                                                  new NasheetHistoryItem(
+                                                          allNsheet.get(i), "", 0, nasheetMonths.get(allNsheet.get(i))));
+                                      }
+                                      Collections.sort(userHistoryItems);
+                                      adapter.notifyDataSetChanged();
                                   }
-                                }
-                                for (Map.Entry entry : nameCounting.entrySet()) {
-                                  allNsheet.remove(entry.getKey().toString());
-                                  userHistoryItems.add(
-                                          new NasheetHistoryItem(
-                                                  entry.getKey().toString(),
-                                                  nameHistory.get(entry.getKey().toString()),
-                                                  Integer.parseInt(entry.getValue().toString()),
-                                                  nasheetMonths.get(entry.getKey().toString())));
-                                }
-                                for (int i = 0; i < allNsheet.size(); i++) {
-                                  userHistoryItems.add(
-                                          new NasheetHistoryItem(
-                                                  allNsheet.get(i), "", 0, nasheetMonths.get(allNsheet.get(i))));
-                                }
-                                Collections.sort(userHistoryItems);
-                                adapter.notifyDataSetChanged();
-                              }
 
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                              }
-                            });
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                      // Failed to read value
+                                      Log.w(TAG, "Failed to read value.", error.toException());
+                                  }
+                              });
   }
 
   private void showDialog() {
@@ -295,26 +296,26 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
     //                    + " "
     //                    + myRules.last_important_update
     //                    + getString(R.string.youAreNotUpdatedMessage1));
-    alertDialogBuilder.setCancelable(true);
-    alertDialogBuilder.setPositiveButton(
-            R.string.nasheetColumn,
-            (dialog, id) -> {
-              writeExcel();
-              dialog.cancel();
-            });
-    alertDialogBuilder.setNeutralButton(
-            R.string.nasheetStats,
-            (dialog, id) -> {
-              writeExcel2();
-              dialog.cancel();
-            });
-    alertDialogBuilder.show();
+      alertDialogBuilder.setCancelable(true);
+      alertDialogBuilder.setPositiveButton(
+              R.string.nasheetColumn,
+              (dialog, id) -> {
+                  writeExcel();
+                  dialog.cancel();
+              });
+      alertDialogBuilder.setNeutralButton(
+              R.string.nasheetStats,
+              (dialog, id) -> {
+                  writeExcel2();
+                  dialog.cancel();
+              });
+      alertDialogBuilder.show();
   }
 
   private void writeExcel2() {
-    String root =
-            Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
-    File dir = new File(root);
+      String root =
+              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
+      File dir = new File(root);
     dir.mkdirs();
     String Fnamexls = ("/مشاركات_نشيط_حتي_الان_" + userBranch + ".xls");
     WorkbookSettings wbSettings = new WorkbookSettings();
@@ -330,9 +331,9 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         sheet.addCell(label1);
         sheet.addCell(label0);
         for (int i = 0; i < userHistoryItems.size(); i++) {
-          Label label_name = new Label(0, i + 1, userHistoryItems.get(i).getUsername());
-          Label label_nasheet =
-                  new Label(1, i + 1, String.valueOf(userHistoryItems.get(i).getCount()));
+            Label label_name = new Label(0, i + 1, userHistoryItems.get(i).getUsername());
+            Label label_nasheet =
+                    new Label(1, i + 1, String.valueOf(userHistoryItems.get(i).getCount()));
           sheet.addCell(label_name);
           sheet.addCell(label_nasheet);
         }
@@ -344,9 +345,9 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         e.printStackTrace();
       }
 
-      workbook.write();
-      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
-              .show();
+        workbook.write();
+        Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_LONG)
+                .show();
       //      sendEmail(root, Fnamexls);
       try {
         workbook.close();

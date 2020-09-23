@@ -239,7 +239,9 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
     }
 
     public void deleteMeeting(View view) {
-        MeetingsRef.child(key).setValue(null);
+        String date = eText.getText().toString();
+        String[] dateParts = date.split("/", 2);
+        MeetingsRef.child(String.valueOf(dateParts[1])).child(key).setValue(null);
         Toast.makeText(this, "تم الغاء الاجتماع", Toast.LENGTH_SHORT).show();
         finish();
     }
