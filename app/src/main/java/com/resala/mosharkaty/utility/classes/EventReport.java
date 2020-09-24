@@ -33,7 +33,7 @@ public class EventReport implements Comparable {
 
     @Override
     public int compareTo(@NonNull Object o) {
-        String[] comparedString = ((Meeting) o).getDate().split("/", 2);
+        String[] comparedString = ((EventReport) o).getDate().split("/", 2);
         int compared = Integer.parseInt(comparedString[0]); // day
         /* For Ascending order*/
         //        return this.count-compared;

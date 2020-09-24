@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
@@ -72,6 +74,8 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
       setContentView(R.layout.activity_admin_weekly_report);
       database = FirebaseDatabase.getInstance();
 
+      TableLayout eventsTable = findViewById(R.id.eventsTable);
+      eventsTable.setVisibility(myRules.show_dummy_report ? View.VISIBLE : View.GONE);
       month_et = findViewById(R.id.current_month);
       day_from_et = findViewById(R.id.day_from);
       day_to_et = findViewById(R.id.day_to);
@@ -111,28 +115,28 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
           finish();
       } else {
           refresh_btn.setEnabled(true);
-      refresh_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
-      nasheetRef = database.getReference("nasheet").child(userBranch);
-      nasheetRef.addListenerForSingleValueEvent(
-              new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                      allNsheet.clear();
-                      nasheetCounter = 0;
-                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          allNsheet.add(snapshot.getKey());
-                          nasheetCounter++;
+          refresh_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
+          nasheetRef = database.getReference("nasheet").child(userBranch);
+          nasheetRef.addListenerForSingleValueEvent(
+                  new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          allNsheet.clear();
+                          nasheetCounter = 0;
+                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                              allNsheet.add(snapshot.getKey());
+                              nasheetCounter++;
+                          }
+                          TextView nasheetCount = findViewById(R.id.nasheetCount);
+                          nasheetCount.setText(String.valueOf(nasheetCounter));
                       }
-                      TextView nasheetCount = findViewById(R.id.nasheetCount);
-                      nasheetCount.setText(String.valueOf(nasheetCounter));
-                  }
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-                      // Failed to read value
-                      Log.w(TAG, "Failed to read value.", error.toException());
-                  }
-              });
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError error) {
+                          // Failed to read value
+                          Log.w(TAG, "Failed to read value.", error.toException());
+                      }
+                  });
           String branchSheetLink =
                   userBranch.equals(branches[9])
                           ? branchesSheets.get(branches[0])
@@ -174,8 +178,8 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
     start_day = Integer.parseInt(day_from_et.getSelectedItem().toString());
     end_day = Integer.parseInt(day_to_et.getSelectedItem().toString());
     updateMeetings();
-    updateEvents();
     updateMosharkat();
+      if (myRules.show_dummy_report) updateEvents();
   }
 
   private void updateMosharkat() {
@@ -220,14 +224,14 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
   }
 
   private void divideMosharkatByDegree(HashMap<String, Integer> nameCounting) {
-    mas2oleenMosharkat = 0;
-    msharee3Mosharkat = 0;
-    nasheetMosharkat = 0;
-    normalMosharkat = 0;
-    mas2oleenArrived = 0;
-    msharee3Arrived = 0;
-    nasheetArrived = 0;
-    normalArrived = 0;
+      mas2oleenMosharkat = 0;
+      msharee3Mosharkat = 0;
+      nasheetMosharkat = 0;
+      normalMosharkat = 0;
+      mas2oleenArrived = 0;
+      msharee3Arrived = 0;
+      nasheetArrived = 0;
+      normalArrived = 0;
       for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
           String volName = entry.getKey().toString();
 
@@ -239,14 +243,14 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                   msharee3Mosharkat += entry.getValue();
                   msharee3Arrived++;
               }
-      } else if (allNsheet.contains(volName)) {
+          } else if (allNsheet.contains(volName)) {
               nasheetMosharkat += entry.getValue();
               nasheetArrived++;
-      } else {
+          } else {
               normalMosharkat += entry.getValue();
               normalArrived++;
+          }
       }
-    }
     // write in table
     TextView mas2olAttended = findViewById(R.id.mas2olAttended);
     TextView mshro3Attended = findViewById(R.id.mshro3Attended);

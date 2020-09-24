@@ -13,7 +13,8 @@ public class Rules {
   public String supervisor_email;
   public String daily_email_body;
   public boolean takyeem_available;
-  public String manager_password;
+    public boolean show_dummy_report;
+    public String manager_password;
   public String from_home;
   public String from_far3;
   public int top_days_count;

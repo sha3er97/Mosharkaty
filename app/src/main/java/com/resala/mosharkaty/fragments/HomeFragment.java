@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.Top5Adapter;
+import com.resala.mosharkaty.utility.classes.EventReport;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.Top5Item;
 import com.resala.mosharkaty.utility.classes.Volunteer;
@@ -41,6 +42,7 @@ import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AddEventReportFragment.reportsTypes;
 import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
 import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
@@ -68,6 +70,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   ValueEventListener appMosharkatlistener;
   ValueEventListener meetingslistener;
 
+  DatabaseReference ReportsRef;
+  ValueEventListener Reportslistener;
+
   DatabaseReference liveSheet;
   HashMap<String, String> teamDegrees = new HashMap<>();
   private ProgressDialog progress;
@@ -91,7 +96,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   TextView average_fari2;
   TextView average_mas2oleen;
   TextView average_msharee3;
-  TextView totslMosharkatCount;
+  TextView totalMosharkatCount;
+  TextView totslReportsCount;
+
   ProgressBar attendanceBar;
   ArrayList<Top5Item> top5Items = new ArrayList<>();
   Top5Adapter adapter;
@@ -100,6 +107,10 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   ArrayList<Top5Item> top5Items2 = new ArrayList<>();
   Top5Adapter adapter2;
   HashMap<String, Integer> mosharkatDaysCounter = new HashMap<>();
+
+  ArrayList<Top5Item> top5Items3 = new ArrayList<>();
+  Top5Adapter adapter3;
+  HashMap<String, Integer> eventsTypeCounter = new HashMap<>();
 
   /**
    * Called when the fragment is visible to the user and actively running.
@@ -113,7 +124,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   @Nullable
   @Override
   public View onCreateView(
-      @NonNull LayoutInflater inflater,
+          @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -132,6 +143,12 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
     adapter2 = new Top5Adapter(top5Items2, getContext());
     recyclerView2.setAdapter(adapter2);
+
+    RecyclerView recyclerView3 = view.findViewById(R.id.eventsReportsRecyclerView);
+    recyclerView3.setHasFixedSize(true);
+    recyclerView3.setLayoutManager(new LinearLayoutManager(getContext()));
+    adapter3 = new Top5Adapter(top5Items3, getContext());
+    recyclerView3.setAdapter(adapter3);
 
     if (!isAdmin) {
       progress = new ProgressDialog(getContext());
@@ -202,9 +219,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
               });
     } else {
       String branchSheetLink =
-          userBranch.equals(branches[9])
-                  ? branchesSheets.get(branches[0])
-                  : branchesSheets.get(userBranch);
+              userBranch.equals(branches[9])
+                      ? branchesSheets.get(branches[0])
+                      : branchesSheets.get(userBranch);
       assert branchSheetLink != null;
       liveSheet = database.getReference(branchSheetLink);
       branchTV.setText(userBranch);
@@ -249,7 +266,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     percent = view.findViewById(R.id.percent);
     totalTeam = view.findViewById(R.id.totalTeam);
     arrivedTeam = view.findViewById(R.id.arrivedTeam);
-    totslMosharkatCount = view.findViewById(R.id.totslMosharkatCount);
+    totalMosharkatCount = view.findViewById(R.id.totslMosharkatCount);
+    totslReportsCount = view.findViewById(R.id.totslReportsCount);
 
     attendanceBar = view.findViewById(R.id.determinateBar);
     mosharkatTab = liveSheet.child("month_mosharkat");
@@ -279,14 +297,14 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
               }
-            });
+        });
 
     final Calendar cldr = Calendar.getInstance(Locale.US);
     month = cldr.get(Calendar.MONTH) + 1;
     week = cldr.get(Calendar.WEEK_OF_MONTH);
     day = cldr.get(Calendar.DAY_OF_MONTH);
     updateMeetings();
-
+    updateEventsReports();
     appMosharkatRef = database.getReference("mosharkat").child(userBranch);
     appMosharkatlistener =
             appMosharkatRef
@@ -411,8 +429,59 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                             });
   }
 
+  private void updateEventsReports() {
+    for (String type : reportsTypes) {
+      // initialize map
+      eventsTypeCounter.put(type, 0);
+    }
+    ReportsRef = database.getReference("reports").child(userBranch);
+    Reportslistener =
+            ReportsRef.child(String.valueOf(month))
+                    .addValueEventListener(
+                            new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                top5Items3.clear();
+                                int reportsCount = (int) dataSnapshot.getChildrenCount();
+                                totslReportsCount.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  EventReport event = snapshot.getValue(EventReport.class);
+                                  if (event != null) {
+                                    try {
+                                      eventsTypeCounter.put(event.type, eventsTypeCounter.get(event.type) + 1);
+                                    } catch (Exception e) {
+                                      e.printStackTrace();
+                                    }
+                                  }
+                                }
+                                ArrayList<Top5Item> top5ItemsArray = new ArrayList<>();
+                                for (Map.Entry<String, Integer> entry : eventsTypeCounter.entrySet()) {
+                                  top5ItemsArray.add(
+                                          new Top5Item(
+                                                  entry.getKey(),
+                                                  entry.getValue(),
+                                                  Math.round(((float) entry.getValue() / reportsCount) * 100),
+                                                  false));
+                                }
+                                Collections.sort(top5ItemsArray);
+                                for (int i = 0; i < reportsTypes.length; i++) {
+                                  if (top5ItemsArray.get(i).total > 0)
+                                    top5Items3.add(top5ItemsArray.get(i));
+                                }
+                                adapter3.notifyDataSetChanged();
+                              }
+
+                              @Override
+                              public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                              }
+                            });
+  }
+
   private void updateTopTypes() {
-    totslMosharkatCount.setText(String.valueOf(allMosharkat));
+    totalMosharkatCount.setText(String.valueOf(allMosharkat));
     ArrayList<Top5Item> top5ItemsArray = new ArrayList<>();
     for (Map.Entry<String, Integer> entry : mosharkatTypesCounter.entrySet()) {
       top5ItemsArray.add(new Top5Item(entry.getKey(), entry.getValue(), 0, false));
@@ -455,9 +524,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
             String.valueOf(
                     Math.round(
                             (float) (mas2oleenMosharkat + msharee3Mosharkat)
-                        * 10
-                        / (msharee3Counter + mas2oleenCounter))
-                / 10.0));
+                                    * 10
+                                    / (msharee3Counter + mas2oleenCounter))
+                            / 10.0));
   }
 
   private void updatePoints() {
@@ -537,6 +606,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     }
     if (meetingsRef != null && meetingslistener != null) {
       meetingsRef.removeEventListener(meetingslistener);
+    }
+    if (ReportsRef != null && Reportslistener != null) {
+      ReportsRef.removeEventListener(Reportslistener);
     }
   }
 }
