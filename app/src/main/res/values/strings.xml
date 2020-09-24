@@ -5,7 +5,7 @@
     <string name="tab_text_2">ايفنتات</string>
     <string name="tab_text_3">مشاركة جديدة</string>
     <string name="tab_text_4">تقييمي</string>
-    <string name="admin_tab_text_1">تقارير</string>
+    <string name="admin_tab_text_1">اضافات</string>
     <string name="admin_tab_text_2">اضافة ايفنت</string>
     <string name="admin_tab_text_3">مشاركات متسجلة</string>
     <string name="admin_tab_text_4">تسجيل مشاركات</string>
@@ -188,4 +188,6 @@
     <string name="courses_btn_text">استكشف المزيد من\n كورسات الفرز</string>
     <string name="nasheetColumn">عمود النشيط</string>
     <string name="nasheetStats">مشاركات كل النشيط</string>
+    <string name="events_reports_tab_text_1">اضافة حدث</string>
+    <string name="events_reports_tab_text_2">عرض الاحداث</string>
 </resources>

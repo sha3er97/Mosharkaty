@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
       TextView textTab0 = tab0.getCustomView().findViewById(R.id.text1);
       textTab0.setText(getString(R.string.admin_tab_text_1));
       ImageView imageViewTab0 = tab0.getCustomView().findViewById(R.id.icon);
-      imageViewTab0.setImageResource(R.drawable.trend);
+      imageViewTab0.setImageResource(R.drawable.settings);
       //      tab0.setIcon(R.drawable.account);
       assert tab1 != null;
       tab1.setCustomView(R.layout.tab_item);

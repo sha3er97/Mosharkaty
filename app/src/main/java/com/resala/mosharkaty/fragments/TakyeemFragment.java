@@ -136,17 +136,14 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
                     });
     // button listener
     contReading.setOnClickListener(
-            new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Intent intent = new Intent(getContext(), ContinueTakyeemActivity.class);
-            intent.putExtra("lastMonthnum", String.valueOf(last_month));
-            intent.putExtra("beforeLastMonthnum", String.valueOf(the_month_before));
-            intent.putExtra("thisMonthnum", String.valueOf(this_month));
-            intent.putExtra("total", String.valueOf(big_total));
-            intent.putExtra("Volname", Volname);
-            startActivity(intent);
-          }
+            v -> {
+                Intent intent = new Intent(getContext(), ContinueTakyeemActivity.class);
+                intent.putExtra("lastMonthnum", String.valueOf(last_month));
+                intent.putExtra("beforeLastMonthnum", String.valueOf(the_month_before));
+                intent.putExtra("thisMonthnum", String.valueOf(this_month));
+                intent.putExtra("total", String.valueOf(big_total));
+                intent.putExtra("Volname", Volname);
+                startActivity(intent);
             });
     return view;
   }

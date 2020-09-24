@@ -16,12 +16,14 @@ import androidx.annotation.Nullable;
 
 import com.resala.mosharkaty.AdminCoursesActivity;
 import com.resala.mosharkaty.AdminEditEventActivity;
+import com.resala.mosharkaty.AdminEventsReportActivity;
 import com.resala.mosharkaty.AdminMeetingsActivity;
 import com.resala.mosharkaty.AdminShowClosingsActivity;
 import com.resala.mosharkaty.AdminShowConfirmationsActivity;
 import com.resala.mosharkaty.AdminShowHomeMosharkatActivity;
 import com.resala.mosharkaty.AdminShowSignatureActivity;
 import com.resala.mosharkaty.AdminShowStatisticsActivity;
+import com.resala.mosharkaty.AdminShowTakyeemActivity;
 import com.resala.mosharkaty.AdminShowUsersActivity;
 import com.resala.mosharkaty.AdminShowZeroesActivity;
 import com.resala.mosharkaty.AdminWeeklyReportActivity;
@@ -63,60 +65,61 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
           @NonNull LayoutInflater inflater,
           @Nullable ViewGroup container,
           @Nullable Bundle savedInstanceState) {
-      view = inflater.inflate(R.layout.fragment_admin_show_reports, container, false);
-      spin = view.findViewById(R.id.branchSpinner3);
-      Button change_branch = view.findViewById(R.id.change_branch);
-      Button showSignatures_btn = view.findViewById(R.id.showSignatures_btn);
-      Button showClosings_btn = view.findViewById(R.id.showClosings_btn);
-      Button showMosharkat_btn = view.findViewById(R.id.showMosharkat_btn);
-      Button showUsers_btn = view.findViewById(R.id.showUsers_btn);
-      Button show_confirmations_btn = view.findViewById(R.id.show_confirmations_btn);
-      Button showHome_btn = view.findViewById(R.id.showHome_btn);
-      Button showZeroes_btn = view.findViewById(R.id.showZeroes_btn);
-      Button Meetings_btn = view.findViewById(R.id.Meetings_btn);
-      Button editEvents_btn = view.findViewById(R.id.editEvents_btn);
-      Button nasheet_btn = view.findViewById(R.id.nasheet_btn);
-      Button weeklyReport_btn = view.findViewById(R.id.weeklyReport_btn);
-      Button add_course_btn = view.findViewById(R.id.add_course_btn);
-      Button show_takyeem_btn = view.findViewById(R.id.show_takyeem_btn);
+    view = inflater.inflate(R.layout.fragment_admin_show_reports, container, false);
+    spin = view.findViewById(R.id.branchSpinner3);
+    Button change_branch = view.findViewById(R.id.change_branch);
+    Button showSignatures_btn = view.findViewById(R.id.showSignatures_btn);
+    Button showClosings_btn = view.findViewById(R.id.showClosings_btn);
+    Button showMosharkat_btn = view.findViewById(R.id.showMosharkat_btn);
+    Button showUsers_btn = view.findViewById(R.id.showUsers_btn);
+    Button show_confirmations_btn = view.findViewById(R.id.show_confirmations_btn);
+    Button showHome_btn = view.findViewById(R.id.showHome_btn);
+    Button showZeroes_btn = view.findViewById(R.id.showZeroes_btn);
+    Button Meetings_btn = view.findViewById(R.id.Meetings_btn);
+    Button editEvents_btn = view.findViewById(R.id.editEvents_btn);
+    Button nasheet_btn = view.findViewById(R.id.nasheet_btn);
+    Button weeklyReport_btn = view.findViewById(R.id.weeklyReport_btn);
+    Button add_course_btn = view.findViewById(R.id.add_course_btn);
+    Button show_takyeem_btn = view.findViewById(R.id.show_takyeem_btn);
+    Button event_reports_btn = view.findViewById(R.id.event_reports_btn);
 
-      if (isMrkzy) {
-          showSignatures_btn.setEnabled(false);
-          showClosings_btn.setEnabled(false);
-          showMosharkat_btn.setEnabled(false);
-          showUsers_btn.setEnabled(false);
-          show_confirmations_btn.setEnabled(false);
-          showHome_btn.setEnabled(false);
-          showZeroes_btn.setEnabled(false);
-          nasheet_btn.setEnabled(false);
-          show_takyeem_btn.setEnabled(false);
+    if (isMrkzy) {
+      showSignatures_btn.setEnabled(false);
+      showClosings_btn.setEnabled(false);
+      showMosharkat_btn.setEnabled(false);
+      showUsers_btn.setEnabled(false);
+      show_confirmations_btn.setEnabled(false);
+      showHome_btn.setEnabled(false);
+      showZeroes_btn.setEnabled(false);
+      nasheet_btn.setEnabled(false);
+      show_takyeem_btn.setEnabled(false);
 
-          showSignatures_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          showClosings_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          showMosharkat_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          showUsers_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          show_confirmations_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          showHome_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          showZeroes_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          nasheet_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          show_takyeem_btn.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-      } else { // لو مركزي
-          change_branch.setEnabled(false);
-          change_branch.setText("لا يمكن تغيير الفرع");
-          change_branch.setBackgroundColor(
-                  getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-          change_branch.setTextColor(getResources().getColor(R.color.new_text_black));
-          change_branch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-      }
+      showSignatures_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      showClosings_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      showMosharkat_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      showUsers_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      show_confirmations_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      showHome_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      showZeroes_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      nasheet_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      show_takyeem_btn.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+    } else { // لو مركزي
+      change_branch.setEnabled(false);
+      change_branch.setText("لا يمكن تغيير الفرع");
+      change_branch.setBackgroundColor(
+              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+      change_branch.setTextColor(getResources().getColor(R.color.new_text_black));
+      change_branch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+    }
 
     ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, branches);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -124,36 +127,40 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
     spin.setAdapter(aa);
     spin.setSelection(Math.max(branchOrder, 0)); // just in case
 
-      change_branch.setOnClickListener(
-              view -> {
-                  userBranch = spin.getSelectedItem().toString();
-                  Toast.makeText(getContext(), "تم تحديث الفرع لفرع " + userBranch, Toast.LENGTH_SHORT)
-                          .show();
-              });
-      showClosings_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowClosingsActivity.class)));
-      showMosharkat_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowStatisticsActivity.class)));
-      showSignatures_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowSignatureActivity.class)));
-      showUsers_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowUsersActivity.class)));
-      show_confirmations_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowConfirmationsActivity.class)));
-      showHome_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowHomeMosharkatActivity.class)));
-      showZeroes_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminShowZeroesActivity.class)));
-      editEvents_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminEditEventActivity.class)));
-      Meetings_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminMeetingsActivity.class)));
-      nasheet_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), NasheetActivity.class)));
-      weeklyReport_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminWeeklyReportActivity.class)));
-      add_course_btn.setOnClickListener(
-              view -> startActivity(new Intent(getActivity(), AdminCoursesActivity.class)));
-      return view;
+    change_branch.setOnClickListener(
+            view -> {
+              userBranch = spin.getSelectedItem().toString();
+              Toast.makeText(getContext(), "تم تحديث الفرع لفرع " + userBranch, Toast.LENGTH_SHORT)
+                      .show();
+            });
+    showClosings_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowClosingsActivity.class)));
+    showMosharkat_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowStatisticsActivity.class)));
+    showSignatures_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowSignatureActivity.class)));
+    showUsers_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowUsersActivity.class)));
+    show_confirmations_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowConfirmationsActivity.class)));
+    showHome_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowHomeMosharkatActivity.class)));
+    showZeroes_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowZeroesActivity.class)));
+    editEvents_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminEditEventActivity.class)));
+    Meetings_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminMeetingsActivity.class)));
+    nasheet_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), NasheetActivity.class)));
+    weeklyReport_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminWeeklyReportActivity.class)));
+    add_course_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminCoursesActivity.class)));
+    show_takyeem_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminShowTakyeemActivity.class)));
+    event_reports_btn.setOnClickListener(
+            view -> startActivity(new Intent(getActivity(), AdminEventsReportActivity.class)));
+    return view;
   }
 }
