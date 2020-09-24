@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
@@ -112,7 +114,14 @@ public class AdminShowTakyeemActivity extends AppCompatActivity {
         final TextView thisCountTV = findViewById(R.id.thisCountTV);
         final TextView LastCountTV = findViewById(R.id.LastCountTV);
         final TextView beforeLastCountTV = findViewById(R.id.beforeLastCountTV);
-
+        if (!isManager) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "illegal action : متقدرش تشوف التقييمات الا لما تدحل كلمة السر الاضافية صح",
+                    Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         DatabaseReference liveSheet =
                 database.getReference(
                         "1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk"); // TODO :: شيت تقييمات لكل فرع
