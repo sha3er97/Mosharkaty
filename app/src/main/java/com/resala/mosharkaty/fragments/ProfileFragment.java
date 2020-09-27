@@ -31,6 +31,7 @@ import com.resala.mosharkaty.ShowAllCourses;
 import com.resala.mosharkaty.ui.adapters.EnrolledCoursesAdapter;
 import com.resala.mosharkaty.utility.classes.Course;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
+import com.resala.mosharkaty.utility.classes.User;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
@@ -50,31 +51,27 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
   public static String userCode;
   public static String userOfficialName;
   View view;
-  ImageButton ApplyChanges;
-  Button Courses_btn;
-  EditText name;
-  EditText code;
-  TextView branch;
-  TextView currentMosharkatapp;
-  TextView currentpercent;
-  ProgressBar attendanceBar;
+    ImageButton ApplyChanges;
+    Button Courses_btn;
+    EditText name;
+    EditText code;
+    TextView branch;
+    TextView currentMosharkatapp;
+    TextView currentpercent;
+    ProgressBar attendanceBar;
 
-  FirebaseDatabase database;
-  ValueEventListener namelistener;
-  ValueEventListener codelistener;
-  ValueEventListener branchlistener;
-  ValueEventListener mosharkatlistener;
+    FirebaseDatabase database;
+    DatabaseReference usersRef;
+    ValueEventListener userlistener;
 
-  DatabaseReference nameRef;
-  DatabaseReference codeRef;
-  DatabaseReference branchRef;
-  DatabaseReference mosharkatTab;
+    DatabaseReference mosharkatTab;
+    ValueEventListener mosharkatTablistener;
 
-  int month, mycounter;
-  ValueEventListener Mosharkatlistener;
-  DatabaseReference MosharkatRef;
-  ValueEventListener CoursesListener;
-  DatabaseReference CoursesRef;
+    int month, mycounter;
+    ValueEventListener Mosharkatlistener;
+    DatabaseReference MosharkatRef;
+    ValueEventListener CoursesListener;
+    DatabaseReference CoursesRef;
 
   EnrolledCoursesAdapter adapter;
   ArrayList<Course> courseItems = new ArrayList<>();
@@ -113,178 +110,148 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
   @Nullable
   @Override
   public View onCreateView(
-      @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_profile, container, false);
-    database = FirebaseDatabase.getInstance();
+          @NonNull LayoutInflater inflater,
+          @Nullable ViewGroup container,
+          @Nullable Bundle savedInstanceState) {
+      view = inflater.inflate(R.layout.fragment_profile, container, false);
+      database = FirebaseDatabase.getInstance();
 
-    // define views
-    name = view.findViewById(R.id.volDetail);
-    code = view.findViewById(R.id.codeDetail);
-    branch = view.findViewById(R.id.far3Detail);
-    ApplyChanges = view.findViewById(R.id.applyChanges_btn2);
-    Courses_btn = view.findViewById(R.id.Courses_btn);
-    currentMosharkatapp = view.findViewById(R.id.current_from_app);
-    currentpercent = view.findViewById(R.id.current_percent);
-    branch.setText(userBranch);
+      // define views
+      name = view.findViewById(R.id.volDetail);
+      code = view.findViewById(R.id.codeDetail);
+      branch = view.findViewById(R.id.far3Detail);
+      ApplyChanges = view.findViewById(R.id.applyChanges_btn2);
+      Courses_btn = view.findViewById(R.id.Courses_btn);
+      currentMosharkatapp = view.findViewById(R.id.current_from_app);
+      currentpercent = view.findViewById(R.id.current_percent);
+      branch.setText(userBranch);
 
-    // buttons listeners
-    Courses_btn.setOnClickListener(
-        v -> {
-          startActivity(new Intent(getActivity(), ShowAllCourses.class));
-        });
-    ApplyChanges.setOnClickListener(
-        v -> {
-          DatabaseReference usersRef = database.getReference("users");
-          DatabaseReference currentUser = usersRef.child(userId);
-          DatabaseReference nameRef = currentUser.child("name");
-          DatabaseReference codeRef = currentUser.child("code");
-          DatabaseReference branchRef = currentUser.child("branch");
+      // buttons listeners
+      Courses_btn.setOnClickListener(
+              v -> {
+                  startActivity(new Intent(getActivity(), ShowAllCourses.class));
+              });
+      ApplyChanges.setOnClickListener(
+              v -> {
+                  DatabaseReference usersRef = database.getReference("users");
 
-          String nameText = name.getText().toString();
-          String codeText = code.getText().toString().trim();
-          String[] words = nameText.split(" ", 5);
-          if (TextUtils.isEmpty(nameText)) {
-            name.setError("Required.");
-            return;
-          }
-          if (TextUtils.isEmpty(codeText)) {
-            name.setError("Required.");
-            return;
-          }
-          if (words.length < 3) {
-            name.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
-            return;
-          }
-          if (code.getText().length() != 5) {
-            code.setError("incorrect code entered .. 5 digits required");
-            return;
-          }
-          if (userId.equals("-1")) {
-            Toast.makeText(getContext(), "خطا في حفظ التعديلات", Toast.LENGTH_SHORT).show();
-            return;
-          }
-
-          nameRef.setValue(nameText);
-          codeRef.setValue(codeText);
-          branchRef.setValue(branch.getText().toString());
-          Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
-        });
-
-    // data base access
-    DatabaseReference usersRef = database.getReference("users");
-    DatabaseReference currentUser = usersRef.child(userId);
-    nameRef = currentUser.child("name");
-    codeRef = currentUser.child("code");
-    branchRef = currentUser.child("branch");
-
-    namelistener =
-        nameRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userName = dataSnapshot.getValue(String.class);
-                name.setText(userName);
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
-
-    codelistener =
-        codeRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userCode = dataSnapshot.getValue(String.class);
-                code.setText(userCode);
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
-
-    branchlistener =
-        branchRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userBranch = dataSnapshot.getValue(String.class);
-                branch.setText(userBranch);
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
-    String branchSheetLink =
-        userBranch.equals(branches[9])
-            ? branchesSheets.get(branches[0])
-            : branchesSheets.get(userBranch);
-    assert branchSheetLink != null;
-    DatabaseReference liveSheet = database.getReference(branchSheetLink);
-    mosharkatTab = liveSheet.child("month_mosharkat");
-    mosharkatlistener =
-        mosharkatTab.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                codeFound = false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  Volunteer user = snapshot.getValue(Volunteer.class);
-                  if (user != null && user.code.equalsIgnoreCase(userCode)) {
-                    userOfficialName = user.Volname;
-                    updateMosharkaty();
-                    codeFound = true;
-                    break;
+                  String nameText = name.getText().toString();
+                  String codeText = code.getText().toString().trim();
+                  String[] words = nameText.split(" ", 5);
+                  if (TextUtils.isEmpty(nameText)) {
+                      name.setError("Required.");
+                      return;
                   }
-                }
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
-            });
-
-    RecyclerView recyclerView = view.findViewById(R.id.coursesRecyclerView);
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new EnrolledCoursesAdapter(courseItems, getContext());
-    recyclerView.setAdapter(adapter);
-
-    EnrollmentRef = database.getReference("enrollment");
-    EnrollmentListener =
-        EnrollmentRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                enrolledCourses.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  if (snapshot.hasChild(userId)) {
-                    boolean isEnrolled = snapshot.child(userId).getValue(Boolean.class);
-                    if (isEnrolled) enrolledCourses.add(snapshot.getKey());
+                  if (TextUtils.isEmpty(codeText)) {
+                      name.setError("Required.");
+                      return;
                   }
-                }
-                getEnrolledCourses();
-              }
+                  if (words.length < 3) {
+                      name.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
+                      return;
+                  }
+                  if (code.getText().length() != 5) {
+                      code.setError("incorrect code entered .. 5 digits required");
+                      return;
+                  }
+                  if (userId.equals("-1")) {
+                      Toast.makeText(getContext(), "خطا في حفظ التعديلات", Toast.LENGTH_SHORT).show();
+                      return;
+                  }
+                  DatabaseReference currentUser = usersRef.child(userId);
+                  currentUser.setValue(new User(userBranch, codeText, nameText));
+                  Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
+              });
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {}
-            });
+      // data base access
+      usersRef = database.getReference("users").child(userId);
 
-    return view;
+      RecyclerView recyclerView = view.findViewById(R.id.coursesRecyclerView);
+      recyclerView.setHasFixedSize(true);
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      adapter = new EnrolledCoursesAdapter(courseItems, getContext());
+      recyclerView.setAdapter(adapter);
+
+      userlistener =
+              usersRef.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              User user = dataSnapshot.getValue(User.class);
+                              assert user != null;
+                              userName = user.name;
+                              userCode = user.code;
+                              userBranch = user.branch;
+
+                              name.setText(userName);
+                              code.setText(userCode);
+                              branch.setText(userBranch);
+                              getUserName();
+                          }
+
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
+
+      EnrollmentRef = database.getReference("enrollment");
+      EnrollmentListener =
+              EnrollmentRef.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              enrolledCourses.clear();
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  if (snapshot.hasChild(userId)) {
+                                      boolean isEnrolled = snapshot.child(userId).getValue(Boolean.class);
+                                      if (isEnrolled) enrolledCourses.add(snapshot.getKey());
+                                  }
+                              }
+                              getEnrolledCourses();
+                          }
+
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                          }
+                      });
+
+      return view;
   }
+
+    private void getUserName() {
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        mosharkatTab = liveSheet.child("month_mosharkat");
+        mosharkatTablistener =
+                mosharkatTab.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                codeFound = false;
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Volunteer user = snapshot.getValue(Volunteer.class);
+                                    if (user != null && user.code.equalsIgnoreCase(userCode)) {
+                                        userOfficialName = user.Volname;
+                                        updateMosharkaty();
+                                        codeFound = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
 
   private void updateMosharkaty() {
     MosharkatRef = database.getReference("mosharkat").child(userBranch);
@@ -371,27 +338,21 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
 
   @Override
   public void onDestroy() {
-    super.onDestroy();
-    if (nameRef != null && namelistener != null) {
-      nameRef.removeEventListener(namelistener);
-    }
-    if (codeRef != null && codelistener != null) {
-      codeRef.removeEventListener(codelistener);
-    }
-    if (branchRef != null && branchlistener != null) {
-      branchRef.removeEventListener(branchlistener);
-    }
-    if (mosharkatTab != null && mosharkatlistener != null) {
-      mosharkatTab.removeEventListener(mosharkatlistener);
-    }
-    if (MosharkatRef != null && Mosharkatlistener != null) {
-      MosharkatRef.removeEventListener(Mosharkatlistener);
-    }
-    if (CoursesRef != null && CoursesListener != null) {
-      CoursesRef.removeEventListener(CoursesListener);
-    }
-    if (EnrollmentRef != null && EnrollmentListener != null) {
-      EnrollmentRef.removeEventListener(EnrollmentListener);
-    }
+      super.onDestroy();
+      if (usersRef != null && userlistener != null) {
+          usersRef.removeEventListener(userlistener);
+      }
+      if (mosharkatTab != null && mosharkatTablistener != null) {
+          mosharkatTab.removeEventListener(mosharkatTablistener);
+      }
+      if (MosharkatRef != null && Mosharkatlistener != null) {
+          MosharkatRef.removeEventListener(Mosharkatlistener);
+      }
+      if (CoursesRef != null && CoursesListener != null) {
+          CoursesRef.removeEventListener(CoursesListener);
+      }
+      if (EnrollmentRef != null && EnrollmentListener != null) {
+          EnrollmentRef.removeEventListener(EnrollmentListener);
+      }
   }
 }

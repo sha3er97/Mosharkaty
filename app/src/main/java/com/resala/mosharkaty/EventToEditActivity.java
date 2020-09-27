@@ -106,7 +106,7 @@ public class EventToEditActivity extends AppCompatActivity {
                                         if (sMinute == 0) {
                                             Mminute = "00";
                                         }
-                                        if (Mhour > 12) {
+                                        if (Mhour >= 12) {
                                             am_pm = "PM";
                                             Mhour = Mhour - 12;
                                         } else {

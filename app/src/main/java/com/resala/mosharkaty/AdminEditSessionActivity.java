@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.resala.mosharkaty.utility.classes.Session;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -110,11 +111,9 @@ public class AdminEditSessionActivity extends AppCompatActivity {
         if (!validateForm()) return;
         DatabaseReference currentSession = SessionsRef.child(session_num);
 
-        DatabaseReference linkRef = currentSession.child("link");
-        DatabaseReference descriptionRef = currentSession.child("description");
-
-        linkRef.setValue(link_et.getText().toString().trim());
-        descriptionRef.setValue(session_description.getText().toString());
+        currentSession.setValue(
+                new Session(
+                        link_et.getText().toString().trim(), session_description.getText().toString().trim()));
 
         Toast.makeText(getApplicationContext(), "Session Edited..", Toast.LENGTH_SHORT).show();
     }

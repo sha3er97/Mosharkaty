@@ -43,21 +43,21 @@ public class MessagesReadActivity extends AppCompatActivity {
     public static boolean isManager;
 
     @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_messages_read);
-    database = FirebaseDatabase.getInstance();
-    refresh_btn = findViewById(R.id.messages_refresh_btn);
-    messagesTV = findViewById(R.id.messagesCount);
-    RecyclerView recyclerView = findViewById(R.id.messagesRecyclerView);
-    pass_et = findViewById(R.id.messagesPass);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_messages_read);
+        database = FirebaseDatabase.getInstance();
+        refresh_btn = findViewById(R.id.messages_refresh_btn);
+        messagesTV = findViewById(R.id.messagesCount);
+        RecyclerView recyclerView = findViewById(R.id.messagesRecyclerView);
+        pass_et = findViewById(R.id.messagesPass);
     confirm_pass = findViewById(R.id.confirm_pass);
     if (isManager) {
         confirm_pass.setEnabled(false);
         confirm_pass.setBackgroundColor(
                 getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
         confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
-      confirm_pass.setText("Welcome");
+        confirm_pass.setText(R.string.welcome_text);
     }
     recyclerView.setHasFixedSize(true);
     LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -72,21 +72,21 @@ public class MessagesReadActivity extends AppCompatActivity {
       ConnectivityManager connectivityManager =
               (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-        if (connectivityManager.getActiveNetworkInfo() == null
-                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
-        }
-    }
-    if (!isManager) {
-        Toast.makeText(
-                getApplicationContext(),
-                "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
-                Toast.LENGTH_SHORT)
-                .show();
-      return;
-    }
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
+      if (!isManager) {
+          Toast.makeText(
+                  getApplicationContext(),
+                  "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
+                  Toast.LENGTH_SHORT)
+                  .show();
+          return;
+      }
     DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
 
     MessagesRef.addValueEventListener(
@@ -97,12 +97,12 @@ public class MessagesReadActivity extends AppCompatActivity {
                     int counter = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         MessageItem message = snapshot.getValue(MessageItem.class);
-                        if (message != null) message.setKey(snapshot.getKey());
+                        if (message != null) {
+                            message.setKey(snapshot.getKey());
 
-                        messageItems.add(message);
-                        Toast.makeText(getApplicationContext(), "messages updated", Toast.LENGTH_SHORT)
-                                .show();
-                        counter++;
+                            messageItems.add(message);
+                            counter++;
+                        }
                     }
                     adapter.notifyDataSetChanged();
                     messagesTV.setText(String.valueOf(counter));
@@ -138,7 +138,7 @@ public class MessagesReadActivity extends AppCompatActivity {
           confirm_pass.setBackgroundColor(
                   getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
           confirm_pass.setTextColor(getResources().getColor(R.color.new_text_black));
-          confirm_pass.setText("Welcome");
+          confirm_pass.setText(R.string.welcome_text);
       }
   }
 }

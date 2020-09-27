@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.resala.mosharkaty.R;
-import com.resala.mosharkaty.utility.classes.Signature;
+import com.resala.mosharkaty.utility.classes.Sig;
 
 import java.util.ArrayList;
 
 public class SignaturesAdapter extends RecyclerView.Adapter<SignaturesAdapter.ViewHolder> {
-    private ArrayList<Signature> signatureitems;
+    private ArrayList<Sig> signatureitems;
     private Context context;
 
-    public SignaturesAdapter(ArrayList<Signature> signatureitems, Context context) {
+    public SignaturesAdapter(ArrayList<Sig> signatureitems, Context context) {
         this.signatureitems = signatureitems;
         this.context = context;
     }
@@ -64,12 +64,12 @@ public class SignaturesAdapter extends RecyclerView.Adapter<SignaturesAdapter.Vi
      */
     @Override
     public void onBindViewHolder(@NonNull SignaturesAdapter.ViewHolder holder, int position) {
-        Signature item = signatureitems.get(position);
-        holder.name.setText(item.getName());
-        holder.time.setText(item.getTime());
+        Sig item = signatureitems.get(position);
+        holder.name.setText(item.volName);
+        holder.time.setText(item.signatureDate);
         //        if (item.getComment().isEmpty()) holder.comment.setVisibility(View.GONE);
         //        else holder.comment.setText(item.getComment());
-        holder.comment.setText(item.getComment());
+        holder.comment.setText(item.comment);
     }
 
     /**
@@ -83,7 +83,7 @@ public class SignaturesAdapter extends RecyclerView.Adapter<SignaturesAdapter.Vi
     }
 
     /**
-     * ***************************************************************************
+     * **************************************************************************
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;

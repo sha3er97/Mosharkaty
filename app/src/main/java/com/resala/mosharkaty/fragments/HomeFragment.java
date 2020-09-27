@@ -26,6 +26,7 @@ import com.resala.mosharkaty.ui.adapters.Top5Adapter;
 import com.resala.mosharkaty.utility.classes.EventReport;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.Top5Item;
+import com.resala.mosharkaty.utility.classes.User;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
@@ -54,14 +55,10 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   View view;
   TextView branchTV;
   FirebaseDatabase database;
-  ValueEventListener namelistener;
-  ValueEventListener codelistener;
-  ValueEventListener branchlistener;
+  ValueEventListener userlistener;
   ValueEventListener mosharkatlistener;
 
-  DatabaseReference nameRef;
-  DatabaseReference codeRef;
-  DatabaseReference branchRef;
+  DatabaseReference usersRef;
   DatabaseReference mosharkatTab;
 
   DatabaseReference appMosharkatRef;
@@ -125,8 +122,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   @Override
   public View onCreateView(
           @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+          @Nullable ViewGroup container,
+          @Nullable Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.fragment_home, container, false);
     database = FirebaseDatabase.getInstance();
 
@@ -156,58 +153,28 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
       progress.setMessage("لحظات معانا...");
       progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
       progress.show();
-      DatabaseReference usersRef = database.getReference("users");
-      DatabaseReference currentUser = usersRef.child(userId);
-      nameRef = currentUser.child("name");
-      codeRef = currentUser.child("code");
-      branchRef = currentUser.child("branch");
+      usersRef = database.getReference("users").child(userId);
 
-      namelistener =
-          nameRef.addValueEventListener(
-              new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  userName = dataSnapshot.getValue(String.class);
-                }
+      userlistener =
+              usersRef.addValueEventListener(
+                      new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          User user = dataSnapshot.getValue(User.class);
+                          assert user != null;
+                          userName = user.name;
+                          userCode = user.code;
+                          userBranch = user.branch;
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                  // Failed to read value
-                  Log.w(TAG, "Failed to read value.", error.toException());
-                }
-              });
-
-      codelistener =
-          codeRef.addValueEventListener(
-              new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  userCode = dataSnapshot.getValue(String.class);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                  // Failed to read value
-                  Log.w(TAG, "Failed to read value.", error.toException());
-                }
-              });
-
-      branchlistener =
-          branchRef.addValueEventListener(
-              new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  userBranch = dataSnapshot.getValue(String.class);
-                  branchTV.setText(userBranch);
-                  // To dismiss the dialog
-                  String branchSheetLink =
-                      userBranch.equals(branches[9])
-                          ? branchesSheets.get(branches[0])
-                          : branchesSheets.get(userBranch);
-                  assert branchSheetLink != null;
-                  liveSheet = database.getReference(branchSheetLink);
-                  getUserName();
-                  progress.dismiss();
+                          branchTV.setText(userBranch);
+                          String branchSheetLink =
+                                  userBranch.equals(branches[9])
+                                          ? branchesSheets.get(branches[0])
+                                          : branchesSheets.get(userBranch);
+                          assert branchSheetLink != null;
+                          liveSheet = database.getReference(branchSheetLink);
+                          getUserName();
+                          progress.dismiss();
                   refreshReports();
                 }
 
@@ -217,6 +184,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                   Log.w(TAG, "Failed to read value.", error.toException());
                 }
               });
+
     } else {
       String branchSheetLink =
               userBranch.equals(branches[9])
@@ -589,14 +557,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    if (nameRef != null && namelistener != null) {
-      nameRef.removeEventListener(namelistener);
-    }
-    if (codeRef != null && codelistener != null) {
-      codeRef.removeEventListener(codelistener);
-    }
-    if (branchRef != null && branchlistener != null) {
-      branchRef.removeEventListener(branchlistener);
+    if (usersRef != null && userlistener != null) {
+      usersRef.removeEventListener(userlistener);
     }
     if (mosharkatTab != null && mosharkatlistener != null) {
       mosharkatTab.removeEventListener(mosharkatlistener);

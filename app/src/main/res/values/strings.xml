@@ -190,4 +190,5 @@
     <string name="nasheetStats">مشاركات كل النشيط</string>
     <string name="events_reports_tab_text_1">اضافة حدث</string>
     <string name="events_reports_tab_text_2">عرض الاحداث</string>
+    <string name="welcome_text">Welcome</string>
 </resources>

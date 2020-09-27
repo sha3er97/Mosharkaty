@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.resala.mosharkaty.utility.classes.EventReport;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -34,7 +35,7 @@ public class EventReportDescriptionActivity extends AppCompatActivity {
     EditText reportDescription_et;
     TextView type_spin;
     DatabaseReference ReportsRef;
-
+    String typeText;
     String key;
 
     @Override
@@ -53,7 +54,7 @@ public class EventReportDescriptionActivity extends AppCompatActivity {
         ReportsRef = database.getReference("reports").child(userBranch);
 
         Intent intent = getIntent();
-        String typeText = intent.getStringExtra("type");
+        typeText = intent.getStringExtra("type");
         String moneyText = intent.getStringExtra("money");
         String countText = intent.getStringExtra("count");
         String headText = intent.getStringExtra("head");
@@ -97,19 +98,15 @@ public class EventReportDescriptionActivity extends AppCompatActivity {
         String date = eText.getText().toString();
         String[] dateParts = date.split("/", 2);
         DatabaseReference currentEvent = ReportsRef.child(String.valueOf(dateParts[1])).child(key);
-        DatabaseReference dateRef = currentEvent.child("date");
-        DatabaseReference headRef = currentEvent.child("head");
-        DatabaseReference descriptionRef = currentEvent.child("description");
-        DatabaseReference countRef = currentEvent.child("count");
-        DatabaseReference moneyRef = currentEvent.child("money");
-        DatabaseReference locRef = currentEvent.child("location");
-
-        headRef.setValue(reportHead_et.getText().toString().trim());
-        countRef.setValue(reportCount.getText().toString().trim());
-        descriptionRef.setValue(reportDescription_et.getText().toString());
-        dateRef.setValue(eText.getText().toString());
-        locRef.setValue(place_et.getText().toString().trim());
-        moneyRef.setValue(money_et.getText().toString().trim());
+        currentEvent.setValue(
+                new EventReport(
+                        reportCount.getText().toString().trim(),
+                        eText.getText().toString(),
+                        reportDescription_et.getText().toString(),
+                        reportHead_et.getText().toString().trim(),
+                        place_et.getText().toString().trim(),
+                        money_et.getText().toString().trim(),
+                        typeText));
 
         Toast.makeText(getApplicationContext(), "Report Edited..", Toast.LENGTH_SHORT).show();
         finish();

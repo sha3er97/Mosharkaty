@@ -13,6 +13,12 @@ public class MessageItem {
         this.date = "1/1/2020";
     }
 
+    public MessageItem(String author, String content, String date) {
+        this.author = author;
+        this.content = content;
+        this.date = date;
+    }
+
     public String getKey() {
         return key;
     }

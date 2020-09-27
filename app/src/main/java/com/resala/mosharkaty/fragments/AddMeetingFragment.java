@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.R;
+import com.resala.mosharkaty.utility.classes.Meeting;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -37,6 +38,7 @@ public class AddMeetingFragment extends Fragment {
             "اجتماع لجنة hr",
             "اجتماع لجنة متابعة",
             "اجتماع لجنة اتصالات",
+            "اجتماع لجنة مكافحة",
             "اجتماع لجنة نقل",
             "اجتماع لجان مجمع",
             "اجتماع ادارة الفرع",
@@ -49,6 +51,7 @@ public class AddMeetingFragment extends Fragment {
             "اجتماع مركزية دور ايواء",
             "اجتماع مركزية ولاد عم",
             "اجتماع مركزية نفسك في ايه",
+            "اجتماع مركزية مكافحة",
             "اجتماع مركزية hr",
             "اجتماع مركزية متابعة",
             "اجتماع مركزية اتصالات",
@@ -109,28 +112,19 @@ public class AddMeetingFragment extends Fragment {
                         if (!validateForm()) return;
                         String date = eText.getText().toString();
                         String[] dateParts = date.split("/", 2);
-                        DatabaseReference currentEvent =
-                                MeetingsRef.child(String.valueOf(dateParts[1]))
-                                        .child(String.valueOf(System.currentTimeMillis() / 1000));
-                        DatabaseReference dateRef = currentEvent.child("date");
-                        DatabaseReference typeRef = currentEvent.child("type");
-                        DatabaseReference headRef = currentEvent.child("head");
-                        DatabaseReference descriptionRef = currentEvent.child("description");
-                        DatabaseReference countRef = currentEvent.child("count");
-                        DatabaseReference reasonRef = currentEvent.child("reason");
-                        DatabaseReference locRef = currentEvent.child("location");
-                        DatabaseReference fromRef = currentEvent.child("from");
-                        DatabaseReference toRef = currentEvent.child("to");
-
-                        headRef.setValue(meetingHead_et.getText().toString().trim());
-                        countRef.setValue(meetingCount.getText().toString().trim());
-                        descriptionRef.setValue(meetingDescription_et.getText().toString());
-                        dateRef.setValue(eText.getText().toString());
-                        fromRef.setValue(eText2.getText().toString());
-                        toRef.setValue(eText3.getText().toString());
-                        typeRef.setValue(type_spin.getSelectedItem().toString());
-                        locRef.setValue(place_spin.getSelectedItem().toString());
-                        reasonRef.setValue(reason_spin.getSelectedItem().toString());
+                        DatabaseReference currentEvent = MeetingsRef.child(String.valueOf(dateParts[1])).push();
+                        // .child(String.valueOf(System.currentTimeMillis() / 1000));
+                        currentEvent.setValue(
+                                new Meeting(
+                                        meetingCount.getText().toString().trim(),
+                                        eText.getText().toString(),
+                                        meetingDescription_et.getText().toString(),
+                                        eText2.getText().toString(),
+                                        meetingHead_et.getText().toString().trim(),
+                                        place_spin.getSelectedItem().toString(),
+                                        reason_spin.getSelectedItem().toString(),
+                                        eText3.getText().toString(),
+                                        type_spin.getSelectedItem().toString()));
 
                         Toast.makeText(getContext(), "Meeting Added..", Toast.LENGTH_SHORT).show();
 
@@ -181,7 +175,7 @@ public class AddMeetingFragment extends Fragment {
                                         if (sMinute == 0) {
                                             Mminute = "00";
                                         }
-                                        if (Mhour > 12) {
+                                        if (Mhour >= 12) {
                                             am_pm = "PM";
                                             Mhour = Mhour - 12;
                                         } else {
@@ -213,7 +207,7 @@ public class AddMeetingFragment extends Fragment {
                                         if (sMinute == 0) {
                                             Mminute = "00";
                                         }
-                                        if (Mhour > 12) {
+                                        if (Mhour >= 12) {
                                             am_pm = "PM";
                                             Mhour = Mhour - 12;
                                         } else {
@@ -236,12 +230,14 @@ public class AddMeetingFragment extends Fragment {
         // Setting the ArrayAdapter data on the Spinner
         type_spin.setAdapter(aa);
 
-        ArrayAdapter<String> ab = new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsReason);
+        ArrayAdapter<String> ab =
+                new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsReason);
         ab.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         reason_spin.setAdapter(ab);
 
-        ArrayAdapter<String> ac = new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsPlace);
+        ArrayAdapter<String> ac =
+                new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsPlace);
         ac.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         place_spin.setAdapter(ac);

@@ -121,7 +121,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         coming_btn.setEnabled(true);
         maybe_btn.setEnabled(false);
         not_coming_btn.setEnabled(true);
-        coming_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
+        coming_btn.setBackgroundResource(R.drawable.btn_green);
         maybe_btn.setBackgroundResource(R.drawable.btn_gradient_disabled);
         not_coming_btn.setBackgroundResource(R.drawable.btn_gradient_red);
     }
@@ -130,7 +130,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         coming_btn.setEnabled(true);
         maybe_btn.setEnabled(true);
         not_coming_btn.setEnabled(false);
-        coming_btn.setBackgroundResource(R.drawable.btn_gradient_blue);
+        coming_btn.setBackgroundResource(R.drawable.btn_green);
         maybe_btn.setBackgroundResource(R.drawable.btn_gradient_yellow);
         not_coming_btn.setBackgroundResource(R.drawable.btn_gradient_disabled);
     }

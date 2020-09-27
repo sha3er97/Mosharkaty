@@ -15,6 +15,23 @@ public class EventReport implements Comparable {
     public EventReport() {
     }
 
+    public EventReport(
+            String count,
+            String date,
+            String description,
+            String head,
+            String location,
+            String money,
+            String type) {
+        this.count = count;
+        this.date = date;
+        this.description = description;
+        this.head = head;
+        this.location = location;
+        this.money = money;
+        this.type = type;
+    }
+
     public String getDate() {
         return date;
     }

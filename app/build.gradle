@@ -10,8 +10,8 @@ android {
         applicationId "com.resala.mosharkaty"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 15
-        versionName "2.1.5"
+        versionCode 16
+        versionName "2.1.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,6 +63,6 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.android.play:core:1.8.0'
     implementation 'com.opencsv:opencsv:4.6' // Here is opencsv library
-    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1' // for searchablespinner widget
+    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1' // for searchableSpinner widget
 
 }

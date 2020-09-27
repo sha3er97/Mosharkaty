@@ -1,6 +1,7 @@
 package com.resala.mosharkaty;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.resala.mosharkaty.utility.classes.MessageItem;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -35,20 +37,23 @@ public class MessagesWriteActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        DatabaseReference MessagesRef = database.getReference("messages").child(userBranch);
+        if (TextUtils.isEmpty(message_et.getText().toString().trim())) {
+            message_et.setError("Required.");
+            return;
+        } else {
+            message_et.setError(null);
+        }
+        DatabaseReference MessagesRef = database.getReference("messages").child(userBranch).push();
         String authour = anonymous.isChecked() ? "anonymous" : userName;
 
-        String key = System.currentTimeMillis() / (1000 * 60) + "&" + authour;
-        DatabaseReference currentMessage = MessagesRef.child(key);
-        DatabaseReference dateRef = currentMessage.child("date");
-        DatabaseReference contentRef = currentMessage.child("content");
-        DatabaseReference nameRef = currentMessage.child("author");
-
-        nameRef.setValue(authour);
+        //        String key = System.currentTimeMillis() / (1000 * 60) + "&" + authour;
         final Calendar cldr = Calendar.getInstance(Locale.US);
-        dateRef.setValue(cldr.getTime().toString());
-        contentRef.setValue(message_et.getText().toString());
+
+        MessagesRef.setValue(
+                new MessageItem(
+                        authour, message_et.getText().toString().trim(), cldr.getTime().toString()));
+
         Toast.makeText(this, "Message Sent..", Toast.LENGTH_SHORT).show();
-        finish();
+        //    finish();
     }
 }

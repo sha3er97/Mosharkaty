@@ -6,25 +6,38 @@ public class Meeting implements Comparable {
   public String count;
   public String date;
   public String description;
-  public String from;
-  public String head;
-  public String location;
-  public String reason;
-  public String to;
-  public String type;
-  public String key;
+    public String from;
+    public String head;
+    public String location;
+    public String reason;
+    public String to;
+    public String type;
+    public String key;
 
-  public Meeting() {}
+    public Meeting() {
+    }
 
-  public String getDate() {
-    return date;
-  }
+    public Meeting(String count, String date, String description, String from, String head, String location, String reason, String to, String type) {
+        this.count = count;
+        this.date = date;
+        this.description = description;
+        this.from = from;
+        this.head = head;
+        this.location = location;
+        this.reason = reason;
+        this.to = to;
+        this.type = type;
+    }
 
-  public void setDate(String date) {
-    this.date = date;
-  }
+    public String getDate() {
+        return date;
+    }
 
-  public String getKey() {
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getKey() {
     return key;
   }
 

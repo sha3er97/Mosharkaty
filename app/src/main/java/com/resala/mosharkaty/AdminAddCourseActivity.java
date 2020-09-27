@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -22,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.resala.mosharkaty.utility.classes.Course;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -35,7 +35,6 @@ public class AdminAddCourseActivity extends AppCompatActivity
     };
     String[] courseLevels = {"Basic", "Medium", "Advanced"};
 
-    Button add_course_btn;
     TextView title;
     TextView instructor;
     TextView course_level;
@@ -160,21 +159,14 @@ public class AdminAddCourseActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "اسم الكورس مكرر", Toast.LENGTH_SHORT).show();
                         } else {
                             DatabaseReference currentCourse = CoursesRef.child(courseName);
-
-                            DatabaseReference typeRef = currentCourse.child("type");
-                            DatabaseReference descriptionRef = currentCourse.child("description");
-                            DatabaseReference nameRef = currentCourse.child("name");
-                            DatabaseReference instructorRef = currentCourse.child("instructor");
-                            DatabaseReference levelRef = currentCourse.child("level");
-                            DatabaseReference styleRef = currentCourse.child("style");
-
-                            nameRef.setValue(courseName_et.getText().toString().trim());
-                            descriptionRef.setValue(course_description.getText().toString());
-                            instructorRef.setValue(instructor_name_et.getText().toString());
-
-                            typeRef.setValue(courseTypeSpinner.getSelectedItem().toString());
-                            levelRef.setValue(courseLevelSpinner.getSelectedItem().toString());
-                            styleRef.setValue(courseColorSpinner.getSelectedItem().toString());
+                            currentCourse.setValue(
+                                    new Course(
+                                            course_description.getText().toString().trim(),
+                                            instructor_name_et.getText().toString().trim(),
+                                            courseLevelSpinner.getSelectedItem().toString(),
+                                            courseName_et.getText().toString().trim(),
+                                            courseColorSpinner.getSelectedItem().toString(),
+                                            courseTypeSpinner.getSelectedItem().toString()));
 
                             Toast.makeText(getApplicationContext(), "Course Added..", Toast.LENGTH_SHORT).show();
 

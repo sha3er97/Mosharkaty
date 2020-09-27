@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.resala.mosharkaty.R;
+import com.resala.mosharkaty.fragments.AdminAddEventsFragment;
 import com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment;
-import com.resala.mosharkaty.fragments.AdminEventsFragment;
 import com.resala.mosharkaty.fragments.AdminShowMosharkatFragment;
 import com.resala.mosharkaty.fragments.AdminShowReportsFragment;
 import com.resala.mosharkaty.fragments.ComposeMosharkaFragment;
@@ -67,7 +67,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
           fragment = new AdminShowReportsFragment();
           break;
         case 1:
-          fragment = new AdminEventsFragment();
+          fragment = new AdminAddEventsFragment();
           break;
         case 2:
           fragment = new HomeFragment();

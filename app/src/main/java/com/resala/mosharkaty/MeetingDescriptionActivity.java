@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.resala.mosharkaty.utility.classes.Meeting;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -60,7 +61,6 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         String fromText = intent.getStringExtra("from");
         String toText = intent.getStringExtra("to");
         key = intent.getStringExtra("key");
-
 
         type_spin = findViewById(R.id.meetingTypeSpinner);
         place_spin = findViewById(R.id.meetingTypeSpinner2);
@@ -118,7 +118,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                                         if (sMinute == 0) {
                                             Mminute = "00";
                                         }
-                                        if (Mhour > 12) {
+                                        if (Mhour >= 12) {
                                             am_pm = "PM";
                                             Mhour = Mhour - 12;
                                         } else {
@@ -149,7 +149,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                                         if (sMinute == 0) {
                                             Mminute = "00";
                                         }
-                                        if (Mhour > 12) {
+                                        if (Mhour >= 12) {
                                             am_pm = "PM";
                                             Mhour = Mhour - 12;
                                         } else {
@@ -218,21 +218,18 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         if (!validateForm()) return;
         String date = eText.getText().toString();
         String[] dateParts = date.split("/", 2);
-        DatabaseReference currentEvent =
-                MeetingsRef.child(String.valueOf(dateParts[1])).child(key);
-        DatabaseReference dateRef = currentEvent.child("date");
-        DatabaseReference headRef = currentEvent.child("head");
-        DatabaseReference descriptionRef = currentEvent.child("description");
-        DatabaseReference countRef = currentEvent.child("count");
-        DatabaseReference fromRef = currentEvent.child("from");
-        DatabaseReference toRef = currentEvent.child("to");
-
-        headRef.setValue(meetingHead_et.getText().toString().trim());
-        countRef.setValue(meetingCount.getText().toString().trim());
-        descriptionRef.setValue(meetingDescription_et.getText().toString());
-        dateRef.setValue(eText.getText().toString());
-        fromRef.setValue(eText2.getText().toString());
-        toRef.setValue(eText3.getText().toString());
+        DatabaseReference currentEvent = MeetingsRef.child(String.valueOf(dateParts[1])).child(key);
+        currentEvent.setValue(
+                new Meeting(
+                        meetingCount.getText().toString().trim(),
+                        eText.getText().toString(),
+                        meetingDescription_et.getText().toString(),
+                        eText2.getText().toString(),
+                        meetingHead_et.getText().toString().trim(),
+                        place_spin.getText().toString(),
+                        reason_spin.getText().toString(),
+                        eText3.getText().toString(),
+                        type_spin.getText().toString()));
 
         Toast.makeText(getApplicationContext(), "Meeting Edited..", Toast.LENGTH_SHORT).show();
         finish();

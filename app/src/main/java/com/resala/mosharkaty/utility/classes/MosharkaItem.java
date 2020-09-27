@@ -9,7 +9,7 @@ public class MosharkaItem implements Comparable {
   private String key;
 
   public MosharkaItem() {
-    //in case of error
+    // in case of error
     this.volname = "error";
     this.mosharkaDate = "1/1/2020";
     this.mosharkaType = "error";
@@ -59,7 +59,8 @@ public class MosharkaItem implements Comparable {
     String[] comparedDate = ((MosharkaItem) o).getMosharkaDate().split("/", 3);
     int comparedDay = Integer.parseInt(comparedDate[0]);
     String[] otherDate = this.mosharkaDate.split("/", 3);
-    if (comparedDay == Integer.parseInt(otherDate[0])) return compared - Integer.parseInt(other[0]);
-    else return comparedDay - Integer.parseInt(otherDate[0]);
+      if (comparedDay == Integer.parseInt(otherDate[0]))
+          return compared - Integer.parseInt(other[0]);
+      else return Integer.parseInt(otherDate[0]) - comparedDay;
   }
 }

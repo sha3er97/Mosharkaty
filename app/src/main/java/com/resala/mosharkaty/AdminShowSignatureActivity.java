@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.ui.adapters.SignaturesAdapter;
 import com.resala.mosharkaty.utility.classes.Sig;
-import com.resala.mosharkaty.utility.classes.Signature;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +27,7 @@ import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowSignatureActivity extends AppCompatActivity {
     SignaturesAdapter adapter;
-    ArrayList<Signature> signatureitems = new ArrayList<>();
+    ArrayList<Sig> signatureitems = new ArrayList<>();
     FirebaseDatabase database;
     int month;
     DatabaseReference SignaturesRef;
@@ -57,9 +56,7 @@ public class AdminShowSignatureActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Sig signature = snapshot.getValue(Sig.class);
                                     if (signature != null) {
-                                        signatureitems.add(
-                                                new Signature(
-                                                        signature.comment, signature.volName, signature.signatureDate));
+                                        signatureitems.add(signature);
                                     } else {
                                         Toast.makeText(
                                                 getApplicationContext(), "something went wrong", Toast.LENGTH_SHORT)
