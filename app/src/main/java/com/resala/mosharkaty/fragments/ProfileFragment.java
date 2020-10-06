@@ -47,10 +47,10 @@ import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class ProfileFragment extends androidx.fragment.app.Fragment {
-  public static String userName;
-  public static String userCode;
-  public static String userOfficialName;
-  View view;
+    public static String userName;
+    public static String userCode;
+    public static String userOfficialName;
+    View view;
     ImageButton ApplyChanges;
     Button Courses_btn;
     EditText name;
@@ -73,15 +73,17 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
     ValueEventListener CoursesListener;
     DatabaseReference CoursesRef;
 
-  EnrolledCoursesAdapter adapter;
-  ArrayList<Course> courseItems = new ArrayList<>();
-  ArrayList<String> enrolledCourses = new ArrayList<>();
+    EnrolledCoursesAdapter adapter;
+    ArrayList<Course> courseItems = new ArrayList<>();
+    ArrayList<String> enrolledCourses = new ArrayList<>();
 
-  DatabaseReference EnrollmentRef;
-  ValueEventListener EnrollmentListener;
+    DatabaseReference EnrollmentRef;
+    ValueEventListener EnrollmentListener;
 
-  /** Called when the fragment is visible to the user and actively running. */
-  @Override
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
+    @Override
   public void onResume() {
     super.onResume();
     adapter.notifyDataSetChanged();
@@ -243,6 +245,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                         break;
                                     }
                                 }
+                                if (!codeFound) userOfficialName = "";
                             }
 
                             @Override
@@ -253,7 +256,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                         });
     }
 
-  private void updateMosharkaty() {
+    private void updateMosharkaty() {
     MosharkatRef = database.getReference("mosharkat").child(userBranch);
     final Calendar cldr = Calendar.getInstance(Locale.US);
     month = cldr.get(Calendar.MONTH) + 1;
@@ -307,32 +310,35 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
   }
 
   private void updateMosharkatUI() {
-    currentMosharkatapp.setText(String.valueOf(mycounter));
-    attendanceBar = view.findViewById(R.id.determinateBar);
-    float percentage = (float) Math.min(mycounter, 8) / 8 * 100;
-    attendanceBar.setProgress(Math.round(percentage));
-    currentpercent.setText(Math.round(percentage) + " %");
-    if (percentage < (float) myRules.bad_average / 8 * 100) {
-      currentpercent.setTextColor(getResources().getColor(R.color.red));
-      currentMosharkatapp.setTextColor(getResources().getColor(R.color.red));
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        attendanceBar.setProgressTintList(
-            ColorStateList.valueOf(getResources().getColor(R.color.red)));
-      }
-    } else if (percentage < (float) myRules.medium_average / 8 * 100) {
-      currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
-      currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        attendanceBar.setProgressTintList(
-            ColorStateList.valueOf(getResources().getColor(R.color.ourBlue)));
-      }
-    } else { // bigger than both
-      currentpercent.setTextColor(getResources().getColor(R.color.green));
-      currentMosharkatapp.setTextColor(getResources().getColor(R.color.green));
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        attendanceBar.setProgressTintList(
-            ColorStateList.valueOf(getResources().getColor(R.color.green)));
-      }
+      currentMosharkatapp.setText(String.valueOf(mycounter));
+      attendanceBar = view.findViewById(R.id.determinateBar);
+      float percentage = (float) Math.min(mycounter, 8) / 8 * 100;
+      attendanceBar.setProgress(Math.round(percentage));
+      currentpercent.setText(Math.round(percentage) + " %");
+      try {
+          if (percentage < (float) myRules.bad_average / 8 * 100) {
+              currentpercent.setTextColor(getResources().getColor(R.color.red));
+              currentMosharkatapp.setTextColor(getResources().getColor(R.color.red));
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                  attendanceBar.setProgressTintList(
+                          ColorStateList.valueOf(getResources().getColor(R.color.red)));
+              }
+          } else if (percentage < (float) myRules.medium_average / 8 * 100) {
+              currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
+              currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                  attendanceBar.setProgressTintList(
+                          ColorStateList.valueOf(getResources().getColor(R.color.ourBlue)));
+              }
+          } else { // bigger than both
+              currentpercent.setTextColor(getResources().getColor(R.color.green));
+              currentMosharkatapp.setTextColor(getResources().getColor(R.color.green));
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                  attendanceBar.setProgressTintList(
+                          ColorStateList.valueOf(getResources().getColor(R.color.green)));
+              }
+          }
+      } catch (Exception ignored) {
     }
   }
 
@@ -353,6 +359,6 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
       }
       if (EnrollmentRef != null && EnrollmentListener != null) {
           EnrollmentRef.removeEventListener(EnrollmentListener);
-      }
+    }
   }
 }

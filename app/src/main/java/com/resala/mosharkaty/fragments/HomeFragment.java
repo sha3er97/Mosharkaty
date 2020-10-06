@@ -214,6 +214,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                             break;
                           }
                         }
+                        if (!codeFound) userOfficialName = "";
                       }
 
                       @Override

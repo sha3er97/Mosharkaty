@@ -1,0 +1,2587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".AdminMrkzyReportsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/ourBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goldTable" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/ourBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/silverTable" />
+
+        <Button
+            android:id="@+id/refresh_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_green"
+            android:drawableStart="@drawable/refresh_white"
+            android:drawablePadding="16dp"
+            android:onClick="refreshReport"
+            android:paddingHorizontal="16dp"
+            android:text="@string/refresh_report"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/day_from" />
+
+        <Spinner
+            android:id="@+id/day_to"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView39"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_month" />
+
+        <Spinner
+            android:id="@+id/day_from"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView37"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView39"
+            app:layout_constraintTop_toBottomOf="@+id/current_month" />
+
+        <Spinner
+            android:id="@+id/current_month"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView36"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TableLayout
+            android:id="@+id/goldTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/my_edit_text_border"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/refresh_btn">
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="فيصل"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="معادي"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="مهندسين"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text=" "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="الاجتماعات"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="اورينتيشن"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="سيشن / كورس"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="احداث اخري"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/faisalNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/maadiNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mohNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+        </TableLayout>
+        <!--***********************************************************-->
+        <TableLayout
+            android:id="@+id/silverTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/my_edit_text_border"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2">
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="اكتوبر"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="م.الجديدة"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="م.نصر"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text=" "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="الاجتماعات"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="اورينتيشن"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="سيشن / كورس"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="احداث اخري"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/octNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/melgdidaNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mnasrNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+        </TableLayout>
+        <!--***************************************************-->
+        <TableLayout
+            android:id="@+id/bronzeTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/my_edit_text_border"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="مقطم"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="اسكندرية"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="حلوان"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text=" "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMeetingsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="الاجتماعات"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanOrientationTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="اورينتيشن"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanSessionsTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="سيشن / كورس"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanEventsTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="احداث اخري"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMas2oolCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMas2oolMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMas2oolPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMas2oolAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمسؤول"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMashroo3CountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMashroo3MosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات مشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMashroo3PercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanMashroo3AvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nمشروع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanNasheetCountTV"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="عدد نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanNasheetMosharkatTV"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="مشاركات نشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanNasheetPercentTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نسبة مشاركة\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/mokattamNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/alexNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/helwanNasheetAvgTV"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="متوسط مشاركات\nنشيط"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/new_jf"
+            android:text="تقرير شهر :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/current_month"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/current_month"
+            app:layout_constraintTop_toTopOf="@+id/current_month" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="من يوم :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/day_from"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/day_from"
+            app:layout_constraintTop_toTopOf="@+id/day_from" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="الي يوم :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/day_to"
+            app:layout_constraintEnd_toStartOf="@+id/day_from"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/day_to"
+            app:layout_constraintTop_toTopOf="@+id/day_to" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -63,7 +63,6 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    codeFound = false;
     view = inflater.inflate(R.layout.fragment_takyeem, container, false);
     database = FirebaseDatabase.getInstance();
     contReading = view.findViewById(R.id.contRead);
@@ -77,74 +76,75 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
 
     final TextView cooperation = view.findViewById(R.id.cooperation);
     final TextView ekhtlat = view.findViewById(R.id.ekhtlat);
-    final TextView respect = view.findViewById(R.id.respect);
-    final TextView humble = view.findViewById(R.id.humble);
-    final TextView loyalty = view.findViewById(R.id.loyalty);
-    final TextView execuses = view.findViewById(R.id.execues);
+      final TextView respect = view.findViewById(R.id.respect);
+      final TextView humble = view.findViewById(R.id.humble);
+      final TextView loyalty = view.findViewById(R.id.loyalty);
+      final TextView execuses = view.findViewById(R.id.execues);
 
-    final TextView totalTechTV = view.findViewById(R.id.totalTechTV);
-    final TextView totalPersonalTV = view.findViewById(R.id.totalPersonalTV);
-    final TextView head_bonus = view.findViewById(R.id.bonusHead);
+      final TextView totalTechTV = view.findViewById(R.id.totalTechTV);
+      final TextView totalPersonalTV = view.findViewById(R.id.totalPersonalTV);
+      final TextView head_bonus = view.findViewById(R.id.bonusHead);
 
-    final TextView extra_comment = view.findViewById(R.id.extraComment);
+      final TextView extra_comment = view.findViewById(R.id.extraComment);
       DatabaseReference liveSheet =
-              database.getReference("1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk"); //TODO :: شيت تقييمات لكل فرع
-    takyeemTab = liveSheet.child("takyeem");
-    Takyeemlistener =
-            takyeemTab.addValueEventListener(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Takyeem takyeem = snapshot.getValue(Takyeem.class);
-                                assert takyeem != null;
-                                if (takyeem.code.equalsIgnoreCase(userCode)) {
-                                    communication.setText(String.valueOf(takyeem.communication));
-                                    commitment.setText(String.valueOf(takyeem.commitment));
-                                    problem_solving.setText(String.valueOf(takyeem.problem_solving));
-                                    quality.setText(String.valueOf(takyeem.quality));
-                                    creativity.setText(String.valueOf(takyeem.creativity));
-                                    cooperation.setText(String.valueOf(takyeem.cooperation));
-                            ekhtlat.setText(String.valueOf(takyeem.ekhtlat));
-                            respect.setText(String.valueOf(takyeem.respect));
-                            humble.setText(String.valueOf(takyeem.humble));
-                            loyalty.setText(String.valueOf(takyeem.loyalty));
-                            execuses.setText(String.valueOf(takyeem.execuses));
-                            totalTechTV.setText(String.valueOf(takyeem.total_technical));
-                            totalPersonalTV.setText(String.valueOf(takyeem.total_personal));
-                            head_bonus.setText(String.valueOf(takyeem.head_bonus));
-                            extra_comment.setText(String.valueOf(takyeem.extra_comment));
-                            big_total = takyeem.big_total;
-                            last_month = takyeem.last_month;
-                            the_month_before = takyeem.the_month_before;
-                            this_month = takyeem.this_month;
-                            Volname = takyeem.Volname;
-                            takyeemVolName.setText(Volname);
-                            //                    Toast.makeText(getContext(), "تم تحديث تقييمك",
-                            // Toast.LENGTH_SHORT).show();
-                            codeFound = true;
-                            break;
+              database.getReference(
+                      "1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk"); // TODO :: شيت تقييمات لكل فرع
+      takyeemTab = liveSheet.child("takyeem");
+      Takyeemlistener =
+              takyeemTab.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  Takyeem takyeem = snapshot.getValue(Takyeem.class);
+                                  assert takyeem != null;
+                                  if (takyeem.code.equalsIgnoreCase(userCode)) {
+                                      communication.setText(String.valueOf(takyeem.communication));
+                                      commitment.setText(String.valueOf(takyeem.commitment));
+                                      problem_solving.setText(String.valueOf(takyeem.problem_solving));
+                                      quality.setText(String.valueOf(takyeem.quality));
+                                      creativity.setText(String.valueOf(takyeem.creativity));
+                                      cooperation.setText(String.valueOf(takyeem.cooperation));
+                                      ekhtlat.setText(String.valueOf(takyeem.ekhtlat));
+                                      respect.setText(String.valueOf(takyeem.respect));
+                                      humble.setText(String.valueOf(takyeem.humble));
+                                      loyalty.setText(String.valueOf(takyeem.loyalty));
+                                      execuses.setText(String.valueOf(takyeem.execuses));
+                                      totalTechTV.setText(String.valueOf(takyeem.total_technical));
+                                      totalPersonalTV.setText(String.valueOf(takyeem.total_personal));
+                                      head_bonus.setText(String.valueOf(takyeem.head_bonus));
+                                      extra_comment.setText(String.valueOf(takyeem.extra_comment));
+                                      big_total = takyeem.big_total;
+                                      last_month = takyeem.last_month;
+                                      the_month_before = takyeem.the_month_before;
+                                      this_month = takyeem.this_month;
+                                      Volname = takyeem.Volname;
+                                      takyeemVolName.setText(Volname);
+                                      //                    Toast.makeText(getContext(), "تم تحديث تقييمك",
+                                      // Toast.LENGTH_SHORT).show();
+                                      codeFound = true;
+                                      break;
+                                  }
+                              }
                           }
-                        }
-                      }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
     // button listener
-    contReading.setOnClickListener(
-            v -> {
-                Intent intent = new Intent(getContext(), ContinueTakyeemActivity.class);
-                intent.putExtra("lastMonthnum", String.valueOf(last_month));
-                intent.putExtra("beforeLastMonthnum", String.valueOf(the_month_before));
-                intent.putExtra("thisMonthnum", String.valueOf(this_month));
-                intent.putExtra("total", String.valueOf(big_total));
-                intent.putExtra("Volname", Volname);
-                startActivity(intent);
-            });
+      contReading.setOnClickListener(
+              v -> {
+                  Intent intent = new Intent(getContext(), ContinueTakyeemActivity.class);
+                  intent.putExtra("lastMonthnum", String.valueOf(last_month));
+                  intent.putExtra("beforeLastMonthnum", String.valueOf(the_month_before));
+                  intent.putExtra("thisMonthnum", String.valueOf(this_month));
+                  intent.putExtra("total", String.valueOf(big_total));
+                  intent.putExtra("Volname", Volname);
+                  startActivity(intent);
+              });
     return view;
   }
 

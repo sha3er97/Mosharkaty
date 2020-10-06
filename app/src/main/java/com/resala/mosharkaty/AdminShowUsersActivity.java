@@ -68,7 +68,7 @@ public class AdminShowUsersActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     User user = snapshot.getValue(User.class);
                                     if (user != null && user.branch.equals(userBranch)) {
-                                        codes.add(user.code);
+                                        codes.add(user.code.toLowerCase());
                                     }
                                 }
                                 checkForBranch();
@@ -104,7 +104,7 @@ public class AdminShowUsersActivity extends AppCompatActivity {
                                     Volunteer user = snapshot.getValue(Volunteer.class);
                                     if (user != null && !user.degree.matches("(.*)مجمد(.*)")) {
                                         teamCounter++;
-                                        if (codes.contains(user.code)) {
+                                        if (codes.contains(user.code.toLowerCase())) {
                                             userCounter++;
                                             userItems.add(user.Volname);
                                         }

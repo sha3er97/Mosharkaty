@@ -24,5 +24,9 @@
     <color name="new_hint_color">#94cff9</color>
 
     <color name="dark_blue">#0C3250</color>
+    <color name="light_gray">#F6F6F6</color>
+    <color name="darker_gray">#C6C6C6</color>
+    <color name="white">#FFFFFF</color>
+
 
 </resources>

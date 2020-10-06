@@ -31,14 +31,14 @@
     <string name="login_tip">لو اول مرة ليك .. اكتب ايميلك و password من اختيارك \nو اعمل account جديد</string>
     <string name="technical1">التواصل</string>
     <string name="technical2">الالتزام</string>
-    <string name="technical3">problem solving</string>
+    <string name="technical3">problem\nsolving</string>
     <string name="technical4">الجودة</string>
     <string name="technical5">creativity</string>
     <string name="point_of_comparison">البند</string>
     <string name="totalpoints">المجموع</string>
     <string name="personal1">التعاون</string>
     <string name="personal2">الاختلاط</string>
-    <string name="personal3">احترام التبعية</string>
+    <string name="personal3">احترام\nالتبعية</string>
     <string name="personal4">التواضع</string>
     <string name="personal5">الانتماء</string>
     <string name="personal6">الاعتذار</string>
