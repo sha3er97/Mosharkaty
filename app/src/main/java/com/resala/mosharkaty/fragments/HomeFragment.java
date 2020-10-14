@@ -435,7 +435,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                                                           false));
                                       }
                                       Collections.sort(top5ItemsArray);
-                                      for (int i = 0; i < reportsTypes.length; i++) {
+                                      for (int i = 0; i < top5ItemsArray.size(); i++) {
                                           if (top5ItemsArray.get(i).total > 0)
                                               top5Items3.add(top5ItemsArray.get(i));
                                       }
