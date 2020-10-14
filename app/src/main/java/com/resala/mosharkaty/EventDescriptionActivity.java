@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class EventDescriptionActivity extends AppCompatActivity {
     Button coming_btn;
@@ -61,7 +61,8 @@ public class EventDescriptionActivity extends AppCompatActivity {
         description.setText(descriptionText);
 
         assert titleText != null;
-        myConfirmation = database.getReference("confirmations").child(userBranch).child(titleText).child(userName);
+        myConfirmation =
+                database.getReference("confirmations").child(userBranch).child(titleText).child(userName);
         myConfirmation.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override

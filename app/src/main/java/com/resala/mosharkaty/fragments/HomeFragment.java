@@ -46,22 +46,22 @@ import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.AddEventReportFragment.reportsTypes;
 import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userOfficialName;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class HomeFragment extends androidx.fragment.app.Fragment {
-  View view;
-  TextView branchTV;
-  FirebaseDatabase database;
-  ValueEventListener userlistener;
-  ValueEventListener mosharkatlistener;
+    public static String userName;
+    public static String userCode;
+    public static String userOfficialName;
+    View view;
+    TextView branchTV;
+    FirebaseDatabase database;
+    ValueEventListener userlistener;
+    ValueEventListener mosharkatlistener;
 
-  DatabaseReference usersRef;
-  DatabaseReference mosharkatTab;
+    DatabaseReference usersRef;
+    DatabaseReference mosharkatTab;
 
-  DatabaseReference appMosharkatRef;
+    DatabaseReference appMosharkatRef;
   DatabaseReference meetingsRef;
 
   ValueEventListener appMosharkatlistener;
@@ -109,31 +109,31 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   Top5Adapter adapter3;
   HashMap<String, Integer> eventsTypeCounter = new HashMap<>();
 
-  /**
-   * Called when the fragment is visible to the user and actively running.
-   */
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
   @Override
   public void onResume() {
     super.onResume();
     if (userBranch != null) branchTV.setText(userBranch);
   }
 
-  @Nullable
-  @Override
-  public View onCreateView(
-          @NonNull LayoutInflater inflater,
-          @Nullable ViewGroup container,
-          @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_home, container, false);
-    database = FirebaseDatabase.getInstance();
+    @Nullable
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        database = FirebaseDatabase.getInstance();
 
-    branchTV = view.findViewById(R.id.branch);
+        branchTV = view.findViewById(R.id.branch);
 
-    RecyclerView recyclerView = view.findViewById(R.id.top5TypesRecyclerView);
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new Top5Adapter(top5Items, getContext());
-    recyclerView.setAdapter(adapter);
+        RecyclerView recyclerView = view.findViewById(R.id.top5TypesRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new Top5Adapter(top5Items, getContext());
+        recyclerView.setAdapter(adapter);
 
     RecyclerView recyclerView2 = view.findViewById(R.id.top5DaysRecyclerView);
     recyclerView2.setHasFixedSize(true);
@@ -155,28 +155,29 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
       progress.show();
       usersRef = database.getReference("users").child(userId);
 
-      userlistener =
-              usersRef.addValueEventListener(
-                      new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                          User user = dataSnapshot.getValue(User.class);
-                          assert user != null;
-                          userName = user.name;
-                          userCode = user.code;
-                          userBranch = user.branch;
+        userlistener =
+                usersRef.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+                                if (user != null) {
+                                    userName = user.name;
+                                    userCode = user.code;
+                                    userBranch = user.branch;
 
-                          branchTV.setText(userBranch);
-                          String branchSheetLink =
-                                  userBranch.equals(branches[9])
-                                          ? branchesSheets.get(branches[0])
-                                          : branchesSheets.get(userBranch);
-                          assert branchSheetLink != null;
-                          liveSheet = database.getReference(branchSheetLink);
-                          getUserName();
-                          progress.dismiss();
-                  refreshReports();
-                }
+                                    branchTV.setText(userBranch);
+                                    String branchSheetLink =
+                                            userBranch.equals(branches[9])
+                                                    ? branchesSheets.get(branches[0])
+                                                    : branchesSheets.get(userBranch);
+                                    assert branchSheetLink != null;
+                                    liveSheet = database.getReference(branchSheetLink);
+                                    getUserName();
+                                    refreshReports();
+                                }
+                                progress.dismiss();
+                            }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -186,10 +187,10 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
               });
 
     } else {
-      String branchSheetLink =
-              userBranch.equals(branches[9])
-                      ? branchesSheets.get(branches[0])
-                      : branchesSheets.get(userBranch);
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
       assert branchSheetLink != null;
       liveSheet = database.getReference(branchSheetLink);
       branchTV.setText(userBranch);
@@ -200,29 +201,29 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
   private void getUserName() {
     mosharkatTab = liveSheet.child("month_mosharkat");
-    mosharkatlistener =
-            mosharkatTab.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        codeFound = false;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          Volunteer user = snapshot.getValue(Volunteer.class);
-                          if (user != null && user.code.equalsIgnoreCase(userCode)) {
-                            userOfficialName = user.Volname;
-                            codeFound = true;
-                            break;
+      mosharkatlistener =
+              mosharkatTab.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              codeFound = false;
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  Volunteer user = snapshot.getValue(Volunteer.class);
+                                  if (user != null && user.code.equalsIgnoreCase(userCode)) {
+                                      userOfficialName = user.Volname;
+                                      codeFound = true;
+                                      break;
+                                  }
+                              }
+                              if (!codeFound) userOfficialName = "";
                           }
-                        }
-                        if (!codeFound) userOfficialName = "";
-                      }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
   }
 
   private void refreshReports() {
@@ -242,30 +243,30 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     mosharkatTab = liveSheet.child("month_mosharkat");
     mosharkatTab.addListenerForSingleValueEvent(
             new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                teamCounter = 0;
-                mas2oleenCounter = 0;
-                msharee3Counter = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  Volunteer user = snapshot.getValue(Volunteer.class);
-                  if (user != null) {
-                    if (!user.degree.matches("(.*)مجمد(.*)")) {
-                      teamDegrees.put(user.Volname, user.degree);
-                      teamCounter++;
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    teamCounter = 0;
+                    mas2oleenCounter = 0;
+                    msharee3Counter = 0;
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Volunteer user = snapshot.getValue(Volunteer.class);
+                        if (user != null) {
+                            if (!user.degree.matches("(.*)مجمد(.*)")) {
+                                teamDegrees.put(user.Volname, user.degree);
+                                teamCounter++;
+                            }
+                            if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
+                            else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
+                        }
                     }
-                    if (user.degree.matches("(.*)مسؤول(.*)")) mas2oleenCounter++;
-                    else if (user.degree.matches("(.*)مشروع(.*)")) msharee3Counter++;
-                  }
+                    totalTeam.setText(String.valueOf(teamCounter));
                 }
-                totalTeam.setText(String.valueOf(teamCounter));
-              }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-              }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
         });
 
     final Calendar cldr = Calendar.getInstance(Locale.US);
@@ -275,127 +276,127 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     updateMeetings();
     updateEventsReports();
     appMosharkatRef = database.getReference("mosharkat").child(userBranch);
-    appMosharkatlistener =
-            appMosharkatRef
-                    .child(String.valueOf(month))
-                    .addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                HashMap<String, Integer> nameCounting = new HashMap<>();
-                                allMosharkat = 0;
-                                mas2oleenMosharkat = 0;
-                                msharee3Mosharkat = 0;
-                                arrivedCounter = 0;
-                                mosharkatTypesCounter = new HashMap<>();
-                                mosharkatDaysCounter = new HashMap<>();
-                                top5Items.clear();
-                                top5Items2.clear();
+      appMosharkatlistener =
+              appMosharkatRef
+                      .child(String.valueOf(month))
+                      .addValueEventListener(
+                              new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                      HashMap<String, Integer> nameCounting = new HashMap<>();
+                                      allMosharkat = 0;
+                                      mas2oleenMosharkat = 0;
+                                      msharee3Mosharkat = 0;
+                                      arrivedCounter = 0;
+                                      mosharkatTypesCounter = new HashMap<>();
+                                      mosharkatDaysCounter = new HashMap<>();
+                                      top5Items.clear();
+                                      top5Items2.clear();
 
-                                for (String mosharkaType : mosharkaTypes) {
-                                  // initialize map
-                                  mosharkatTypesCounter.put(mosharkaType, 0);
-                                }
-                                for (String dayy : days) {
-                                  // initialize map
-                                  mosharkatDaysCounter.put(dayy, 0);
-                                }
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                  MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                      for (String mosharkaType : mosharkaTypes) {
+                                          // initialize map
+                                          mosharkatTypesCounter.put(mosharkaType, 0);
+                                      }
+                                      for (String dayy : days) {
+                                          // initialize map
+                                          mosharkatDaysCounter.put(dayy, 0);
+                                      }
+                                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
 
-                                  if (mosharka != null) {
-                                    allMosharkat++;
-                                    try {
-                                      mosharkatTypesCounter.put(
-                                              mosharka.getMosharkaType(),
-                                              mosharkatTypesCounter.get(mosharka.getMosharkaType()) + 1);
-                                    } catch (Exception e) {
-                                      e.printStackTrace();
-                                    }
+                                          if (mosharka != null) {
+                                              allMosharkat++;
+                                              try {
+                                                  mosharkatTypesCounter.put(
+                                                          mosharka.getMosharkaType(),
+                                                          mosharkatTypesCounter.get(mosharka.getMosharkaType()) + 1);
+                                              } catch (Exception e) {
+                                                  e.printStackTrace();
+                                              }
 
-                                    try {
-                                      String[] splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                                      mosharkatDaysCounter.put(
-                                              splittedDate[0], mosharkatDaysCounter.get(splittedDate[0]) + 1);
-                                    } catch (Exception e) {
-                                      e.printStackTrace();
-                                    }
+                                              try {
+                                                  String[] splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                                  mosharkatDaysCounter.put(
+                                                          splittedDate[0], mosharkatDaysCounter.get(splittedDate[0]) + 1);
+                                              } catch (Exception e) {
+                                                  e.printStackTrace();
+                                              }
 
-                                    if (nameCounting.containsKey(mosharka.getVolname().trim())) {
-                                      nameCounting.put(
-                                              mosharka.getVolname().trim(),
-                                              Math.min(nameCounting.get(mosharka.getVolname().trim()) + 1, 8));
-                                    } else {
-                                      nameCounting.put(mosharka.getVolname().trim(), 1);
-                                    }
+                                              if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                                  nameCounting.put(
+                                                          mosharka.getVolname().trim(),
+                                                          Math.min(nameCounting.get(mosharka.getVolname().trim()) + 1, 8));
+                                              } else {
+                                                  nameCounting.put(mosharka.getVolname().trim(), 1);
+                                              }
+                                          }
+                                      }
+                                      Log.d("Home", "nameCounting size " + nameCounting.size());
+                                      Log.d("Home", "teamDegrees size " + teamDegrees.size());
+
+                                      for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+                                          String degree = teamDegrees.get(entry.getKey());
+                                          if (teamDegrees.containsKey(entry.getKey())) {
+                                              assert degree != null;
+                                              if (!degree.matches("(.*)مجمد(.*)")) arrivedCounter++;
+                                              if (degree.matches("(.*)مسؤول(.*)"))
+                                                  mas2oleenMosharkat += Integer.parseInt(entry.getValue().toString());
+                                              if (degree.matches("(.*)مشروع(.*)"))
+                                                  msharee3Mosharkat += Integer.parseInt(entry.getValue().toString());
+                                          }
+                                      }
+                                      updateAttendance();
+                                      updatePoints();
+                                      updateAverages();
+                                      updateTopTypes();
+                                      updateTopDays();
                                   }
-                                }
-                                Log.d("Home", "nameCounting size " + nameCounting.size());
-                                Log.d("Home", "teamDegrees size " + teamDegrees.size());
 
-                                for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
-                                  String degree = teamDegrees.get(entry.getKey());
-                                  if (teamDegrees.containsKey(entry.getKey())) {
-                                    assert degree != null;
-                                    if (!degree.matches("(.*)مجمد(.*)")) arrivedCounter++;
-                                    if (degree.matches("(.*)مسؤول(.*)"))
-                                      mas2oleenMosharkat += Integer.parseInt(entry.getValue().toString());
-                                    if (degree.matches("(.*)مشروع(.*)"))
-                                      msharee3Mosharkat += Integer.parseInt(entry.getValue().toString());
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                      // Failed to read value
+                                      Log.w(TAG, "Failed to read value.", error.toException());
                                   }
-                                }
-                                updateAttendance();
-                                updatePoints();
-                                updateAverages();
-                                updateTopTypes();
-                                updateTopDays();
-                              }
-
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                              }
-                            });
+                              });
   }
 
   private void updateMeetings() {
     meetingsRef = database.getReference("meetings").child(userBranch);
-    meetingslistener =
-            meetingsRef
-                    .child(String.valueOf(month))
-                    .addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int meetingsCount = (int) dataSnapshot.getChildrenCount();
-                                meetings.setText(String.valueOf(dataSnapshot.getChildrenCount()));
-                                try {
-                                  if (meetingsCount < (week * myRules.meetings_bad)) {
-                                    meetings.setTextColor(getActivity().getResources().getColor(R.color.red));
-                                    meetings_word.setTextColor(
-                                            getActivity().getResources().getColor(R.color.red));
-                                  } else if (meetingsCount < (week * myRules.meetings_medium)) {
-                                    meetings.setTextColor(
-                                            getActivity().getResources().getColor(R.color.ourBlue));
-                                    meetings_word.setTextColor(
-                                            getActivity().getResources().getColor(R.color.ourBlue));
-                                  } else { // bigger than both
-                                    meetings.setTextColor(getActivity().getResources().getColor(R.color.green));
-                                    meetings_word.setTextColor(
-                                            getActivity().getResources().getColor(R.color.green));
+      meetingslistener =
+              meetingsRef
+                      .child(String.valueOf(month))
+                      .addValueEventListener(
+                              new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                      int meetingsCount = (int) dataSnapshot.getChildrenCount();
+                                      meetings.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                                      try {
+                                          if (meetingsCount < (week * myRules.meetings_bad)) {
+                                              meetings.setTextColor(getActivity().getResources().getColor(R.color.red));
+                                              meetings_word.setTextColor(
+                                                      getActivity().getResources().getColor(R.color.red));
+                                          } else if (meetingsCount < (week * myRules.meetings_medium)) {
+                                              meetings.setTextColor(
+                                                      getActivity().getResources().getColor(R.color.ourBlue));
+                                              meetings_word.setTextColor(
+                                                      getActivity().getResources().getColor(R.color.ourBlue));
+                                          } else { // bigger than both
+                                              meetings.setTextColor(getActivity().getResources().getColor(R.color.green));
+                                              meetings_word.setTextColor(
+                                                      getActivity().getResources().getColor(R.color.green));
+                                          }
+                                      } catch (Exception ignored) {
+
+                                      }
                                   }
-                                } catch (Exception ignored) {
 
-                                }
-                              }
-
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                              }
-                            });
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                      // Failed to read value
+                                      Log.w(TAG, "Failed to read value.", error.toException());
+                                  }
+                              });
   }
 
   private void updateEventsReports() {
@@ -404,49 +405,49 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
       eventsTypeCounter.put(type, 0);
     }
     ReportsRef = database.getReference("reports").child(userBranch);
-    Reportslistener =
-            ReportsRef.child(String.valueOf(month))
-                    .addValueEventListener(
-                            new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                top5Items3.clear();
-                                int reportsCount = (int) dataSnapshot.getChildrenCount();
-                                totslReportsCount.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+      Reportslistener =
+              ReportsRef.child(String.valueOf(month))
+                      .addValueEventListener(
+                              new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                      top5Items3.clear();
+                                      int reportsCount = (int) dataSnapshot.getChildrenCount();
+                                      totslReportsCount.setText(String.valueOf(dataSnapshot.getChildrenCount()));
 
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                  EventReport event = snapshot.getValue(EventReport.class);
-                                  if (event != null) {
-                                    try {
-                                      eventsTypeCounter.put(event.type, eventsTypeCounter.get(event.type) + 1);
-                                    } catch (Exception e) {
-                                      e.printStackTrace();
-                                    }
+                                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                          EventReport event = snapshot.getValue(EventReport.class);
+                                          if (event != null) {
+                                              try {
+                                                  eventsTypeCounter.put(event.type, eventsTypeCounter.get(event.type) + 1);
+                                              } catch (Exception e) {
+                                                  e.printStackTrace();
+                                              }
+                                          }
+                                      }
+                                      ArrayList<Top5Item> top5ItemsArray = new ArrayList<>();
+                                      for (Map.Entry<String, Integer> entry : eventsTypeCounter.entrySet()) {
+                                          top5ItemsArray.add(
+                                                  new Top5Item(
+                                                          entry.getKey(),
+                                                          entry.getValue(),
+                                                          Math.round(((float) entry.getValue() / reportsCount) * 100),
+                                                          false));
+                                      }
+                                      Collections.sort(top5ItemsArray);
+                                      for (int i = 0; i < reportsTypes.length; i++) {
+                                          if (top5ItemsArray.get(i).total > 0)
+                                              top5Items3.add(top5ItemsArray.get(i));
+                                      }
+                                      adapter3.notifyDataSetChanged();
                                   }
-                                }
-                                ArrayList<Top5Item> top5ItemsArray = new ArrayList<>();
-                                for (Map.Entry<String, Integer> entry : eventsTypeCounter.entrySet()) {
-                                  top5ItemsArray.add(
-                                          new Top5Item(
-                                                  entry.getKey(),
-                                                  entry.getValue(),
-                                                  Math.round(((float) entry.getValue() / reportsCount) * 100),
-                                                  false));
-                                }
-                                Collections.sort(top5ItemsArray);
-                                for (int i = 0; i < reportsTypes.length; i++) {
-                                  if (top5ItemsArray.get(i).total > 0)
-                                    top5Items3.add(top5ItemsArray.get(i));
-                                }
-                                adapter3.notifyDataSetChanged();
-                              }
 
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError error) {
-                                // Failed to read value
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                              }
-                            });
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                      // Failed to read value
+                                      Log.w(TAG, "Failed to read value.", error.toException());
+                                  }
+                              });
   }
 
   private void updateTopTypes() {
@@ -485,17 +486,17 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
   }
 
   private void updateAverages() {
-    average_mas2oleen.setText(
-            String.valueOf(Math.round((float) mas2oleenMosharkat * 10 / mas2oleenCounter) / 10.0));
-    average_msharee3.setText(
-            String.valueOf(Math.round((float) msharee3Mosharkat * 10 / msharee3Counter) / 10.0));
-    average_fari2.setText(
-            String.valueOf(
-                    Math.round(
-                            (float) (mas2oleenMosharkat + msharee3Mosharkat)
-                                    * 10
-                                    / (msharee3Counter + mas2oleenCounter))
-                            / 10.0));
+      average_mas2oleen.setText(
+              String.valueOf(Math.round((float) mas2oleenMosharkat * 10 / mas2oleenCounter) / 10.0));
+      average_msharee3.setText(
+              String.valueOf(Math.round((float) msharee3Mosharkat * 10 / msharee3Counter) / 10.0));
+      average_fari2.setText(
+              String.valueOf(
+                      Math.round(
+                              (float) (mas2oleenMosharkat + msharee3Mosharkat)
+                                      * 10
+                                      / (msharee3Counter + mas2oleenCounter))
+                              / 10.0));
   }
 
   private void updatePoints() {

@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class MessagesWriteActivity extends AppCompatActivity {
     EditText message_et;

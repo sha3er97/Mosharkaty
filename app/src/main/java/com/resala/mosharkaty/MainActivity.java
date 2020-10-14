@@ -21,8 +21,8 @@ import static com.resala.mosharkaty.LoginActivity.isMrkzy;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class MainActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     mAuth = FirebaseAuth.getInstance();
 
-    SectionsPagerAdapter sectionsPagerAdapter =
-            new SectionsPagerAdapter(this, getSupportFragmentManager());
-    ViewPager viewPager = findViewById(R.id.view_pager);
+      SectionsPagerAdapter sectionsPagerAdapter =
+              new SectionsPagerAdapter(this, getSupportFragmentManager());
+      ViewPager viewPager = findViewById(R.id.view_pager);
     viewPager.setAdapter(sectionsPagerAdapter);
     viewPager.setCurrentItem(2); // home page
     TabLayout tabs = findViewById(R.id.tabs);
@@ -128,12 +128,13 @@ public class MainActivity extends AppCompatActivity {
     }
     FloatingActionButton fab = findViewById(R.id.fab);
 
-    fab.setOnClickListener(
-            view -> {
-              if (isAdmin)
-                startActivity(new Intent(getApplicationContext(), MessagesReadActivity.class));
-              else startActivity(new Intent(getApplicationContext(), MessagesWriteActivity.class));
-            });
+      fab.setOnClickListener(
+              view -> {
+                  if (isAdmin)
+                      startActivity(new Intent(getApplicationContext(), MessagesReadActivity.class));
+                  else
+                      startActivity(new Intent(getApplicationContext(), MessagesWriteActivity.class));
+              });
   }
 
   @Override

@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userOfficialName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
 
 public class ViewSpecificSessionActivity extends YouTubeBaseActivity {
 
@@ -122,7 +122,12 @@ public class ViewSpecificSessionActivity extends YouTubeBaseActivity {
     }
 
     public void finishVideo(View view) {
-        progressRef = database.getReference("progress").child(course_nameText).child(session_numText).child(userId);
+        progressRef =
+                database
+                        .getReference("progress")
+                        .child(course_nameText)
+                        .child(session_numText)
+                        .child(userId);
         progressRef.setValue(true);
 
         mosharka_btn.setEnabled(true);

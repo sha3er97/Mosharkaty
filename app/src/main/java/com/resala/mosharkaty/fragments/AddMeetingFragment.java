@@ -43,6 +43,7 @@ public class AddMeetingFragment extends Fragment {
             "اجتماع لجان مجمع",
             "اجتماع ادارة الفرع",
             "اجتماع مسؤولين",
+            "اجتماع نشيط",
             "اجتماع فريق عمل"
     };
     public static String[] meetingsTypesMarkzy = {

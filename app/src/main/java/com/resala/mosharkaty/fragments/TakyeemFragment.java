@@ -22,7 +22,7 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.Takyeem;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.fragments.ProfileFragment.userCode;
+import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
 
 public class TakyeemFragment extends androidx.fragment.app.Fragment {
   View view;
@@ -66,16 +66,16 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
     view = inflater.inflate(R.layout.fragment_takyeem, container, false);
     database = FirebaseDatabase.getInstance();
     contReading = view.findViewById(R.id.contRead);
-    final TextView takyeemVolName = view.findViewById(R.id.takyeemVolName);
+      final TextView takyeemVolName = view.findViewById(R.id.takyeemVolName);
 
-    final TextView communication = view.findViewById(R.id.communication);
-    final TextView commitment = view.findViewById(R.id.commitment);
-    final TextView problem_solving = view.findViewById(R.id.problem_solving);
-    final TextView quality = view.findViewById(R.id.quality);
-    final TextView creativity = view.findViewById(R.id.creativity);
+      final TextView communication = view.findViewById(R.id.communication);
+      final TextView commitment = view.findViewById(R.id.commitment);
+      final TextView problem_solving = view.findViewById(R.id.problem_solving);
+      final TextView quality = view.findViewById(R.id.quality);
+      final TextView creativity = view.findViewById(R.id.creativity);
 
-    final TextView cooperation = view.findViewById(R.id.cooperation);
-    final TextView ekhtlat = view.findViewById(R.id.ekhtlat);
+      final TextView cooperation = view.findViewById(R.id.cooperation);
+      final TextView ekhtlat = view.findViewById(R.id.ekhtlat);
       final TextView respect = view.findViewById(R.id.respect);
       final TextView humble = view.findViewById(R.id.humble);
       final TextView loyalty = view.findViewById(R.id.loyalty);
@@ -134,7 +134,7 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
                               Log.w(TAG, "Failed to read value.", error.toException());
                           }
                       });
-    // button listener
+      // button listener
       contReading.setOnClickListener(
               v -> {
                   Intent intent = new Intent(getContext(), ContinueTakyeemActivity.class);
@@ -145,7 +145,7 @@ public class TakyeemFragment extends androidx.fragment.app.Fragment {
                   intent.putExtra("Volname", Volname);
                   startActivity(intent);
               });
-    return view;
+      return view;
   }
 
   @Override

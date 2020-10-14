@@ -257,7 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/new_jf"
-            android:text="@string/dummy_far3"
+            android:text="-"
             android:textColor="@color/new_blue_dark"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView16"

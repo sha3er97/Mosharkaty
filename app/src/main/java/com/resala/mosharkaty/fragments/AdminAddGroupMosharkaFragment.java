@@ -46,21 +46,23 @@ import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
-  public static String[] mosharkaTypes = {
-          "استكشاف",
-          "ولاد عم",
-          "اجتماع",
-          "اتصالات",
-          "شيت",
-          "معرض / قافلة",
-          "كرنفال",
-          "نقل",
-          "فرز",
-          "سيشن / اورينتيشن",
-          "دعايا",
-          "نزول الفرع",
-          "اخري / بيت"
-  };
+    public static String[] mosharkaTypes = {
+            "استكشاف",
+            "ولاد عم",
+            "اجتماع",
+            "اتصالات",
+            "شيت",
+            "معرض / قافلة",
+            "كرنفال",
+            "نقل",
+            "فرز",
+            "سيشن / اورينتيشن",
+            "دعايا",
+            "اوتينج",
+            "كامب",
+            "نزول الفرع",
+            "اخري / بيت"
+    };
   View view;
   ArrayList<String> users = new ArrayList<>();
   ArrayList<String> phones = new ArrayList<>();
@@ -116,16 +118,16 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
           @NonNull LayoutInflater inflater,
           @Nullable ViewGroup container,
           @Nullable Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_admin_add_group_mosharka, container, false);
-    database = FirebaseDatabase.getInstance();
-    final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
-    final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
+      view = inflater.inflate(R.layout.fragment_admin_add_group_mosharka, container, false);
+      database = FirebaseDatabase.getInstance();
+      final DatabaseReference MosharkatRef = database.getReference("mosharkat").child(userBranch);
+      final DatabaseReference ClosingRef = database.getReference("closings").child(userBranch);
 
-    eText = view.findViewById(R.id.mosharkaDate);
-    addMosharka_btn = view.findViewById(R.id.confirmMosharka);
-    spin = view.findViewById(R.id.spinner);
-    users_spin = view.findViewById(R.id.spinner2);
-    phoneSpinner = view.findViewById(R.id.phoneSpinner);
+      eText = view.findViewById(R.id.mosharkaDate);
+      addMosharka_btn = view.findViewById(R.id.confirmMosharka);
+      spin = view.findViewById(R.id.spinner);
+      users_spin = view.findViewById(R.id.spinner2);
+      phoneSpinner = view.findViewById(R.id.phoneSpinner);
     editTextPhone = view.findViewById(R.id.editTextPhone);
     volunteerName_et = view.findViewById(R.id.volInGroupTV);
     nasheetSpinner = view.findViewById(R.id.nasheetSpinner);
@@ -135,23 +137,23 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
     day = cldr.get(Calendar.DAY_OF_MONTH);
     month = cldr.get(Calendar.MONTH);
     year = cldr.get(Calendar.YEAR);
-    eText.setInputType(InputType.TYPE_NULL);
-    eText.setOnClickListener(
-            v -> {
-              // date picker dialog
-              picker =
-                      new DatePickerDialog(
-                              getContext(),
-                              (view, year, monthOfYear, dayOfMonth) ->
-                                      eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year),
-                              year,
-                              month,
-                              day);
-              picker.show();
-            });
+      eText.setInputType(InputType.TYPE_NULL);
+      eText.setOnClickListener(
+              v -> {
+                  // date picker dialog
+                  picker =
+                          new DatePickerDialog(
+                                  getContext(),
+                                  (view, year, monthOfYear, dayOfMonth) ->
+                                          eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year),
+                                  year,
+                                  month,
+                                  day);
+                  picker.show();
+              });
 
-    ArrayAdapter<String> aa =
-            new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
+      ArrayAdapter<String> aa =
+              new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
     aa.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     spin.setAdapter(aa);
@@ -190,8 +192,8 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
     /**
      * ************************************************************************************************************
      */
-    final ArrayAdapter<String> ad =
-            new ArrayAdapter<>(getContext(), R.layout.spinner_item, allNsheet);
+      final ArrayAdapter<String> ad =
+              new ArrayAdapter<>(getContext(), R.layout.spinner_item, allNsheet);
     ad.setDropDownViewResource(R.layout.spinner_dropdown);
     // Setting the ArrayAdapter data on the Spinner
     nasheetSpinner.setAdapter(ad);
@@ -199,149 +201,149 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
     nasheetSpinner.setOnItemSelectedListener(this);
 
     nasheetRef = database.getReference("nasheet").child(userBranch);
-    nasheetlistener =
-            nasheetRef.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        allNsheet.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
-                          assert nasheetVolunteer != null;
-                          allNsheet.add(snapshot.getKey().trim());
-                        }
-                        Collections.sort(allNsheet); // alphapetical
-                        ad.notifyDataSetChanged();
-                      }
+      nasheetlistener =
+              nasheetRef.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              allNsheet.clear();
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
+                                  assert nasheetVolunteer != null;
+                                  allNsheet.add(snapshot.getKey().trim());
+                              }
+                              Collections.sort(allNsheet); // alphapetical
+                              ad.notifyDataSetChanged();
+                          }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
     /**
      * *************************************************************************************************************
      */
-    String branchSheetLink =
-            userBranch.equals(branches[9])
-                    ? branchesSheets.get(branches[0])
-                    : branchesSheets.get(userBranch);
+      String branchSheetLink =
+              userBranch.equals(branches[9])
+                      ? branchesSheets.get(branches[0])
+                      : branchesSheets.get(userBranch);
     assert branchSheetLink != null;
     DatabaseReference liveSheet = database.getReference(branchSheetLink);
     fari2Ref = liveSheet.child("month_mosharkat");
-    final ArrayAdapter<String> ae =
-            new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
+      final ArrayAdapter<String> ae =
+              new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
     ae.setDropDownViewResource(R.layout.spinner_dropdown);
     fari2Spinner.setSelection(0, false);
     fari2Spinner.setOnItemSelectedListener(this);
     fari2Spinner.setAdapter(ae);
 
-    fari2listener =
-            fari2Ref.addValueEventListener(
-                    new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        allFari2.clear();
+      fari2listener =
+              fari2Ref.addValueEventListener(
+                      new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              allFari2.clear();
 
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          Volunteer user = snapshot.getValue(Volunteer.class);
-                          assert user != null;
-                          allFari2.add(user.Volname.trim());
-                        }
-                        Collections.sort(allFari2); // alphapetical
-                        ae.notifyDataSetChanged();
-                      }
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                  Volunteer user = snapshot.getValue(Volunteer.class);
+                                  assert user != null;
+                                  allFari2.add(user.Volname.trim());
+                              }
+                              Collections.sort(allFari2); // alphapetical
+                              ae.notifyDataSetChanged();
+                          }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                      }
-                    });
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError error) {
+                              // Failed to read value
+                              Log.w(TAG, "Failed to read value.", error.toException());
+                          }
+                      });
     /**
      * *************************************************************************************************************
      */
     // buttons click listener
     addMosharka_btn.setOnClickListener(
             v -> {
-              if (!validateForm()) return;
+                if (!validateForm()) return;
 
-              appMosharkatRef = database.getReference("mosharkat").child(userBranch);
-              String date = eText.getText().toString();
-              String[] dateParts = date.split("/", 3);
-              appMosharkatRef
-                      .child(dateParts[1])
-                      .addListenerForSingleValueEvent(
-                              new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                  boolean duplicate = false;
-                                  boolean isHome = false;
-                                  addMosharka_btn.setEnabled(false);
-                                  addMosharka_btn.setBackgroundColor(
-                                          getResources()
-                                                  .getColor(R.color.common_google_signin_btn_text_light_disabled));
-                                  for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                                    if (mosharka != null) {
-                                      if (volunteerName_et
-                                              .getText()
-                                              .toString()
-                                              .equals(mosharka.getVolname().trim())
-                                              && mosharka.getMosharkaType().matches("(.*)بيت(.*)"))
-                                        isHome = true;
-                                      if (volunteerName_et
-                                              .getText()
-                                              .toString()
-                                              .equals(mosharka.getVolname().trim())
-                                              && (eText.getText().toString().equals(mosharka.getMosharkaDate()))
-                                              || (spin.getSelectedItem().toString().matches("(.*)بيت(.*)")
-                                              && isHome)) {
-                                        duplicate = true;
-                                        break;
-                                      }
+                appMosharkatRef = database.getReference("mosharkat").child(userBranch);
+                String date = eText.getText().toString();
+                String[] dateParts = date.split("/", 3);
+                appMosharkatRef
+                        .child(dateParts[1])
+                        .addListenerForSingleValueEvent(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        boolean duplicate = false;
+                                        boolean isHome = false;
+                                        addMosharka_btn.setEnabled(false);
+                                        addMosharka_btn.setBackgroundColor(
+                                                getResources()
+                                                        .getColor(R.color.common_google_signin_btn_text_light_disabled));
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                            if (mosharka != null) {
+                                                if (volunteerName_et
+                                                        .getText()
+                                                        .toString()
+                                                        .equals(mosharka.getVolname().trim())
+                                                        && mosharka.getMosharkaType().matches("(.*)بيت(.*)"))
+                                                    isHome = true;
+                                                if (volunteerName_et
+                                                        .getText()
+                                                        .toString()
+                                                        .equals(mosharka.getVolname().trim())
+                                                        && (eText.getText().toString().equals(mosharka.getMosharkaDate()))
+                                                        || (spin.getSelectedItem().toString().matches("(.*)بيت(.*)")
+                                                        && isHome)) {
+                                                    duplicate = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (!duplicate) {
+                                            String key =
+                                                    System.currentTimeMillis() / (1000 * 60)
+                                                            + "&"
+                                                            + dateParts[0]
+                                                            + "&"
+                                                            + volunteerName_et.getText().toString().trim();
+                                            DatabaseReference currentMosharka =
+                                                    MosharkatRef.child(String.valueOf(dateParts[1])).child(key);
+                                            currentMosharka.setValue(
+                                                    new MosharkaItem(
+                                                            volunteerName_et.getText().toString().trim(),
+                                                            eText.getText().toString(),
+                                                            spin.getSelectedItem().toString()));
+
+                                            ClosingRef.child(String.valueOf(dateParts[1]))
+                                                    .child(String.valueOf(dateParts[0]))
+                                                    .setValue(0);
+                                            Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
+                                                    .show();
+                                            editTextPhone.setText("");
+                                            volunteerName_et.setText("");
+                                        } else {
+                                            Toast.makeText(
+                                                    getContext(),
+                                                    "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
+                                                    Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                        addMosharka_btn.setEnabled(true);
+                                        addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
                                     }
-                                  }
-                                  if (!duplicate) {
-                                    String key =
-                                            System.currentTimeMillis() / (1000 * 60)
-                                                    + "&"
-                                                    + dateParts[0]
-                                                    + "&"
-                                                    + volunteerName_et.getText().toString().trim();
-                                    DatabaseReference currentMosharka =
-                                            MosharkatRef.child(String.valueOf(dateParts[1])).child(key);
-                                    currentMosharka.setValue(
-                                            new MosharkaItem(
-                                                    volunteerName_et.getText().toString().trim(),
-                                                    eText.getText().toString(),
-                                                    spin.getSelectedItem().toString()));
 
-                                    ClosingRef.child(String.valueOf(dateParts[1]))
-                                            .child(String.valueOf(dateParts[0]))
-                                            .setValue(0);
-                                    Toast.makeText(getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
-                                            .show();
-                                    editTextPhone.setText("");
-                                    volunteerName_et.setText("");
-                                  } else {
-                                    Toast.makeText(
-                                            getContext(),
-                                            "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
-                                            Toast.LENGTH_SHORT)
-                                            .show();
-                                  }
-                                  addMosharka_btn.setEnabled(true);
-                                  addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                  // Failed to read value
-                                  Log.w(TAG, "Failed to read value.", error.toException());
-                                }
-                              });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w(TAG, "Failed to read value.", error.toException());
+                                    }
+                                });
             });
 
     return view;
@@ -351,31 +353,31 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     //    editTextPhone = view.findViewById(R.id.editTextPhone);
     //    volunteerName_et = view.findViewById(R.id.volInGroupTV);
-    if (adapterView.getId() == R.id.spinner2
-            || adapterView.getId() == R.id.nasheetSpinner
-            || adapterView.getId() == R.id.fari2Spinner) {
-      volunteerName_et.setText(adapterView.getItemAtPosition(i).toString().trim());
-      try {
-        normalVolunteer normalVolunteer =
-                allVolunteersByName.get(adapterView.getItemAtPosition(i).toString().trim());
-        assert normalVolunteer != null;
-        editTextPhone.setText(normalVolunteer.phone_text);
-      } catch (NullPointerException e) {
-        volunteerName_et.setText("");
-        editTextPhone.setText("الاسم غير موجود في الشيت حاليا");
-      }
+      if (adapterView.getId() == R.id.spinner2
+              || adapterView.getId() == R.id.nasheetSpinner
+              || adapterView.getId() == R.id.fari2Spinner) {
+          volunteerName_et.setText(adapterView.getItemAtPosition(i).toString().trim());
+          try {
+              normalVolunteer normalVolunteer =
+                      allVolunteersByName.get(adapterView.getItemAtPosition(i).toString().trim());
+              assert normalVolunteer != null;
+              editTextPhone.setText(normalVolunteer.phone_text);
+          } catch (NullPointerException e) {
+              volunteerName_et.setText("");
+              editTextPhone.setText("الاسم غير موجود في الشيت حاليا");
+          }
     } else if (adapterView.getId() == R.id.phoneSpinner) {
       editTextPhone.setText(adapterView.getItemAtPosition(i).toString());
-      normalVolunteer normalVolunteer =
-              allVolunteersByPhone.get(adapterView.getItemAtPosition(i).toString().trim());
+          normalVolunteer normalVolunteer =
+                  allVolunteersByPhone.get(adapterView.getItemAtPosition(i).toString().trim());
       assert normalVolunteer != null;
       volunteerName_et.setText(normalVolunteer.Volname.trim());
     }
   }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-  }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 
   private boolean validateForm() {
     String date = eText.getText().toString();
@@ -386,10 +388,10 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
     } else if (Integer.parseInt(parts[2]) > year
             || Integer.parseInt(parts[1]) > month + 1
             || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
-      eText.setError("you can't choose a date in the future.");
-      return false;
+        eText.setError("you can't choose a date in the future.");
+        return false;
     } else {
-      eText.setError(null);
+        eText.setError(null);
     }
 
     String name = volunteerName_et.getText().toString().trim();
