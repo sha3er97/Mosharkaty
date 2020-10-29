@@ -358,7 +358,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                             if (Integer.parseInt(splittedDate[0]) >= start_day
                                     && Integer.parseInt(splittedDate[0]) <= end_day) {
                               if (event.type.matches("(.*)اورينتيشن(.*)")) OrientationCounter++;
-                              if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
+                              else if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
                               else EventsCounter++;
                             }
                           }

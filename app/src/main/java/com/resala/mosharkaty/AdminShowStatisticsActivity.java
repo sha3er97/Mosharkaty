@@ -35,61 +35,69 @@ import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowStatisticsActivity extends AppCompatActivity {
-  FirebaseDatabase database;
-  int month;
-  UserHistoryAdapter adapter;
-  ArrayList<UserHistoryItem> userHistoryItems = new ArrayList<>();
-  DatabaseReference MosharkatRef;
-  ValueEventListener mosharkatlistener;
-  boolean fari2Filter;
-  CheckBox filterFari2Check;
-  DatabaseReference usersRef;
-  ArrayList<String> allFari2 = new ArrayList<>();
+    FirebaseDatabase database;
+    int month;
+    UserHistoryAdapter adapter;
+    ArrayList<UserHistoryItem> userHistoryItems = new ArrayList<>();
+    DatabaseReference MosharkatRef;
+    ValueEventListener mosharkatlistener;
+    boolean fari2Filter;
+    CheckBox filterFari2Check;
+    boolean frozenFilter;
+    CheckBox filterFrozenCheck;
+    DatabaseReference usersRef;
+    ArrayList<String> allFari2 = new ArrayList<>();
+    ArrayList<String> allFrozen = new ArrayList<>();
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_admin_show_statistics);
-    database = FirebaseDatabase.getInstance();
-    RecyclerView recyclerView = findViewById(R.id.mosharkatnaRecyclerView);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_show_statistics);
+        database = FirebaseDatabase.getInstance();
+        RecyclerView recyclerView = findViewById(R.id.mosharkatnaRecyclerView);
     TextView current_month = findViewById(R.id.current_month);
     ImageButton refreshBtn = findViewById(R.id.refresh_btn);
-    refreshBtn.setEnabled(false); // by default
-    final Calendar cldr = Calendar.getInstance(Locale.US);
-    month = cldr.get(Calendar.MONTH) + 1;
-    current_month.setText(String.valueOf(month));
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    adapter = new UserHistoryAdapter(userHistoryItems, getApplicationContext());
-    recyclerView.setAdapter(adapter);
-    filterFari2Check = findViewById(R.id.Filtercheckbox);
-    filterFari2Check.setOnClickListener(v -> fari2Filter = filterFari2Check.isChecked());
-    String branchSheetLink =
-            userBranch.equals(branches[9])
-                    ? branchesSheets.get(branches[0])
-                    : branchesSheets.get(userBranch);
-    assert branchSheetLink != null;
-    DatabaseReference liveSheet = database.getReference(branchSheetLink);
-    usersRef = liveSheet.child("month_mosharkat");
-    usersRef.addListenerForSingleValueEvent(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    allFari2.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Volunteer user = snapshot.getValue(Volunteer.class);
-                        if (user != null && !user.degree.matches("(.*)مجمد(.*)"))
-                            allFari2.add(user.Volname.trim()); // add all team
+        refreshBtn.setEnabled(false); // by default
+        final Calendar cldr = Calendar.getInstance(Locale.US);
+        month = cldr.get(Calendar.MONTH) + 1;
+        current_month.setText(String.valueOf(month));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new UserHistoryAdapter(userHistoryItems, getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        filterFari2Check = findViewById(R.id.Filtercheckbox);
+        filterFari2Check.setOnClickListener(v -> fari2Filter = filterFari2Check.isChecked());
+        filterFrozenCheck = findViewById(R.id.Filter2checkbox);
+        filterFrozenCheck.setOnClickListener(v -> frozenFilter = filterFrozenCheck.isChecked());
+        String branchSheetLink =
+                userBranch.equals(branches[9])
+                        ? branchesSheets.get(branches[0])
+                        : branchesSheets.get(userBranch);
+        assert branchSheetLink != null;
+        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        usersRef = liveSheet.child("month_mosharkat");
+        usersRef.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        allFari2.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Volunteer user = snapshot.getValue(Volunteer.class);
+                            if (user != null) {
+                                if (user.degree.matches("(.*)مجمد(.*)"))
+                                    allFrozen.add(user.Volname.trim()); // add all team
+                                else allFari2.add(user.Volname.trim()); // add all team
+                            }
+                        }
+                        refreshBtn.setEnabled(true);
                     }
-                    refreshBtn.setEnabled(true);
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
   }
 
   @Override
@@ -101,7 +109,7 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
   }
 
   public void refreshStatistics(View view) {
-    MosharkatRef = database.getReference("mosharkat").child(userBranch);
+      MosharkatRef = database.getReference("mosharkat").child(userBranch);
       mosharkatlistener =
               MosharkatRef.child(String.valueOf(month))
                       .addValueEventListener(
@@ -115,8 +123,25 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
                                           MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
                                           String[] splittedDate;
                                           if (mosharka != null) {
-                                              if (fari2Filter && !allFari2.contains(mosharka.getVolname().trim()))
-                                                  continue;
+                                              if (fari2Filter) {
+                                                  if (frozenFilter) { // both
+                                                      if (!allFari2.contains(mosharka.getVolname().trim())
+                                                              && !allFrozen.contains(mosharka.getVolname().trim()))
+                                                          continue;
+                                                  } else { // fari2 only
+                                                      if (!allFari2.contains(mosharka.getVolname().trim()))
+                                                          continue;
+                                                  }
+                                              } else if (frozenFilter) { // frozen only
+                                                  if (!allFrozen.contains(mosharka.getVolname().trim()))
+                                                      continue;
+                                              }
+                                              //                        if (fari2Filter &&
+                                              // !allFari2.contains(mosharka.getVolname().trim()))
+                                              //                          continue;
+                                              //                        if (frozenFilter &&
+                                              // !allFrozen.contains(mosharka.getVolname().trim()))
+                                              //                          continue;
                                               splittedDate = mosharka.getMosharkaDate().split("/", 3);
                                               if (nameCounting.containsKey(mosharka.getVolname().trim())) {
                                                   // If char is present in charCountMap,

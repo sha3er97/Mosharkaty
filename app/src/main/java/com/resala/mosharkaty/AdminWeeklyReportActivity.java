@@ -346,23 +346,24 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
     TextView orientationCount = findViewById(R.id.orientationCount);
     TextView coursesCount = findViewById(R.id.coursesCount);
     EventsRef = database.getReference("reports").child(userBranch);
-    EventsRef.child(String.valueOf(selected_month)).addListenerForSingleValueEvent(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int EventsCounter = 0;
-                int OrientationCounter = 0;
-                int CoursesCounter = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  EventReport event = snapshot.getValue(EventReport.class);
-                  if (event != null) {
-                    String[] splittedDate = event.date.split("/", 2);
-                    if (Integer.parseInt(splittedDate[0]) >= start_day
-                            && Integer.parseInt(splittedDate[0]) <= end_day) {
-                      if (event.type.matches("(.*)اورينتيشن(.*)")) OrientationCounter++;
-                      if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
-                      else EventsCounter++;
-                    }
+    EventsRef.child(String.valueOf(selected_month))
+            .addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int EventsCounter = 0;
+                        int OrientationCounter = 0;
+                        int CoursesCounter = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                          EventReport event = snapshot.getValue(EventReport.class);
+                          if (event != null) {
+                            String[] splittedDate = event.date.split("/", 2);
+                            if (Integer.parseInt(splittedDate[0]) >= start_day
+                                    && Integer.parseInt(splittedDate[0]) <= end_day) {
+                              if (event.type.matches("(.*)اورينتيشن(.*)")) OrientationCounter++;
+                              else if (event.type.matches("(.*)سيشن(.*)")) CoursesCounter++;
+                              else EventsCounter++;
+                            }
                   }
                 }
                 eventsCount.setText(String.valueOf(EventsCounter));

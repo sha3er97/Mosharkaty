@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/btn_gradient_blue"
         android:onClick="refreshStatistics"
         android:padding="16dp"
@@ -52,12 +52,12 @@
         android:id="@+id/mosharkatnaRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/refresh_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/checkbox2Text" />
 
     <CheckBox
         android:id="@+id/Filtercheckbox"
@@ -65,13 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/mosharkatnaRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
-        android:id="@+id/checkbox2Text"
+        android:id="@+id/checkboxText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
@@ -82,4 +80,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/Filtercheckbox"
         app:layout_constraintEnd_toStartOf="@+id/Filtercheckbox"
         app:layout_constraintTop_toTopOf="@+id/Filtercheckbox" />
+
+    <CheckBox
+        android:id="@+id/Filter2checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Filtercheckbox" />
+
+    <TextView
+        android:id="@+id/checkbox2Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:fontFamily="@font/new_jf"
+        android:gravity="right"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/magamad_filter_text"
+        android:textColor="@color/new_text_blue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Filter2checkbox"
+        app:layout_constraintEnd_toStartOf="@+id/Filter2checkbox"
+        app:layout_constraintStart_toStartOf="@+id/current_month"
+        app:layout_constraintTop_toTopOf="@+id/Filter2checkbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
