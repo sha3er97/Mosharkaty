@@ -201,6 +201,30 @@
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/points"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="نقاط الجمعية"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </TableRow>
         </TableLayout>
 
         <TableLayout
@@ -218,17 +242,30 @@
             <TableRow android:background="@drawable/gray_transparent_border">
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
                     android:paddingHorizontal="3dip"
                     android:paddingVertical="8dip"
-                    android:text="اخري"
+                    android:text="جدد"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingVertical="8dip"
+                    android:layout_height="match_parent"
+                    android:text="داخل\nمتابعة"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
@@ -237,9 +274,10 @@
                     android:text="نشيط"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
@@ -248,9 +286,10 @@
                     android:text="مشروع"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
@@ -259,9 +298,10 @@
                     android:text="مسؤول"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
@@ -274,6 +314,17 @@
             </TableRow>
 
             <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/noobsCount"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:background="@drawable/gray_transparent_border"
@@ -332,6 +383,17 @@
             <TableRow android:background="@drawable/gray_transparent_border">
 
                 <TextView
+                    android:id="@+id/noobsAttended"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/normalAttended"
                     android:background="@drawable/gray_gray_border"
                     android:fontFamily="@font/new_jf"
@@ -379,11 +441,11 @@
                     android:background="@drawable/gray_side_table_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:layout_height="match_parent"
                     android:text="شارك منهم"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </TableRow>
 
             <TableRow android:background="@drawable/gray_transparent_border">
@@ -392,57 +454,79 @@
                     android:background="@drawable/gray_transparent_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:layout_height="match_parent"
                     android:text="@string/dummy_number"
                     android:textAlignment="center"
                     android:textColor="@color/new_text_black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/nasheetPercent"
                     android:background="@drawable/gray_transparent_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:layout_height="match_parent"
                     android:text="@string/dummy_number"
                     android:textAlignment="center"
                     android:textColor="@color/new_text_black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/mshro3Percent"
                     android:background="@drawable/gray_transparent_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:layout_height="match_parent"
                     android:text="@string/dummy_number"
                     android:textAlignment="center"
                     android:textColor="@color/new_text_black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/mas2olPercent"
                     android:background="@drawable/gray_transparent_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:layout_height="match_parent"
                     android:text="@string/dummy_number"
                     android:textAlignment="center"
                     android:textColor="@color/new_text_black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:background="@drawable/gray_side_table_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:paddingVertical="5dp"
+                    android:layout_height="match_parent"
                     android:text="نسبة مشاركة"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </TableRow>
 
             <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/noobsMosharkat"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/normalMosharkat"
@@ -492,14 +576,26 @@
                     android:background="@drawable/gray_side_table_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:paddingVertical="5dp"
+                    android:layout_height="match_parent"
                     android:text="عدد مشاركات"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </TableRow>
 
             <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/noobsAverage"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/normalAverage"
@@ -549,14 +645,27 @@
                     android:background="@drawable/gray_side_table_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:paddingVertical="5dp"
+                    android:layout_height="match_parent"
                     android:text="متوسط مشاركات"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </TableRow>
 
             <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/noobsAverage8"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_gray_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/normalAverage8"
@@ -610,11 +719,12 @@
                     android:background="@drawable/gray_side_table_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
-                    android:padding="3dip"
+                    android:paddingVertical="5dp"
+                    android:layout_height="match_parent"
                     android:text="متوسط مقفول\n علي 8"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </TableRow>
         </TableLayout>
 

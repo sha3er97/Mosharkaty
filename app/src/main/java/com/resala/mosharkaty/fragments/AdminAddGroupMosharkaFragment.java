@@ -361,13 +361,12 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
             || adapterView.getId() == R.id.fari2Spinner) {
       volunteerName_et.setText(adapterView.getItemAtPosition(i).toString().trim());
       try {
-        normalVolunteer normalVolunteer =
-                allVolunteersByName.get(adapterView.getItemAtPosition(i).toString().trim());
-        assert normalVolunteer != null;
-        editTextPhone.setText(normalVolunteer.phone_text);
-      } catch (NullPointerException e) {
-        volunteerName_et.setText("");
-        editTextPhone.setText("الاسم غير موجود في الشيت حاليا");
+          normalVolunteer normalVolunteer =
+                  allVolunteersByName.get(adapterView.getItemAtPosition(i).toString().trim());
+          editTextPhone.setText(normalVolunteer.phone_text);
+      } catch (Exception e) {
+          volunteerName_et.setText("");
+          editTextPhone.setText("الاسم غير موجود في الشيت حاليا");
       }
     } else if (adapterView.getId() == R.id.phoneSpinner) {
       editTextPhone.setText(adapterView.getItemAtPosition(i).toString());

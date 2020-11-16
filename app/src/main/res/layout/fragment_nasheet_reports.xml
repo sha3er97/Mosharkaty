@@ -29,12 +29,13 @@
                     android:gravity="center"
                     android:paddingHorizontal="3dip"
                     android:paddingVertical="8dip"
-                    android:text="جدد"
+                    android:text="استمارات\nجديدة"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"
@@ -46,6 +47,7 @@
                     android:textSize="22sp" />
 
                 <TextView
+                    android:layout_height="match_parent"
                     android:background="@drawable/gray_header_border"
                     android:fontFamily="@font/new_jf"
                     android:gravity="center"

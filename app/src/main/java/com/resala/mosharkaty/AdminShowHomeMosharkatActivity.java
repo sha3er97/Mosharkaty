@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.ui.adapters.UsersAdapter;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
-import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,8 +25,7 @@ import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.HomeFragment.globalFari2Names;
 
 public class AdminShowHomeMosharkatActivity extends AppCompatActivity {
     FirebaseDatabase database;
@@ -36,9 +34,7 @@ public class AdminShowHomeMosharkatActivity extends AppCompatActivity {
     UsersAdapter adapter2;
     ArrayList<String> notCompletedUsers = new ArrayList<>();
     int month;
-    DatabaseReference usersRef;
     DatabaseReference MosharkatRef;
-    ValueEventListener mosharkatlistener;
     TextView completedCount, notCompletedCount;
     private ProgressDialog progress;
 
@@ -71,75 +67,41 @@ public class AdminShowHomeMosharkatActivity extends AppCompatActivity {
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
 
-        String branchSheetLink =
-                userBranch.equals(branches[9])
-                        ? branchesSheets.get(branches[0])
-                        : branchesSheets.get(userBranch);
-        assert branchSheetLink != null;
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
-        usersRef = liveSheet.child("month_mosharkat");
-        usersRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        notCompletedUsers.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Volunteer user = snapshot.getValue(Volunteer.class);
-                            if (user != null && !user.degree.matches("(.*)مجمد(.*)"))
-                                notCompletedUsers.add(user.Volname); // add all team
-                        }
-                        Collections.sort(notCompletedUsers); // alphabetical
-                        checkCompleted();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
+        notCompletedUsers.addAll(globalFari2Names); // add all team
+        checkCompleted();
     }
 
     private void checkCompleted() {
         MosharkatRef = database.getReference("mosharkat").child(userBranch);
-        mosharkatlistener =
-                MosharkatRef.child(String.valueOf(month))
-                        .addValueEventListener(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        completedUsers.clear();
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                                            if (mosharka != null) {
-                                                if (mosharka.getMosharkaType().matches("(.*)بيت(.*)")) {
-                                                    notCompletedUsers.remove(mosharka.getVolname());
-                                                    completedUsers.add(mosharka.getVolname());
-                                                }
-                                            }
+        MosharkatRef.child(String.valueOf(month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                completedUsers.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                    if (mosharka != null) {
+                                        if (mosharka.getMosharkaType().matches("(.*)بيت(.*)")) {
+                                            notCompletedUsers.remove(mosharka.getVolname());
+                                            completedUsers.add(mosharka.getVolname());
                                         }
-                                        Collections.sort(completedUsers);
-                                        adapter.notifyDataSetChanged();
-                                        adapter2.notifyDataSetChanged();
-                                        completedCount.setText(String.valueOf(completedUsers.size()));
-                                        notCompletedCount.setText(String.valueOf(notCompletedUsers.size()));
-                                        // To dismiss the dialog
-                                        progress.dismiss();
                                     }
+                                }
+                                Collections.sort(completedUsers);
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                                completedCount.setText(String.valueOf(completedUsers.size()));
+                                notCompletedCount.setText(String.valueOf(notCompletedUsers.size()));
+                                // To dismiss the dialog
+                                progress.dismiss();
+                            }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Failed to read value
-                                        Log.w(TAG, "Failed to read value.", error.toException());
-                                    }
-                                });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (MosharkatRef != null && mosharkatlistener != null) {
-            MosharkatRef.removeEventListener(mosharkatlistener);
-        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
     }
 }

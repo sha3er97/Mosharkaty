@@ -7,11 +7,47 @@
     android:background="#ffffff"
     tools:context=".MessagesReadActivity">
 
+    <Button
+        android:id="@+id/confirmMessage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_gradient_blue"
+        android:fontFamily="@font/new_jf"
+        android:onClick="sendMessage"
+        android:text="ارسال\nالرسالة"
+        android:textColor="@color/new_white_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/messageText"
+        app:layout_constraintEnd_toStartOf="@+id/messageText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/messageText" />
+
+    <EditText
+        android:id="@+id/messageText"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/my_edit_text_border"
+        android:fontFamily="@font/new_jf"
+        android:gravity="center"
+        android:hint="Draft message"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        android:textColor="@color/new_text_black"
+        android:textColorHint="@color/new_hint_color"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/confirmMessage" />
+
     <TextView
         android:id="@+id/passwordTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/new_jf"
         android:text="@string/password"
@@ -43,11 +79,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:background="@drawable/btn_gradient_blue"
         android:onClick="refreshMessages"
+        android:padding="16dp"
         android:src="@drawable/refresh_icon"
         android:tint="@color/new_text_black"
-        android:background="@drawable/btn_gradient_blue"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/titleShowMessages"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleShowMessages" />
@@ -71,9 +107,11 @@
         android:id="@+id/messagesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="54dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleShowMessages" />
 
     <TextView
@@ -81,8 +119,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/dummy_number"
         android:fontFamily="@font/new_jf"
+        android:text="@string/dummy_number"
         android:textColor="@color/new_text_blue"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/titleShowMessages"

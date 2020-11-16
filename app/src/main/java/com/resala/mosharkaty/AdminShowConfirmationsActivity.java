@@ -47,16 +47,16 @@ public class AdminShowConfirmationsActivity extends AppCompatActivity
     UsersAdapter adapter;
     DatabaseReference EventsRef;
     DatabaseReference confirmationsRef;
-  TextView comingCount;
-  TextView maybeCount;
-  TextView notComingCount;
-  TextView totalComing;
-  TextView totalConfirmations;
-  TextView percent;
-  ProgressBar attendanceBar;
-  ValueEventListener EventsListener;
+    TextView comingCount;
+    TextView maybeCount;
+    TextView notComingCount;
+    TextView totalComing;
+    TextView totalConfirmations;
+    TextView percent;
+    ProgressBar attendanceBar;
+    ValueEventListener EventsListener;
 
-  @Override
+    @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin_show_confirmations);
@@ -74,61 +74,61 @@ public class AdminShowConfirmationsActivity extends AppCompatActivity
 
     final Calendar cldr = Calendar.getInstance(Locale.US);
     month = cldr.get(Calendar.MONTH) + 1;
-    day = cldr.get(Calendar.DAY_OF_MONTH);
-    // recycler view
-    RecyclerView recyclerView = findViewById(R.id.confirmationsRecyclerView);
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    adapter = new UsersAdapter(filtered_confirmations, getApplicationContext());
-    recyclerView.setAdapter(adapter);
+        day = cldr.get(Calendar.DAY_OF_MONTH);
+        // recycler view
+        RecyclerView recyclerView = findViewById(R.id.confirmationsRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new UsersAdapter(filtered_confirmations, getApplicationContext());
+        recyclerView.setAdapter(adapter);
 
-    // spinner
-    events.add(" ");
-      final ArrayAdapter<String> ab =
-              new ArrayAdapter<>(AdminShowConfirmationsActivity.this, R.layout.spinner_item, events);
-    ab.setDropDownViewResource(R.layout.spinner_dropdown);
-    // Setting the ArrayAdapter data on the Spinner
-    eventSpinner.setSelection(0, false);
-    eventSpinner.setOnItemSelectedListener(this);
-    eventSpinner.setAdapter(ab);
-      EventsListener =
-              EventsRef.addValueEventListener(
-                      new ValueEventListener() {
-                          @Override
-                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                              events.clear();
-                              if (userBranch != null && dataSnapshot.hasChild(userBranch)) {
-                                  for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
-                                      Event event = snapshot.getValue(Event.class);
-                                      if (event != null) {
-                                          String[] splittedDate = event.date.split("/", 2);
-                                          if (Integer.parseInt(splittedDate[1]) == month) {
-                                              events.add(event.Eventname);
-                                          }
-                                      }
-                                  }
-                              }
-                              if (dataSnapshot.hasChild(branches[9])) {
-                                  for (DataSnapshot snapshot : dataSnapshot.child(branches[9]).getChildren()) {
-                                      Event event = snapshot.getValue(Event.class);
-                                      if (event != null) {
-                                          String[] splittedDate = event.date.split("/", 2);
-                                          if (Integer.parseInt(splittedDate[1]) == month) {
-                                              events.add(event.Eventname);
-                                          }
-                                      }
-                                  }
-                                  ab.notifyDataSetChanged();
-                              }
-                          }
+        // spinner
+        events.add(" ");
+        final ArrayAdapter<String> ab =
+                new ArrayAdapter<>(AdminShowConfirmationsActivity.this, R.layout.spinner_item, events);
+        ab.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        eventSpinner.setSelection(0, false);
+        eventSpinner.setOnItemSelectedListener(this);
+        eventSpinner.setAdapter(ab);
+        EventsListener =
+                EventsRef.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                events.clear();
+                                if (userBranch != null && dataSnapshot.hasChild(userBranch)) {
+                                    for (DataSnapshot snapshot : dataSnapshot.child(userBranch).getChildren()) {
+                                        Event event = snapshot.getValue(Event.class);
+                                        if (event != null) {
+                                            String[] splittedDate = event.date.split("/", 2);
+                                            if (Integer.parseInt(splittedDate[1]) == month) {
+                                                events.add(event.Eventname);
+                                            }
+                                        }
+                                    }
+                                }
+                                if (dataSnapshot.hasChild(branches[9])) {
+                                    for (DataSnapshot snapshot : dataSnapshot.child(branches[9]).getChildren()) {
+                                        Event event = snapshot.getValue(Event.class);
+                                        if (event != null) {
+                                            String[] splittedDate = event.date.split("/", 2);
+                                            if (Integer.parseInt(splittedDate[1]) == month) {
+                                                events.add(event.Eventname);
+                                            }
+                                        }
+                                    }
+                                    ab.notifyDataSetChanged();
+                                }
+                            }
 
-                          @Override
-                          public void onCancelled(@NonNull DatabaseError error) {
-                              // Failed to read value
-                              Log.w(TAG, "Failed to read value.", error.toException());
-                          }
-                      });
-  }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
 
   public void filterComing(View view) {
       filtered_confirmations.clear();
@@ -227,11 +227,11 @@ public class AdminShowConfirmationsActivity extends AppCompatActivity
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (EventsRef != null && EventsListener != null) {
-      EventsRef.removeEventListener(EventsListener);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventsRef != null && EventsListener != null) {
+            EventsRef.removeEventListener(EventsListener);
+        }
     }
-  }
 }

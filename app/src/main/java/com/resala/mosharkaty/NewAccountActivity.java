@@ -14,13 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -49,86 +45,85 @@ public class NewAccountActivity extends AppCompatActivity
             "المقطم",
             "مركزي"
     };
-  Spinner spin;
-  ImageView logo;
+    Spinner spin;
+    ImageView logo;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_new_account);
-    mAuth = FirebaseAuth.getInstance();
-    email_et = findViewById(R.id.newAccountEmail);
-    password_et = findViewById(R.id.newAccountPass);
-    name_et = findViewById(R.id.newAccountName);
-    code_et = findViewById(R.id.newAccountCode);
-    logo = findViewById(R.id.logo);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_account);
+        mAuth = FirebaseAuth.getInstance();
+        email_et = findViewById(R.id.newAccountEmail);
+        password_et = findViewById(R.id.newAccountPass);
+        name_et = findViewById(R.id.newAccountName);
+        code_et = findViewById(R.id.newAccountCode);
+        logo = findViewById(R.id.logo);
 
-      email_et.setOnFocusChangeListener(
-              (view, hasFocus) -> {
-                  if (hasFocus) {
-                      logo.setVisibility(View.GONE);
-                  } else {
-                      logo.setVisibility(View.VISIBLE);
-                  }
-              });
-      password_et.setOnFocusChangeListener(
-              (view, hasFocus) -> {
-                  if (hasFocus) {
-                      logo.setVisibility(View.GONE);
-                  } else {
-                      logo.setVisibility(View.VISIBLE);
-                  }
-              });
-      name_et.setOnFocusChangeListener(
-              (view, hasFocus) -> {
-                  if (hasFocus) {
-                      logo.setVisibility(View.GONE);
-                  } else {
-                      logo.setVisibility(View.VISIBLE);
-                  }
-              });
-      code_et.setOnFocusChangeListener(
-              (view, hasFocus) -> {
-                  if (hasFocus) {
-                      logo.setVisibility(View.GONE);
-                  } else {
-                      logo.setVisibility(View.VISIBLE);
-                  }
-              });
+        email_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        password_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        name_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
+        code_et.setOnFocusChangeListener(
+                (view, hasFocus) -> {
+                    if (hasFocus) {
+                        logo.setVisibility(View.GONE);
+                    } else {
+                        logo.setVisibility(View.VISIBLE);
+                    }
+                });
 
-    database = FirebaseDatabase.getInstance();
-    spin = findViewById(R.id.branchSpinner);
-    spin.setOnItemSelectedListener(this);
-    // Creating the ArrayAdapter instance having the country list
-    ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.spinner_item, branches);
-    aa.setDropDownViewResource(R.layout.spinner_dropdown);
-    // Setting the ArrayAdapter data on the Spinner
-    spin.setAdapter(aa);
-  }
+        database = FirebaseDatabase.getInstance();
+        spin = findViewById(R.id.branchSpinner);
+        spin.setOnItemSelectedListener(this);
+        // Creating the ArrayAdapter instance having the country list
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.spinner_item, branches);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+    }
 
   private void createAccount(String email, String password) {
-    if (!validateForm()) {
-      return;
-    }
+      if (!validateForm()) {
+          return;
+      }
       mAuth
               .createUserWithEmailAndPassword(email, password)
               .addOnCompleteListener(
                       this,
-                      new OnCompleteListener<AuthResult>() {
-                          @Override
-                          public void onComplete(@NonNull Task<AuthResult> task) {
-                              if (task.isSuccessful()) {
-                                  // Sign in success, update UI with the signed-in user's information
-                                  FirebaseUser user = mAuth.getCurrentUser();
-                                  updateUI(user);
-                              } else {
-                                  // If sign in fails, display a message to the user.
-                                  //                  task.getException().printStackTrace();
-                                  Toast.makeText(
-                                          getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT)
-                                          .show();
-                                  updateUI(null);
-                              }
+                      task -> {
+                          if (task.isSuccessful()) {
+                              // Sign in success, update UI with the signed-in user's information
+                              FirebaseUser user = mAuth.getCurrentUser();
+                              updateUI(user);
+                          } else {
+                              // If sign in fails, display a message to the user.
+                              //                  task.getException().printStackTrace();
+                              Toast.makeText(
+                                      getApplicationContext(),
+                                      "Authentication failed ,maybe used email or weak password ",
+                                      Toast.LENGTH_SHORT)
+                                      .show();
+                              updateUI(null);
                           }
                       });
   }
@@ -207,16 +202,16 @@ public class NewAccountActivity extends AppCompatActivity
       ConnectivityManager connectivityManager =
               (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    if (connectivityManager != null) {
-        if (connectivityManager.getActiveNetworkInfo() == null
-                || !connectivityManager.getActiveNetworkInfo().isConnected()) {
-            //          Toast.makeText(getApplicationContext(), "No Internet",
-            // Toast.LENGTH_SHORT).show();
-            Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
-        }
-    }
-    createAccount(email_et.getText().toString(), password_et.getText().toString());
+      if (connectivityManager != null) {
+          if (connectivityManager.getActiveNetworkInfo() == null
+                  || !connectivityManager.getActiveNetworkInfo().isConnected()) {
+              //          Toast.makeText(getApplicationContext(), "No Internet",
+              // Toast.LENGTH_SHORT).show();
+              Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+              return;
+          }
+      }
+      createAccount(email_et.getText().toString(), password_et.getText().toString());
   }
 
     @Override

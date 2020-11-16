@@ -18,8 +18,6 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 import static com.resala.mosharkaty.LoginActivity.isAdmin;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
@@ -88,7 +86,7 @@ public class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.View
   }
 
   /**
-   * **************************************************************************
+   * *************************************************************************
    */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     TextView name;
@@ -113,17 +111,18 @@ public class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.View
       MosharkaItem itemClicked = mosharkatItems.get(position);
 
       if (view.getId() == delete_btn.getId()) {
-          if (isManager || !isAdmin) {
-              database = FirebaseDatabase.getInstance();
-            final DatabaseReference MosharkatRef =
-                    database.getReference("mosharkat").child(userBranch);
-            final Calendar cldr = Calendar.getInstance(Locale.US);
-            int month = cldr.get(Calendar.MONTH) + 1;
-              MosharkatRef.child(String.valueOf(month)).child(itemClicked.getKey()).setValue(null);
-          } else {
-              Toast.makeText(context, "illegal action : متقدرش تلغي المشاركة دي", Toast.LENGTH_SHORT)
-                      .show();
-          }
+        if (isManager || !isAdmin) {
+          database = FirebaseDatabase.getInstance();
+          final DatabaseReference MosharkatRef =
+                  database.getReference("mosharkat").child(userBranch);
+          String[] splittedDate = itemClicked.getMosharkaDate().split("/", 3);
+          MosharkatRef.child(String.valueOf(splittedDate[1]))
+                  .child(itemClicked.getKey())
+                  .setValue(null);
+        } else {
+          Toast.makeText(context, "illegal action : متقدرش تلغي المشاركة دي", Toast.LENGTH_SHORT)
+                  .show();
+        }
       } else {
         // do nothing till now
       }

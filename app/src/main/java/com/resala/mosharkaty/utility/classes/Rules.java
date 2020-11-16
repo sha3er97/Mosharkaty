@@ -21,6 +21,7 @@ public class Rules {
     public int top_types_count;
     public int meetings_bad;
     public int meetings_medium;
+    public boolean ignoreAbove;
 
     public Rules() {
     }

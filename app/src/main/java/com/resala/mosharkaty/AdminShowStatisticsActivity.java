@@ -3,9 +3,10 @@ package com.resala.mosharkaty;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class AdminShowStatisticsActivity extends AppCompatActivity {
     FirebaseDatabase database;
@@ -48,6 +50,8 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
     DatabaseReference usersRef;
     ArrayList<String> allFari2 = new ArrayList<>();
     ArrayList<String> allFrozen = new ArrayList<>();
+    Spinner month_et;
+    int selected_month;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +59,18 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_show_statistics);
         database = FirebaseDatabase.getInstance();
         RecyclerView recyclerView = findViewById(R.id.mosharkatnaRecyclerView);
-    TextView current_month = findViewById(R.id.current_month);
-    ImageButton refreshBtn = findViewById(R.id.refresh_btn);
+        month_et = findViewById(R.id.current_month);
+        ImageButton refreshBtn = findViewById(R.id.refresh_btn);
         refreshBtn.setEnabled(false); // by default
         final Calendar cldr = Calendar.getInstance(Locale.US);
-        month = cldr.get(Calendar.MONTH) + 1;
-        current_month.setText(String.valueOf(month));
+        month = cldr.get(Calendar.MONTH);
+        // setting spinner
+        ArrayAdapter<String> aa =
+                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, months);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        month_et.setAdapter(aa);
+        month_et.setSelection(Math.max(month, 0));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new UserHistoryAdapter(userHistoryItems, getApplicationContext());
@@ -98,86 +108,81 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
                         Log.w(TAG, "Failed to read value.", error.toException());
                     }
                 });
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (MosharkatRef != null && mosharkatlistener != null) {
-      MosharkatRef.removeEventListener(mosharkatlistener);
     }
-  }
 
-  public void refreshStatistics(View view) {
-      MosharkatRef = database.getReference("mosharkat").child(userBranch);
-      mosharkatlistener =
-              MosharkatRef.child(String.valueOf(month))
-                      .addValueEventListener(
-                              new ValueEventListener() {
-                                  @Override
-                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                      userHistoryItems.clear();
-                                      HashMap<String, Integer> nameCounting = new HashMap<>();
-                                      HashMap<String, String> nameHistory = new HashMap<>();
-                                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                          MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                                          String[] splittedDate;
-                                          if (mosharka != null) {
-                                              if (fari2Filter) {
-                                                  if (frozenFilter) { // both
-                                                      if (!allFari2.contains(mosharka.getVolname().trim())
-                                                              && !allFrozen.contains(mosharka.getVolname().trim()))
-                                                          continue;
-                                                  } else { // fari2 only
-                                                      if (!allFari2.contains(mosharka.getVolname().trim()))
-                                                          continue;
-                                                  }
-                                              } else if (frozenFilter) { // frozen only
-                                                  if (!allFrozen.contains(mosharka.getVolname().trim()))
-                                                      continue;
-                                              }
-                                              //                        if (fari2Filter &&
-                                              // !allFari2.contains(mosharka.getVolname().trim()))
-                                              //                          continue;
-                                              //                        if (frozenFilter &&
-                                              // !allFrozen.contains(mosharka.getVolname().trim()))
-                                              //                          continue;
-                                              splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                                              if (nameCounting.containsKey(mosharka.getVolname().trim())) {
-                                                  // If char is present in charCountMap,
-                                                  // incrementing it's count by 1
-                                                  nameCounting.put(
-                                                          mosharka.getVolname().trim(),
-                                                          nameCounting.get(mosharka.getVolname().trim()) + 1);
-                                                  nameHistory.put(
-                                                          mosharka.getVolname().trim(),
-                                                          nameHistory.get(mosharka.getVolname().trim())
-                                                                  + ","
-                                                                  + splittedDate[0]);
-                                              } else {
-                                                  // If char is not present in charCountMap,
-                                                  // putting this char to charCountMap with 1 as it's value
-                                                  nameCounting.put(mosharka.getVolname().trim(), 1);
-                                                  nameHistory.put(mosharka.getVolname().trim(), splittedDate[0]);
-                                              }
-                                          }
-                                      }
-                                      for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
-                                          userHistoryItems.add(
-                                                  new UserHistoryItem(
-                                                          entry.getKey(),
-                                                          nameHistory.get(entry.getKey()),
-                                                          Integer.parseInt(entry.getValue().toString())));
-                                      }
-                                      Collections.sort(userHistoryItems);
-                                      adapter.notifyDataSetChanged();
-                                  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (MosharkatRef != null && mosharkatlistener != null) {
+            MosharkatRef.removeEventListener(mosharkatlistener);
+        }
+    }
 
-                                  @Override
-                                  public void onCancelled(@NonNull DatabaseError error) {
-                                      // Failed to read value
-                                      Log.w(TAG, "Failed to read value.", error.toException());
-                                  }
-                              });
-  }
+    public void refreshStatistics(View view) {
+        selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
+        MosharkatRef = database.getReference("mosharkat").child(userBranch);
+        mosharkatlistener =
+                MosharkatRef.child(String.valueOf(selected_month))
+                        .addValueEventListener(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        userHistoryItems.clear();
+                                        HashMap<String, Integer> nameCounting = new HashMap<>();
+                                        HashMap<String, String> nameHistory = new HashMap<>();
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                            String[] splittedDate;
+                                            if (mosharka != null) {
+                                                if (fari2Filter) {
+                                                    if (frozenFilter) { // both
+                                                        if (!allFari2.contains(mosharka.getVolname().trim())
+                                                                && !allFrozen.contains(mosharka.getVolname().trim()))
+                                                            continue;
+                                                    } else { // fari2 only
+                                                        if (!allFari2.contains(mosharka.getVolname().trim()))
+                                                            continue;
+                                                    }
+                                                } else if (frozenFilter) { // frozen only
+                                                    if (!allFrozen.contains(mosharka.getVolname().trim()))
+                                                        continue;
+                                                }
+                                                splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                                if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                                    // If char is present in charCountMap,
+                                                    // incrementing it's count by 1
+                                                    nameCounting.put(
+                                                            mosharka.getVolname().trim(),
+                                                            nameCounting.get(mosharka.getVolname().trim()) + 1);
+                                                    nameHistory.put(
+                                                            mosharka.getVolname().trim(),
+                                                            nameHistory.get(mosharka.getVolname().trim())
+                                                                    + ","
+                                                                    + splittedDate[0]);
+                                                } else {
+                                                    // If char is not present in charCountMap,
+                                                    // putting this char to charCountMap with 1 as it's value
+                                                    nameCounting.put(mosharka.getVolname().trim(), 1);
+                                                    nameHistory.put(mosharka.getVolname().trim(), splittedDate[0]);
+                                                }
+                                            }
+                                        }
+                                        for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+                                            userHistoryItems.add(
+                                                    new UserHistoryItem(
+                                                            entry.getKey(),
+                                                            nameHistory.get(entry.getKey()),
+                                                            Integer.parseInt(entry.getValue().toString())));
+                                        }
+                                        Collections.sort(userHistoryItems);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w(TAG, "Failed to read value.", error.toException());
+                                    }
+                                });
+    }
 }
