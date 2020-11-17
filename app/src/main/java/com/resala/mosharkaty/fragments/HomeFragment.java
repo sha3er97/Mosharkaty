@@ -255,6 +255,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         mas2oleenCounter = 0;
                         msharee3Counter = 0;
+                        globalFari2Names.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             normalVolunteer user = snapshot.getValue(normalVolunteer.class);
                             if (user != null) {

@@ -1,16 +1,22 @@
 package com.resala.mosharkaty;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,16 +29,27 @@ import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
 import com.resala.mosharkaty.utility.classes.normalVolunteer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
 import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.NewAccountActivity.branches;
 import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
@@ -54,6 +71,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     int[] msharee3Counter = new int[9];
     int[] nasheetCounter = new int[9];
 
+    WritableWorkbook workbook;
 
     int branchIterator;
     ArrayList<HashMap<String, String>> teamDegrees = new ArrayList<>();
@@ -86,6 +104,9 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     TextView[] normalAverage = new TextView[9];
 
     TextView[] points = new TextView[9];
+    private boolean excelOut = false;
+    private ProgressDialog progress;
+    Button export_report_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +117,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         day_from_et = findViewById(R.id.day_from);
         day_to_et = findViewById(R.id.day_to);
         refresh_btn = findViewById(R.id.refresh_btn);
+        export_report_btn = findViewById(R.id.export_report_btn);
+
         getBranchesTables();
         initializeLists();
         final Calendar cldr = Calendar.getInstance(Locale.US);
@@ -664,5 +687,611 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         Log.w(TAG, "Failed to read value.", error.toException());
                     }
                 });
+    }
+
+    public void exportExcelClick(View view) {
+        excelOut = true;
+        selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            if (!hasPermissions(PERMISSIONS)) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST);
+            } else { // permession already granted
+                exportExcel(month_et.getSelectedItem().toString());
+            }
+        } else { // api below 23
+            exportExcel(month_et.getSelectedItem().toString());
+        }
+    }
+
+    private void exportExcel(String month) {
+        String root =
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/تقارير";
+        File dir = new File(root);
+        dir.mkdirs();
+        String Fnamexls = ("/تقرير_مجمع_شهر_" + month + ".xls");
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        try {
+            File file = new File(dir, Fnamexls);
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableSheet sheet1 = workbook.createSheet("درجات التطوع", 0);
+            WritableSheet sheet2 = workbook.createSheet("اجتماعات", 1);
+            WritableSheet sheet3 = workbook.createSheet("ايفنتات و اخري", 2);
+
+            progress = new ProgressDialog(AdminMrkzyReportsActivity.this);
+            progress.setTitle("Loading");
+            progress.setMessage("لحظات معانا...");
+            progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+            progress.show();
+
+            for (branchIterator = 0; branchIterator < BRANCHES_COUNT; branchIterator++) {
+                printMeetings(branchIterator, sheet2);
+                printEvents(branchIterator, sheet3);
+                printMosharkat(branchIterator, sheet1);
+            }
+            for (int i = 1; i <= 22; i += 7) {
+                int print_end_day = i + 6;//7-->14-->21-->28
+                if (end_day == 28) end_day = 31; //ensure end of month
+                for (branchIterator = 0; branchIterator < BRANCHES_COUNT; branchIterator++) {
+                    printWeeklyMosharkat(branchIterator, i, print_end_day, sheet1);
+                }
+            }
+            printMeetingsHeaders(sheet2);
+            printEventsHeaders(sheet3);
+            printMosharkatHeaders(sheet1);
+            Toast.makeText(getApplicationContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_SHORT)
+                    .show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printEventsHeaders(WritableSheet sheet) {
+        Label label0 = new Label(1, 0, "الكورسات");
+        Label label1 = new Label(2, 0, "الاورينتيشن");
+        Label label2 = new Label(3, 0, "الورش");
+        Label label3 = new Label(4, 0, "ايفنتات اخري");
+        Label label4 = new Label(5, 0, "الاجمالي");
+
+        try {
+            sheet.addCell(label4);
+            sheet.addCell(label3);
+            sheet.addCell(label2);
+            sheet.addCell(label1);
+            sheet.addCell(label0);
+            for (branchIterator = 0; branchIterator < BRANCHES_COUNT; branchIterator++) {
+                Label label00 = new Label(0, branchIterator + 1, branches[branchIterator]);
+                sheet.addCell(label00);
+            }
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printEvents(int branchIterator, WritableSheet sheet) {
+        DatabaseReference EventsRef = database.getReference("reports").child(branches[branchIterator]);
+        EventsRef.child(String.valueOf(selected_month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int EventsCounter = 0;
+                                int OrientationCounter = 0;
+                                int CoursesCounter = 0;
+                                int warshaCounter = 0;
+                                int otherCounter = 0;
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    EventReport event = snapshot.getValue(EventReport.class);
+                                    if (event != null) {
+                                        EventsCounter++;
+                                        if (event.type.matches("(.*)اورينتيشن(.*)"))
+                                            OrientationCounter++;
+                                        else if (event.type.matches("(.*)سيشن(.*)"))
+                                            CoursesCounter++;
+                                        else if (event.type.matches("(.*)ورشة(.*)"))
+                                            warshaCounter++;
+                                        else otherCounter++;
+                                    }
+                                }
+                                Label label0 = new Label(1, branchIterator + 1, String.valueOf(CoursesCounter));
+                                Label label1 = new Label(2, branchIterator + 1, String.valueOf(OrientationCounter));
+                                Label label2 = new Label(3, branchIterator + 1, String.valueOf(warshaCounter));
+                                Label label3 = new Label(4, branchIterator + 1, String.valueOf(otherCounter));
+                                Label label4 = new Label(5, branchIterator + 1, String.valueOf(EventsCounter));
+                                try {
+                                    sheet.addCell(label4);
+                                    sheet.addCell(label3);
+                                    sheet.addCell(label2);
+                                    sheet.addCell(label1);
+                                    sheet.addCell(label0);
+                                } catch (RowsExceededException e) {
+                                    e.printStackTrace();
+                                } catch (WriteException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
+
+    private void printMosharkatHeaders(WritableSheet sheet) {
+        Label label0 = new Label(1, 0, "عدد المسؤولين");
+        Label label1 = new Label(2, 0, "حضور الاسبوع الاول");
+        Label label2 = new Label(3, 0, "حضور الاسبوع التاني");
+        Label label3 = new Label(4, 0, "حضور الاسبوع التالت");
+        Label label4 = new Label(5, 0, "حضور الاسبوع الرابع");
+        Label label5 = new Label(6, 0, "عدد مشاركات مسؤول المحقق");
+        Label label6 = new Label(7, 0, "متوسط مشاركات مسؤول المحقق");
+        Label label7 = new Label(8, 0, "عدد المشاريع");
+        Label label8 = new Label(9, 0, "حضور الاسبوع الاول");
+        Label label9 = new Label(10, 0, "حضور الاسبوع التاني");
+        Label label10 = new Label(11, 0, "حضور الاسبوع التالت");
+        Label label11 = new Label(12, 0, "حضور الاسبوع الرابع");
+        Label label12 = new Label(13, 0, "عدد مشاركات مشروع المحقق");
+        Label label13 = new Label(14, 0, "متوسط مشاركات مشروع المحقق");
+        Label label14 = new Label(15, 0, "محقق عدد داخل المتابعة");
+        Label label15 = new Label(16, 0, "محقق مشاركات داخل المتابعة");
+        Label label16 = new Label(17, 0, "متوسط داخل المتابعة");
+        Label label17 = new Label(18, 0, "محقق الجدد");
+        Label label18 = new Label(19, 0, "اجمالي النقاط");
+
+        try {
+            sheet.addCell(label18);
+            sheet.addCell(label17);
+            sheet.addCell(label16);
+            sheet.addCell(label15);
+            sheet.addCell(label14);
+            sheet.addCell(label13);
+            sheet.addCell(label12);
+            sheet.addCell(label11);
+            sheet.addCell(label10);
+            sheet.addCell(label9);
+            sheet.addCell(label8);
+            sheet.addCell(label7);
+            sheet.addCell(label6);
+            sheet.addCell(label5);
+            sheet.addCell(label4);
+            sheet.addCell(label3);
+            sheet.addCell(label2);
+            sheet.addCell(label1);
+            sheet.addCell(label0);
+            for (branchIterator = 0; branchIterator < BRANCHES_COUNT; branchIterator++) {
+                Label label00 = new Label(0, branchIterator + 1, branches[branchIterator]);
+                sheet.addCell(label00);
+            }
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printMosharkat(int branchIterator, WritableSheet sheet) {
+        DatabaseReference MosharkatRef =
+                database.getReference("mosharkat").child(branches[branchIterator]);
+        MosharkatRef.child(String.valueOf(selected_month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                HashMap<String, Integer> nameCounting = new HashMap<>();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                    if (mosharka != null) {
+                                        // get all mosharkat for everyone firstly
+                                        if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                            // If char is present in charCountMap,
+                                            // incrementing it's count by 1
+                                            nameCounting.put(
+                                                    mosharka.getVolname().trim(),
+                                                    nameCounting.get(mosharka.getVolname().trim()) + 1);
+                                        } else {
+                                            // If char is not present in charCountMap,
+                                            // putting this char to charCountMap with 1 as it's value
+                                            nameCounting.put(mosharka.getVolname().trim(), 1);
+                                        }
+                                    }
+                                }
+                                print_divideMosharkatByDegree(nameCounting, branchIterator, sheet);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
+
+    private void print_divideMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator, WritableSheet sheet) {
+        int mas2oleenMosharkat8 = 0;
+        int msharee3Mosharkat8 = 0;
+        int nasheetMosharkat8 = 0;
+        int noobsMosharkat8 = 0;
+        int da5el_2_Mosharkat = 0;
+        int normalMosharkat8 = 0;
+        int da5el_aboveMosharkat = 0;
+        int otherMosharkat = 0;
+
+        int mas2oleenArrived = 0;
+        int msharee3Arrived = 0;
+        int nasheetArrived = 0;
+        int noobsArrived = 0;
+        int normalArrived = 0;
+
+
+        for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+            String volName = entry.getKey();
+
+            if (teamDegrees.get(branchIterator).containsKey(volName)) {
+                if (teamDegrees.get(branchIterator).get(volName).equals("مسؤول")) {
+                    mas2oleenMosharkat8 += Math.min(8, entry.getValue());
+                    mas2oleenArrived++;
+                } else if (teamDegrees.get(branchIterator).get(volName).equals("مشروع")) {
+                    msharee3Mosharkat8 += Math.min(8, entry.getValue());
+                    msharee3Arrived++;
+                } else if (teamDegrees.get(branchIterator).get(volName).contains("داخل")) {
+                    String[] splittedDegree = teamDegrees.get(branchIterator).get(volName).split("&", 2);
+
+                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                        case 0:
+                            noobsMosharkat8 += Math.min(8, entry.getValue());
+                            noobsArrived++;
+                            break;
+                        case 1:
+                            da5el_2_Mosharkat += Math.min(8, entry.getValue());
+                            break;
+                        default:
+                            if (Integer.parseInt(splittedDegree[1]) >= 8 && myRules.ignoreAbove)
+                                break;
+                            da5el_aboveMosharkat += Math.min(8, entry.getValue());
+                            break;
+                    }
+
+                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.get(branchIterator).contains(volName)) {
+                        nasheetMosharkat8 += Math.min(8, entry.getValue());
+                        nasheetArrived++;
+                    } else {
+                        normalMosharkat8 += Math.min(8, entry.getValue());
+                        normalArrived++;
+                    }
+                }
+            } else {
+                otherMosharkat += Math.min(8, entry.getValue());
+            }
+        }
+        Label label0 = new Label(18, branchIterator + 1, String.valueOf(noobsArrived));
+        Label label1 = new Label(15, branchIterator + 1, String.valueOf(normalArrived + nasheetArrived));
+        /* ************************************************************************************ */
+        int pointsCalculated =
+                msharee3Mosharkat8 * myRules.mashroo3_points + myRules.mas2ool_points * mas2oleenMosharkat8;
+        int otherPointsCalculated = otherMosharkat + noobsMosharkat8 + da5el_2_Mosharkat * 2 + da5el_aboveMosharkat * 3;
+        Label label2 = new Label(19, branchIterator + 1, String.valueOf(pointsCalculated + otherPointsCalculated));
+        /* ************************************************************************************* */
+        Label label3 = new Label(1, branchIterator + 1, String.valueOf(mas2oleenCounter[branchIterator]));
+        Label label4 = new Label(8, branchIterator + 1, String.valueOf(msharee3Counter[branchIterator]));
+        /* ************************************************************************************* */
+        Label label5 = new Label(6, branchIterator + 1, String.valueOf(mas2oleenMosharkat8));
+        Label label6 = new Label(13, branchIterator + 1, String.valueOf(msharee3Mosharkat8));
+        Label label7 = new Label(16, branchIterator + 1, String.valueOf(nasheetMosharkat8 + normalMosharkat8));
+
+        /* ************************************************************************************* */
+        float avg1 = (float) mas2oleenMosharkat8 / mas2oleenArrived;
+        float avg2 = (float) msharee3Mosharkat8 / msharee3Arrived;
+        float avg3 = (float) (nasheetMosharkat8 + normalMosharkat8) / (nasheetArrived + normalArrived);
+
+        Label label8 = new Label(7, branchIterator + 1, String.valueOf(Math.round(avg1 * 10) / 10.0));
+        Label label9 = new Label(14, branchIterator + 1, String.valueOf(Math.round(avg2 * 10) / 10.0));
+        Label label10 = new Label(17, branchIterator + 1, String.valueOf(Math.round(avg3 * 10) / 10.0));
+        try {
+            sheet.addCell(label10);
+            sheet.addCell(label9);
+            sheet.addCell(label8);
+            sheet.addCell(label7);
+            sheet.addCell(label6);
+            sheet.addCell(label5);
+            sheet.addCell(label4);
+            sheet.addCell(label3);
+            sheet.addCell(label2);
+            sheet.addCell(label1);
+            sheet.addCell(label0);
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printWeeklyMosharkat(int branchIterator, int print_start_day, int print_end_day, WritableSheet sheet) {
+        DatabaseReference MosharkatRef =
+                database.getReference("mosharkat").child(branches[branchIterator]);
+        MosharkatRef.child(String.valueOf(selected_month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                HashMap<String, Integer> nameCounting = new HashMap<>();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                    String[] splittedDate;
+                                    if (mosharka != null) {
+                                        splittedDate = mosharka.getMosharkaDate().split("/", 3);
+                                        if (Integer.parseInt(splittedDate[0]) >= print_start_day
+                                                && Integer.parseInt(splittedDate[0]) <= print_end_day) {
+                                            // get all mosharkat for everyone firstly
+                                            if (nameCounting.containsKey(mosharka.getVolname().trim())) {
+                                                // If char is present in charCountMap,
+                                                // incrementing it's count by 1
+                                                nameCounting.put(
+                                                        mosharka.getVolname().trim(),
+                                                        nameCounting.get(mosharka.getVolname().trim()) + 1);
+                                            } else {
+                                                // If char is not present in charCountMap,
+                                                // putting this char to charCountMap with 1 as it's value
+                                                nameCounting.put(mosharka.getVolname().trim(), 1);
+                                            }
+                                        }
+                                    }
+                                }
+                                print_divideWeeklyMosharkatByDegree(nameCounting, branchIterator, sheet, getweekNum(print_start_day));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
+
+    private int getweekNum(int print_start_day) {
+        switch (print_start_day) {
+            case 1:
+                return 1;
+            case 8:
+                return 2;
+            case 15:
+                return 3;
+            case 22:
+                return 4;
+        }
+        return 0;
+    }
+
+    private void print_divideWeeklyMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator, WritableSheet sheet, int weekNum) {
+        if (weekNum == 4 && branchIterator == BRANCHES_COUNT - 1) progress.dismiss();
+        Log.d(TAG, "print_divideWeeklyMosharkatByDegree: weeknum = " + weekNum + " , branchIterator = " + branchIterator);
+        int mas2oleenMosharkat8 = 0;
+        int msharee3Mosharkat8 = 0;
+        int nasheetMosharkat8 = 0;
+        int noobsMosharkat8 = 0;
+        int da5el_2_Mosharkat = 0;
+        int normalMosharkat8 = 0;
+        int da5el_aboveMosharkat = 0;
+        int otherMosharkat = 0;
+
+        int mas2oleenArrived = 0;
+        int msharee3Arrived = 0;
+        int nasheetArrived = 0;
+        int noobsArrived = 0;
+        int normalArrived = 0;
+
+
+        for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
+            String volName = entry.getKey();
+
+            if (teamDegrees.get(branchIterator).containsKey(volName)) {
+                if (teamDegrees.get(branchIterator).get(volName).equals("مسؤول")) {
+                    mas2oleenMosharkat8 += Math.min(8, entry.getValue());
+                    mas2oleenArrived++;
+                } else if (teamDegrees.get(branchIterator).get(volName).equals("مشروع")) {
+                    msharee3Mosharkat8 += Math.min(8, entry.getValue());
+                    msharee3Arrived++;
+                } else if (teamDegrees.get(branchIterator).get(volName).contains("داخل")) {
+                    String[] splittedDegree = teamDegrees.get(branchIterator).get(volName).split("&", 2);
+
+                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                        case 0:
+                            noobsMosharkat8 += Math.min(8, entry.getValue());
+                            noobsArrived++;
+                            break;
+                        case 1:
+                            da5el_2_Mosharkat += Math.min(8, entry.getValue());
+                            break;
+                        default:
+                            if (Integer.parseInt(splittedDegree[1]) >= 8 && myRules.ignoreAbove)
+                                break;
+                            da5el_aboveMosharkat += Math.min(8, entry.getValue());
+                            break;
+                    }
+
+                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.get(branchIterator).contains(volName)) {
+                        nasheetMosharkat8 += Math.min(8, entry.getValue());
+                        nasheetArrived++;
+                    } else {
+                        normalMosharkat8 += Math.min(8, entry.getValue());
+                        normalArrived++;
+                    }
+                }
+            } else {
+                otherMosharkat += Math.min(8, entry.getValue());
+            }
+        }
+        /* ************************************************************************************* */
+        Label label0 = new Label(1 + weekNum, branchIterator + 1, String.valueOf(mas2oleenArrived));
+        Label label1 = new Label(8 + weekNum, branchIterator + 1, String.valueOf(msharee3Arrived));
+        try {
+            sheet.addCell(label1);
+            sheet.addCell(label0);
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printMeetingsHeaders(WritableSheet sheet) {
+        Label label0 = new Label(1, 0, "اجتماعات هيد الفرع");
+        Label label1 = new Label(2, 0, "اجتماعات hr");
+        Label label2 = new Label(3, 0, "اجتماعات المتابعة");
+        Label label3 = new Label(4, 0, "اجتماعات الاتصالات");
+        Label label4 = new Label(5, 0, "اجتماعات الفرق");
+        Label label5 = new Label(6, 0, "اجتماعات نفسك في ايه");
+        Label label6 = new Label(7, 0, "اجتماعات المعارض");
+        Label label7 = new Label(8, 0, "اجتماعات اخري");
+        Label label8 = new Label(9, 0, "اجمالي الاجتماعات");
+
+        try {
+            sheet.addCell(label8);
+            sheet.addCell(label7);
+            sheet.addCell(label6);
+            sheet.addCell(label5);
+            sheet.addCell(label4);
+            sheet.addCell(label3);
+            sheet.addCell(label2);
+            sheet.addCell(label1);
+            sheet.addCell(label0);
+            for (branchIterator = 0; branchIterator < BRANCHES_COUNT; branchIterator++) {
+                Label label00 = new Label(0, branchIterator + 1, branches[branchIterator]);
+                sheet.addCell(label00);
+            }
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printMeetings(int branchIterator, WritableSheet sheet) {
+        DatabaseReference MeetingsRef =
+                database.getReference("meetings").child(branches[branchIterator]);
+        MeetingsRef.child(String.valueOf(selected_month))
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int headMeetings = 0;
+                                int hrMeetings = 0;
+                                int motabaaMeetings = 0;
+                                int etisalatMeetings = 0;
+                                int fera2Meetings = 0;
+                                int nfskMeetings = 0;
+                                int m3aredMeetings = 0;
+                                int otherMeetings = 0;
+                                int meetingsCounter = 0;
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Meeting meet = snapshot.getValue(Meeting.class);
+                                    if (meet != null) {
+                                        meetingsCounter++;
+
+                                        if (meet.type.contains("فرق")) fera2Meetings++;
+                                        else if (meet.type.contains("معارض")) m3aredMeetings++;
+                                        else if (meet.type.contains("نفسك")) nfskMeetings++;
+                                        else if (meet.type.contains("hr")) hrMeetings++;
+                                        else if (meet.type.contains("متابعة")) motabaaMeetings++;
+                                        else if (meet.type.contains("نشيط")) motabaaMeetings++;
+                                        else if (meet.type.contains("اتصالات")) etisalatMeetings++;
+                                        else if (meet.type.contains("فريق")) headMeetings++;
+                                        else if (meet.type.contains("مسؤولين")) headMeetings++;
+                                        else otherMeetings++;
+                                    }
+                                }
+                                Label label0 = new Label(1, branchIterator + 1, String.valueOf(headMeetings));
+                                Label label1 = new Label(2, branchIterator + 1, String.valueOf(hrMeetings));
+                                Label label2 = new Label(3, branchIterator + 1, String.valueOf(motabaaMeetings));
+                                Label label3 = new Label(4, branchIterator + 1, String.valueOf(etisalatMeetings));
+                                Label label4 = new Label(5, branchIterator + 1, String.valueOf(fera2Meetings));
+                                Label label5 = new Label(6, branchIterator + 1, String.valueOf(nfskMeetings));
+                                Label label6 = new Label(7, branchIterator + 1, String.valueOf(m3aredMeetings));
+                                Label label7 = new Label(8, branchIterator + 1, String.valueOf(otherMeetings));
+                                Label label8 = new Label(9, branchIterator + 1, String.valueOf(meetingsCounter));
+                                try {
+                                    sheet.addCell(label8);
+                                    sheet.addCell(label7);
+                                    sheet.addCell(label6);
+                                    sheet.addCell(label5);
+                                    sheet.addCell(label4);
+                                    sheet.addCell(label3);
+                                    sheet.addCell(label2);
+                                    sheet.addCell(label1);
+                                    sheet.addCell(label0);
+                                } catch (RowsExceededException e) {
+                                    e.printStackTrace();
+                                } catch (WriteException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Failed to read value
+                                Log.w(TAG, "Failed to read value.", error.toException());
+                            }
+                        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    exportExcel(month_et.getSelectedItem().toString());
+
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "The app was not allowed to write in your storage",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        }
+    }
+
+    private boolean hasPermissions(String[] permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && getApplicationContext() != null
+                && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), permission)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (excelOut) {
+            try {
+                workbook.write();
+                Log.i(TAG, "printMeetings: workbook write");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                workbook.close();
+                Log.i(TAG, "printMeetings: final workbook close");
+
+            } catch (WriteException | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

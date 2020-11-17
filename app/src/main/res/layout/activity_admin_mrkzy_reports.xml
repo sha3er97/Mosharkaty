@@ -3574,7 +3574,7 @@
             app:layout_constraintTop_toTopOf="@+id/day_to" />
 
         <Button
-            android:id="@+id/export_nasheet_btn2"
+            android:id="@+id/export_report_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -3584,7 +3584,8 @@
             android:drawablePadding="16dp"
             android:fontFamily="@font/new_jf"
             android:paddingHorizontal="16dp"
-            android:text="اخراج فايل اكسيل"
+            android:onClick="exportExcelClick"
+            android:text="اخراج التقرير في اكسيل"
             android:textAlignment="center"
             android:textColor="@color/new_white_light"
             android:textSize="18sp"
