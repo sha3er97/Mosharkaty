@@ -564,8 +564,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                     msharee3Arrived++;
                 } else if (teamDegrees.get(branchIterator).get(volName).contains("داخل")) {
                     String[] splittedDegree = teamDegrees.get(branchIterator).get(volName).split("&", 2);
-
-                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                    int tempMonth = myRules.prev_months_allowed ? selected_month - (month + 1) : 0;
+                    switch (Integer.parseInt(splittedDegree[1]) - tempMonth) {
                         case 0:
                             noobsMosharkat8 += Math.min(8, entry.getValue());
                             noobsArrived++;
@@ -580,7 +580,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                             break;
                     }
 
-                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.get(branchIterator).contains(volName)) {
+                    if (Integer.parseInt(splittedDegree[1]) - tempMonth > 0 && allNsheet.get(branchIterator).contains(volName)) {
                         nasheetMosharkat8 += Math.min(8, entry.getValue());
                         nasheetArrived++;
                     } else {
@@ -940,8 +940,9 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                     msharee3Arrived++;
                 } else if (teamDegrees.get(branchIterator).get(volName).contains("داخل")) {
                     String[] splittedDegree = teamDegrees.get(branchIterator).get(volName).split("&", 2);
+                    int tempMonth = myRules.prev_months_allowed ? selected_month - (month + 1) : 0;
 
-                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                    switch (Integer.parseInt(splittedDegree[1]) - tempMonth) {
                         case 0:
                             noobsMosharkat8 += Math.min(8, entry.getValue());
                             noobsArrived++;
@@ -956,7 +957,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                             break;
                     }
 
-                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.get(branchIterator).contains(volName)) {
+                    if (Integer.parseInt(splittedDegree[1]) - tempMonth > 0 && allNsheet.get(branchIterator).contains(volName)) {
                         nasheetMosharkat8 += Math.min(8, entry.getValue());
                         nasheetArrived++;
                     } else {
@@ -1097,8 +1098,9 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                     msharee3Arrived++;
                 } else if (teamDegrees.get(branchIterator).get(volName).contains("داخل")) {
                     String[] splittedDegree = teamDegrees.get(branchIterator).get(volName).split("&", 2);
+                    int tempMonth = myRules.prev_months_allowed ? selected_month - (month + 1) : 0;
 
-                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                    switch (Integer.parseInt(splittedDegree[1]) - tempMonth) {
                         case 0:
                             noobsMosharkat8 += Math.min(8, entry.getValue());
                             noobsArrived++;
@@ -1113,7 +1115,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                             break;
                     }
 
-                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.get(branchIterator).contains(volName)) {
+                    if (Integer.parseInt(splittedDegree[1]) - tempMonth > 0 && allNsheet.get(branchIterator).contains(volName)) {
                         nasheetMosharkat8 += Math.min(8, entry.getValue());
                         nasheetArrived++;
                     } else {

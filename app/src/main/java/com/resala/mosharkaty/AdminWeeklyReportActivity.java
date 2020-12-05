@@ -264,8 +264,9 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                     msharee3Arrived++;
                 } else if (teamDegrees.get(volName).contains("داخل")) {
                     String[] splittedDegree = teamDegrees.get(volName).split("&", 2);
+                    int tempMonth = myRules.prev_months_allowed ? selected_month - (month + 1) : 0;
 
-                    switch (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1))) {
+                    switch (Integer.parseInt(splittedDegree[1]) - tempMonth) {
                         case 0:
                             noobsMosharkat += entry.getValue();
                             noobsMosharkat8 += Math.min(8, entry.getValue());
@@ -281,7 +282,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                             break;
                     }
 
-                    if (Integer.parseInt(splittedDegree[1]) - (selected_month - (month + 1)) > 0 && allNsheet.contains(volName)) {
+                    if (Integer.parseInt(splittedDegree[1]) - tempMonth > 0 && allNsheet.contains(volName)) {
                         nasheetMosharkat += entry.getValue();
                         nasheetMosharkat8 += Math.min(8, entry.getValue());
                         nasheetArrived++;

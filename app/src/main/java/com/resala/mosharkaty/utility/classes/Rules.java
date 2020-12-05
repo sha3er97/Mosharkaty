@@ -1,8 +1,8 @@
 package com.resala.mosharkaty.utility.classes;
 
 public class Rules {
-  public int attendance_bad;
-  public int attendance_medium;
+    public int attendance_bad;
+    public int attendance_medium;
     public int last_important_update;
     public int mas2ool_points;
     public int mashroo3_points;
@@ -22,6 +22,7 @@ public class Rules {
     public int meetings_bad;
     public int meetings_medium;
     public boolean ignoreAbove;
+    public boolean prev_months_allowed;
 
     public Rules() {
     }
