@@ -388,8 +388,8 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
       eText.setError("Required.");
       return false;
     } else if (Integer.parseInt(parts[2]) > year
-            || Integer.parseInt(parts[1]) > month + 1
-            || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+            || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) > month + 1
+            || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day) {
       eText.setError("you can't choose a date in the future.");
       return false;
     } else {
