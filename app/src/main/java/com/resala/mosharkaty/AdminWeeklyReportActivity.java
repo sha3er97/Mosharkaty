@@ -78,7 +78,6 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
 
     Button refresh_btn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

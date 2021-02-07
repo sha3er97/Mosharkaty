@@ -112,6 +112,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             intent.putExtra("count", itemClicked.count);
             intent.putExtra("date", itemClicked.date);
             intent.putExtra("head", itemClicked.head);
+            intent.putExtra("head_role", itemClicked.head_role);
             intent.putExtra("from", itemClicked.from);
             intent.putExtra("to", itemClicked.to);
             intent.putExtra("description", itemClicked.description);

@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.resala.mosharkaty">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -16,7 +21,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:supportsRtl">
-        <activity android:name=".AdminMrkzyReportsActivity"></activity>
+        <activity android:name=".WithoutRepeatReportActivity" />
+        <activity android:name=".AdminMrkzyReportsActivity" />
         <activity android:name=".EventReportDescriptionActivity" />
         <activity android:name=".AdminEventsReportActivity" />
         <activity android:name=".AdminShowTakyeemActivity" />
@@ -72,11 +78,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

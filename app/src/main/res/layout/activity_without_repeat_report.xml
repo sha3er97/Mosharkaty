@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".WithoutRepeatReportActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/refresh_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/refresh_white"
+            android:drawablePadding="16dp"
+            android:onClick="refreshReport"
+            android:paddingHorizontal="16dp"
+            android:text="@string/refresh_report"
+            android:textColor="@color/new_white_light"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/day_from" />
+
+        <Spinner
+            android:id="@+id/month_to"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView392"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/month_from"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView372"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView392"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView372"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="من شهر :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/month_from"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/month_from"
+            app:layout_constraintTop_toTopOf="@+id/month_from" />
+
+        <TextView
+            android:id="@+id/textView392"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text="الي شهر :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/month_to"
+            app:layout_constraintEnd_toStartOf="@+id/month_from"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/month_to"
+            app:layout_constraintTop_toTopOf="@+id/month_to" />
+
+        <Spinner
+            android:id="@+id/day_to"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/month_to"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/month_to"
+            app:layout_constraintTop_toBottomOf="@+id/month_to" />
+
+        <Spinner
+            android:id="@+id/day_from"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dummy_number"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/month_from"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/month_from"
+            app:layout_constraintTop_toBottomOf="@+id/month_from" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text=" يوم :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/day_from"
+            app:layout_constraintEnd_toEndOf="@+id/textView372"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView372"
+            app:layout_constraintTop_toTopOf="@+id/day_from" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/new_jf"
+            android:text=" يوم :"
+            android:textColor="@color/new_text_black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/day_to"
+            app:layout_constraintEnd_toEndOf="@+id/textView392"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView392"
+            app:layout_constraintTop_toTopOf="@+id/day_to" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_green"
+            app:layout_constraintBottom_toTopOf="@+id/refresh_btn"
+            app:layout_constraintEnd_toStartOf="@+id/month_from"
+            app:layout_constraintStart_toEndOf="@+id/textView392"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/brTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/branch"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/branchSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/branchSpinner" />
+
+        <Spinner
+            android:id="@+id/branchSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/brTV2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/refresh_btn" />
+
+        <TextView
+            android:id="@+id/typeTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/new_jf"
+            android:text="@string/mosharka_type"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/typeSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/typeSpinner" />
+
+        <Spinner
+            android:id="@+id/typeSpinner"
+            style="@style/SpinnerwithNoArrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/typeTV2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/branchSpinner" />
+
+        <TableLayout
+            android:id="@+id/reportsTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/gray_transparent_border"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/typeSpinner">
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text="عدد"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:background="@drawable/gray_header_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dip"
+                    android:paddingVertical="8dip"
+                    android:text=" "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/noRepeatCount"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:lineSpacingExtra="8dp"
+                    android:padding="3dip"
+                    android:text="اجمالي المتطوعين\nبدون تكرار"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/withRepeatCount"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:lineSpacingExtra="8dp"
+                    android:padding="3dip"
+                    android:text="اجمالي المتطوعين\nبالتكرار"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow android:background="@drawable/gray_transparent_border">
+
+                <TextView
+                    android:id="@+id/eventsCount"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_transparent_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="@string/dummy_number"
+                    android:textAlignment="center"
+                    android:textColor="@color/new_text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:background="@drawable/gray_side_table_border"
+                    android:fontFamily="@font/new_jf"
+                    android:gravity="center"
+                    android:lineSpacingExtra="8dp"
+                    android:padding="3dip"
+                    android:text="اجمالي الايام المسجل\nبها هذا النوع"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/topVolTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="المتطوعين الاكثر مشاركة :"
+            android:textColor="@color/new_text_blue"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportsTable" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top5TypesRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topVolTV2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

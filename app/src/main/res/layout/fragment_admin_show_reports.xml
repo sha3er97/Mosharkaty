@@ -88,6 +88,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/showClosings_btn" />
 
+        <Button
+            android:id="@+id/withoutRepeatReport_btn"
+            android:layout_width="0dp"
+            android:layout_height="128dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/btn_gradient_blue"
+            android:drawableStart="@drawable/document"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/new_jf"
+            android:gravity="start|center_vertical"
+            android:lineSpacingExtra="8dp"
+            android:paddingHorizontal="32dp"
+            android:text="تقرير تكرار نوع المشاركة"
+            android:textColor="@color/new_white_light"
+            android:textSize="22sp"
+            app:drawableTint="@color/new_white_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showMrkzy_btn" />
+
         <Spinner
             android:id="@+id/branchSpinner3"
             style="@style/SpinnerwithNoArrow"
@@ -139,7 +161,7 @@
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showMrkzy_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/withoutRepeatReport_btn" />
 
 
         <TextView

@@ -1147,11 +1147,13 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         Label label3 = new Label(4, 0, "اجتماعات الاتصالات");
         Label label4 = new Label(5, 0, "اجتماعات الفرق");
         Label label5 = new Label(6, 0, "اجتماعات نفسك في ايه");
-        Label label6 = new Label(7, 0, "اجتماعات المعارض");
-        Label label7 = new Label(8, 0, "اجتماعات اخري");
-        Label label8 = new Label(9, 0, "اجمالي الاجتماعات");
+        Label label6 = new Label(7, 0, "اجتماعات القوافل");
+        Label label7 = new Label(8, 0, "اجتماعات المسنين");
+        Label label8 = new Label(9, 0, "اجتماعات اخري");
+        Label label9 = new Label(10, 0, "اجمالي الاجتماعات");
 
         try {
+            sheet.addCell(label9);
             sheet.addCell(label8);
             sheet.addCell(label7);
             sheet.addCell(label6);
@@ -1186,7 +1188,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                 int etisalatMeetings = 0;
                                 int fera2Meetings = 0;
                                 int nfskMeetings = 0;
-                                int m3aredMeetings = 0;
+                                int kawafelMeetings = 0;
+                                int mosneenMeetings = 0;
                                 int otherMeetings = 0;
                                 int meetingsCounter = 0;
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -1195,7 +1198,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                         meetingsCounter++;
 
                                         if (meet.type.contains("فرق")) fera2Meetings++;
-                                        else if (meet.type.contains("معارض")) m3aredMeetings++;
+                                        else if (meet.type.contains("معارض")) kawafelMeetings++;
+                                        else if (meet.type.contains("مسنين")) mosneenMeetings++;
                                         else if (meet.type.contains("نفسك")) nfskMeetings++;
                                         else if (meet.type.contains("hr")) hrMeetings++;
                                         else if (meet.type.contains("متابعة")) motabaaMeetings++;
@@ -1212,10 +1216,12 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                 Label label3 = new Label(4, branchIterator + 1, String.valueOf(etisalatMeetings));
                                 Label label4 = new Label(5, branchIterator + 1, String.valueOf(fera2Meetings));
                                 Label label5 = new Label(6, branchIterator + 1, String.valueOf(nfskMeetings));
-                                Label label6 = new Label(7, branchIterator + 1, String.valueOf(m3aredMeetings));
-                                Label label7 = new Label(8, branchIterator + 1, String.valueOf(otherMeetings));
-                                Label label8 = new Label(9, branchIterator + 1, String.valueOf(meetingsCounter));
+                                Label label6 = new Label(7, branchIterator + 1, String.valueOf(kawafelMeetings));
+                                Label label7 = new Label(8, branchIterator + 1, String.valueOf(mosneenMeetings));
+                                Label label8 = new Label(9, branchIterator + 1, String.valueOf(otherMeetings));
+                                Label label9 = new Label(10, branchIterator + 1, String.valueOf(meetingsCounter));
                                 try {
+                                    sheet.addCell(label9);
                                     sheet.addCell(label8);
                                     sheet.addCell(label7);
                                     sheet.addCell(label6);

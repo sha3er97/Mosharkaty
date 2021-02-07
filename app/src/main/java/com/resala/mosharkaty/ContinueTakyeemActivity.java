@@ -47,11 +47,14 @@ public class ContinueTakyeemActivity extends AppCompatActivity {
         // special cases correction
         switch (thisMonth) {
             case 2:
-                beforeLastMonth = 12;
+//                beforeLastMonth = 12;
+                beforeLastMonth = 0;
                 break;
             case 1:
-                beforeLastMonth = 11;
-                lastMonth = 12;
+//                beforeLastMonth = 11;
+//                lastMonth = 12;
+                beforeLastMonth = -1;
+                lastMonth = 0;
                 break;
         }
         Intent intent = getIntent();
@@ -92,30 +95,30 @@ public class ContinueTakyeemActivity extends AppCompatActivity {
         }
     }
 
-  public void signTakyeem(View view) {
-      if (!codeFound) {
-          Toast.makeText(
-                  getApplicationContext(),
-                  "لازم تحدث الكود بتاعك بالكود الصح عشان تقدر تشوف تقييمك و تمضيه",
-                  Toast.LENGTH_SHORT)
-                  .show();
-          signBtn.setEnabled(false);
-          return;
-      }
-      DatabaseReference signaturesRef =
-              database
-                      .getReference("signatures")
-                      .child(userBranch)
-                      .child(String.valueOf(thisMonth))
-                      .child(volName);
+    public void signTakyeem(View view) {
+        if (!codeFound) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "لازم تحدث الكود بتاعك بالكود الصح عشان تقدر تشوف تقييمك و تمضيه",
+                    Toast.LENGTH_SHORT)
+                    .show();
+            signBtn.setEnabled(false);
+            return;
+        }
+        DatabaseReference signaturesRef =
+                database
+                        .getReference("signatures")
+                        .child(userBranch)
+                        .child(String.valueOf(thisMonth))
+                        .child(volName);
 
-      signaturesRef.setValue(
-              new Sig(VolComment.getText().toString().trim(), cldr.getTime().toString(), volName));
-      signBtn.setEnabled(false);
-      signBtn.setBackgroundColor(
-              getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
-      signBtn.setText("تم الامضاء");
-      signBtn.setTextColor(getResources().getColor(R.color.new_text_black));
-      Toast.makeText(this, "شكرا لامضائك و استني تقييم الشهر الجاي ..", Toast.LENGTH_SHORT).show();
-  }
+        signaturesRef.setValue(
+                new Sig(VolComment.getText().toString().trim(), cldr.getTime().toString(), volName));
+        signBtn.setEnabled(false);
+        signBtn.setBackgroundColor(
+                getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+        signBtn.setText("تم الامضاء");
+        signBtn.setTextColor(getResources().getColor(R.color.new_text_black));
+        Toast.makeText(this, "شكرا لامضائك و استني تقييم الشهر الجاي ..", Toast.LENGTH_SHORT).show();
+    }
 }

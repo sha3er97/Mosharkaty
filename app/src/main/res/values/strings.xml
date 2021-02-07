@@ -192,4 +192,5 @@
     <string name="events_reports_tab_text_2">عرض الاحداث</string>
     <string name="welcome_text">Welcome</string>
     <string name="magamad_filter_text">فريق غير رسمي / مجمد فقط</string>
+    <string name="mosharka_type">نوع المشاركة :</string>
 </resources>

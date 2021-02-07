@@ -207,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/new_jf"
-                android:text="نوع المشاركة : "
+                android:text="@string/mosharka_type"
                 android:textColor="@color/new_text_black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/spinner"

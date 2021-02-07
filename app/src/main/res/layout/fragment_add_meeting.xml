@@ -9,6 +9,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/eventNameTV8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/new_jf"
+            android:text="صفة مدير الاجتماع"
+            android:textColor="@color/new_text_black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/meetingHead_et2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/meetingHead_et2" />
+
+        <EditText
+            android:id="@+id/meetingHead_et2"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_gray"
+            android:fontFamily="@font/new_jf"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textColor="@color/new_text_blue"
+            android:textColorHint="@color/new_hint_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/eventNameTV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/meetingHead_et" />
+
         <Button
             android:id="@+id/add_meeting_btn"
             android:layout_width="match_parent"
@@ -209,7 +241,7 @@
             android:id="@+id/eventTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/new_jf"
             android:text="من"
@@ -217,7 +249,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/meetingTime_et"
             app:layout_constraintStart_toStartOf="@+id/meetingTime_et"
-            app:layout_constraintTop_toBottomOf="@+id/meetingHead_et" />
+            app:layout_constraintTop_toBottomOf="@+id/meetingHead_et2" />
 
         <TextView
             android:id="@+id/eventType"
@@ -277,8 +309,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/new_jf"
-            android:text="محضر\n الاجتماع"
             android:gravity="center"
+            android:text="محضر\n الاجتماع"
             android:textAlignment="center"
             android:textColor="@color/new_text_black"
             android:textSize="20sp"

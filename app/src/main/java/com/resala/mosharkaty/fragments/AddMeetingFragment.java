@@ -1,5 +1,6 @@
 package com.resala.mosharkaty.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class AddMeetingFragment extends Fragment {
     public static String[] meetingsTypesNormal = {
             "اجتماع لجنة فرق",
             "اجتماع لجنة معارض/قوافل",
-            "اجتماع لجنة دور ايواء",
+            "اجتماع لجنة مسنين",
             "اجتماع لجنة ولاد عم",
             "اجتماع لجنة نفسك في ايه",
             "اجتماع لجنة hr",
@@ -49,7 +50,7 @@ public class AddMeetingFragment extends Fragment {
     public static String[] meetingsTypesMarkzy = {
             "اجتماع مركزية فرق",
             "اجتماع مركزية معارض/قوافل",
-            "اجتماع مركزية دور ايواء",
+            "اجتماع مركزية مسنين",
             "اجتماع مركزية ولاد عم",
             "اجتماع مركزية نفسك في ايه",
             "اجتماع مركزية مكافحة",
@@ -83,8 +84,11 @@ public class AddMeetingFragment extends Fragment {
     int year;
     EditText meetingDescription_et;
     EditText meetingHead_et;
+    EditText meetingHead_et2;
+
     EditText meetingCount;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +106,8 @@ public class AddMeetingFragment extends Fragment {
         addMeeting_btn = view.findViewById(R.id.add_meeting_btn);
 
         meetingHead_et = view.findViewById(R.id.meetingHead_et);
+        meetingHead_et2 = view.findViewById(R.id.meetingHead_et2);
+
         meetingCount = view.findViewById(R.id.meetingCount);
         meetingDescription_et = view.findViewById(R.id.meetingDescription_et);
 
@@ -126,12 +132,14 @@ public class AddMeetingFragment extends Fragment {
                                         place_spin.getSelectedItem().toString(),
                                         reason_spin.getSelectedItem().toString(),
                                         eText3.getText().toString(),
-                                        type_spin.getSelectedItem().toString()));
+                                        type_spin.getSelectedItem().toString(),
+                                        meetingHead_et2.getText().toString().trim()));
 
-                        Toast.makeText(getContext(), "Meeting Added..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "تم اضافة الاجتماع ..", Toast.LENGTH_SHORT).show();
 
-                        // عشان ماجد
+                        // avoid replication
                         meetingHead_et.setText("");
+                        meetingHead_et2.setText("");
                         meetingCount.setText("");
                         meetingDescription_et.setText("");
                         eText.setText("");
@@ -271,10 +279,21 @@ public class AddMeetingFragment extends Fragment {
         }
 
         String head = meetingHead_et.getText().toString();
+        String[] words = head.split(" ", 5);
         if (TextUtils.isEmpty(head)) {
             meetingHead_et.setError("Required.");
             valid = false;
+        } else if (words.length < 2) {
+            meetingHead_et.setError("الاسم لازم يبقي ثنائي علي الاقل.");
+            valid = false;
         }
+
+        String head2 = meetingHead_et2.getText().toString();
+        if (TextUtils.isEmpty(head2)) {
+            meetingHead_et2.setError("Required.");
+            valid = false;
+        }
+
         String description = meetingDescription_et.getText().toString();
         String count = meetingCount.getText().toString();
         if (TextUtils.isEmpty(description)) {
@@ -290,6 +309,7 @@ public class AddMeetingFragment extends Fragment {
             meetingDescription_et.setError(null);
             meetingCount.setError(null);
             meetingHead_et.setError(null);
+            meetingHead_et2.setError(null);
             eText2.setError(null);
             eText3.setError(null);
         }

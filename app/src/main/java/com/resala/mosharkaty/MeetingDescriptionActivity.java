@@ -1,5 +1,6 @@
 package com.resala.mosharkaty;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -38,10 +39,12 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
     int year;
     EditText meetingDescription_et;
     EditText meetingHead_et;
+    EditText meetingHead_et2;
     EditText meetingCount;
     String key;
     DatabaseReference MeetingsRef;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         String reasonText = intent.getStringExtra("reason");
         String countText = intent.getStringExtra("count");
         String headText = intent.getStringExtra("head");
-
+        String head_roleText = intent.getStringExtra("head_role");
         String dateText = intent.getStringExtra("date");
         String descriptionText = intent.getStringExtra("description");
         String locationText = intent.getStringExtra("location");
@@ -69,6 +72,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         eText2 = findViewById(R.id.meetingTime_et);
         eText3 = findViewById(R.id.meetingTime_et2);
         meetingHead_et = findViewById(R.id.meetingHead_et);
+        meetingHead_et2 = findViewById(R.id.meetingHead_et2);
         meetingCount = findViewById(R.id.meetingCount);
         meetingDescription_et = findViewById(R.id.meetingDescription_et);
 
@@ -79,6 +83,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         eText2.setText(fromText);
         eText3.setText(toText);
         meetingHead_et.setText(headText);
+        meetingHead_et2.setText(head_roleText);
         meetingCount.setText(countText);
         meetingDescription_et.setText(descriptionText);
         final Calendar cldr = Calendar.getInstance(Locale.US);
@@ -189,10 +194,21 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         }
 
         String head = meetingHead_et.getText().toString();
+        String[] words = head.split(" ", 5);
         if (TextUtils.isEmpty(head)) {
             meetingHead_et.setError("Required.");
             valid = false;
+        } else if (words.length < 2) {
+            meetingHead_et.setError("الاسم لازم يبقي ثنائي علي الاقل.");
+            valid = false;
         }
+
+        String head2 = meetingHead_et2.getText().toString();
+        if (TextUtils.isEmpty(head2)) {
+            meetingHead_et2.setError("Required.");
+            valid = false;
+        }
+
         String description = meetingDescription_et.getText().toString();
         String count = meetingCount.getText().toString();
         if (TextUtils.isEmpty(description)) {
@@ -229,9 +245,10 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                         place_spin.getText().toString(),
                         reason_spin.getText().toString(),
                         eText3.getText().toString(),
-                        type_spin.getText().toString()));
+                        type_spin.getText().toString(),
+                        meetingHead_et2.getText().toString().trim()));
 
-        Toast.makeText(getApplicationContext(), "Meeting Edited..", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "تم حفظ التعديلات ..", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -239,7 +256,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         String date = eText.getText().toString();
         String[] dateParts = date.split("/", 2);
         MeetingsRef.child(String.valueOf(dateParts[1])).child(key).setValue(null);
-        Toast.makeText(this, "تم الغاء الاجتماع", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "تم الغاء الاجتماع ..", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
