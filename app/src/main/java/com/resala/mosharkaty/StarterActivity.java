@@ -1,5 +1,8 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -13,9 +16,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
-
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 
 public class StarterActivity extends AppCompatActivity {
     public static HashMap<String, String> branchesSheets = new HashMap<>();
@@ -36,7 +36,8 @@ public class StarterActivity extends AppCompatActivity {
     private void fillSheets() {
         branchesSheets.put(branches[0], "1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0"); // مهندسين
         branchesSheets.put(branches[1], "1IzyuwMrKap0uQutEKM0qcRpL3MlBxfd2tLv9jZ1M32o"); // معادي
-        branchesSheets.put(branches[2], "1twEafdr_bJgXoCmM26cQHZlPuCkYwntr8LJ5pPxreOI"); // فيصل
+//        branchesSheets.put(branches[2], "1twEafdr_bJgXoCmM26cQHZlPuCkYwntr8LJ5pPxreOI"); // فيصل
+        branchesSheets.put(branches[2], "1X5D1sIfM7BR4ZtM6knHTt96STJMC8DK6_1a9O7DX5Ic"); // فيصل
         branchesSheets.put(branches[3], "1x_yXMc32YxG62C_l1Bqis4Sjdy_PH2iGiAmL6w3DoTA"); // مدينة نصر
 //        branchesSheets.put(branches[4], "1h8ApI25VevdkmRj_bRoYUwnbSdlGnm5lAVXpQlVte9Y"); // مصر الجديدة
         branchesSheets.put(branches[4], "1wramn0b32bE_tvW1VaT98vJ7_xDlQ22djEsRja_wzjc"); // مصر الجديدة
