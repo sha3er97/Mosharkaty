@@ -269,23 +269,34 @@
                 app:layout_constraintBottom_toBottomOf="@+id/far3Detail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/far3Detail" />
-
-            <TextView
+            <Spinner
                 android:id="@+id/far3Detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/white_rect"
-                android:fontFamily="@font/new_jf"
-                android:gravity="center"
                 android:padding="8dp"
-                android:text="@string/dummy_far3"
-                android:textColor="@color/new_text_black"
-                android:textSize="16sp"
+                android:gravity="center"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toStartOf="@+id/fra3Name"
                 app:layout_constraintStart_toEndOf="@+id/applyChanges_btn2"
                 app:layout_constraintTop_toBottomOf="@+id/codeDetail" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/far3Detail"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:layout_marginEnd="16dp"-->
+            <!--                android:background="@drawable/white_rect"-->
+            <!--                android:fontFamily="@font/new_jf"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="8dp"-->
+            <!--                android:text="@string/dummy_far3"-->
+            <!--                android:textColor="@color/new_text_black"-->
+            <!--                android:textSize="16sp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/fra3Name"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/applyChanges_btn2"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/codeDetail" />-->
 
             <TextView
                 android:id="@+id/textView3"

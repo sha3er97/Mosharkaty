@@ -1,5 +1,16 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -9,10 +20,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,27 +49,17 @@ import com.resala.mosharkaty.utility.classes.User;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
-import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
-import static com.resala.mosharkaty.fragments.HomeFragment.userName;
-import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
-import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
-
-public class ProfileFragment extends androidx.fragment.app.Fragment {
+public class ProfileFragment extends androidx.fragment.app.Fragment implements AdapterView.OnItemSelectedListener {
     View view;
     ImageButton ApplyChanges;
     Button Courses_btn;
     EditText name;
     EditText code;
-    TextView branch;
+    Spinner branch;
     TextView currentMosharkatapp;
     TextView currentpercent;
     ProgressBar attendanceBar;
@@ -94,19 +98,19 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
      * non-graphical fragments can return null. This will be called between {@link #onCreate(Bundle)}
      * and {@link #onActivityCreated(Bundle)}.
      *
-   * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
-   *
-   * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
-   * view is being released.
-   *
-   * @param inflater The LayoutInflater object that can be used to inflate any views in the
-   *     fragment,
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached
-     *     to. The fragment should not add the view itself, but this can be used to generate the
-     *     LayoutParams of the view.
+     * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+     *
+     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
+     * view is being released.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the
+     *                           fragment,
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached
+     *                           to. The fragment should not add the view itself, but this can be used to generate the
+     *                           LayoutParams of the view.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-     *     saved state as given here.
+     *                           saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
     @Nullable
@@ -121,12 +125,20 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
         // define views
         name = view.findViewById(R.id.volDetail);
         code = view.findViewById(R.id.codeDetail);
-        branch = view.findViewById(R.id.far3Detail);
         ApplyChanges = view.findViewById(R.id.applyChanges_btn2);
         Courses_btn = view.findViewById(R.id.Courses_btn);
         currentMosharkatapp = view.findViewById(R.id.current_from_app);
         currentpercent = view.findViewById(R.id.current_percent);
-        branch.setText(userBranch);
+
+        branch = view.findViewById(R.id.far3Detail);
+        branch.setOnItemSelectedListener(this);
+        // Creating the ArrayAdapter instance having the country list
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item2, branches);
+        aa.setDropDownViewResource(R.layout.spinner_dropdown);
+        // Setting the ArrayAdapter data on the Spinner
+        branch.setAdapter(aa);
+        branch.setSelection(Arrays.asList(branches).indexOf(userBranch));
+//        branch.setText(userBranch);
 
         // buttons listeners
         Courses_btn.setOnClickListener(
@@ -139,6 +151,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
 
                     String nameText = name.getText().toString();
                     String codeText = code.getText().toString().trim();
+                    String branchText = branch.getSelectedItem().toString();
                     String[] words = nameText.split(" ", 5);
                     if (TextUtils.isEmpty(nameText)) {
                         name.setError("Required.");
@@ -161,7 +174,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                         return;
                     }
                     DatabaseReference currentUser = usersRef.child(userId);
-                    currentUser.setValue(new User(userBranch, codeText, nameText));
+                    currentUser.setValue(new User(branchText, codeText, nameText));
                     Toast.makeText(getContext(), "changes Saved..", Toast.LENGTH_SHORT).show();
                 });
 
@@ -187,7 +200,8 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
 
                                     name.setText(userName);
                                     code.setText(userCode);
-                                    branch.setText(userBranch);
+//                                    branch.setText(userBranch);
+                                    branch.setSelection(Arrays.asList(branches).indexOf(userBranch));
                                     getUserName();
                                 }
                             }
@@ -268,98 +282,107 @@ public class ProfileFragment extends androidx.fragment.app.Fragment {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         mycounter = 0;
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                      MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                      if (mosharka != null) {
-                        if (mosharka.getVolname().trim().equals(userName.trim())
-                            || mosharka.getVolname().trim().equals(userOfficialName.trim())) {
-                          mycounter++;
-                        }
-                      }
-                    }
-                    updateMosharkatUI();
-                  }
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
+                                            if (mosharka != null) {
+                                                if (mosharka.getVolname().trim().equals(userName.trim())
+                                                        || mosharka.getVolname().trim().equals(userOfficialName.trim())) {
+                                                    mycounter++;
+                                                }
+                                            }
+                                        }
+                                        updateMosharkatUI();
+                                    }
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                  }
-                });
-  }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w(TAG, "Failed to read value.", error.toException());
+                                    }
+                                });
+    }
 
-  private void getEnrolledCourses() {
-    CoursesRef = database.getReference("courses");
-    CoursesListener =
-        CoursesRef.addValueEventListener(
-            new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                courseItems.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                  Course course = snapshot.getValue(Course.class);
-                  if (course != null && enrolledCourses.contains(snapshot.getKey())) {
-                    courseItems.add(course);
-                  }
+    private void getEnrolledCourses() {
+        CoursesRef = database.getReference("courses");
+        CoursesListener =
+                CoursesRef.addValueEventListener(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                courseItems.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Course course = snapshot.getValue(Course.class);
+                                    if (course != null && enrolledCourses.contains(snapshot.getKey())) {
+                                        courseItems.add(course);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+    }
+
+    private void updateMosharkatUI() {
+        currentMosharkatapp.setText(String.valueOf(mycounter));
+        attendanceBar = view.findViewById(R.id.determinateBar);
+        float percentage = (float) Math.min(mycounter, 8) / 8 * 100;
+        attendanceBar.setProgress(Math.round(percentage));
+        currentpercent.setText(Math.round(percentage) + " %");
+        try {
+            if (percentage < (float) myRules.bad_average / 8 * 100) {
+                currentpercent.setTextColor(getResources().getColor(R.color.red));
+                currentMosharkatapp.setTextColor(getResources().getColor(R.color.red));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    attendanceBar.setProgressTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.red)));
                 }
-                adapter.notifyDataSetChanged();
-              }
-
-              @Override
-              public void onCancelled(@NonNull DatabaseError error) {}
-            });
-  }
-
-  private void updateMosharkatUI() {
-      currentMosharkatapp.setText(String.valueOf(mycounter));
-      attendanceBar = view.findViewById(R.id.determinateBar);
-      float percentage = (float) Math.min(mycounter, 8) / 8 * 100;
-      attendanceBar.setProgress(Math.round(percentage));
-      currentpercent.setText(Math.round(percentage) + " %");
-      try {
-          if (percentage < (float) myRules.bad_average / 8 * 100) {
-              currentpercent.setTextColor(getResources().getColor(R.color.red));
-              currentMosharkatapp.setTextColor(getResources().getColor(R.color.red));
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                  attendanceBar.setProgressTintList(
-                          ColorStateList.valueOf(getResources().getColor(R.color.red)));
-              }
-          } else if (percentage < (float) myRules.medium_average / 8 * 100) {
-              currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
-              currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                  attendanceBar.setProgressTintList(
-                          ColorStateList.valueOf(getResources().getColor(R.color.ourBlue)));
-              }
-          } else { // bigger than both
-              currentpercent.setTextColor(getResources().getColor(R.color.green));
-              currentMosharkatapp.setTextColor(getResources().getColor(R.color.green));
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                  attendanceBar.setProgressTintList(
-                          ColorStateList.valueOf(getResources().getColor(R.color.green)));
-              }
-          }
-      } catch (Exception ignored) {
+            } else if (percentage < (float) myRules.medium_average / 8 * 100) {
+                currentpercent.setTextColor(getResources().getColor(R.color.ourBlue));
+                currentMosharkatapp.setTextColor(getResources().getColor(R.color.ourBlue));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    attendanceBar.setProgressTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.ourBlue)));
+                }
+            } else { // bigger than both
+                currentpercent.setTextColor(getResources().getColor(R.color.green));
+                currentMosharkatapp.setTextColor(getResources().getColor(R.color.green));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    attendanceBar.setProgressTintList(
+                            ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                }
+            }
+        } catch (Exception ignored) {
+        }
     }
-  }
 
-  @Override
-  public void onDestroy() {
-      super.onDestroy();
-      if (usersRef != null && userlistener != null) {
-          usersRef.removeEventListener(userlistener);
-      }
-      if (mosharkatTab != null && mosharkatTablistener != null) {
-          mosharkatTab.removeEventListener(mosharkatTablistener);
-      }
-      if (MosharkatRef != null && Mosharkatlistener != null) {
-          MosharkatRef.removeEventListener(Mosharkatlistener);
-      }
-      if (CoursesRef != null && CoursesListener != null) {
-          CoursesRef.removeEventListener(CoursesListener);
-      }
-      if (EnrollmentRef != null && EnrollmentListener != null) {
-          EnrollmentRef.removeEventListener(EnrollmentListener);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (usersRef != null && userlistener != null) {
+            usersRef.removeEventListener(userlistener);
+        }
+        if (mosharkatTab != null && mosharkatTablistener != null) {
+            mosharkatTab.removeEventListener(mosharkatTablistener);
+        }
+        if (MosharkatRef != null && Mosharkatlistener != null) {
+            MosharkatRef.removeEventListener(Mosharkatlistener);
+        }
+        if (CoursesRef != null && CoursesListener != null) {
+            CoursesRef.removeEventListener(CoursesListener);
+        }
+        if (EnrollmentRef != null && EnrollmentListener != null) {
+            EnrollmentRef.removeEventListener(EnrollmentListener);
+        }
     }
-  }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 }
