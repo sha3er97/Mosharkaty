@@ -3,15 +3,15 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.resala.mosharkaty"
         minSdkVersion 18
-        targetSdkVersion 30
-        versionCode 21
-        versionName "3.2"
+        targetSdkVersion 31
+        versionCode 23
+        versionName "4.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
