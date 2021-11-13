@@ -9,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -166,12 +166,21 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
 //      File dir = new File(root);
         String FolderName = "Mosharkaty/النشيط";
+        String directoryName;
         File dir;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
-        } else {
-            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
-        }
+        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            directoryName = Environment.getDownloadCacheDirectory().toString();
+//            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
+//
+////            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
+//        } else {
+//            directoryName = Environment.getExternalStorageDirectory().toString();
+//
+//            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
+//        }
         dir.mkdirs();
         String Fnamexls = ("/قائمة_نشيط_نشاط_الفرز_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
@@ -215,7 +224,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + FolderName + Fnamexls, Toast.LENGTH_LONG)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
                     .show();
             //      sendEmail(root, Fnamexls);
             try {
@@ -324,12 +333,21 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
 //        File dir = new File(root);
         String FolderName = "Mosharkaty/النشيط";
+        String directoryName;
         File dir;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
-        } else {
-            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
-        }
+        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            directoryName = Environment.getDownloadCacheDirectory().toString();
+//            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
+//
+////            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
+//        } else {
+//            directoryName = Environment.getExternalStorageDirectory().toString();
+//
+//            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
+//        }
         dir.mkdirs();
         String Fnamexls = ("/مشاركات_نشيط_حتي_الان_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
@@ -360,7 +378,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + FolderName + Fnamexls, Toast.LENGTH_LONG)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
                     .show();
             //      sendEmail(root, Fnamexls);
             try {

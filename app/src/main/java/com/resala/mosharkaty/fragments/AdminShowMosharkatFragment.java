@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Objects;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -333,13 +334,23 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
 //    String root =
 //            Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/متابعة_يومية";
 //    File dir = new File(root);
+        String directoryName;
         String FolderName = "Mosharkaty/شيت_المتابعة اليومية";
         File dir;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
-        } else {
-            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
-        }
+        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            directoryName = Environment.getDownloadCacheDirectory().toString();
+//            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
+//
+////            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
+//        } else {
+//            directoryName = Environment.getExternalStorageDirectory().toString();
+//
+//            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
+//        }
+
         dir.mkdirs();
         String Fnamexls = ("/متابعة_يومية_نشاط_الفرز_" + userBranch + "_" + day + "_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
@@ -376,7 +387,7 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + FolderName + Fnamexls, Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
                     .show();
             // To dismiss the dialog
             progress.dismiss();
@@ -401,12 +412,21 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
         String FolderName = "Mosharkaty/شيت_المتابعة";
+        String directoryName;
         File dir;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            dir = new File(Environment.DIRECTORY_DOCUMENTS + "/" + FolderName);
-        } else {
-            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
-        }
+        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            directoryName = Environment.getDownloadCacheDirectory().toString();
+//            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
+//
+////            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
+//        } else {
+//            directoryName = Environment.getExternalStorageDirectory().toString();
+//
+//            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
+//        }
         dir.mkdirs();
         String Fnamexls = ("/شيت_متابعة_نشاط_الفرز_" + userBranch + "_" + day + "_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
@@ -452,7 +472,7 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + FolderName + Fnamexls, Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
                     .show();
             // To dismiss the dialog
             progress.dismiss();
