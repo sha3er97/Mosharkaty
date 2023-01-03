@@ -1,5 +1,11 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -47,12 +53,6 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class ShowMeetingFragment extends Fragment {
     View view;

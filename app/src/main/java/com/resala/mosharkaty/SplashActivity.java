@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.utility.classes.Rules;
-
-import static android.content.ContentValues.TAG;
 
 public class SplashActivity extends AppCompatActivity {
     DatabaseReference rulesRef;
