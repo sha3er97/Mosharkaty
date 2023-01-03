@@ -1,5 +1,9 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +22,6 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 
 import java.util.ArrayList;
-
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
 
 public class MosharkatAdapter extends RecyclerView.Adapter<MosharkatAdapter.ViewHolder> {
   private ArrayList<MosharkaItem> mosharkatItems;

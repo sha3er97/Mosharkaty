@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,8 +22,6 @@ import com.resala.mosharkaty.utility.classes.Meeting;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class MeetingDescriptionActivity extends AppCompatActivity {
     TextView type_spin;

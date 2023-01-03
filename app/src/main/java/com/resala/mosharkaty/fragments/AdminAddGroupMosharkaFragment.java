@@ -1,5 +1,12 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
+import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -37,13 +44,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {

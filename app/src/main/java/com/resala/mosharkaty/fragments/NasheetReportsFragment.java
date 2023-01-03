@@ -1,5 +1,8 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +26,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class NasheetReportsFragment extends androidx.fragment.app.Fragment {
   View view;

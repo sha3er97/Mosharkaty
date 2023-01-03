@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.fragments;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -22,8 +24,6 @@ import com.resala.mosharkaty.utility.classes.EventReport;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AddEventReportFragment extends Fragment {
   View view;

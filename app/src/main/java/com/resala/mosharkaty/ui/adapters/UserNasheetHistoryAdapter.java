@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,6 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.NasheetHistoryItem;
 
 import java.util.ArrayList;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryAdapter.ViewHolder> {
     private ArrayList<NasheetHistoryItem> userHistoryItems;

@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,8 +21,6 @@ import com.resala.mosharkaty.ViewSpecificSessionActivity;
 import com.resala.mosharkaty.utility.classes.Session;
 
 import java.util.ArrayList;
-
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
 
 public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHolder> {
     private ArrayList<Session> sessionsItems;

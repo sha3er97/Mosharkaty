@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,11 +34,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 
 public class AdminShowConfirmationsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {

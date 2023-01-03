@@ -1,5 +1,10 @@
 package com.resala.mosharkaty.fragments;
 
+import static com.resala.mosharkaty.LoginActivity.branchOrder;
+import static com.resala.mosharkaty.LoginActivity.isMrkzy;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -31,11 +36,6 @@ import com.resala.mosharkaty.AdminWeeklyReportActivity;
 import com.resala.mosharkaty.NasheetActivity;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.WithoutRepeatReportActivity;
-
-import static com.resala.mosharkaty.LoginActivity.branchOrder;
-import static com.resala.mosharkaty.LoginActivity.isMrkzy;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
 
 public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
     View view;

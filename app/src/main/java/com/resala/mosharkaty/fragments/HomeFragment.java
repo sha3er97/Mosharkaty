@@ -1,5 +1,17 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AddEventReportFragment.reportsTypes;
+import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
+import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+
 import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -36,18 +48,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
-import static com.resala.mosharkaty.fragments.AddEventReportFragment.reportsTypes;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class HomeFragment extends androidx.fragment.app.Fragment {
     public static String userName;

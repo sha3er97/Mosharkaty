@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.fragments;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -28,8 +30,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminAddEventsFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {

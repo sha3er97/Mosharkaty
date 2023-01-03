@@ -1,5 +1,8 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,9 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
 
 public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAdapter.ViewHolder> {
     private ArrayList<Course> cousreItems;

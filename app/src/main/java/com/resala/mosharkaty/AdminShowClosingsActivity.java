@@ -1,5 +1,9 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +26,6 @@ import com.resala.mosharkaty.utility.classes.ClosingItem;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class AdminShowClosingsActivity extends AppCompatActivity {
     ClosingAdapter adapter;

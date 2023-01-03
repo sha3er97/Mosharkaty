@@ -1,5 +1,12 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+import static com.resala.mosharkaty.fragments.HomeFragment.teamDegrees;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,13 +35,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
-import static com.resala.mosharkaty.fragments.HomeFragment.teamDegrees;
 
 public class AdminWeeklyReportActivity extends AppCompatActivity {
     Spinner month_et;

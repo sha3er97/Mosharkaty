@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userId;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -22,8 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.utility.classes.User;
-
-import static com.resala.mosharkaty.LoginActivity.userId;
 
 public class NewAccountActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {

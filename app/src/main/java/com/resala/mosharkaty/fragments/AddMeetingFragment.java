@@ -1,6 +1,8 @@
 package com.resala.mosharkaty.fragments;
 
-import android.annotation.SuppressLint;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -25,20 +27,20 @@ import com.resala.mosharkaty.utility.classes.Meeting;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-
 public class AddMeetingFragment extends Fragment {
     View view;
     public static String[] meetingsTypesNormal = {
             "اجتماع لجنة فرق",
-            "اجتماع لجنة معارض/قوافل",
-            "اجتماع لجنة مسنين",
+            "اجتماع لجنة معارض/اطفال",
+            "اجتماع لجنة اطعام/مسنين",
+            "اجتماع لجنة اعمار",
             "اجتماع لجنة ولاد عم",
             "اجتماع لجنة نفسك في ايه",
             "اجتماع لجنة hr",
             "اجتماع لجنة متابعة",
             "اجتماع لجنة اتصالات",
+            "اجتماع لجنة اشبال",
+            "اجتماع لجنة دعايا",
             "اجتماع لجنة مكافحة",
             "اجتماع لجنة نقل",
             "اجتماع لجان مجمع",
@@ -49,16 +51,21 @@ public class AddMeetingFragment extends Fragment {
     };
     public static String[] meetingsTypesMarkzy = {
             "اجتماع مركزية فرق",
-            "اجتماع مركزية معارض/قوافل",
-            "اجتماع مركزية مسنين",
+            "اجتماع مركزية معارض/اطفال",
+            "اجتماع مركزية اطعام/مسنين",
+            "اجتماع مركزية اعمار",
             "اجتماع مركزية ولاد عم",
             "اجتماع مركزية نفسك في ايه",
-            "اجتماع مركزية مكافحة",
             "اجتماع مركزية hr",
             "اجتماع مركزية متابعة",
             "اجتماع مركزية اتصالات",
+            "اجتماع مركزية اشبال",
+            "اجتماع مركزية مكافحة",
             "اجتماع لجنة دعايا",
-            "اجتماع المديرين التنفيذيين",
+            "اجتماع مركزية نقل",
+            "اجتماع ادارة التيكنيكال",
+            "اجتماع ادارة التطوع",
+            "اجتماع ادارة الجودة",
             "اجتماع هدود الفروع",
             "اجتماع ادارة فنية",
             "اجتماع مسؤولين النشاط",
@@ -88,7 +95,6 @@ public class AddMeetingFragment extends Fragment {
 
     EditText meetingCount;
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -261,8 +267,9 @@ public class AddMeetingFragment extends Fragment {
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
-        } else if (Integer.parseInt(parts[1]) > month + 1
-                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+        } else if (Integer.parseInt(parts[2]) > year
+                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) > month + 1
+                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day) {
             eText.setError("you can't choose a date in the future.");
             valid = false;
         }

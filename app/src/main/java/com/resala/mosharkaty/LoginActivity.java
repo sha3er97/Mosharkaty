@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -28,11 +33,6 @@ import com.resala.mosharkaty.utility.classes.Admin;
 import com.resala.mosharkaty.utility.classes.normalVolunteer;
 
 import java.util.HashMap;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;

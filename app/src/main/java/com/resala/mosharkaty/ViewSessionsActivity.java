@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userId;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +20,6 @@ import com.resala.mosharkaty.ui.adapters.SessionsAdapter;
 import com.resala.mosharkaty.utility.classes.Session;
 
 import java.util.ArrayList;
-
-import static com.resala.mosharkaty.LoginActivity.userId;
 
 public class ViewSessionsActivity extends AppCompatActivity {
   SessionsAdapter adapter;

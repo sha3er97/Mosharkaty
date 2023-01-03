@@ -1,5 +1,8 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,9 +19,6 @@ import com.resala.mosharkaty.utility.classes.MessageItem;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class MessagesWriteActivity extends AppCompatActivity {
     EditText message_et;

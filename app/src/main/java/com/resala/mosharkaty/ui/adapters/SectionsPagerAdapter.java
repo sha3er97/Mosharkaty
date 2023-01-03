@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -19,8 +21,6 @@ import com.resala.mosharkaty.fragments.HomeFragment;
 import com.resala.mosharkaty.fragments.ProfileFragment;
 import com.resala.mosharkaty.fragments.TakyeemFragment;
 import com.resala.mosharkaty.fragments.UserCalendarFragment;
-
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.

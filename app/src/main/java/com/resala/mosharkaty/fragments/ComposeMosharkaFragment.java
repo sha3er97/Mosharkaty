@@ -1,5 +1,10 @@
 package com.resala.mosharkaty.fragments;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
+import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,11 +36,6 @@ import com.resala.mosharkaty.utility.classes.MosharkaItem;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
-import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
 
 public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {

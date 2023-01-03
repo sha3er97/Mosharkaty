@@ -1,5 +1,12 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -24,13 +31,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowTakyeemActivity extends AppCompatActivity {
     Spinner fari2Spinner;

@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +31,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
 
 public class ViewSpecificSessionActivity extends YouTubeBaseActivity {
 

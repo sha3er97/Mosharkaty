@@ -1,5 +1,9 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,10 +23,6 @@ import com.resala.mosharkaty.utility.classes.Sig;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
 
 public class ContinueTakyeemActivity extends AppCompatActivity {
     Button signBtn;

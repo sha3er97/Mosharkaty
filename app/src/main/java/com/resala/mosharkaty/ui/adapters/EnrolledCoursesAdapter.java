@@ -1,5 +1,9 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
+import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -27,10 +31,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 
 public class EnrolledCoursesAdapter
         extends RecyclerView.Adapter<EnrolledCoursesAdapter.ViewHolder> {

@@ -1,5 +1,13 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
@@ -44,14 +52,6 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class AdminMrkzyReportsActivity extends AppCompatActivity {
     private static final int BRANCHES_COUNT = 9;

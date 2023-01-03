@@ -1,5 +1,7 @@
 package com.resala.mosharkaty.ui.adapters;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,8 +21,6 @@ import com.resala.mosharkaty.utility.classes.EventItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private ArrayList<EventItem> eventItems;

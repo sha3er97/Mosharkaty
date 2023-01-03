@@ -1,5 +1,13 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.isMrkzy;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.MessagesReadActivity.isManager;
+import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,14 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.resala.mosharkaty.ui.adapters.SectionsPagerAdapter;
-
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.isMrkzy;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
-import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class MainActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;

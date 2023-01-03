@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -18,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class EventToEditActivity extends AppCompatActivity {
     FirebaseDatabase database;

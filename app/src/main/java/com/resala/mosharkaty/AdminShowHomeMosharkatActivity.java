@@ -1,5 +1,9 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.HomeFragment.globalFari2Names;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.HomeFragment.globalFari2Names;
 
 public class AdminShowHomeMosharkatActivity extends AppCompatActivity {
     FirebaseDatabase database;

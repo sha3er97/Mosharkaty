@@ -1,5 +1,9 @@
 package com.resala.mosharkaty.fragments;
 
+import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
+import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -24,10 +28,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AddNasheetFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {

@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userId;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import static com.resala.mosharkaty.LoginActivity.userId;
 
 public class CourseDescriptionActivity extends AppCompatActivity {
     FirebaseDatabase database;

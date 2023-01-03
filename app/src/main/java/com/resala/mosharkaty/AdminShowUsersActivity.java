@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +26,6 @@ import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 
 public class AdminShowUsersActivity extends AppCompatActivity {
     FirebaseDatabase database;

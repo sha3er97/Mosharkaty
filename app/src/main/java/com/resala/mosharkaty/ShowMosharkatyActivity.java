@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,11 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.HomeFragment.userName;
-import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
 
 public class ShowMosharkatyActivity extends AppCompatActivity {
   int month;

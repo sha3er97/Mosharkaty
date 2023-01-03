@@ -1,5 +1,11 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,12 +35,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class AdminShowStatisticsActivity extends AppCompatActivity {
     FirebaseDatabase database;

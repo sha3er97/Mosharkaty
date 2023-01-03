@@ -1,5 +1,8 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminEditEventActivity extends AppCompatActivity {
     HashMap<String, String> eventsImages = new HashMap<>();

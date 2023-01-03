@@ -1,5 +1,10 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.SplashActivity.myRules;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -29,11 +34,6 @@ import com.resala.mosharkaty.utility.classes.MessageItem;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 
 public class MessagesReadActivity extends AppCompatActivity {
     MessagesAdapter adapter;

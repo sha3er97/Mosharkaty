@@ -1,5 +1,8 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -21,9 +24,6 @@ import com.resala.mosharkaty.utility.classes.Sig;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class AdminShowSignatureActivity extends AppCompatActivity {
     SignaturesAdapter adapter;

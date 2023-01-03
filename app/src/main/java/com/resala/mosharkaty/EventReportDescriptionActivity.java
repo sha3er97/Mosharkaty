@@ -1,5 +1,7 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +20,6 @@ import com.resala.mosharkaty.utility.classes.EventReport;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 
 public class EventReportDescriptionActivity extends AppCompatActivity {
     DatePickerDialog picker;

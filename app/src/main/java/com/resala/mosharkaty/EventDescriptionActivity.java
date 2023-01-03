@@ -1,5 +1,8 @@
 package com.resala.mosharkaty;
 
+import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,9 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 
 public class EventDescriptionActivity extends AppCompatActivity {
     Button coming_btn;
