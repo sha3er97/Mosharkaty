@@ -1,9 +1,10 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isManager;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -45,7 +46,6 @@ public class MessagesReadActivity extends AppCompatActivity {
     Button confirm_pass;
     EditText message_et;
     Button addMessage_btn;
-    public static boolean isManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +86,9 @@ public class MessagesReadActivity extends AppCompatActivity {
         }
         if (!isManager) {
             Toast.makeText(
-                    getApplicationContext(),
-                    "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
-                    Toast.LENGTH_SHORT)
+                            getApplicationContext(),
+                            "illegal action : متقدرش تشوف المسدجات الا لما تدحل كلمة السر صح",
+                            Toast.LENGTH_SHORT)
                     .show();
             return;
         }

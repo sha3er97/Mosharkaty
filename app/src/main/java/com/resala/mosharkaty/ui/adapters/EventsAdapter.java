@@ -1,6 +1,6 @@
 package com.resala.mosharkaty.ui.adapters;
 
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
 
 import android.content.Context;
 import android.content.Intent;

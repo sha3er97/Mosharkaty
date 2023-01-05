@@ -1,8 +1,8 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.fragments.HomeFragment.globalFari2Names;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

@@ -1,8 +1,8 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +55,7 @@ public class ShowEventsReportsFragment extends Fragment {
         final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH);
         ArrayAdapter<String> aa =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, months);
+                new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, months);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         month_et.setAdapter(aa);
@@ -85,7 +85,7 @@ public class ShowEventsReportsFragment extends Fragment {
 
                                                         } else {
                                                             Toast.makeText(
-                                                                    getContext(), "something went wrong", Toast.LENGTH_SHORT)
+                                                                            getContext(), "something went wrong", Toast.LENGTH_SHORT)
                                                                     .show();
                                                         }
                                                     }

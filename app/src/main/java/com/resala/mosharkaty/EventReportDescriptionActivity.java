@@ -1,6 +1,6 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.utility.classes.EventReport;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -85,7 +86,7 @@ public class EventReportDescriptionActivity extends AppCompatActivity {
                             new DatePickerDialog(
                                     getApplicationContext(),
                                     (view, year, monthOfYear, dayOfMonth) ->
-                                            eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
+                                            eText.setText(UtilityClass.dateToText(dayOfMonth, monthOfYear, year)),
                                     year,
                                     month,
                                     day);
@@ -123,12 +124,10 @@ public class EventReportDescriptionActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean valid = true;
         String date = eText.getText().toString();
-        String[] parts = date.split("/", 2);
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
-        } else if (Integer.parseInt(parts[1]) > month + 1
-                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+        } else if (UtilityClass.checkFutureDate(date, year, month, day)) {
             eText.setError("you can't choose a date in the future.");
             valid = false;
         }

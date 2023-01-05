@@ -1,9 +1,9 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
@@ -32,7 +32,8 @@ import com.resala.mosharkaty.ui.adapters.UserNasheetHistoryAdapter;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetHistoryItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -116,8 +117,8 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                 view -> {
                     if (Build.VERSION.SDK_INT >= 23) {
                         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!hasPermissions(PERMISSIONS)) {
-                            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
+                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
                         } else { // permession already granted
                             showDialog();
                         }
@@ -132,33 +133,17 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showDialog();
-                } else {
-                    Toast.makeText(
-                            getContext(),
-                            "The app was not allowed to write in your storage",
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
+        if (requestCode == REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showDialog();
+            } else {
+                Toast.makeText(
+                                getContext(),
+                                "The app was not allowed to write in your storage",
+                                Toast.LENGTH_LONG)
+                        .show();
             }
         }
-    }
-
-    private boolean hasPermissions(String[] permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && getContext() != null
-                && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(getContext(), permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private void writeExcel() {
@@ -199,7 +184,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                 sheet.addCell(label0);
                 int notFoundCounter = 0;
                 for (int i = 0; i < userHistoryItems.size(); i++) {
-                    normalVolunteer vol = allVolunteersByName.get(userHistoryItems.get(i).getUsername());
+                    NormalVolunteer vol = allVolunteersByName.get(userHistoryItems.get(i).getUsername());
                     int volID;
                     int colNum = 0;
                     int col2Num = 1;

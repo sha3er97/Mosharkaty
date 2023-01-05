@@ -1,6 +1,7 @@
 package com.resala.mosharkaty.utility.classes;
 
-import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 
 public class User {
     public String branch;
@@ -8,7 +9,7 @@ public class User {
     public String name;
 
     public User() {
-        this.branch = branches[9];
+        this.branch = branches[BRANCHES_COUNT];
         this.code = " ";
         this.name = " ";
     }

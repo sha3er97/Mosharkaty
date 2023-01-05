@@ -1,6 +1,6 @@
 package com.resala.mosharkaty.ui.adapters;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Context;
 import android.view.LayoutInflater;

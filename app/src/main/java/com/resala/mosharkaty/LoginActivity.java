@@ -1,9 +1,16 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByPhone;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchOrder;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isMrkzy;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,19 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.resala.mosharkaty.utility.classes.Admin;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
-
-import java.util.HashMap;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    public static String userId;
-    public static String userBranch;
-    public static int branchOrder;
-    public static boolean isMrkzy;
-    public static boolean isAdmin;
-    public static HashMap<String, normalVolunteer> allVolunteersByName = new HashMap<>();
-    public static HashMap<String, normalVolunteer> allVolunteersByPhone = new HashMap<>();
 
     EditText email_et;
     EditText password_et;
@@ -129,10 +128,10 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setBackgroundColor(
                 getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
         String branchSheetLink =
-                userBranch.equals(branches[9])
+                userBranch.equals(branches[BRANCHES_COUNT])
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
-        if (!userBranch.equals(branches[9])) {
+        if (!userBranch.equals(branches[BRANCHES_COUNT])) {
             assert branchSheetLink != null;
             DatabaseReference allVolsRef = database.getReference(branchSheetLink).child("all");
             allVolsRef.addListenerForSingleValueEvent(
@@ -140,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                normalVolunteer user = snapshot.getValue(normalVolunteer.class);
+                                NormalVolunteer user = snapshot.getValue(NormalVolunteer.class);
                                 assert user != null;
                                 if (user.Volname.isEmpty()) continue;
                                 allVolunteersByName.put(user.Volname.trim(), user);
@@ -176,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "مش فاكرك ياض :/", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Not Signed in", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -263,8 +262,8 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         } else if (email_et.getText().toString().trim().equalsIgnoreCase(admin.mrkzy)) {
             isMrkzy = true;
-            isManager = true;
-            userBranch = branches[9];
+            UtilityClass.isManager = true;
+            userBranch = branches[BRANCHES_COUNT];
             branchOrder = 0;
             return true;
         } else return false;
@@ -273,6 +272,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginClick(View view) {
+        if (checkConnectivity(view)) {
+            if (IsAdminDetails()) makeAdminActions();
+            else { // not admin
+                Log.d(TAG, "user not admin ");
+                Log.d(TAG, "entered email : " + email_et.getText().toString());
+                Log.d(TAG, "entered pass : " + password_et.getText().toString());
+
+                isAdmin = false;
+                signIn(email_et.getText().toString(), password_et.getText().toString());
+            }
+        }
+    }
+
+    public boolean checkConnectivity(View view) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -282,18 +295,10 @@ public class LoginActivity extends AppCompatActivity {
                 //          Toast.makeText(getApplicationContext(), "No Internet",
                 // Toast.LENGTH_SHORT).show();
                 Snackbar.make(view, "No Internet", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                return;
+                return false;
             }
         }
-        if (IsAdminDetails()) makeAdminActions();
-        else { // not admin
-            Log.d(TAG, "user not admin ");
-            Log.d(TAG, "entered email : " + email_et.getText().toString());
-            Log.d(TAG, "entered pass : " + password_et.getText().toString());
-
-            isAdmin = false;
-            signIn(email_et.getText().toString(), password_et.getText().toString());
-        }
+        return true;
     }
 
     public void resetPassword(View view) {
@@ -308,14 +313,14 @@ public class LoginActivity extends AppCompatActivity {
                         task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(
-                                        getApplicationContext(),
-                                        "check your email for reset password link",
-                                        Toast.LENGTH_SHORT)
+                                                getApplicationContext(),
+                                                "check your email for reset password link",
+                                                Toast.LENGTH_SHORT)
                                         .show();
                                 Log.d(TAG, "Email sent.");
                             } else {
                                 Toast.makeText(
-                                        getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
+                                                getApplicationContext(), "couldn't reset password", Toast.LENGTH_SHORT)
                                         .show();
                             }
                         });

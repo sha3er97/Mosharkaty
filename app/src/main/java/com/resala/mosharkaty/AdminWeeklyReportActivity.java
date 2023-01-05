@@ -1,11 +1,11 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 import static com.resala.mosharkaty.fragments.HomeFragment.teamDegrees;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.days;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +29,7 @@ import com.resala.mosharkaty.utility.classes.EventReport;
 import com.resala.mosharkaty.utility.classes.Meeting;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -146,7 +147,6 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
         selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
         start_day = Integer.parseInt(day_from_et.getSelectedItem().toString());
         end_day = Integer.parseInt(day_to_et.getSelectedItem().toString());
-
         getNashitData(); //and mosharkat
         updateMeetings();
         updateEvents();
@@ -308,7 +308,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
         nasheetAttended.setText(String.valueOf(nasheetArrived));
         normalAttended.setText(String.valueOf(normalArrived));
         noobsAttended.setText(String.valueOf(noobsArrived));
-        /** ************************************************************************************* */
+        //*****************************************************************************************/
         TextView mas2olPercent = findViewById(R.id.mas2olPercent);
         TextView mshro3Percent = findViewById(R.id.mshro3Percent);
         TextView nasheetPercent = findViewById(R.id.nasheetPercent);
@@ -317,10 +317,10 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
         float percent2 = (float) msharee3Arrived / msharee3Counter * 100;
         float percent3 = (float) nasheetArrived / nasheetCounter * 100;
 
-        mas2olPercent.setText(Math.round(percent1 * 10) / 10.0 + " %");
-        mshro3Percent.setText(Math.round(percent2 * 10) / 10.0 + " %");
-        nasheetPercent.setText(Math.round(percent3 * 10) / 10.0 + " %");
-        /** ************************************************************************************* */
+        mas2olPercent.setText(UtilityClass.getPercentString(percent1));
+        mshro3Percent.setText(UtilityClass.getPercentString(percent2));
+        nasheetPercent.setText(UtilityClass.getPercentString(percent3));
+        //*****************************************************************************************/
         TextView mas2olMosharkat = findViewById(R.id.mas2olMosharkat);
         TextView mshro3Mosharkat = findViewById(R.id.mshro3Mosharkat);
         TextView nasheetMosharkatTV = findViewById(R.id.nasheetMosharkat);
@@ -332,7 +332,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
         nasheetMosharkatTV.setText(String.valueOf(nasheetMosharkat));
         normalMosharkatTV.setText(String.valueOf(normalMosharkat));
         noobsMosharkatTV.setText(String.valueOf(noobsMosharkat));
-        /** ************************************************************************************* */
+        //*****************************************************************************************/
         TextView mas2olAverage = findViewById(R.id.mas2olAverage);
         TextView mshro3Average = findViewById(R.id.mshro3Average);
         TextView nasheetAverage = findViewById(R.id.nasheetAverage);
@@ -350,8 +350,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
         nasheetAverage.setText(String.valueOf(Math.round(avg3 * 10) / 10.0));
         normalAverage.setText(String.valueOf(Math.round(avg4 * 10) / 10.0));
         noobsAverage.setText(String.valueOf(Math.round(avg5 * 10) / 10.0));
-
-        /** ************************************************************************************* */
+        //*****************************************************************************************/
         TextView mas2olAverage8 = findViewById(R.id.mas2olAverage8);
         TextView mshro3Average8 = findViewById(R.id.mshro3Average8);
         TextView nasheetAverage8 = findViewById(R.id.nasheetAverage8);

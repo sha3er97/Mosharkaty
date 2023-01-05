@@ -1,9 +1,11 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.days;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -41,7 +43,8 @@ import com.resala.mosharkaty.BuildConfig;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.MosharkatAdapter;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -65,11 +68,6 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
     MosharkatAdapter adapter;
     ArrayList<MosharkaItem> mosharkaItems = new ArrayList<>();
     FirebaseDatabase database;
-    public static String[] months = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-    public static String[] days = {
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-            "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
-    };
     int day;
     int month;
     int year;
@@ -125,14 +123,14 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
 
         // setting spinner
         ArrayAdapter<String> aa =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, months);
+                new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, months);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         month_et.setAdapter(aa);
         month_et.setSelection(Math.max(month, 0));
 
         ArrayAdapter<String> ab =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, days);
+                new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, days);
         ab.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         day_et.setAdapter(ab);
@@ -167,8 +165,8 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
                     final int day = Integer.parseInt(day_et.getSelectedItem().toString());
                     if (Build.VERSION.SDK_INT >= 23) {
                         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!hasPermissions(PERMISSIONS)) {
-                            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
+                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
                         } else { // permession already granted
                             //              writeCSV(month, day);
                             showDialog(month, day);
@@ -445,7 +443,7 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
                 sheet.addCell(label0);
                 int notFoundCounter = 0;
                 for (int i = 0; i < mosharkaItems.size(); i++) {
-                    normalVolunteer vol = allVolunteersByName.get(mosharkaItems.get(i).getVolname());
+                    NormalVolunteer vol = allVolunteersByName.get(mosharkaItems.get(i).getVolname());
                     int colNum = 0;
                     int col2Num = 1;
                     int volID;
@@ -503,7 +501,7 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
         emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
             Uri uri =
-                    FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+                    FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".provider", file);
             emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
             startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
         } catch (Exception e) {
@@ -524,26 +522,12 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
                     showDialog(month, day);
                 } else {
                     Toast.makeText(
-                            getContext(),
-                            "The app was not allowed to write in your storage",
-                            Toast.LENGTH_LONG)
+                                    getContext(),
+                                    "The app was not allowed to write in your storage",
+                                    Toast.LENGTH_LONG)
                             .show();
                 }
             }
         }
-    }
-
-    private boolean hasPermissions(String[] permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && getContext() != null
-                && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(getContext(), permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

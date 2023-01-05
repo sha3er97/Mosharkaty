@@ -15,10 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.utility.classes.Rules;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 public class SplashActivity extends AppCompatActivity {
     DatabaseReference rulesRef;
-    public static Rules myRules;
     FirebaseDatabase database;
 
     @Override
@@ -39,11 +39,12 @@ public class SplashActivity extends AppCompatActivity {
 //                        },
 //                        SPLASH_DISPLAY_LENGTH);
         rulesRef = database.getReference("Rules");
+        UtilityClass.initializeConstantHashMaps();
         rulesRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        myRules = dataSnapshot.getValue(Rules.class);
+                        UtilityClass.myRules = dataSnapshot.getValue(Rules.class);
                         startActivity(new Intent(SplashActivity.this, StarterActivity.class));
                         finish();
                     }

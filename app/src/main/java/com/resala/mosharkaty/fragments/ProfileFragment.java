@@ -1,15 +1,16 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.HomeFragment.userCode;
 import static com.resala.mosharkaty.fragments.HomeFragment.userName;
 import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -46,6 +47,7 @@ import com.resala.mosharkaty.ui.adapters.EnrolledCoursesAdapter;
 import com.resala.mosharkaty.utility.classes.Course;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.User;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
@@ -133,7 +135,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment implements A
         branch = view.findViewById(R.id.far3Detail);
         branch.setOnItemSelectedListener(this);
         // Creating the ArrayAdapter instance having the country list
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item2, branches);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item2, branches);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         branch.setAdapter(aa);
@@ -165,8 +167,8 @@ public class ProfileFragment extends androidx.fragment.app.Fragment implements A
                         name.setError("الاسم لازم يبقي ثلاثي علي الاقل.");
                         return;
                     }
-                    if (code.getText().length() != 5) {
-                        code.setError("incorrect code entered .. 5 digits required");
+                    if (code.getText().length() != UtilityClass.userCodeLength) {
+                        code.setError("incorrect code entered .. " + UtilityClass.userCodeLength + " Digits required");
                         return;
                     }
                     if (userId.equals("-1")) {
@@ -239,7 +241,7 @@ public class ProfileFragment extends androidx.fragment.app.Fragment implements A
 
     private void getUserName() {
         String branchSheetLink =
-                userBranch.equals(branches[9])
+                userBranch.equals(branches[BRANCHES_COUNT])
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;

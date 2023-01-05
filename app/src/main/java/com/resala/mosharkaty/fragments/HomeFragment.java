@@ -1,16 +1,17 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.AddEventReportFragment.reportsTypes;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.days;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.mosharkaTypes;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
 import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
@@ -37,10 +38,11 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.Top5Adapter;
 import com.resala.mosharkaty.utility.classes.EventReport;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
 import com.resala.mosharkaty.utility.classes.Top5Item;
 import com.resala.mosharkaty.utility.classes.User;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.resala.mosharkaty.utility.classes.Volunteer;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -175,7 +177,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
                                         branchTV.setText(userBranch);
                                         String branchSheetLink =
-                                                userBranch.equals(branches[9])
+                                                userBranch.equals(branches[BRANCHES_COUNT])
                                                         ? branchesSheets.get(branches[0])
                                                         : branchesSheets.get(userBranch);
                                         assert branchSheetLink != null;
@@ -195,7 +197,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
         } else {
             String branchSheetLink =
-                    userBranch.equals(branches[9])
+                    userBranch.equals(branches[BRANCHES_COUNT])
                             ? branchesSheets.get(branches[0])
                             : branchesSheets.get(userBranch);
             assert branchSheetLink != null;
@@ -257,7 +259,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                         msharee3Counter = 0;
                         globalFari2Names.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            normalVolunteer user = snapshot.getValue(normalVolunteer.class);
+                            NormalVolunteer user = snapshot.getValue(NormalVolunteer.class);
                             if (user != null) {
                                 if (user.motabaa.equals("مشروع مسئول")) {
                                     teamDegrees.put(user.Volname, "مشروع");
@@ -410,18 +412,18 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                                         meetings.setText(String.valueOf(dataSnapshot.getChildrenCount()));
                                         try {
                                             if (meetingsCount < (week * myRules.meetings_bad)) {
-                                                meetings.setTextColor(getActivity().getResources().getColor(R.color.red));
+                                                meetings.setTextColor(requireActivity().getResources().getColor(R.color.red));
                                                 meetings_word.setTextColor(
-                                                        getActivity().getResources().getColor(R.color.red));
+                                                        requireActivity().getResources().getColor(R.color.red));
                                             } else if (meetingsCount < (week * myRules.meetings_medium)) {
                                                 meetings.setTextColor(
-                                                        getActivity().getResources().getColor(R.color.ourBlue));
+                                                        requireActivity().getResources().getColor(R.color.ourBlue));
                                                 meetings_word.setTextColor(
-                                                        getActivity().getResources().getColor(R.color.ourBlue));
+                                                        requireActivity().getResources().getColor(R.color.ourBlue));
                                             } else { // bigger than both
-                                                meetings.setTextColor(getActivity().getResources().getColor(R.color.green));
+                                                meetings.setTextColor(requireActivity().getResources().getColor(R.color.green));
                                                 meetings_word.setTextColor(
-                                                        getActivity().getResources().getColor(R.color.green));
+                                                        requireActivity().getResources().getColor(R.color.green));
                                             }
                                         } catch (Exception ignored) {
 
@@ -554,22 +556,22 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                         + myRules.medium_average * msharee3Counter * myRules.mashroo3_points;
         try {
             if (pointsCalculated < (points_bad * ((float) day / 30))) {
-                points_fari2.setTextColor(getActivity().getResources().getColor(R.color.red));
-                points_other.setTextColor(getActivity().getResources().getColor(R.color.red));
-                points_word.setTextColor(getActivity().getResources().getColor(R.color.red));
-                points_word2.setTextColor(getActivity().getResources().getColor(R.color.red));
+                points_fari2.setTextColor(requireActivity().getResources().getColor(R.color.red));
+                points_other.setTextColor(requireActivity().getResources().getColor(R.color.red));
+                points_word.setTextColor(requireActivity().getResources().getColor(R.color.red));
+                points_word2.setTextColor(requireActivity().getResources().getColor(R.color.red));
 
             } else if (pointsCalculated < (points_medium * ((float) day / 30))) {
-                points_fari2.setTextColor(getActivity().getResources().getColor(R.color.ourBlue));
-                points_other.setTextColor(getActivity().getResources().getColor(R.color.ourBlue));
-                points_word.setTextColor(getActivity().getResources().getColor(R.color.ourBlue));
-                points_word2.setTextColor(getActivity().getResources().getColor(R.color.ourBlue));
+                points_fari2.setTextColor(requireActivity().getResources().getColor(R.color.ourBlue));
+                points_other.setTextColor(requireActivity().getResources().getColor(R.color.ourBlue));
+                points_word.setTextColor(requireActivity().getResources().getColor(R.color.ourBlue));
+                points_word2.setTextColor(requireActivity().getResources().getColor(R.color.ourBlue));
 
             } else { // bigger than both
-                points_fari2.setTextColor(getActivity().getResources().getColor(R.color.green));
-                points_other.setTextColor(getActivity().getResources().getColor(R.color.green));
-                points_word.setTextColor(getActivity().getResources().getColor(R.color.green));
-                points_word2.setTextColor(getActivity().getResources().getColor(R.color.green));
+                points_fari2.setTextColor(requireActivity().getResources().getColor(R.color.green));
+                points_other.setTextColor(requireActivity().getResources().getColor(R.color.green));
+                points_word.setTextColor(requireActivity().getResources().getColor(R.color.green));
+                points_word2.setTextColor(requireActivity().getResources().getColor(R.color.green));
 
             }
         } catch (Exception ignored) {
@@ -581,25 +583,25 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         arrivedTeam.setText(String.valueOf(arrivedCounter));
         float percentage = (float) arrivedCounter / globalFari2Names.size() * 100;
         attendanceBar.setProgress(Math.round(percentage));
-        percent.setText(Math.round(percentage) + " %");
+        percent.setText(UtilityClass.getPercentString(percentage));
         try {
             if (percentage < myRules.attendance_bad) {
-                percent.setTextColor(getActivity().getResources().getColor(R.color.red));
+                percent.setTextColor(requireActivity().getResources().getColor(R.color.red));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     attendanceBar.setProgressTintList(
-                            ColorStateList.valueOf(getActivity().getResources().getColor(R.color.red)));
+                            ColorStateList.valueOf(requireActivity().getResources().getColor(R.color.red)));
                 }
             } else if (percentage < myRules.attendance_medium) {
-                percent.setTextColor(getActivity().getResources().getColor(R.color.ourBlue));
+                percent.setTextColor(requireActivity().getResources().getColor(R.color.ourBlue));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     attendanceBar.setProgressTintList(
-                            ColorStateList.valueOf(getActivity().getResources().getColor(R.color.ourBlue)));
+                            ColorStateList.valueOf(requireActivity().getResources().getColor(R.color.ourBlue)));
                 }
             } else { // bigger than both
-                percent.setTextColor(getActivity().getResources().getColor(R.color.green));
+                percent.setTextColor(requireActivity().getResources().getColor(R.color.green));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     attendanceBar.setProgressTintList(
-                            ColorStateList.valueOf(getActivity().getResources().getColor(R.color.green)));
+                            ColorStateList.valueOf(requireActivity().getResources().getColor(R.color.green)));
                 }
             }
         } catch (Exception ignored) {

@@ -1,5 +1,13 @@
 package com.resala.mosharkaty;
 
+import static android.content.ContentValues.TAG;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.days;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isBetween;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.mosharkaTypes;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,13 +37,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
 
 public class WithoutRepeatReportActivity extends AppCompatActivity {
     Spinner month_from;
@@ -204,16 +205,4 @@ public class WithoutRepeatReportActivity extends AppCompatActivity {
 
     }
 
-    private boolean isBetween(int m, int start_month, int end_month, int d, int start_day, int end_day) {
-        if (m > start_month && m < end_month) return true;
-        if (m > end_month || m < start_month) return false;
-        if (m == start_month && m != end_month) {
-            return d >= start_day;
-        } else if ((m != start_month && m == end_month)) {
-            return d <= end_day;
-        } else //same month
-        {
-            return d >= start_day && d <= end_day;
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
 import static com.resala.mosharkaty.fragments.HomeFragment.userName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,7 +1,6 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -15,38 +14,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
+
 
 public class StarterActivity extends AppCompatActivity {
-    public static HashMap<String, String> branchesSheets = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter);
         try {
-            fillSheets();
             checkUpdate();
         } catch (Exception ignored) {
             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             finish();
         }
-    }
-
-    private void fillSheets() {
-        branchesSheets.put(branches[0], "1tsMZ5EwtKrBUGuLFVBvuwpU5ve0JKMsaqK1nNAONj-0"); // مهندسين
-        branchesSheets.put(branches[1], "1IzyuwMrKap0uQutEKM0qcRpL3MlBxfd2tLv9jZ1M32o"); // معادي
-//        branchesSheets.put(branches[2], "1twEafdr_bJgXoCmM26cQHZlPuCkYwntr8LJ5pPxreOI"); // فيصل
-        branchesSheets.put(branches[2], "1X5D1sIfM7BR4ZtM6knHTt96STJMC8DK6_1a9O7DX5Ic"); // فيصل
-        branchesSheets.put(branches[3], "1x_yXMc32YxG62C_l1Bqis4Sjdy_PH2iGiAmL6w3DoTA"); // مدينة نصر
-//        branchesSheets.put(branches[4], "1h8ApI25VevdkmRj_bRoYUwnbSdlGnm5lAVXpQlVte9Y"); // مصر الجديدة
-        branchesSheets.put(branches[4], "1wramn0b32bE_tvW1VaT98vJ7_xDlQ22djEsRja_wzjc"); // مصر الجديدة
-//        branchesSheets.put(branches[5], "1h6JOptK1SRHelRIHV-iqp1S3YhjdG8hHHLi0-phVulY"); // اكتوبر
-        branchesSheets.put(branches[5], "1MkTi8BIrcfieEdlevXLuY3yEFpPXDI1P5mgUhmZJywM"); // اكتوبر
-        branchesSheets.put(branches[6], "1o4MSMw7ip0BUNLkx5t0WOZrPM9SyNYsty6jJ4mtkyRo"); // حلوان
-        branchesSheets.put(branches[7], "1U_F192CWif54Q9mWcYgPKM7662jCBXCU_COLPp0AaPQ"); // اسكندرية
-        branchesSheets.put(branches[8], "1UrPaZyzfh7Vag_Cxb6tHkBXMKdHVThvDxya1SQYeKqI"); // المقطم
-        // مركزي ملوش شيت
     }
 
     private void checkUpdate() {
@@ -73,8 +55,8 @@ public class StarterActivity extends AppCompatActivity {
                             startActivity(
                                     new Intent(
                                             Intent.ACTION_VIEW,
-                                            Uri.parse(
-                                                    "https://play.google.com/store/apps/details?id=com.resala.mosharkaty")));
+                                            Uri.parse(UtilityClass.playStoreLink
+                                            )));
                             dialog.cancel();
                         });
                 alertDialogBuilder.show();

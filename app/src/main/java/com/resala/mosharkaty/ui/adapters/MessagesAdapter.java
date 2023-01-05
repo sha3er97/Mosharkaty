@@ -1,6 +1,6 @@
 package com.resala.mosharkaty.ui.adapters;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,12 +21,10 @@ import com.resala.mosharkaty.utility.classes.MessageItem;
 import java.util.ArrayList;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
-    private ArrayList<MessageItem> messageItems;
-    private Context context;
+    private final ArrayList<MessageItem> messageItems;
 
     public MessagesAdapter(ArrayList<MessageItem> messageItems, Context context) {
         this.messageItems = messageItems;
-        this.context = context;
     }
 
     /**

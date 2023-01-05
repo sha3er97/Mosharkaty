@@ -1,8 +1,8 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.fragments.TakyeemFragment.codeFound;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -98,9 +98,9 @@ public class ContinueTakyeemActivity extends AppCompatActivity {
     public void signTakyeem(View view) {
         if (!codeFound) {
             Toast.makeText(
-                    getApplicationContext(),
-                    "لازم تحدث الكود بتاعك بالكود الصح عشان تقدر تشوف تقييمك و تمضيه",
-                    Toast.LENGTH_SHORT)
+                            getApplicationContext(),
+                            "لازم تحدث الكود بتاعك بالكود الصح عشان تقدر تشوف تقييمك و تمضيه",
+                            Toast.LENGTH_SHORT)
                     .show();
             signBtn.setEnabled(false);
             return;

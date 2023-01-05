@@ -1,9 +1,9 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.fragments.AdminAddGroupMosharkaFragment.mosharkaTypes;
 import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.mosharkaTypes;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -33,11 +33,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ShowMosharkatyActivity;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
+public class ComposeOwnMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
     View view;
     DatePickerDialog picker;
@@ -59,18 +60,18 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
      * and {@link #onActivityCreated(Bundle)}.
      *
      * <p>It is recommended to <strong>only</strong> inflate the layout in this method and move logic
-   * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
-   *
-   * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
-   * view is being released.
-   *
-   * @param inflater The LayoutInflater object that can be used to inflate any views in the
-   *     fragment,
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached
-     *     to. The fragment should not add the view itself, but this can be used to generate the
-     *     LayoutParams of the view.
+     * that operates on the returned View to {@link #onViewCreated(View, Bundle)}.
+     *
+     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when the
+     * view is being released.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the
+     *                           fragment,
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached
+     *                           to. The fragment should not add the view itself, but this can be used to generate the
+     *                           LayoutParams of the view.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-     *     saved state as given here.
+     *                           saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
     @Nullable
@@ -101,10 +102,8 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                     // date picker dialog
                     picker =
                             new DatePickerDialog(
-                                    getContext(),
-                                    (view, year, monthOfYear, dayOfMonth) -> {
-                                        eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                    },
+                                    requireContext(),
+                                    (view, year, monthOfYear, dayOfMonth) -> eText.setText(UtilityClass.dateToText(dayOfMonth, monthOfYear, year)),
                                     year,
                                     month,
                                     day);
@@ -113,7 +112,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
         spin.setOnItemSelectedListener(this);
         // Creating the ArrayAdapter instance having the country list
         ArrayAdapter<String> aa =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, mosharkaTypes);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
@@ -179,7 +178,7 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                                                             .child(String.valueOf(dateParts[0]))
                                                             .setValue(0);
                                                     Toast.makeText(
-                                                            getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
+                                                                    getContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
                                                             .show();
                                                     addMosharka_btn.setEnabled(false);
                                                     addMosharka_btn.setBackgroundColor(
@@ -188,9 +187,9 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
                                                     newMosharkaTV.setText("تم تسجيل مشاركة لليوم");
                                                 } else {
                                                     Toast.makeText(
-                                                            getContext(),
-                                                            "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
-                                                            Toast.LENGTH_SHORT)
+                                                                    getContext(),
+                                                                    "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
+                                                                    Toast.LENGTH_SHORT)
                                                             .show();
                                                     addMosharka_btn.setEnabled(true);
                                                     addMosharka_btn.setBackgroundResource(R.drawable.blue_btn);
@@ -218,31 +217,28 @@ public class ComposeMosharkaFragment extends androidx.fragment.app.Fragment
 
     private boolean validateForm() {
         String date = eText.getText().toString();
-        String[] parts = date.split("/", 3);
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             return false;
-        } else if (Integer.parseInt(parts[2]) > year
-                || Integer.parseInt(parts[1]) > month + 1
-                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+        } else if (UtilityClass.checkFutureDate(date, year, month, day)) {
             eText.setError("you can't choose a date in the future.");
             return false;
         } else if (userOfficialName.equals(" ")) {
             Toast.makeText(
-                    getContext(), "لا يمكن تسجيل المشاركة الان يرجي مراجعة الكود", Toast.LENGTH_SHORT)
+                            getContext(), "لا يمكن تسجيل المشاركة الان يرجي مراجعة الكود", Toast.LENGTH_SHORT)
                     .show();
             return false;
         } else {
             eText.setError(null);
             return true;
         }
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (branchRef != null && branchlistener != null) {
-      branchRef.removeEventListener(branchlistener);
     }
-  }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (branchRef != null && branchlistener != null) {
+            branchRef.removeEventListener(branchlistener);
+        }
+    }
 }

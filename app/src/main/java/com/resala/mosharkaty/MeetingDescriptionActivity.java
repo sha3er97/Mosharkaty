@@ -1,6 +1,6 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.utility.classes.Meeting;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -98,7 +99,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                             new DatePickerDialog(
                                     MeetingDescriptionActivity.this,
                                     (view, year, monthOfYear, dayOfMonth) ->
-                                            eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
+                                            eText.setText(UtilityClass.dateToText(dayOfMonth, monthOfYear, year)),
                                     year,
                                     month,
                                     day);
@@ -114,23 +115,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                     picker2 =
                             new TimePickerDialog(
                                     MeetingDescriptionActivity.this,
-                                    (tp, sHour, sMinute) -> {
-                                        int Mhour;
-                                        String Mminute;
-                                        String am_pm;
-                                        Mhour = sHour;
-                                        Mminute = String.valueOf(sMinute);
-                                        if (sMinute == 0) {
-                                            Mminute = "00";
-                                        }
-                                        if (Mhour >= 12) {
-                                            am_pm = "PM";
-                                            Mhour = Mhour - 12;
-                                        } else {
-                                            am_pm = "AM";
-                                        }
-                                        eText2.setText(Mhour + ":" + Mminute + " " + am_pm);
-                                    },
+                                    (tp, sHour, sMinute) -> eText2.setText(UtilityClass.timeToText(sHour, sMinute)),
                                     hour,
                                     minutes,
                                     false);
@@ -145,23 +130,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
                     picker3 =
                             new TimePickerDialog(
                                     MeetingDescriptionActivity.this,
-                                    (tp, sHour, sMinute) -> {
-                                        int Mhour;
-                                        String Mminute;
-                                        String am_pm;
-                                        Mhour = sHour;
-                                        Mminute = String.valueOf(sMinute);
-                                        if (sMinute == 0) {
-                                            Mminute = "00";
-                                        }
-                                        if (Mhour >= 12) {
-                                            am_pm = "PM";
-                                            Mhour = Mhour - 12;
-                                        } else {
-                                            am_pm = "AM";
-                                        }
-                                        eText3.setText(Mhour + ":" + Mminute + " " + am_pm);
-                                    },
+                                    (tp, sHour, sMinute) -> eText3.setText(UtilityClass.timeToText(sHour, sMinute)),
                                     hour,
                                     minutes,
                                     false);
@@ -176,8 +145,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
-        } else if (Integer.parseInt(parts[1]) > month + 1
-                || (Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day)) {
+        } else if (UtilityClass.checkFutureDate(date, year, month, day)) {
             eText.setError("you can't choose a date in the future.");
             valid = false;
         }

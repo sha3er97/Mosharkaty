@@ -1,11 +1,13 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByName;
-import static com.resala.mosharkaty.LoginActivity.allVolunteersByPhone;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByPhone;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.mosharkaTypes;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -36,38 +38,19 @@ import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.CustomSearchableSpinner;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.resala.mosharkaty.utility.classes.Volunteer;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragment
         implements AdapterView.OnItemSelectedListener {
-    public static String[] mosharkaTypes = {
-            "استكشاف",
-            "ولاد عم",
-            "اجتماع",
-            "اتصالات",
-            "معرض / قافلة",
-            "كرنفال",
-            "نقل",
-            "فرز",
-            "سيشن / اورينتيشن",
-            "دعايا",
-            "اوتينج",
-            "كامب",
-            "عزومة",
-            "توزيع مساعدات نفسك في ايه",
-            "اداريات نفسك في ايه",
-            "بلاغ مكافحة",
-            "حملة مكافحة",
-            "نزول الفرع",
-            "اخري / بيت"
-    };
     View view;
     ArrayList<String> users = new ArrayList<>();
     ArrayList<String> phones = new ArrayList<>();
@@ -149,7 +132,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                     // date picker dialog
                     picker =
                             new DatePickerDialog(
-                                    getContext(),
+                                    requireContext(),
                                     (view, year, monthOfYear, dayOfMonth) ->
                                             eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year),
                                     year,
@@ -159,47 +142,39 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                 });
 
         ArrayAdapter<String> aa =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, mosharkaTypes);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, mosharkaTypes);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
-        /**
-         * ***********************************************************************************************************************************
-         */
+        //********************************************************************************************************//
         phones.clear();
-        for (Map.Entry<String, normalVolunteer> entry : allVolunteersByPhone.entrySet()) {
+        for (Map.Entry<String, NormalVolunteer> entry : allVolunteersByPhone.entrySet()) {
             //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
             //      phones.add(normalVolunteer.phone_text);
             phones.add(entry.getKey());
         }
-        ArrayAdapter<String> ac = new ArrayAdapter<>(getContext(), R.layout.spinner_item, phones);
+        ArrayAdapter<String> ac = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, phones);
         ac.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         phoneSpinner.setAdapter(ac);
         phoneSpinner.setSelection(0, false);
         phoneSpinner.setOnItemSelectedListener(this);
-
-        /**
-         * ************************************************************************************************************
-         */
+        //********************************************************************************************************//
         users.clear();
-        for (Map.Entry<String, normalVolunteer> entry : allVolunteersByName.entrySet()) {
+        for (Map.Entry<String, NormalVolunteer> entry : allVolunteersByName.entrySet()) {
             //      normalVolunteer normalVolunteer = (normalVolunteer) entry.getValue();
             //      users.add(normalVolunteer.Volname);
             users.add(entry.getKey());
         }
-        final ArrayAdapter<String> ab = new ArrayAdapter<>(getContext(), R.layout.spinner_item, users);
+        final ArrayAdapter<String> ab = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, users);
         ab.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         users_spin.setAdapter(ab);
         users_spin.setSelection(0, false);
         users_spin.setOnItemSelectedListener(this);
-
-        /**
-         * ************************************************************************************************************
-         */
+        //********************************************************************************************************//
         final ArrayAdapter<String> ad =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, allNsheet);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, allNsheet);
         ad.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         nasheetSpinner.setAdapter(ad);
@@ -216,7 +191,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
                                     assert nasheetVolunteer != null;
-                                    allNsheet.add(snapshot.getKey().trim());
+                                    allNsheet.add(Objects.requireNonNull(snapshot.getKey()).trim());
                                 }
                                 Collections.sort(allNsheet); // alphapetical
                                 ad.notifyDataSetChanged();
@@ -228,18 +203,16 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
-        /**
-         * *************************************************************************************************************
-         */
+        //********************************************************************************************************//
         String branchSheetLink =
-                userBranch.equals(branches[9])
+                userBranch.equals(branches[BRANCHES_COUNT])
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
         DatabaseReference liveSheet = database.getReference(branchSheetLink);
         fari2Ref = liveSheet.child("month_mosharkat");
         final ArrayAdapter<String> ae =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, allFari2);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, allFari2);
         ae.setDropDownViewResource(R.layout.spinner_dropdown);
         fari2Spinner.setSelection(0, false);
         fari2Spinner.setOnItemSelectedListener(this);
@@ -267,9 +240,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
-        /**
-         * *************************************************************************************************************
-         */
+        //********************************************************************************************************//
         // buttons click listener
         addMosharka_btn.setOnClickListener(
                 v -> {
@@ -335,9 +306,9 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                                                 volunteerName_et.setText("");
                                             } else {
                                                 Toast.makeText(
-                                                        getContext(),
-                                                        "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
-                                                        Toast.LENGTH_SHORT)
+                                                                getContext(),
+                                                                "عذرا .. المشاركة مكررة في اليوم دا او في مشاركة بيت سابقة مسجلة",
+                                                                Toast.LENGTH_SHORT)
                                                         .show();
                                             }
                                             addMosharka_btn.setEnabled(true);
@@ -364,7 +335,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                 || adapterView.getId() == R.id.fari2Spinner) {
             volunteerName_et.setText(adapterView.getItemAtPosition(i).toString().trim());
             try {
-                normalVolunteer normalVolunteer =
+                NormalVolunteer normalVolunteer =
                         allVolunteersByName.get(adapterView.getItemAtPosition(i).toString().trim());
                 editTextPhone.setText(normalVolunteer.phone_text);
             } catch (Exception e) {
@@ -373,7 +344,7 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
             }
         } else if (adapterView.getId() == R.id.phoneSpinner) {
             editTextPhone.setText(adapterView.getItemAtPosition(i).toString());
-            normalVolunteer normalVolunteer =
+            NormalVolunteer normalVolunteer =
                     allVolunteersByPhone.get(adapterView.getItemAtPosition(i).toString().trim());
             assert normalVolunteer != null;
             volunteerName_et.setText(normalVolunteer.Volname.trim());
@@ -386,13 +357,10 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
 
     private boolean validateForm() {
         String date = eText.getText().toString();
-        String[] parts = date.split("/", 3);
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             return false;
-        } else if (Integer.parseInt(parts[2]) > year
-                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) > month + 1
-                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day) {
+        } else if (UtilityClass.checkFutureDate(date, year, month, day)) {
             eText.setError("you can't choose a date in the future.");
             return false;
         } else {

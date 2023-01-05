@@ -1,11 +1,12 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.MessagesReadActivity.isManager;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isManager;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.utility.classes.Takyeem;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
@@ -35,16 +37,16 @@ import java.util.Locale;
 public class AdminShowTakyeemActivity extends AppCompatActivity {
     Spinner fari2Spinner;
     DatabaseReference fari2Ref;
+    DatabaseReference takyeemTab;
     FirebaseDatabase database;
+    ValueEventListener Takyeemlistener;
     ArrayList<String> allFari2 = new ArrayList<>();
+    Calendar cldr;
     int big_total;
     int last_month;
     int the_month_before;
     int this_month;
-    ValueEventListener Takyeemlistener;
-    DatabaseReference takyeemTab;
     int thisMonthName;
-    Calendar cldr;
     boolean takyeemFound;
 
     @Override
@@ -55,7 +57,7 @@ public class AdminShowTakyeemActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         String branchSheetLink =
-                userBranch.equals(branches[9])
+                userBranch.equals(branches[BRANCHES_COUNT])
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
@@ -116,15 +118,15 @@ public class AdminShowTakyeemActivity extends AppCompatActivity {
         final TextView beforeLastCountTV = findViewById(R.id.beforeLastCountTV);
         if (!isManager) {
             Toast.makeText(
-                    getApplicationContext(),
-                    "illegal action : متقدرش تشوف التقييمات الا لما تدحل كلمة السر الاضافية صح",
-                    Toast.LENGTH_SHORT)
+                            getApplicationContext(),
+                            "illegal action : متقدرش تشوف التقييمات الا لما تدحل كلمة السر الاضافية صح",
+                            Toast.LENGTH_SHORT)
                     .show();
             return;
         }
         DatabaseReference liveSheet =
                 database.getReference(
-                        "1VuTdZ3el0o94Y9wqec0y90yxVG4Ko7PHTtrOm2EViOk"); // TODO :: شيت تقييمات لكل فرع
+                        UtilityClass.takyeemSheet);
         takyeemTab = liveSheet.child("takyeem");
         Takyeemlistener =
                 takyeemTab.addValueEventListener(

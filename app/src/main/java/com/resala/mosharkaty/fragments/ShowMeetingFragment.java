@@ -1,10 +1,10 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.SplashActivity.myRules;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,6 +38,7 @@ import com.resala.mosharkaty.BuildConfig;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.MeetingAdapter;
 import com.resala.mosharkaty.utility.classes.Meeting;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class ShowMeetingFragment extends Fragment {
         final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH);
         ArrayAdapter<String> aa =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, months);
+                new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, months);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         month_et.setAdapter(aa);
@@ -115,7 +116,7 @@ public class ShowMeetingFragment extends Fragment {
 
                                                         } else {
                                                             Toast.makeText(
-                                                                    getContext(), "something went wrong", Toast.LENGTH_SHORT)
+                                                                            getContext(), "something went wrong", Toast.LENGTH_SHORT)
                                                                     .show();
                                                         }
                                                     }
@@ -135,8 +136,8 @@ public class ShowMeetingFragment extends Fragment {
                 view -> {
                     if (Build.VERSION.SDK_INT >= 23) {
                         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!hasPermissions(PERMISSIONS)) {
-                            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST);
+                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
                         } else { // permession already granted
                             exportExcel(month_et.getSelectedItem().toString());
                         }
@@ -151,34 +152,18 @@ public class ShowMeetingFragment extends Fragment {
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    exportExcel(month_et.getSelectedItem().toString());
+        if (requestCode == REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                exportExcel(month_et.getSelectedItem().toString());
 
-                } else {
-                    Toast.makeText(
-                            getContext(),
-                            "The app was not allowed to write in your storage",
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
+            } else {
+                Toast.makeText(
+                                getContext(),
+                                "The app was not allowed to write in your storage",
+                                Toast.LENGTH_LONG)
+                        .show();
             }
         }
-    }
-
-    private boolean hasPermissions(String[] permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && getContext() != null
-                && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(getContext(), permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private void exportExcel(String month) {
@@ -265,7 +250,7 @@ public class ShowMeetingFragment extends Fragment {
         emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
             Uri uri =
-                    FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+                    FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".provider", file);
             emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
             startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
         } catch (Exception e) {

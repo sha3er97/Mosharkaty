@@ -1,9 +1,10 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.ui.adapters.UsersAdapter;
 import com.resala.mosharkaty.utility.classes.User;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.resala.mosharkaty.utility.classes.Volunteer;
 
 import java.util.ArrayList;
@@ -86,7 +88,7 @@ public class AdminShowUsersActivity extends AppCompatActivity {
 
     private void checkForBranch() {
         String branchSheetLink =
-                userBranch.equals(branches[9])
+                userBranch.equals(branches[BRANCHES_COUNT])
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
@@ -115,7 +117,7 @@ public class AdminShowUsersActivity extends AppCompatActivity {
                                 usersCount.setText(String.valueOf(userCounter));
                                 teamCount.setText(String.valueOf(teamCounter));
                                 float percentage = (float) userCounter / teamCounter * 100;
-                                percent.setText(Math.round(percentage) + " %");
+                                percent.setText(UtilityClass.getPercentString(percentage));
                                 if (percentage < 50) {
                                     percent.setTextColor(getResources().getColor(R.color.red));
                                 } else if (percentage > 50 && percentage < 70) {

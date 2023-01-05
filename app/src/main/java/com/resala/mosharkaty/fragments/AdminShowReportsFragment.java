@@ -1,9 +1,9 @@
 package com.resala.mosharkaty.fragments;
 
-import static com.resala.mosharkaty.LoginActivity.branchOrder;
-import static com.resala.mosharkaty.LoginActivity.isMrkzy;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchOrder;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isMrkzy;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -129,7 +129,7 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
 
         }
 
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, branches);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, branches);
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);

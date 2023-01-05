@@ -1,14 +1,14 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
-import static com.resala.mosharkaty.SplashActivity.myRules;
-import static com.resala.mosharkaty.StarterActivity.branchesSheets;
 import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.days;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.days;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -35,7 +35,8 @@ import com.resala.mosharkaty.utility.classes.EventReport;
 import com.resala.mosharkaty.utility.classes.Meeting;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
-import com.resala.mosharkaty.utility.classes.normalVolunteer;
+import com.resala.mosharkaty.utility.classes.NormalVolunteer;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +55,6 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class AdminMrkzyReportsActivity extends AppCompatActivity {
-    private static final int BRANCHES_COUNT = 9;
     Spinner month_et;
     Spinner day_from_et;
     Spinner day_to_et;
@@ -67,43 +67,43 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     int end_day;
 
     Button refresh_btn;
-    int[] mas2oleenCounter = new int[9];
-    int[] msharee3Counter = new int[9];
-    int[] nasheetCounter = new int[9];
+    int[] mas2oleenCounter = new int[BRANCHES_COUNT];
+    int[] msharee3Counter = new int[BRANCHES_COUNT];
+    int[] nasheetCounter = new int[BRANCHES_COUNT];
 
     WritableWorkbook workbook;
 
     int branchIterator;
     ArrayList<HashMap<String, String>> teamDegrees = new ArrayList<>();
     ArrayList<ArrayList<String>> allNsheet = new ArrayList<>();
-    TextView[] mas2olCount = new TextView[9];
-    TextView[] mshro3Count = new TextView[9];
-    TextView[] nasheetCount = new TextView[9];
-    TextView[] noobsCount = new TextView[9];
-    TextView[] normalCount = new TextView[9];
+    TextView[] mas2olCount = new TextView[BRANCHES_COUNT];
+    TextView[] mshro3Count = new TextView[BRANCHES_COUNT];
+    TextView[] nasheetCount = new TextView[BRANCHES_COUNT];
+    TextView[] noobsCount = new TextView[BRANCHES_COUNT];
+    TextView[] normalCount = new TextView[BRANCHES_COUNT];
 
-    TextView[] meetingsCount = new TextView[9];
-    TextView[] eventsCount = new TextView[9];
-    TextView[] orientationCount = new TextView[9];
-    TextView[] coursesCount = new TextView[9];
+    TextView[] meetingsCount = new TextView[BRANCHES_COUNT];
+    TextView[] eventsCount = new TextView[BRANCHES_COUNT];
+    TextView[] orientationCount = new TextView[BRANCHES_COUNT];
+    TextView[] coursesCount = new TextView[BRANCHES_COUNT];
 
-    TextView[] mas2olPercent = new TextView[9];
-    TextView[] mshro3Percent = new TextView[9];
-    TextView[] nasheetPercent = new TextView[9];
+    TextView[] mas2olPercent = new TextView[BRANCHES_COUNT];
+    TextView[] mshro3Percent = new TextView[BRANCHES_COUNT];
+    TextView[] nasheetPercent = new TextView[BRANCHES_COUNT];
 
-    TextView[] mas2olMosharkat = new TextView[9];
-    TextView[] mshro3Mosharkat = new TextView[9];
-    TextView[] nasheetMosharkatTV = new TextView[9];
-    TextView[] noobsMosharkatTV = new TextView[9];
-    TextView[] normalMosharkatTV = new TextView[9];
+    TextView[] mas2olMosharkat = new TextView[BRANCHES_COUNT];
+    TextView[] mshro3Mosharkat = new TextView[BRANCHES_COUNT];
+    TextView[] nasheetMosharkatTV = new TextView[BRANCHES_COUNT];
+    TextView[] noobsMosharkatTV = new TextView[BRANCHES_COUNT];
+    TextView[] normalMosharkatTV = new TextView[BRANCHES_COUNT];
 
-    TextView[] mas2olAverage = new TextView[9];
-    TextView[] mshro3Average = new TextView[9];
-    TextView[] nasheetAverage = new TextView[9];
-    TextView[] noobsAverage = new TextView[9];
-    TextView[] normalAverage = new TextView[9];
+    TextView[] mas2olAverage = new TextView[BRANCHES_COUNT];
+    TextView[] mshro3Average = new TextView[BRANCHES_COUNT];
+    TextView[] nasheetAverage = new TextView[BRANCHES_COUNT];
+    TextView[] noobsAverage = new TextView[BRANCHES_COUNT];
+    TextView[] normalAverage = new TextView[BRANCHES_COUNT];
 
-    TextView[] points = new TextView[9];
+    TextView[] points = new TextView[BRANCHES_COUNT];
     private boolean excelOut = false;
     private ProgressDialog progress;
     Button export_report_btn;
@@ -167,7 +167,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         mas2oleenCounter[branchIterator] = 0;
                         msharee3Counter[branchIterator] = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            normalVolunteer user = snapshot.getValue(normalVolunteer.class);
+                            NormalVolunteer user = snapshot.getValue(NormalVolunteer.class);
                             if (user != null) {
                                 if (user.motabaa.equals("مشروع مسئول")) {
                                     teamDegrees.get(branchIterator).put(user.Volname, "مشروع");
@@ -468,9 +468,9 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     EventReport event = snapshot.getValue(EventReport.class);
                                     if (event != null) {
-                                        String[] splittedDate = event.date.split("/", 2);
-                                        if (Integer.parseInt(splittedDate[0]) >= start_day
-                                                && Integer.parseInt(splittedDate[0]) <= end_day) {
+                                        String[] splitDate = event.date.split("/", 2);
+                                        if (Integer.parseInt(splitDate[0]) >= start_day
+                                                && Integer.parseInt(splitDate[0]) <= end_day) {
                                             if (event.type.matches("(.*)اورينتيشن(.*)"))
                                                 OrientationCounter++;
                                             else if (event.type.matches("(.*)سيشن(.*)"))
@@ -503,11 +503,11 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                 HashMap<String, Integer> nameCounting = new HashMap<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
-                                    String[] splittedDate;
+                                    String[] splitDate;
                                     if (mosharka != null) {
-                                        splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                                        if (Integer.parseInt(splittedDate[0]) >= start_day
-                                                && Integer.parseInt(splittedDate[0]) <= end_day) {
+                                        splitDate = mosharka.getMosharkaDate().split("/", 3);
+                                        if (Integer.parseInt(splitDate[0]) >= start_day
+                                                && Integer.parseInt(splitDate[0]) <= end_day) {
                                             // get all mosharkat for everyone firstly
                                             if (nameCounting.containsKey(mosharka.getVolname().trim())) {
                                                 // If char is present in charCountMap,
@@ -534,7 +534,6 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         });
     }
 
-    @SuppressLint("SetTextI18n")
     private void divideMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator) {
         int mas2oleenMosharkat8 = 0;
         int msharee3Mosharkat8 = 0;
@@ -594,26 +593,26 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         }
         noobsCount[branchIterator].setText(String.valueOf(noobsArrived));
         normalCount[branchIterator].setText(String.valueOf(normalArrived));
-        /* ************************************************************************************ */
+        //************************************************************************************************/
         int pointsCalculated =
                 msharee3Mosharkat8 * myRules.mashroo3_points + myRules.mas2ool_points * mas2oleenMosharkat8;
         int otherPointsCalculated = otherMosharkat + noobsMosharkat8 + da5el_2_Mosharkat * 2 + da5el_aboveMosharkat * 3;
         points[branchIterator].setText(String.valueOf(pointsCalculated + otherPointsCalculated));
-        /* ************************************************************************************* */
+        //************************************************************************************************/
         float percent1 = (float) mas2oleenArrived / mas2oleenCounter[branchIterator] * 100;
         float percent2 = (float) msharee3Arrived / msharee3Counter[branchIterator] * 100;
         float percent3 = (float) nasheetArrived / nasheetCounter[branchIterator] * 100;
 
-        mas2olPercent[branchIterator].setText(Math.round(percent1 * 10) / 10.0 + " %");
-        mshro3Percent[branchIterator].setText(Math.round(percent2 * 10) / 10.0 + " %");
-        nasheetPercent[branchIterator].setText(Math.round(percent3 * 10) / 10.0 + " %");
-        /* ************************************************************************************* */
+        mas2olPercent[branchIterator].setText(UtilityClass.getPercentString(percent1));
+        mshro3Percent[branchIterator].setText(UtilityClass.getPercentString(percent2));
+        nasheetPercent[branchIterator].setText(UtilityClass.getPercentString(percent3));
+        //************************************************************************************************/
         mas2olMosharkat[branchIterator].setText(String.valueOf(mas2oleenMosharkat8));
         mshro3Mosharkat[branchIterator].setText(String.valueOf(msharee3Mosharkat8));
         nasheetMosharkatTV[branchIterator].setText(String.valueOf(nasheetMosharkat8));
         noobsMosharkatTV[branchIterator].setText(String.valueOf(noobsMosharkat8));
         normalMosharkatTV[branchIterator].setText(String.valueOf(normalMosharkat8));
-        /* ************************************************************************************* */
+        //************************************************************************************************/
         float avg1 = (float) mas2oleenMosharkat8 / mas2oleenArrived;
         float avg2 = (float) msharee3Mosharkat8 / msharee3Arrived;
         float avg3 = (float) nasheetMosharkat8 / nasheetArrived;
@@ -695,7 +694,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= 23) {
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (!hasPermissions(PERMISSIONS)) {
+            if (!UtilityClass.hasPermissions(PERMISSIONS, getApplicationContext())) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST);
             } else { // permession already granted
                 exportExcel(month_et.getSelectedItem().toString());
@@ -900,7 +899,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                print_divideMosharkatByDegree(nameCounting, branchIterator, sheet);
+                                printDivideMosharkatByDegree(nameCounting, branchIterator, sheet);
                             }
 
                             @Override
@@ -911,7 +910,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         });
     }
 
-    private void print_divideMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator, WritableSheet sheet) {
+    private void printDivideMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator, WritableSheet sheet) {
         int mas2oleenMosharkat8 = 0;
         int msharee3Mosharkat8 = 0;
         int nasheetMosharkat8 = 0;
@@ -971,20 +970,19 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         }
         Label label0 = new Label(18, branchIterator + 1, String.valueOf(noobsArrived));
         Label label1 = new Label(15, branchIterator + 1, String.valueOf(normalArrived + nasheetArrived));
-        /* ************************************************************************************ */
+        //*****************************************************************************************/
         int pointsCalculated =
                 msharee3Mosharkat8 * myRules.mashroo3_points + myRules.mas2ool_points * mas2oleenMosharkat8;
         int otherPointsCalculated = otherMosharkat + noobsMosharkat8 + da5el_2_Mosharkat * 2 + da5el_aboveMosharkat * 3;
         Label label2 = new Label(19, branchIterator + 1, String.valueOf(pointsCalculated + otherPointsCalculated));
-        /* ************************************************************************************* */
+        //*****************************************************************************************/
         Label label3 = new Label(1, branchIterator + 1, String.valueOf(mas2oleenCounter[branchIterator]));
         Label label4 = new Label(8, branchIterator + 1, String.valueOf(msharee3Counter[branchIterator]));
-        /* ************************************************************************************* */
+        //*****************************************************************************************/
         Label label5 = new Label(6, branchIterator + 1, String.valueOf(mas2oleenMosharkat8));
         Label label6 = new Label(13, branchIterator + 1, String.valueOf(msharee3Mosharkat8));
         Label label7 = new Label(16, branchIterator + 1, String.valueOf(nasheetMosharkat8 + normalMosharkat8));
-
-        /* ************************************************************************************* */
+        //*****************************************************************************************/
         float avg1 = (float) mas2oleenMosharkat8 / mas2oleenArrived;
         float avg2 = (float) msharee3Mosharkat8 / msharee3Arrived;
         float avg3 = (float) (nasheetMosharkat8 + normalMosharkat8) / (nasheetArrived + normalArrived);
@@ -1011,7 +1009,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         }
     }
 
-    private void printWeeklyMosharkat(int branchIterator, int print_start_day, int print_end_day, WritableSheet sheet) {
+    private void printWeeklyMosharkat(int branchIterator, int printStartDay, int printEndDay, WritableSheet sheet) {
         DatabaseReference MosharkatRef =
                 database.getReference("mosharkat").child(branches[branchIterator]);
         MosharkatRef.child(String.valueOf(selected_month))
@@ -1025,8 +1023,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                     String[] splittedDate;
                                     if (mosharka != null) {
                                         splittedDate = mosharka.getMosharkaDate().split("/", 3);
-                                        if (Integer.parseInt(splittedDate[0]) >= print_start_day
-                                                && Integer.parseInt(splittedDate[0]) <= print_end_day) {
+                                        if (Integer.parseInt(splittedDate[0]) >= printStartDay
+                                                && Integer.parseInt(splittedDate[0]) <= printEndDay) {
                                             // get all mosharkat for everyone firstly
                                             if (nameCounting.containsKey(mosharka.getVolname().trim())) {
                                                 // If char is present in charCountMap,
@@ -1042,7 +1040,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                print_divideWeeklyMosharkatByDegree(nameCounting, branchIterator, sheet, getweekNum(print_start_day));
+                                print_divideWeeklyMosharkatByDegree(nameCounting, branchIterator, sheet, UtilityClass.getWeekNum(printStartDay));
                             }
 
                             @Override
@@ -1051,20 +1049,6 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                                 Log.w(TAG, "Failed to read value.", error.toException());
                             }
                         });
-    }
-
-    private int getweekNum(int print_start_day) {
-        switch (print_start_day) {
-            case 1:
-                return 1;
-            case 8:
-                return 2;
-            case 15:
-                return 3;
-            case 22:
-                return 4;
-        }
-        return 0;
     }
 
     private void print_divideWeeklyMosharkatByDegree(HashMap<String, Integer> nameCounting, int branchIterator, WritableSheet sheet, int weekNum) {
@@ -1127,7 +1111,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                 otherMosharkat += Math.min(8, entry.getValue());
             }
         }
-        /* ************************************************************************************* */
+        //*****************************************************************************************/
         Label label0 = new Label(1 + weekNum, branchIterator + 1, String.valueOf(mas2oleenArrived));
         Label label1 = new Label(8 + weekNum, branchIterator + 1, String.valueOf(msharee3Arrived));
         try {
@@ -1251,34 +1235,18 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    exportExcel(month_et.getSelectedItem().toString());
+        if (requestCode == REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                exportExcel(month_et.getSelectedItem().toString());
 
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "The app was not allowed to write in your storage",
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
+            } else {
+                Toast.makeText(
+                                getApplicationContext(),
+                                "The app was not allowed to write in your storage",
+                                Toast.LENGTH_LONG)
+                        .show();
             }
         }
-    }
-
-    private boolean hasPermissions(String[] permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && getApplicationContext() != null
-                && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override

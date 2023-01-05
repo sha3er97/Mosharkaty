@@ -1,9 +1,9 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.LoginActivity.userId;
 import static com.resala.mosharkaty.fragments.HomeFragment.userOfficialName;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -177,7 +177,7 @@ public class ViewSpecificSessionActivity extends YouTubeBaseActivity {
 
                                     ClosingRef.child(String.valueOf(month)).child(String.valueOf(day)).setValue(0);
                                     Toast.makeText(
-                                            getApplicationContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
+                                                    getApplicationContext(), "تم اضافة مشاركة جديدة..", Toast.LENGTH_SHORT)
                                             .show();
                                     mosharka_btn.setEnabled(false);
                                     mosharka_btn.setBackgroundColor(
@@ -186,9 +186,9 @@ public class ViewSpecificSessionActivity extends YouTubeBaseActivity {
                                     mosharka_btn.setText("تم تسجيل مشاركة لليوم");
                                 } else {
                                     Toast.makeText(
-                                            getApplicationContext(),
-                                            "عذرا .. المشاركة مكررة في اليوم دا",
-                                            Toast.LENGTH_SHORT)
+                                                    getApplicationContext(),
+                                                    "عذرا .. المشاركة مكررة في اليوم دا",
+                                                    Toast.LENGTH_SHORT)
                                             .show();
                                     mosharka_btn.setEnabled(true);
                                     mosharka_btn.setBackgroundResource(R.drawable.btn_gradient_blue);

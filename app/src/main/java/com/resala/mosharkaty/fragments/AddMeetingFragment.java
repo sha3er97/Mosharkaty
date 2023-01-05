@@ -1,7 +1,11 @@
 package com.resala.mosharkaty.fragments;
 
-import static com.resala.mosharkaty.LoginActivity.userBranch;
-import static com.resala.mosharkaty.NewAccountActivity.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsPlace;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsReason;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsTypesMarkzy;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsTypesNormal;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -23,58 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.Meeting;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 public class AddMeetingFragment extends Fragment {
     View view;
-    public static String[] meetingsTypesNormal = {
-            "اجتماع لجنة فرق",
-            "اجتماع لجنة معارض/اطفال",
-            "اجتماع لجنة اطعام/مسنين",
-            "اجتماع لجنة اعمار",
-            "اجتماع لجنة ولاد عم",
-            "اجتماع لجنة نفسك في ايه",
-            "اجتماع لجنة hr",
-            "اجتماع لجنة متابعة",
-            "اجتماع لجنة اتصالات",
-            "اجتماع لجنة اشبال",
-            "اجتماع لجنة دعايا",
-            "اجتماع لجنة مكافحة",
-            "اجتماع لجنة نقل",
-            "اجتماع لجان مجمع",
-            "اجتماع ادارة الفرع",
-            "اجتماع مسؤولين",
-            "اجتماع نشيط",
-            "اجتماع فريق عمل"
-    };
-    public static String[] meetingsTypesMarkzy = {
-            "اجتماع مركزية فرق",
-            "اجتماع مركزية معارض/اطفال",
-            "اجتماع مركزية اطعام/مسنين",
-            "اجتماع مركزية اعمار",
-            "اجتماع مركزية ولاد عم",
-            "اجتماع مركزية نفسك في ايه",
-            "اجتماع مركزية hr",
-            "اجتماع مركزية متابعة",
-            "اجتماع مركزية اتصالات",
-            "اجتماع مركزية اشبال",
-            "اجتماع مركزية مكافحة",
-            "اجتماع لجنة دعايا",
-            "اجتماع مركزية نقل",
-            "اجتماع ادارة التيكنيكال",
-            "اجتماع ادارة التطوع",
-            "اجتماع ادارة الجودة",
-            "اجتماع هدود الفروع",
-            "اجتماع ادارة فنية",
-            "اجتماع مسؤولين النشاط",
-            "اجتماع فريق عمل النشاط"
-    };
-    public static String[] meetingsReason = {
-            "متابعة شغل الشهر", "تقييم الشغل", "حل مشكلة", "تواصل/ترفيه", "تخطيط"
-    };
-    public static String[] meetingsPlace = {"zoom النشاط", "الفرع", "اونلاين اخر"};
     Spinner type_spin;
     Spinner place_spin;
     Spinner reason_spin;
@@ -163,9 +122,9 @@ public class AddMeetingFragment extends Fragment {
                     // date picker dialog
                     picker =
                             new DatePickerDialog(
-                                    getContext(),
+                                    requireContext(),
                                     (view, year, monthOfYear, dayOfMonth) ->
-                                            eText.setText(dayOfMonth + "/" + (monthOfYear + 1)),
+                                            eText.setText(UtilityClass.dateToText(dayOfMonth, monthOfYear, year)),
                                     year,
                                     month,
                                     day);
@@ -182,23 +141,7 @@ public class AddMeetingFragment extends Fragment {
                     picker2 =
                             new TimePickerDialog(
                                     getContext(),
-                                    (tp, sHour, sMinute) -> {
-                                        int Mhour;
-                                        String Mminute;
-                                        String am_pm;
-                                        Mhour = sHour;
-                                        Mminute = String.valueOf(sMinute);
-                                        if (sMinute == 0) {
-                                            Mminute = "00";
-                                        }
-                                        if (Mhour >= 12) {
-                                            am_pm = "PM";
-                                            Mhour = Mhour - 12;
-                                        } else {
-                                            am_pm = "AM";
-                                        }
-                                        eText2.setText(Mhour + ":" + Mminute + " " + am_pm);
-                                    },
+                                    (tp, sHour, sMinute) -> eText2.setText(UtilityClass.timeToText(sHour, sMinute)),
                                     hour,
                                     minutes,
                                     false);
@@ -214,23 +157,7 @@ public class AddMeetingFragment extends Fragment {
                     picker3 =
                             new TimePickerDialog(
                                     getContext(),
-                                    (tp, sHour, sMinute) -> {
-                                        int Mhour;
-                                        String Mminute;
-                                        String am_pm;
-                                        Mhour = sHour;
-                                        Mminute = String.valueOf(sMinute);
-                                        if (sMinute == 0) {
-                                            Mminute = "00";
-                                        }
-                                        if (Mhour >= 12) {
-                                            am_pm = "PM";
-                                            Mhour = Mhour - 12;
-                                        } else {
-                                            am_pm = "AM";
-                                        }
-                                        eText3.setText(Mhour + ":" + Mminute + " " + am_pm);
-                                    },
+                                    (tp, sHour, sMinute) -> eText3.setText(UtilityClass.timeToText(sHour, sMinute)),
                                     hour,
                                     minutes,
                                     false);
@@ -239,21 +166,21 @@ public class AddMeetingFragment extends Fragment {
 
         ArrayAdapter<String> aa;
         if (userBranch.equals(branches[9]))
-            aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsTypesMarkzy);
-        else aa = new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsTypesNormal);
+            aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsTypesMarkzy);
+        else aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsTypesNormal);
 
         aa.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         type_spin.setAdapter(aa);
 
         ArrayAdapter<String> ab =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsReason);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsReason);
         ab.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         reason_spin.setAdapter(ab);
 
         ArrayAdapter<String> ac =
-                new ArrayAdapter<>(getContext(), R.layout.spinner_item, meetingsPlace);
+                new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsPlace);
         ac.setDropDownViewResource(R.layout.spinner_dropdown);
         // Setting the ArrayAdapter data on the Spinner
         place_spin.setAdapter(ac);

@@ -1,7 +1,6 @@
 package com.resala.mosharkaty.ui.adapters;
 
-import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
-import static com.resala.mosharkaty.LoginActivity.isAdmin;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,20 +18,18 @@ import com.resala.mosharkaty.AdminAddSessionActivity;
 import com.resala.mosharkaty.CourseDescriptionActivity;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.Course;
+import com.resala.mosharkaty.utility.classes.UtilityClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAdapter.ViewHolder> {
-    private ArrayList<Course> cousreItems;
-    private Context context;
-    HashMap<String, String> coursesImages = new HashMap<>();
+    private final ArrayList<Course> cousreItems;
+    private final Context context;
 
     public ExploreCoursesAdapter(ArrayList<Course> cousreItems, Context context) {
         this.cousreItems = cousreItems;
         this.context = context;
-        fillCoursesImages();
     }
 
     /**
@@ -81,7 +78,7 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
         holder.title.setText(item.name);
         holder.course_level.setText(item.level);
         holder.inst.setText(item.instructor);
-        String url = coursesImages.get(item.style);
+        String url = UtilityClass.coursesImages.get(item.style);
         Picasso.get().load(url).into(holder.imageView);
     }
 
@@ -93,17 +90,6 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
     @Override
     public int getItemCount() {
         return cousreItems.size();
-    }
-
-    private void fillCoursesImages() {
-        coursesImages.put(courseColors[0], "https://i.imgur.com/KziR4lT.jpeg");
-        coursesImages.put(courseColors[1], "https://i.imgur.com/EVGYLud.jpeg");
-        coursesImages.put(courseColors[2], "https://i.imgur.com/nopDz7z.jpeg");
-        coursesImages.put(courseColors[3], "https://i.imgur.com/ssQjxN1.jpeg");
-        coursesImages.put(courseColors[4], "https://i.imgur.com/g3URUe1.jpeg");
-        coursesImages.put(courseColors[5], "https://i.imgur.com/T1j6SLM.jpeg");
-        coursesImages.put(courseColors[6], "https://i.imgur.com/gYpp03z.jpeg");
-        coursesImages.put(courseColors[7], "https://i.imgur.com/lpBuQrV.jpeg");
     }
 
     /**
@@ -136,7 +122,7 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
             intent.putExtra("instructor", itemClicked.instructor);
             intent.putExtra("level", itemClicked.level);
             intent.putExtra("description", itemClicked.description);
-            intent.putExtra("image", coursesImages.get(itemClicked.style));
+            intent.putExtra("image", UtilityClass.coursesImages.get(itemClicked.style));
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

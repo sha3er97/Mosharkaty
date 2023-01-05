@@ -1,6 +1,6 @@
 package com.resala.mosharkaty;
 
-import static com.resala.mosharkaty.LoginActivity.userId;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -87,9 +87,9 @@ public class CourseDescriptionActivity extends AppCompatActivity {
     public void enrollCourse(View view) {
         EnrollmentRef.child(userId).setValue(!isEnrolled);
         Toast.makeText(
-                getApplicationContext(),
-                "تم تحديث اشتراكك .. روح بروفايلك عشان تقدر تتفرج علي كل كورساتك",
-                Toast.LENGTH_LONG)
+                        getApplicationContext(),
+                        "تم تحديث اشتراكك .. روح بروفايلك عشان تقدر تتفرج علي كل كورساتك",
+                        Toast.LENGTH_LONG)
                 .show();
     }
 
