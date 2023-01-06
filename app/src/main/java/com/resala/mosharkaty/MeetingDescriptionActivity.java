@@ -141,7 +141,6 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean valid = true;
         String date = eText.getText().toString();
-        String[] parts = date.split("/", 2);
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
@@ -201,7 +200,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
     public void editMeeting(View view) {
         if (!validateForm()) return;
         String date = eText.getText().toString();
-        String[] dateParts = date.split("/", 2);
+        String[] dateParts = date.split("/", 3);
         DatabaseReference currentEvent = MeetingsRef.child(String.valueOf(dateParts[1])).child(key);
         currentEvent.setValue(
                 new Meeting(
@@ -222,7 +221,7 @@ public class MeetingDescriptionActivity extends AppCompatActivity {
 
     public void deleteMeeting(View view) {
         String date = eText.getText().toString();
-        String[] dateParts = date.split("/", 2);
+        String[] dateParts = date.split("/", 3);
         MeetingsRef.child(String.valueOf(dateParts[1])).child(key).setValue(null);
         Toast.makeText(this, "تم الغاء الاجتماع ..", Toast.LENGTH_SHORT).show();
         finish();

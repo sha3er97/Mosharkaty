@@ -108,7 +108,6 @@ public class AdminAddEventsFragment extends androidx.fragment.app.Fragment
 
                         Toast.makeText(getContext(), "Event Added..", Toast.LENGTH_SHORT).show();
 
-                        // عشان ماجد
                         EventName_et.setText("");
                         EventDescription_et.setText("");
                         eText.setText("");

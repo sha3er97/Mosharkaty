@@ -1,5 +1,6 @@
 package com.resala.mosharkaty.fragments;
 
+import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsPlace;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.meetingsReason;
@@ -12,6 +13,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +86,7 @@ public class AddMeetingFragment extends Fragment {
                     v -> {
                         if (!validateForm()) return;
                         String date = eText.getText().toString();
-                        String[] dateParts = date.split("/", 2);
+                        String[] dateParts = date.split("/", 3);
                         DatabaseReference currentEvent = MeetingsRef.child(String.valueOf(dateParts[1])).push();
                         // .child(String.valueOf(System.currentTimeMillis() / 1000));
                         currentEvent.setValue(
@@ -165,7 +167,8 @@ public class AddMeetingFragment extends Fragment {
                 });
 
         ArrayAdapter<String> aa;
-        if (userBranch.equals(branches[9]))
+        Log.d("D", "debug ::" + userBranch);
+        if (userBranch.equals(branches[BRANCHES_COUNT]))
             aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsTypesMarkzy);
         else aa = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, meetingsTypesNormal);
 
@@ -190,13 +193,10 @@ public class AddMeetingFragment extends Fragment {
     private boolean validateForm() {
         boolean valid = true;
         String date = eText.getText().toString();
-        String[] parts = date.split("/", 2);
         if (TextUtils.isEmpty(date)) {
             eText.setError("Required.");
             valid = false;
-        } else if (Integer.parseInt(parts[2]) > year
-                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) > month + 1
-                || Integer.parseInt(parts[2]) == year && Integer.parseInt(parts[1]) == month + 1 && Integer.parseInt(parts[0]) > day) {
+        } else if (UtilityClass.checkFutureDate(date, year, month, day)) {
             eText.setError("you can't choose a date in the future.");
             valid = false;
         }
