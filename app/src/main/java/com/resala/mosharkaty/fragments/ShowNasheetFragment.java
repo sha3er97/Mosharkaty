@@ -97,7 +97,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                                     NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
                                     assert nasheetVolunteer != null;
                                     allNsheet.add(snapshot.getKey());
-                                    String[] parts = nasheetVolunteer.first_month.split("/", 2);
+                                    String[] parts = nasheetVolunteer.first_month.split("/", 3);
                                     int months =
                                             (year - Integer.parseInt(parts[1])) * 12
                                                     + (month - Integer.parseInt(parts[0]));

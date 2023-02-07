@@ -261,6 +261,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             NormalVolunteer user = snapshot.getValue(NormalVolunteer.class);
                             if (user != null) {
+                                Log.d(TAG, "onDataChange: fetched  user # " + user.id + " with name : " + user.Volname + " and motabaa : " + user.motabaa);
                                 if (user.motabaa.equals("مشروع مسئول")) {
                                     teamDegrees.put(user.Volname, "مشروع");
                                     globalFari2Names.add(user.Volname);

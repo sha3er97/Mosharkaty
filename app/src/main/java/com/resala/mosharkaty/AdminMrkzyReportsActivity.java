@@ -23,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -688,26 +688,34 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                 });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void exportExcelClick(View view) {
-        excelOut = true;
-        selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (!UtilityClass.hasPermissions(PERMISSIONS, getApplicationContext())) {
-                ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST);
-            } else { // permession already granted
-                exportExcel(month_et.getSelectedItem().toString());
-            }
-        } else { // api below 23
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            Toast.makeText(getApplicationContext(), "This feature isn't available for android < 19 ", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            excelOut = true;
+            selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
+//            if (Build.VERSION.SDK_INT >= 23) {
+//                String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                if (!UtilityClass.hasPermissions(PERMISSIONS, getApplicationContext())) {
+//                    ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST);
+//                } else { // permession already granted
+//                    exportExcel(month_et.getSelectedItem().toString());
+//                }
+//            } else { // api below 23
             exportExcel(month_et.getSelectedItem().toString());
+//            }
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void exportExcel(String month) {
-        String root =
-                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/تقارير";
-        File dir = new File(root);
+//        File[] root = getExternalFilesDirs(null);
+        //root = Arrays.toString(getExternalFilesDirs(null)) + "/تقارير";
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "مشاركاتي/تقارير");
+
+//        File dir = new File(root.toString()+ "/تقارير");
         dir.mkdirs();
         String Fnamexls = ("/تقرير_مجمع_شهر_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
@@ -739,7 +747,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
             printMeetingsHeaders(sheet2);
             printEventsHeaders(sheet3);
             printMosharkatHeaders(sheet1);
-            Toast.makeText(getApplicationContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + '\n' + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -1231,6 +1239,7 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

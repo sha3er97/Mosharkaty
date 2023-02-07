@@ -6,4 +6,10 @@ public class NormalVolunteer {
     public int id;
     public String motabaa;
     public int months_count;
+
+    public NormalVolunteer() {
+        motabaa = "null";
+        months_count = 0;
+        Volname = "null";
+    }
 }
