@@ -163,7 +163,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
                             assert nasheetVolunteer != null;
-                            String[] parts = nasheetVolunteer.first_month.split("/", 2);
+                            String[] parts = nasheetVolunteer.first_month.split("/", 3);
                             int months =
                                     (year - Integer.parseInt(parts[1])) * 12
                                             + (selected_month - Integer.parseInt(parts[0]));
@@ -394,7 +394,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     EventReport event = snapshot.getValue(EventReport.class);
                                     if (event != null) {
-                                        String[] splittedDate = event.date.split("/", 2);
+                                        String[] splittedDate = event.date.split("/", 3);
                                         if (Integer.parseInt(splittedDate[0]) >= start_day
                                                 && Integer.parseInt(splittedDate[0]) <= end_day) {
                                             if (event.type.matches("(.*)اورينتيشن(.*)"))
@@ -430,7 +430,7 @@ public class AdminWeeklyReportActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Meeting meet = snapshot.getValue(Meeting.class);
                                     if (meet != null) {
-                                        String[] splittedDate = meet.date.split("/", 2);
+                                        String[] splittedDate = meet.date.split("/", 3);
                                         if (Integer.parseInt(splittedDate[0]) >= start_day
                                                 && Integer.parseInt(splittedDate[0]) <= end_day) {
                                             meetingsCounter++;
