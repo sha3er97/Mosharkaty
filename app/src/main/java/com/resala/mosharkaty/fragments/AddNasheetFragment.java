@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.utility.classes.CustomSearchableSpinner;
 import com.resala.mosharkaty.utility.classes.NormalVolunteer;
-import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +71,7 @@ public class AddNasheetFragment extends androidx.fragment.app.Fragment
                             new DatePickerDialog(
                                     requireContext(),
                                     (view, year, monthOfYear, dayOfMonth) ->
-                                            eText.setText(UtilityClass.dateToText(dayOfMonth, monthOfYear, year)),
+                                            eText.setText((monthOfYear + 1) + "/" + year),
                                     year,
                                     month,
                                     day);
