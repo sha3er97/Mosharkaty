@@ -1,14 +1,12 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersByName;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.app.AlertDialog;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +30,6 @@ import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetHistoryItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
 import com.resala.mosharkaty.utility.classes.NormalVolunteer;
-import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +39,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -115,58 +110,52 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 
         export_nasheet_btn2.setOnClickListener(
                 view -> {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
-                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
-                        } else { // permession already granted
-                            showDialog();
-                        }
-                    } else { // api below 23
-                        showDialog();
-                    }
+//                    if (Build.VERSION.SDK_INT >= 23) {
+//                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+//                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
+//                        } else { // permession already granted
+                    showDialog();
+//                        }
+//                    } else { // api below 23
+//                        showDialog();
+//                    }
                 });
         return view;
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showDialog();
-            } else {
-                Toast.makeText(
-                                getContext(),
-                                "The app was not allowed to write in your storage",
-                                Toast.LENGTH_LONG)
-                        .show();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(
+//            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == REQUEST) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                showDialog();
+//            } else {
+//                Toast.makeText(
+//                                getContext(),
+//                                "The app was not allowed to write in your storage",
+//                                Toast.LENGTH_LONG)
+//                        .show();
+//            }
+//        }
+//    }
 
     private void writeExcel() {
 //      String root =
 //              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
 //      File dir = new File(root);
-        String FolderName = "Mosharkaty/النشيط";
-        String directoryName;
-        File dir;
-        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
-        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+//        String FolderName = "Mosharkaty/النشيط";
+//        String directoryName;
+//        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+//        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            directoryName = Environment.getDownloadCacheDirectory().toString();
-//            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
-//
-////            dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + FolderName);
-//        } else {
-//            directoryName = Environment.getExternalStorageDirectory().toString();
-//
-//            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
-//        }
-        dir.mkdirs();
+//        String root =
+//                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/اجتماعات";
+//        File dir = new File(root);
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/النشيط");
+        boolean check = dir.mkdirs();
+
         String Fnamexls = ("/قائمة_نشيط_نشاط_الفرز_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
@@ -209,8 +198,10 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
+//            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+//                    .show();
             //      sendEmail(root, Fnamexls);
             try {
                 workbook.close();
@@ -317,12 +308,13 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //        String root =
 //                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
 //        File dir = new File(root);
-        String FolderName = "Mosharkaty/النشيط";
-        String directoryName;
-        File dir;
-        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
-        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
-
+//        String FolderName = "Mosharkaty/النشيط";
+//        String directoryName;
+//        File dir;
+//        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+//        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/النشيط");
+        boolean check = dir.mkdirs();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //            directoryName = Environment.getDownloadCacheDirectory().toString();
 //            dir = new File(Environment.getDownloadCacheDirectory() + "/" + FolderName);
@@ -333,7 +325,6 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //
 //            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
 //        }
-        dir.mkdirs();
         String Fnamexls = ("/مشاركات_نشيط_حتي_الان_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
@@ -363,8 +354,10 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
+//            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+//                    .show();
             //      sendEmail(root, Fnamexls);
             try {
                 workbook.close();

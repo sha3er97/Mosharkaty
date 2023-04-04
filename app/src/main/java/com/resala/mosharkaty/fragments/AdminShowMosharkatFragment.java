@@ -10,9 +10,7 @@ import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -28,7 +26,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,22 +35,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.opencsv.CSVWriter;
 import com.resala.mosharkaty.BuildConfig;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.MosharkatAdapter;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NormalVolunteer;
-import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Objects;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -163,19 +156,19 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
                 v -> {
                     final int month = Integer.parseInt(month_et.getSelectedItem().toString());
                     final int day = Integer.parseInt(day_et.getSelectedItem().toString());
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
-                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
-                        } else { // permession already granted
-                            //              writeCSV(month, day);
-                            showDialog(month, day);
-                            //              writeExcel(month, day);
-                        }
-                    } else { // api below 23
-                        //            writeCSV(month, day);
-                        showDialog(month, day);
-                    }
+//                    if (Build.VERSION.SDK_INT >= 23) {
+//                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+//                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
+//                        } else { // permession already granted
+                    //              writeCSV(month, day);
+                    showDialog(month, day);
+                    //              writeExcel(month, day);
+//                        }
+//                    } else { // api below 23
+//                        //            writeCSV(month, day);
+//                        showDialog(month, day);
+//                    }
                 });
 
         refreshBtn.setOnClickListener(
@@ -294,34 +287,34 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
         alertDialogBuilder.show();
     }
 
-    private void writeCSV(int month, int day) {
-        String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/csv";
-        File dir = new File(root);
-        dir.mkdirs();
-        String csv = ("/متابعة_يومية_" + userBranch + "_" + day + "_" + month + ".csv");
-        CSVWriter writer;
-
-        try {
-            File file = new File(dir, csv);
-            writer = new CSVWriter(new FileWriter(file));
-
-            ArrayList<String[]> data = new ArrayList<>();
-            data.add(new String[]{"الاسم", "الرقم", "النوع"});
-            for (int i = 0; i < mosharkaItems.size(); i++) {
-                data.add(
-                        new String[]{
-                                mosharkaItems.get(i).getVolname(), " ", mosharkaItems.get(i).getMosharkaType()
-                        });
-            }
-
-            writer.writeAll(data); // data is adding to csv
-            //      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + csv,
-            // Toast.LENGTH_SHORT).show();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void writeCSV(int month, int day) {
+//        String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/csv";
+//        File dir = new File(root);
+//        dir.mkdirs();
+//        String csv = ("/متابعة_يومية_" + userBranch + "_" + day + "_" + month + ".csv");
+//        CSVWriter writer;
+//
+//        try {
+//            File file = new File(dir, csv);
+//            writer = new CSVWriter(new FileWriter(file));
+//
+//            ArrayList<String[]> data = new ArrayList<>();
+//            data.add(new String[]{"الاسم", "الرقم", "النوع"});
+//            for (int i = 0; i < mosharkaItems.size(); i++) {
+//                data.add(
+//                        new String[]{
+//                                mosharkaItems.get(i).getVolname(), " ", mosharkaItems.get(i).getMosharkaType()
+//                        });
+//            }
+//
+//            writer.writeAll(data); // data is adding to csv
+//            //      Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + csv,
+//            // Toast.LENGTH_SHORT).show();
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void writeExcel(int month, int day) {
         ProgressDialog progress = new ProgressDialog(getContext());
@@ -332,11 +325,13 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
 //    String root =
 //            Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/متابعة_يومية";
 //    File dir = new File(root);
-        String directoryName;
-        String FolderName = "Mosharkaty/شيت_المتابعة اليومية";
-        File dir;
-        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
-        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+//        String directoryName;
+//        String FolderName = "Mosharkaty/شيت_المتابعة_اليومية";
+//        File dir;
+//        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+//        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/شيت_المتابعة_اليومية");
+        boolean check = dir.mkdirs();
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //            directoryName = Environment.getDownloadCacheDirectory().toString();
@@ -349,7 +344,6 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
 //            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
 //        }
 
-        dir.mkdirs();
         String Fnamexls = ("/متابعة_يومية_نشاط_الفرز_" + userBranch + "_" + day + "_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
@@ -385,11 +379,14 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
+//            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+//                    .show();
             // To dismiss the dialog
             progress.dismiss();
-            sendEmail(FolderName, Fnamexls);
+            sendEmail(dir.getAbsolutePath(), Fnamexls);
+//            sendEmail(FolderName, Fnamexls);
             try {
                 workbook.close();
             } catch (WriteException e) {
@@ -409,11 +406,14 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
         progress.setMessage("لحظات معانا...");
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
-        String FolderName = "Mosharkaty/شيت_المتابعة";
-        String directoryName;
-        File dir;
-        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
-        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+//        String FolderName = "Mosharkaty/شيت_المتابعة";
+//        String directoryName;
+//        File dir;
+//        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
+//        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
+
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/شيت_المتابعة_اليومية");
+        boolean check = dir.mkdirs();
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //            directoryName = Environment.getDownloadCacheDirectory().toString();
@@ -425,7 +425,6 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
 //
 //            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
 //        }
-        dir.mkdirs();
         String Fnamexls = ("/شيت_متابعة_نشاط_الفرز_" + userBranch + "_" + day + "_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
@@ -470,7 +469,9 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+//            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + directoryName + FolderName + Fnamexls, Toast.LENGTH_LONG)
+//                    .show();
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
             // To dismiss the dialog
             progress.dismiss();
@@ -509,25 +510,25 @@ public class AdminShowMosharkatFragment extends androidx.fragment.app.Fragment {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //            writeCSV(month, day);
-                    final int month = Integer.parseInt(month_et.getSelectedItem().toString());
-                    final int day = Integer.parseInt(day_et.getSelectedItem().toString());
-                    showDialog(month, day);
-                } else {
-                    Toast.makeText(
-                                    getContext(),
-                                    "The app was not allowed to write in your storage",
-                                    Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(
+//            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case REQUEST: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //            writeCSV(month, day);
+//                    final int month = Integer.parseInt(month_et.getSelectedItem().toString());
+//                    final int day = Integer.parseInt(day_et.getSelectedItem().toString());
+//                    showDialog(month, day);
+//                } else {
+//                    Toast.makeText(
+//                                    getContext(),
+//                                    "The app was not allowed to write in your storage",
+//                                    Toast.LENGTH_LONG)
+//                            .show();
+//                }
+//            }
+//        }
+//    }
 }

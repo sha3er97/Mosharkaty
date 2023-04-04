@@ -2,12 +2,6 @@ package com.resala.mosharkaty.utility.classes;
 
 import static com.resala.mosharkaty.AdminAddCourseActivity.courseColors;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
-
-import androidx.core.app.ActivityCompat;
-
 import java.util.HashMap;
 
 public class UtilityClass {
@@ -222,19 +216,19 @@ public class UtilityClass {
         // مركزي ملوش شيت
     }
 
-    public static boolean hasPermissions(String[] permissions, Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && context != null
-                && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    public static boolean hasPermissions(String[] permissions, Context context) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//                && context != null
+//                && permissions != null) {
+//            for (String permission : permissions) {
+//                if (ActivityCompat.checkSelfPermission(context, permission)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
     public static String timeToText(int sHour, int sMinute) {
         int Mhour;

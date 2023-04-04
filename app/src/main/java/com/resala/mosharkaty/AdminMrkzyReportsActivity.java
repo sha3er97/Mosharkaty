@@ -1,7 +1,6 @@
 package com.resala.mosharkaty;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.BRANCHES_COUNT;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
@@ -10,7 +9,6 @@ import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 
 import android.app.ProgressDialog;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -70,8 +67,6 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     int[] mas2oleenCounter = new int[BRANCHES_COUNT];
     int[] msharee3Counter = new int[BRANCHES_COUNT];
     int[] nasheetCounter = new int[BRANCHES_COUNT];
-
-    WritableWorkbook workbook;
 
     int branchIterator;
     ArrayList<HashMap<String, String>> teamDegrees = new ArrayList<>();
@@ -688,13 +683,12 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                 });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void exportExcelClick(View view) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             Toast.makeText(getApplicationContext(), "This feature isn't available for android < 19 ", Toast.LENGTH_SHORT)
                     .show();
         } else {
-            excelOut = true;
+//            excelOut = true;
             selected_month = Integer.parseInt(month_et.getSelectedItem().toString());
 //            if (Build.VERSION.SDK_INT >= 23) {
 //                String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -709,16 +703,16 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void exportExcel(String month) {
 //        File[] root = getExternalFilesDirs(null);
         //root = Arrays.toString(getExternalFilesDirs(null)) + "/تقارير";
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "مشاركاتي/تقارير");
-
 //        File dir = new File(root.toString()+ "/تقارير");
-        dir.mkdirs();
+
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/تقارير");
+        boolean check = dir.mkdirs();
         String Fnamexls = ("/تقرير_مجمع_شهر_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
+        WritableWorkbook workbook;
         try {
             File file = new File(dir, Fnamexls);
             workbook = Workbook.createWorkbook(file, wbSettings);
@@ -747,8 +741,14 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
             printMeetingsHeaders(sheet2);
             printEventsHeaders(sheet3);
             printMosharkatHeaders(sheet1);
+            workbook.write();
             Toast.makeText(getApplicationContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + '\n' + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1239,44 +1239,43 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
                         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                exportExcel(month_et.getSelectedItem().toString());
-
-            } else {
-                Toast.makeText(
-                                getApplicationContext(),
-                                "The app was not allowed to write in your storage",
-                                Toast.LENGTH_LONG)
-                        .show();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(
+//            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == REQUEST) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                exportExcel(month_et.getSelectedItem().toString());
+//
+//            } else {
+//                Toast.makeText(
+//                                getApplicationContext(),
+//                                "The app was not allowed to write in your storage",
+//                                Toast.LENGTH_LONG)
+//                        .show();
+//            }
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (excelOut) {
-            try {
-                workbook.write();
-                Log.i(TAG, "printMeetings: workbook write");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                workbook.close();
-                Log.i(TAG, "printMeetings: final workbook close");
-
-            } catch (WriteException | IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (excelOut) {
+//            try {
+//                workbook.write();
+//                Log.i(TAG, "printMeetings: workbook write");
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                workbook.close();
+//                Log.i(TAG, "printMeetings: final workbook close");
+//
+//            } catch (WriteException | IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

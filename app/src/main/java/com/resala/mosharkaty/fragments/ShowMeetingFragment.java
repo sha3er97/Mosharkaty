@@ -1,15 +1,12 @@
 package com.resala.mosharkaty.fragments;
 
 import static android.content.ContentValues.TAG;
-import static com.resala.mosharkaty.fragments.AdminShowMosharkatFragment.REQUEST;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -23,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +34,6 @@ import com.resala.mosharkaty.BuildConfig;
 import com.resala.mosharkaty.R;
 import com.resala.mosharkaty.ui.adapters.MeetingAdapter;
 import com.resala.mosharkaty.utility.classes.Meeting;
-import com.resala.mosharkaty.utility.classes.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -134,43 +129,46 @@ public class ShowMeetingFragment extends Fragment {
 
         export_meetings_btn.setOnClickListener(
                 view -> {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
-                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
-                        } else { // permession already granted
-                            exportExcel(month_et.getSelectedItem().toString());
-                        }
-                    } else { // api below 23
-                        exportExcel(month_et.getSelectedItem().toString());
-                    }
+                    exportExcel(month_et.getSelectedItem().toString());
+//                    if (Build.VERSION.SDK_INT >= 23) {
+//                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                        if (!UtilityClass.hasPermissions(PERMISSIONS, getContext())) {
+//                            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST);
+//                        } else { // permession already granted
+//                            exportExcel(month_et.getSelectedItem().toString());
+//                        }
+//                    } else { // api below 23
+//                        exportExcel(month_et.getSelectedItem().toString());
+//                    }
                 });
         return view;
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                exportExcel(month_et.getSelectedItem().toString());
-
-            } else {
-                Toast.makeText(
-                                getContext(),
-                                "The app was not allowed to write in your storage",
-                                Toast.LENGTH_LONG)
-                        .show();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(
+//            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == REQUEST) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                exportExcel(month_et.getSelectedItem().toString());
+//
+//            } else {
+//                Toast.makeText(
+//                                getContext(),
+//                                "The app was not allowed to write in your storage",
+//                                Toast.LENGTH_LONG)
+//                        .show();
+//            }
+//        }
+//    }
 
     private void exportExcel(String month) {
-        String root =
-                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/اجتماعات";
-        File dir = new File(root);
-        dir.mkdirs();
+//        String root =
+//                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/اجتماعات";
+//        File dir = new File(root);
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/اجتماعات");
+        boolean check = dir.mkdirs();
+
         String Fnamexls = ("/تقرير_اجتماعات_" + userBranch + "_" + month + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
@@ -223,9 +221,11 @@ public class ShowMeetingFragment extends Fragment {
             }
 
             workbook.write();
-            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_SHORT)
+//            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + root + Fnamexls, Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), "تم حفظ الفايل في\n " + dir.getAbsolutePath() + Fnamexls, Toast.LENGTH_SHORT)
                     .show();
-            sendEmail(root, Fnamexls);
+            sendEmail(dir.getAbsolutePath(), Fnamexls);
+//            sendEmail(root, Fnamexls);
             try {
                 workbook.close();
             } catch (WriteException e) {
