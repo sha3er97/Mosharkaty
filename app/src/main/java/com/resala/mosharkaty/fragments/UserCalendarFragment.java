@@ -121,7 +121,7 @@ public class UserCalendarFragment extends androidx.fragment.app.Fragment {
                                     for (DataSnapshot snapshot : dataSnapshot.child(branches[BRANCHES_COUNT]).getChildren()) {
                                         Event event = snapshot.getValue(Event.class);
                                         if (event != null) {
-                                            String[] splittedDate = event.date.split("/", 2);
+                                            String[] splittedDate = event.date.split("/", 3);
                                             if (Integer.parseInt(splittedDate[0]) >= day
                                                     && Integer.parseInt(splittedDate[1]) == month) {
                                                 String url = eventsImages.get(event.type);
