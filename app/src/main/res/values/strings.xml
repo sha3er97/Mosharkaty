@@ -175,6 +175,7 @@
     <string name="chooseExcelForm">اختار فورم الاكسيل اللي عايزه</string>
     <string name="dailyReport">متابعة ادارة المتطوعين اليومية</string>
     <string name="motab3asheet">شيت المتابعة</string>
+    <string name="teen_tab_text_1">اضافة اشبال</string>
     <string name="nasheet_tab_text_1">اضافة نشيط</string>
     <string name="nasheet_tab_text_2">عرض المشاركات</string>
     <string name="nasheet_tab_text_3">تقرير</string>
@@ -188,6 +189,8 @@
     <string name="courses_btn_text">استكشف المزيد من\n كورسات الفرز</string>
     <string name="nasheetColumn">عمود النشيط</string>
     <string name="nasheetStats">مشاركات كل النشيط</string>
+    <string name="teenColumn">عمود الاشبال</string>
+    <string name="teenStats">مشاركات كل الاشبال</string>
     <string name="events_reports_tab_text_1">اضافة حدث</string>
     <string name="events_reports_tab_text_2">عرض الاحداث</string>
     <string name="welcome_text">Welcome</string>

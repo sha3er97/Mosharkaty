@@ -46,26 +46,6 @@
             app:layout_constraintTop_toTopOf="@+id/branchSpinner3"
             app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/showClosings_btn"
-            android:layout_width="0dp"
-            android:layout_height="128dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
-            android:background="@drawable/btn_gradient_blue"
-            android:drawableStart="@drawable/calendar"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/new_jf"
-            android:gravity="start|center_vertical"
-            android:paddingHorizontal="32dp"
-            android:text="الايام المقفولة"
-            android:textColor="@color/new_white_light"
-            android:textSize="22sp"
-            app:drawableTint="@color/new_white_light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutBottom" />
 
         <Button
             android:id="@+id/showMrkzy_btn"
@@ -86,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showClosings_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutBottomNew" />
 
         <Button
             android:id="@+id/withoutRepeatReport_btn"
@@ -189,6 +169,59 @@
             app:layout_constraintBottom_toBottomOf="@+id/branchSpinner3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/branchSpinner3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutBottomNew"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutBottom">
+
+            <Button
+                android:id="@+id/showClosings_btn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/btn_gradient_blue"
+                android:drawableStart="@drawable/calendar"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="16dp"
+                android:text="الايام المقفولة"
+                android:textColor="@color/new_white_light"
+                android:textSize="18sp"
+                app:drawableTint="@color/new_white_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/teensButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Button: newButton -->
+            <Button
+                android:id="@+id/teensButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/btn_gradient_blue"
+                android:drawableStart="@drawable/person_add"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/new_jf"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="32dp"
+                android:text="تقارير الاشبال"
+                android:textColor="@color/new_white_light"
+                android:textSize="18sp"
+                app:drawableTint="@color/new_white_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/showClosings_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTop"

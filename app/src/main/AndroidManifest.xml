@@ -39,6 +39,7 @@
         <activity android:name=".ViewSpecificSessionActivity" />
         <activity android:name=".AdminWeeklyReportActivity" />
         <activity android:name=".NasheetActivity" />
+        <activity android:name=".TeensActivity" />
         <activity android:name=".MeetingDescriptionActivity" />
         <activity android:name=".AdminMeetingsActivity" />
         <activity android:name=".EventToEditActivity" />

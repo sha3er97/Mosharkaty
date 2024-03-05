@@ -35,6 +35,7 @@ import com.resala.mosharkaty.AdminShowZeroesActivity;
 import com.resala.mosharkaty.AdminWeeklyReportActivity;
 import com.resala.mosharkaty.NasheetActivity;
 import com.resala.mosharkaty.R;
+import com.resala.mosharkaty.TeensActivity;
 import com.resala.mosharkaty.WithoutRepeatReportActivity;
 
 public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
@@ -86,6 +87,7 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
         Button event_reports_btn = view.findViewById(R.id.event_reports_btn);
         Button showMrkzy_btn = view.findViewById(R.id.showMrkzy_btn);
         Button withoutRepeatReport_btn = view.findViewById(R.id.withoutRepeatReport_btn);
+        Button teensButton = view.findViewById(R.id.teensButton);
 
         if (isMrkzy) {
             showSignatures_btn.setEnabled(false);
@@ -97,6 +99,7 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
             showZeroes_btn.setEnabled(false);
             nasheet_btn.setEnabled(false);
             show_takyeem_btn.setEnabled(false);
+            teensButton.setEnabled(false);
 
             showSignatures_btn.setBackgroundColor(
                     getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
@@ -115,6 +118,8 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
             nasheet_btn.setBackgroundColor(
                     getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
             show_takyeem_btn.setBackgroundColor(
+                    getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
+            teensButton.setBackgroundColor(
                     getResources().getColor(R.color.common_google_signin_btn_text_light_disabled));
         } else { // لو مش مركزي
             change_branch.setEnabled(false);
@@ -173,6 +178,8 @@ public class AdminShowReportsFragment extends androidx.fragment.app.Fragment {
                 view -> startActivity(new Intent(getActivity(), AdminMrkzyReportsActivity.class)));
         withoutRepeatReport_btn.setOnClickListener(
                 view -> startActivity(new Intent(getActivity(), WithoutRepeatReportActivity.class)));
+        teensButton.setOnClickListener(
+                view -> startActivity(new Intent(getActivity(), TeensActivity.class)));
         return view;
     }
 }

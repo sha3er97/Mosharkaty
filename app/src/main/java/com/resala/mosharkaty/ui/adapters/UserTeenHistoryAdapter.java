@@ -20,18 +20,18 @@ import com.resala.mosharkaty.utility.classes.VolunteerHistoryItem;
 
 import java.util.ArrayList;
 
-public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetHistoryAdapter.ViewHolder> {
+public class UserTeenHistoryAdapter extends RecyclerView.Adapter<UserTeenHistoryAdapter.ViewHolder> {
     private final ArrayList<VolunteerHistoryItem> userHistoryItems;
     private Context context;
 
-    public UserNasheetHistoryAdapter(
+    public UserTeenHistoryAdapter(
             ArrayList<VolunteerHistoryItem> userHistoryItems, Context context) {
         this.userHistoryItems = userHistoryItems;
         this.context = context;
     }
 
     /**
-     * Called when RecyclerView needs a new {@link UserNasheetHistoryAdapter.ViewHolder} of the given
+     * Called when RecyclerView needs a new {@link UserTeenHistoryAdapter.ViewHolder} of the given
      * type to represent an item. This new ViewHolder should be constructed with a new View that can
      * represent the items of the given type. You can either create a new View manually or inflate it
      * from an XML layout file.
@@ -41,21 +41,21 @@ public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetH
      * @param viewType The view type of the new View.
      * @return A new ViewHolder that holds a View of the given view type.
      * @see #getItemViewType(int)
-     * @see #onBindViewHolder(UserNasheetHistoryAdapter.ViewHolder, int)
+     * @see #onBindViewHolder(UserTeenHistoryAdapter.ViewHolder, int)
      */
     @NonNull
     @Override
-    public UserNasheetHistoryAdapter.ViewHolder onCreateViewHolder(
+    public UserTeenHistoryAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         View view =
                 LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.nasheet_history_item, parent, false);
-        return new UserNasheetHistoryAdapter.ViewHolder(view);
+        return new UserTeenHistoryAdapter.ViewHolder(view);
     }
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should update
-     * the contents of the {@link UserNasheetHistoryAdapter.ViewHolder#itemView} to reflect the item
+     * the contents of the {@link UserTeenHistoryAdapter.ViewHolder#itemView} to reflect the item
      * at the given position.
      *
      * <p>Note that unlike {@link ListView}, RecyclerView will not call this method again if the
@@ -63,7 +63,7 @@ public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetH
      * position cannot be determined. For this reason, you should only use the <code>position</code>
      * parameter while acquiring the related data item inside this method and should not keep a copy
      * of it. If you need the position of an item later on (e.g. in a click listener), use {@link
-     * UserNasheetHistoryAdapter.ViewHolder#getAdapterPosition()} which will have the updated adapter
+     * UserTeenHistoryAdapter.ViewHolder#getAdapterPosition()} which will have the updated adapter
      * position.
      *
      * @param holder   The ViewHolder which should be updated to represent the contents of the item at
@@ -71,7 +71,7 @@ public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetH
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(@NonNull UserNasheetHistoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserTeenHistoryAdapter.ViewHolder holder, int position) {
         VolunteerHistoryItem item = userHistoryItems.get(position);
         holder.Username.setText(item.getUsername());
         holder.monthsCount.setText(String.valueOf(item.getMonthsCount()));
@@ -117,8 +117,8 @@ public class UserNasheetHistoryAdapter extends RecyclerView.Adapter<UserNasheetH
             VolunteerHistoryItem itemClicked = userHistoryItems.get(position);
             if (view.getId() == delete_btn.getId()) {
                 database = FirebaseDatabase.getInstance();
-                final DatabaseReference nasheetRef = database.getReference("nasheet").child(userBranch);
-                nasheetRef.child(itemClicked.getUsername()).setValue(null);
+                final DatabaseReference teenRef = database.getReference("teens").child(userBranch);
+                teenRef.child(itemClicked.getUsername()).setValue(null);
             } else {
                 // do nothing till now
             }

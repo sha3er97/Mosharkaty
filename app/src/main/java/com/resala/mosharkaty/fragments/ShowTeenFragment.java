@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.resala.mosharkaty.R;
-import com.resala.mosharkaty.ui.adapters.UserNasheetHistoryAdapter;
+import com.resala.mosharkaty.ui.adapters.UserTeenHistoryAdapter;
 import com.resala.mosharkaty.utility.classes.MosharkaItem;
 import com.resala.mosharkaty.utility.classes.NasheetVolunteer;
 import com.resala.mosharkaty.utility.classes.NormalVolunteer;
@@ -48,28 +48,28 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
+public class ShowTeenFragment extends androidx.fragment.app.Fragment {
     View view;
     FirebaseDatabase database;
     int month;
     int year;
-    UserNasheetHistoryAdapter adapter;
-    ArrayList<String> allNsheet = new ArrayList<>();
+    UserTeenHistoryAdapter adapter;
+    ArrayList<String> allTeens = new ArrayList<>();
     ArrayList<VolunteerHistoryItem> userHistoryItems = new ArrayList<>();
     DatabaseReference MosharkatRef;
     ValueEventListener mosharkatlistener;
-    DatabaseReference nasheetRef;
-    ValueEventListener nasheetlistener;
-    Button export_nasheet_btn2;
-    HashMap<String, Integer> nasheetMonths = new HashMap<>();
+    DatabaseReference teenRef;
+    ValueEventListener teenlistener;
+    Button export_teen_btn2;
+    HashMap<String, Integer> teenMonths = new HashMap<>();
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_show_nasheet, container, false);
+        view = inflater.inflate(R.layout.fragment_show_teens, container, false);
         database = FirebaseDatabase.getInstance();
-        RecyclerView recyclerView = view.findViewById(R.id.nasheetRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.teenRecyclerView);
         TextView current_month = view.findViewById(R.id.current_month);
         final Calendar cldr = Calendar.getInstance(Locale.US);
         month = cldr.get(Calendar.MONTH) + 1;
@@ -77,28 +77,28 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         current_month.setText(String.valueOf(month));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new UserNasheetHistoryAdapter(userHistoryItems, getContext());
+        adapter = new UserTeenHistoryAdapter(userHistoryItems, getContext());
         recyclerView.setAdapter(adapter);
-        export_nasheet_btn2 = view.findViewById(R.id.export_nasheet_btn2);
-        nasheetRef = database.getReference("nasheet").child(userBranch);
-        nasheetlistener =
-                nasheetRef.addValueEventListener(
+        export_teen_btn2 = view.findViewById(R.id.export_teen_btn2);
+        teenRef = database.getReference("teens").child(userBranch);
+        teenlistener =
+                teenRef.addValueEventListener(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                allNsheet.clear();
-                                nasheetMonths = new HashMap<>();
+                                allTeens.clear();
+                                teenMonths = new HashMap<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    NasheetVolunteer nasheetVolunteer = snapshot.getValue(NasheetVolunteer.class);
-                                    assert nasheetVolunteer != null;
-                                    allNsheet.add(snapshot.getKey());
-                                    String[] parts = nasheetVolunteer.first_month.split("/", 2);
+                                    NasheetVolunteer teenVolunteer = snapshot.getValue(NasheetVolunteer.class);
+                                    assert teenVolunteer != null;
+                                    allTeens.add(snapshot.getKey());
+                                    String[] parts = teenVolunteer.first_month.split("/", 2);
                                     int months =
                                             (year - Integer.parseInt(parts[1])) * 12
                                                     + (month - Integer.parseInt(parts[0]));
-                                    nasheetMonths.put(snapshot.getKey(), months);
+                                    teenMonths.put(snapshot.getKey(), months);
                                 }
-                                getNasheetMosharkat();
+                                getTeenMosharkat();
                             }
 
                             @Override
@@ -108,7 +108,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                             }
                         });
 
-        export_nasheet_btn2.setOnClickListener(
+        export_teen_btn2.setOnClickListener(
                 view -> {
 //                    if (Build.VERSION.SDK_INT >= 23) {
 //                        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -143,9 +143,9 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 
     private void writeExcel() {
 //      String root =
-//              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
+//              Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/الاشبال";
 //      File dir = new File(root);
-//        String FolderName = "Mosharkaty/النشيط";
+//        String FolderName = "Mosharkaty/الاشبال";
 //        String directoryName;
 //        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
 //        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
@@ -153,10 +153,10 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //        String root =
 //                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/اجتماعات";
 //        File dir = new File(root);
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/النشيط");
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/الاشبال");
         boolean check = dir.mkdirs();
 
-        String Fnamexls = ("/قائمة_نشيط_نشاط_الفرز_" + userBranch + ".xls");
+        String Fnamexls = ("/قائمة_اشبال_نشاط_الفرز_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
         try {
@@ -164,7 +164,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
             workbook = Workbook.createWorkbook(file, wbSettings);
             WritableSheet sheet = workbook.createSheet("sheet", 0);
             Label label0 = new Label(0, 0, "الاسم");
-            Label label1 = new Label(1, 0, "نشيط ؟");
+            Label label1 = new Label(1, 0, "اشبال ؟");
             Label label2 = new Label(2, 0, "غير موجود في الشيت");
 
             try {
@@ -185,9 +185,9 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                         col2Num = 3;
                     }
                     Label label_name = new Label(colNum, volID, userHistoryItems.get(i).getUsername());
-                    Label label_nasheet = new Label(col2Num, volID, "نشيط");
+                    Label label_teen = new Label(col2Num, volID, "اشبال");
                     sheet.addCell(label_name);
-                    sheet.addCell(label_nasheet);
+                    sheet.addCell(label_teen);
                 }
             } catch (RowsExceededException e) {
                 Toast.makeText(getContext(), "rows exceeding limit error", Toast.LENGTH_SHORT).show();
@@ -216,7 +216,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         }
     }
 
-    private void getNasheetMosharkat() {
+    private void getTeenMosharkat() {
         MosharkatRef = database.getReference("mosharkat").child(userBranch);
         mosharkatlistener =
                 MosharkatRef.child(String.valueOf(month))
@@ -231,7 +231,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                                             MosharkaItem mosharka = snapshot.getValue(MosharkaItem.class);
                                             String[] splittedDate;
                                             if (mosharka != null) {
-                                                if (!allNsheet.contains(mosharka.getVolname()))
+                                                if (!allTeens.contains(mosharka.getVolname()))
                                                     continue;
                                                 splittedDate = mosharka.getMosharkaDate().split("/", 3);
                                                 if (nameCounting.containsKey(mosharka.getVolname().trim())) {
@@ -254,18 +254,18 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                                             }
                                         }
                                         for (Map.Entry<String, Integer> entry : nameCounting.entrySet()) {
-                                            allNsheet.remove(entry.getKey());
+                                            allTeens.remove(entry.getKey());
                                             userHistoryItems.add(
                                                     new VolunteerHistoryItem(
                                                             entry.getKey(),
                                                             nameHistory.get(entry.getKey()),
                                                             entry.getValue(),
-                                                            nasheetMonths.get(entry.getKey())));
+                                                            teenMonths.get(entry.getKey())));
                                         }
-                                        for (int i = 0; i < allNsheet.size(); i++) {
+                                        for (int i = 0; i < allTeens.size(); i++) {
                                             userHistoryItems.add(
                                                     new VolunteerHistoryItem(
-                                                            allNsheet.get(i), "", 0, nasheetMonths.get(allNsheet.get(i))));
+                                                            allTeens.get(i), "", 0, teenMonths.get(allTeens.get(i))));
                                         }
                                         Collections.sort(userHistoryItems);
                                         adapter.notifyDataSetChanged();
@@ -290,13 +290,13 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         //                    + getString(R.string.youAreNotUpdatedMessage1));
         alertDialogBuilder.setCancelable(true);
         alertDialogBuilder.setPositiveButton(
-                R.string.nasheetColumn,
+                R.string.teenColumn,
                 (dialog, id) -> {
                     writeExcel();
                     dialog.cancel();
                 });
         alertDialogBuilder.setNeutralButton(
-                R.string.nasheetStats,
+                R.string.teenStats,
                 (dialog, id) -> {
                     writeExcel2();
                     dialog.cancel();
@@ -306,14 +306,14 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 
     private void writeExcel2() {
 //        String root =
-//                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/النشيط";
+//                Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mosharkaty/الاشبال";
 //        File dir = new File(root);
-//        String FolderName = "Mosharkaty/النشيط";
+//        String FolderName = "Mosharkaty/الاشبال";
 //        String directoryName;
 //        File dir;
 //        directoryName = Objects.requireNonNull(requireContext().getExternalFilesDir(null)).toString();
 //        dir = new File(requireContext().getExternalFilesDir(null) + "/" + FolderName);
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/النشيط");
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "مشاركاتي/الاشبال");
         boolean check = dir.mkdirs();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //            directoryName = Environment.getDownloadCacheDirectory().toString();
@@ -325,7 +325,7 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
 //
 //            dir = new File(Environment.getExternalStorageDirectory() + "/" + FolderName);
 //        }
-        String Fnamexls = ("/مشاركات_نشيط_حتي_الان_" + userBranch + ".xls");
+        String Fnamexls = ("/مشاركات_اشبال_حتي_الان_" + userBranch + ".xls");
         WorkbookSettings wbSettings = new WorkbookSettings();
         WritableWorkbook workbook;
         try {
@@ -340,10 +340,10 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
                 sheet.addCell(label0);
                 for (int i = 0; i < userHistoryItems.size(); i++) {
                     Label label_name = new Label(0, i + 1, userHistoryItems.get(i).getUsername());
-                    Label label_nasheet =
+                    Label label_teen =
                             new Label(1, i + 1, String.valueOf(userHistoryItems.get(i).getCount()));
                     sheet.addCell(label_name);
-                    sheet.addCell(label_nasheet);
+                    sheet.addCell(label_teen);
                 }
             } catch (RowsExceededException e) {
                 Toast.makeText(getContext(), "rows exceeding limit error", Toast.LENGTH_SHORT).show();
@@ -378,8 +378,8 @@ public class ShowNasheetFragment extends androidx.fragment.app.Fragment {
         if (MosharkatRef != null && mosharkatlistener != null) {
             MosharkatRef.removeEventListener(mosharkatlistener);
         }
-        if (nasheetRef != null && nasheetlistener != null) {
-            nasheetRef.removeEventListener(nasheetlistener);
+        if (teenRef != null && teenlistener != null) {
+            teenRef.removeEventListener(teenlistener);
         }
     }
 }

@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.resala.mosharkaty.ui.adapters.NasheetPagerAdapter;
+import com.resala.mosharkaty.ui.adapters.TeensPagerAdapter;
 
-public class NasheetActivity extends AppCompatActivity {
+public class TeensActivity extends AppCompatActivity {
     public TabLayout.Tab tab0;
     public TabLayout.Tab tab1;
     public TabLayout.Tab tab2;
@@ -18,8 +18,8 @@ public class NasheetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teens);
-        NasheetPagerAdapter sectionsPagerAdapter = new NasheetPagerAdapter(this, getSupportFragmentManager());
+        setContentView(R.layout.activity_nasheet);
+        TeensPagerAdapter sectionsPagerAdapter = new TeensPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -31,7 +31,7 @@ public class NasheetActivity extends AppCompatActivity {
         assert tab0 != null;
         tab0.setCustomView(R.layout.tab_item);
         TextView textTab0 = tab0.getCustomView().findViewById(R.id.text1);
-        textTab0.setText(getString(R.string.nasheet_tab_text_1));
+        textTab0.setText(getString(R.string.teen_tab_text_1));
         ImageView imageViewTab0 = tab0.getCustomView().findViewById(R.id.icon);
         imageViewTab0.setImageResource(R.drawable.person_add);
         //      tab0.setIcon(R.drawable.account);

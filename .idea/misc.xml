@@ -3,9 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_admin_show_home.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_admin_show_statistics.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_event_report_description.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_nasheet.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_new_account.xml" value="0.129981884057971" />
+        <entry key="app/src/main/res/layout/activity_teens.xml" value="0.3115942028985507" />
+        <entry key="app/src/main/res/layout/fragment_add_teen.xml" value="0.3115942028985507" />
+        <entry key="app/src/main/res/layout/fragment_admin_show_reports.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_compose_new_mosharka.xml" value="0.1453804347826087" />
+        <entry key="app/src/main/res/layout/fragment_nasheet_reports.xml" value="0.3115942028985507" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_show_nasheet.xml" value="0.3115942028985507" />
+        <entry key="app/src/main/res/layout/fragment_show_teens.xml" value="0.3115942028985507" />
+        <entry key="app/src/main/res/layout/fragment_teen_reports.xml" value="0.3115942028985507" />
         <entry key="app/src/main/res/layout/signature_item.xml" value="0.12047101449275362" />
         <entry key="app/src/main/res/layout/spinner_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/spinner_item2.xml" value="0.25" />
