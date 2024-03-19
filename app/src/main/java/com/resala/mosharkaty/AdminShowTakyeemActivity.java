@@ -61,7 +61,8 @@ public class AdminShowTakyeemActivity extends AppCompatActivity {
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        DatabaseReference liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(userBranch);
+//        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         fari2Ref = liveSheet.child("month_mosharkat");
         final ArrayAdapter<String> ae =
                 new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, allFari2);

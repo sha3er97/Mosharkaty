@@ -9,6 +9,7 @@ import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.isAdmin;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.isMrkzy;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userId;
 
@@ -133,7 +134,8 @@ public class LoginActivity extends AppCompatActivity {
                         : branchesSheets.get(userBranch);
         if (!userBranch.equals(branches[BRANCHES_COUNT])) {
             assert branchSheetLink != null;
-            DatabaseReference allVolsRef = database.getReference(branchSheetLink).child("all");
+            DatabaseReference allVolsRef = !myRules.useOnlineSheets ? database.getReference(branchSheetLink).child("all") : database.getReference("sheets").child(userBranch).child("all");
+//            DatabaseReference allVolsRef = database.getReference(branchSheetLink).child("all");
             allVolsRef.addListenerForSingleValueEvent(
                     new ValueEventListener() {
                         @Override

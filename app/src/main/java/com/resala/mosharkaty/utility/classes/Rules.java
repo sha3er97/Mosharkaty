@@ -23,6 +23,7 @@ public class Rules {
     public int meetings_medium;
     public boolean ignoreAbove;
     public boolean prev_months_allowed;
+    public boolean useOnlineSheets;
 
     public Rules() {
     }

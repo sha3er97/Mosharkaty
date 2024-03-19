@@ -152,7 +152,8 @@ public class AdminMrkzyReportsActivity extends AppCompatActivity {
     }
 
     private void getFari2Data(int branchIterator, String branchSheetLink) {
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+//        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        DatabaseReference liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(branches[branchIterator]);
         DatabaseReference usersRef = liveSheet.child("all");
         usersRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {

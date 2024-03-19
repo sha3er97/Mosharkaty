@@ -7,6 +7,7 @@ import static com.resala.mosharkaty.utility.classes.UtilityClass.allVolunteersBy
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.mosharkaTypes;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.annotation.SuppressLint;
@@ -209,7 +210,8 @@ public class AdminAddGroupMosharkaFragment extends androidx.fragment.app.Fragmen
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        DatabaseReference liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(userBranch);
+//        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         fari2Ref = liveSheet.child("month_mosharkat");
         final ArrayAdapter<String> ae =
                 new ArrayAdapter<>(requireContext(), R.layout.spinner_item, allFari2);

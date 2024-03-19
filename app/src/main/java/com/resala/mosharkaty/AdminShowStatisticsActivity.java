@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branches;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.branchesSheets;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.months;
+import static com.resala.mosharkaty.utility.classes.UtilityClass.myRules;
 import static com.resala.mosharkaty.utility.classes.UtilityClass.userBranch;
 
 import android.os.Bundle;
@@ -84,7 +85,8 @@ public class AdminShowStatisticsActivity extends AppCompatActivity {
                         ? branchesSheets.get(branches[0])
                         : branchesSheets.get(userBranch);
         assert branchSheetLink != null;
-        DatabaseReference liveSheet = database.getReference(branchSheetLink);
+        DatabaseReference liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(userBranch);
+//        DatabaseReference liveSheet = database.getReference(branchSheetLink);
         usersRef = liveSheet.child("month_mosharkat");
         usersRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {

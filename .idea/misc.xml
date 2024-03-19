@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/layout/activity_admin_show_home.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_admin_show_statistics.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_event_report_description.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.3115942028985507" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_nasheet.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_new_account.xml" value="0.129981884057971" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/signature_item.xml" value="0.12047101449275362" />
         <entry key="app/src/main/res/layout/spinner_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/spinner_item2.xml" value="0.25" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/icon.xml" value="0.2845" />
       </map>
     </option>
   </component>

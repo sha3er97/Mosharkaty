@@ -181,7 +181,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                                                         ? branchesSheets.get(branches[0])
                                                         : branchesSheets.get(userBranch);
                                         assert branchSheetLink != null;
-                                        liveSheet = database.getReference(branchSheetLink);
+                                        liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(userBranch);
+//                                        liveSheet = database.getReference(branchSheetLink);
                                         getUserName();
                                         refreshReports();
                                     }
@@ -201,7 +202,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
                             ? branchesSheets.get(branches[0])
                             : branchesSheets.get(userBranch);
             assert branchSheetLink != null;
-            liveSheet = database.getReference(branchSheetLink);
+            liveSheet = !myRules.useOnlineSheets ? database.getReference(branchSheetLink) : database.getReference("sheets").child(userBranch);
+//            liveSheet = database.getReference(branchSheetLink);
             branchTV.setText(userBranch);
             refreshReports();
         }
